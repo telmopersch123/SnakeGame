@@ -1,0 +1,114 @@
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Random;
+
+public class LocaleUtils {
+  static boolean teste = false;
+
+  public static ArrayList<Point> LocateFood(int FrameWidth, int FrameHeight, int WIDTH, int HEIGHT,
+      ArrayList<Integer> walls_x,
+      ArrayList<Integer> walls_y, Node[] nodeSnake) {
+    ArrayList<Point> foodPositions = new ArrayList<>();
+    // Variáveis para armazenar a posição da comida
+    int[] foodX = new int[3];
+    int[] foodY = new int[3];
+    WIDTH = 18;
+    HEIGHT = 18;
+    ArrayList<Integer> snake_x = new ArrayList<>();
+    ArrayList<Integer> snake_y = new ArrayList<>();
+    for (int i = 0; i < nodeSnake.length; i++) {
+      snake_x.add(nodeSnake[i].x);
+      snake_y.add(nodeSnake[i].y);
+    }
+    // Loop para continuar gerando novas posições para a comida até que ela não
+    // esteja dentro ou muito próxima das paredes
+    boolean tooCloseToWall;
+
+    do {
+      tooCloseToWall = false; // Define como falso para cada iteração
+      // Gera uma posição aleatória para a comida dentro da área do jogo
+      foodX[0] = new Random().nextInt(FrameWidth - WIDTH);
+      foodX[1] = new Random().nextInt(FrameWidth - 25);
+      foodX[2] = new Random().nextInt(FrameWidth - WIDTH);
+
+      foodY[0] = new Random().nextInt(FrameWidth - WIDTH);
+      foodY[1] = new Random().nextInt(FrameWidth - 25);
+      foodY[2] = new Random().nextInt(FrameWidth - WIDTH);
+
+      for (int i = 0; i < nodeSnake.length; i++) {
+        Rectangle SnakeRect = new Rectangle(snake_x.get(i), snake_y.get(i), WIDTH, HEIGHT);
+        Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], WIDTH, HEIGHT);
+        Rectangle foodRect2 = new Rectangle(foodX[1], foodY[1], 25, 25);
+        Rectangle foodRect3 = new Rectangle(foodX[2], foodY[2], WIDTH, HEIGHT);
+
+        if (foodRect1.intersects(SnakeRect) || foodRect2.intersects(SnakeRect)
+            || foodRect3.intersects(SnakeRect)) {
+          tooCloseToWall = true;
+          break;
+        }
+      }
+
+      // Verifica se a comida está dentro ou muito próxima de alguma parede
+      for (int i = 0; i < walls_x.size(); i++) {
+        // Cria um retângulo para representar a parede atual
+        Rectangle wallRect = new Rectangle(walls_x.get(i), walls_y.get(i), WIDTH, HEIGHT);
+        Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], WIDTH, HEIGHT);
+        Rectangle foodRect2 = new Rectangle(foodX[1], foodY[1], 25, 25);
+        Rectangle foodRect3 = new Rectangle(foodX[2], foodY[2], WIDTH, HEIGHT);
+        if (foodRect1.intersects(wallRect) || foodRect1.contains(wallRect) ||
+            foodRect2.intersects(wallRect) || foodRect2.contains(wallRect) ||
+            foodRect3.intersects(wallRect) || foodRect3.contains(wallRect)) {
+          tooCloseToWall = true;
+          break; // Interrompe o loop assim que uma parede próxima é encontrada
+        }
+      }
+      if (!tooCloseToWall) {
+        foodPositions.add(new Point(foodX[0], foodY[0]));
+        foodPositions.add(new Point(foodX[1], foodY[1]));
+        foodPositions.add(new Point(foodX[2], foodY[2]));
+      }
+      // Repete o loop se a comida estiver muito próxima de alguma parede
+    } while (tooCloseToWall);
+    return foodPositions;
+    // Define as coordenadas da comida com as coordenadas válidas geradas acima
+  }
+
+  public static ArrayList<ArrayList<Integer>> LocateWall(int FrameWidth, int FrameHeight, int WIDTH, int HEIGHT,
+      int numWalls) {
+    ArrayList<Integer> walls_x = new ArrayList<>();
+    ArrayList<Integer> walls_y = new ArrayList<>();
+
+    for (int k = 0; k < numWalls; k++) {
+      // Define as dimensões do quadrado ou retângulo perfeito
+      int wallWidth = (int) (Math.random() * 4) + 1; // Largura aleatória entre 5 e 14
+      int wallHeight = (int) (Math.random() * 2) + 1; // Altura aleatória entre 3 e 7
+
+      // Define a posição inicial do quadrado ou retângulo
+      int startX = (int) (Math.random() * (FrameWidth - wallWidth * WIDTH));
+      int startY = (int) (Math.random() * (FrameHeight - wallHeight * HEIGHT));
+
+      // Adiciona os pontos do quadrado ou retângulo à lista de paredes
+      for (int i = startX; i < startX + wallWidth * WIDTH; i += WIDTH) {
+        for (int j = startY; j < startY + wallHeight * HEIGHT; j += HEIGHT) {
+          walls_x.add(i);
+          walls_y.add(j);
+        }
+      }
+
+      // Adiciona falhas aleatórias sobre o quadrado ou retângulo
+      for (int i = 0; i < 20 * (wallWidth + wallHeight); i++) {
+        int randomX = startX - 2 * WIDTH + (int) (Math.random() * (wallWidth * WIDTH + 4 * WIDTH));
+        int randomY = startY - 2 * HEIGHT + (int) (Math.random() * (wallHeight * HEIGHT + 4 * HEIGHT));
+        walls_x.add(randomX);
+        walls_y.add(randomY);
+      }
+    }
+
+    ArrayList<ArrayList<Integer>> walls = new ArrayList<>();
+    walls.add(walls_x);
+    walls.add(walls_y);
+
+    return walls;
+  }
+}
