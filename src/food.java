@@ -6,9 +6,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 public class food {
-  private static long lastFrameTimee = System.currentTimeMillis();
+  private static long lastFrameTime1 = System.currentTimeMillis();
   private static long lastFrameTime = System.currentTimeMillis();
-  private static final int frameInterval = 80; // Intervalo entre quadros em milissegundos
   public static int lastRenderedFrame = -1;
 
   public static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
@@ -31,68 +30,72 @@ public class food {
     g.drawImage(buffer, 0, 0, null);
   }
 
+  public static int numFramesX1 = 13; // Ajuste conforme necessário
+  public static int numFramesY1 = 1; // Supondo que todas as animações estão na mesma linha
+  public static int frameWidth1 = 500; // Largura do frame redimensionado
+  public static int frameHeight1 = 500; // Altura do frame redimensionado
+  public static int totalFrames1 = numFramesX1 * numFramesY1;
+  public static int frameInterval1 = 250; // Intervalo entre quadros em milissegundos
+  public static long currentTime1 = System.currentTimeMillis();
+  public static Graphics2D food1;
+  public static AffineTransform transform1 = new AffineTransform();
+
   public static void PoisonFood(Graphics g, BufferedImage buffer, int macaPOX, int macaPOY, Image applePoison,
       int width, int height) {
-    int numFramesXx = 13; // Ajuste conforme necessário
-    int numFramesYy = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidthh = 100; // Largura do frame redimensionado
-    int frameHeightt = 100; // Altura do frame redimensionado
-    int totalFramess = numFramesXx * numFramesYy;
-    int frameIntervall = 80; // Intervalo entre quadros em milissegundos
     BufferedImage EnergyAnimationFoodPoison = (BufferedImage) applePoison;
-    Graphics2D food = buffer.createGraphics();
-
-    long currentTime = System.currentTimeMillis();
-
-    int sx = (Game.currentFrame6 % numFramesXx) * (EnergyAnimationFoodPoison.getWidth() / numFramesXx);
-    int sy = (Game.currentFrame6 / numFramesXx) * (EnergyAnimationFoodPoison.getHeight() / numFramesXx);
-    int sw = EnergyAnimationFoodPoison.getWidth() / numFramesXx;
-    int sh = EnergyAnimationFoodPoison.getHeight() / numFramesYy;
-    BufferedImage resizedImageFoodPoison = resizeImage(EnergyAnimationFoodPoison.getSubimage(sx, sy, sw, sh),
-        frameWidthh,
-        frameHeightt);
-    Image scaledApplePoison = resizedImageFoodPoison.getScaledInstance(width, height,
-        Image.SCALE_SMOOTH);
-    food.drawImage(scaledApplePoison, macaPOX, macaPOY, null);
-
+    //
+    int sx = (Game.currentFrame6 % numFramesX1) * (EnergyAnimationFoodPoison.getWidth() / numFramesX1);
+    int sy = (Game.currentFrame6 / numFramesX1) * (EnergyAnimationFoodPoison.getHeight() / numFramesX1);
+    int sw = EnergyAnimationFoodPoison.getWidth() / numFramesX1;
+    int sh = EnergyAnimationFoodPoison.getHeight() / numFramesY1;
+    food1 = buffer.createGraphics();
+    AffineTransform atPoison = new AffineTransform();
+    atPoison.scale((double) (width + 2) / sw, (double) (height + 2) / sh);
+    AffineTransformOp op = new AffineTransformOp(atPoison, AffineTransformOp.TYPE_BILINEAR);
+    BufferedImage scaledImage = op.filter(EnergyAnimationFoodPoison.getSubimage(sx, sy, sw, sh), null);
+    food1.drawImage(scaledImage, macaPOX, macaPOY, null);
     // Atualize o quadro que foi renderizado
-
-    // Atualize o quadro apenas quando o intervalo de tempo entre os quadros passar
-    if (currentTime - lastFrameTimee > frameIntervall) {
-      // Avance para o próximo quadro
-      Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFramess;
-      lastFrameTimee = currentTime;
-
+    Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFrames1;
+    totalFrames1 = numFramesX1 * numFramesY1;
+    if (currentTime1 - lastFrameTime1 > frameInterval1) {
+      Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFrames1;
+      lastFrameTime1 = currentTime1;
     }
   }
+
+  public static int numFramesX = 6; // Ajuste conforme necessário
+  public static int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
+  public static int frameWidth = 500; // Largura do frame redimensionado
+  public static int frameHeight = 500; // Altura do frame redimensionado
+  private static final int frameInterval = 120;
+  public static int totalFrames = numFramesX * numFramesY;
+  public static long currentTime = System.currentTimeMillis();
+  public static Graphics2D food;
+  public static AffineTransform transform = new AffineTransform();
 
   public static void EnergyFood(Game game, Graphics g, BufferedImage buffer, int macaX, int macaY, Image appleEnergy,
       int width,
       int height) {
     BufferedImage EnergyAnimationFoodEnergy = (BufferedImage) appleEnergy;
-    Graphics2D food = buffer.createGraphics();
-    int numFramesX = 6; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 500; // Largura do frame redimensionado
-    int frameHeight = 500; // Altura do frame redimensionado
-    int totalFrames = numFramesX * numFramesY;
-    long currentTime = System.currentTimeMillis();
     int sx = (Game.currentFrame5 % numFramesX) * (EnergyAnimationFoodEnergy.getWidth() / numFramesX);
-    int sy = (Game.currentFrame5 / numFramesX) * (EnergyAnimationFoodEnergy.getHeight() / numFramesX);
+    int sy = (Game.currentFrame5 / numFramesX) * (EnergyAnimationFoodEnergy.getHeight() / numFramesY);
     int sw = EnergyAnimationFoodEnergy.getWidth() / numFramesX;
     int sh = EnergyAnimationFoodEnergy.getHeight() / numFramesY;
-    BufferedImage resizedImageFoodEnergy = resizeImage(EnergyAnimationFoodEnergy.getSubimage(sx, sy, sw, sh),
-        frameWidth,
-        frameHeight);
-    Image scaledAppleEnergy = resizedImageFoodEnergy.getScaledInstance(width, height,
-        Image.SCALE_SMOOTH);
-    food.drawImage(scaledAppleEnergy, macaX, macaY, null);
-
+    food = buffer.createGraphics();
+    // Create an AffineTransform to scale the image
+    AffineTransform at = new AffineTransform();
+    at.scale((double) (width + 2) / sw, (double) (height + 2) / sh);
+    // Create an AffineTransformOp object with the AffineTransform
+    AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+    // Apply the transform to the image
+    BufferedImage scaledImage = op.filter(EnergyAnimationFoodEnergy.getSubimage(sx, sy, sw, sh), null);
+    // Draw the scaled image
+    food.drawImage(scaledImage, macaX, macaY, null);
+    Game.currentFrame5 = (Game.currentFrame5 + 1) % totalFrames;
+    totalFrames = numFramesX * numFramesY;
     if (currentTime - lastFrameTime > frameInterval) {
-      Game.currentFrame5 = (Game.currentFrame5 + 1) % totalFrames;
       lastFrameTime = currentTime;
     }
-
   }
 
 }

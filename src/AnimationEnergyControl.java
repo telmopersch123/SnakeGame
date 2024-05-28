@@ -16,7 +16,7 @@ public class AnimationEnergyControl {
     Rectangle headCollisionAreaEN = new Rectangle(game.nodeSnake[0].x - 12 / 2,
         game.nodeSnake[0].y - 30 / 2,
         15, 15);
-    Rectangle fruitEnergyArea = new Rectangle(game.macaENX, game.macaENY, 18, 13);
+    Rectangle fruitEnergyArea = new Rectangle(game.macaENX, game.macaENY, 18, 15);
     Point foodPosition2 = foodPositions.get(2);
 
     long elapsedTimeEnergy = System.currentTimeMillis() - game.lastVenomAnimationTimeEnergy;

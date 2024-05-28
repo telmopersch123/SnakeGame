@@ -6,9 +6,16 @@ public class checkedColisson {
       ArrayList<Integer> walls_x, ArrayList<Integer> walls_y, Node[] nodeSnake, int largerCollisionArea,
       Rectangle headCollisionArea, boolean poisonDeathAnimationPlaying) {
 
+    if (nodeSnake.length < 30) {
+      gameOver = true;
+      poisonDeathAnimationPlaying = true;
+    }
+
     // colisão com o painel
-    if (nodeSnake[0].x >= -10 && nodeSnake[0].x <= -3 || nodeSnake[0].x >= 590 && nodeSnake[0].x <= 600 ||
-        nodeSnake[0].y >= -10 && nodeSnake[0].y <= -3 || nodeSnake[0].y >= 590 && nodeSnake[0].y <= 600) {
+    if (nodeSnake[0].x >= -10 && nodeSnake[0].x <= -3
+        || nodeSnake[0].x >= FrameWidth - 10 && nodeSnake[0].x <= FrameWidth
+        || nodeSnake[0].y >= -10 && nodeSnake[0].y <= -3
+        || nodeSnake[0].y >= FrameHeight - 70 && nodeSnake[0].y <= FrameHeight) {
       gameOver = true;
       poisonDeathAnimationPlaying = false;
     }

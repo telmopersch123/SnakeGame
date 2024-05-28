@@ -46,7 +46,6 @@ public class AnimationControlPoison {
 
           game.macaPOX = foodPosition1.x;
           game.macaPOY = foodPosition1.y;
-
         }
       }
       if (!Game.colidionPoiControlTimerAnimation) {

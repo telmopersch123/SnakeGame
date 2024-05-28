@@ -1,8 +1,11 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -18,11 +21,13 @@ public class Game extends JPanel implements Runnable {
   int WIDTH = 10;
   int HEIGHT = 10;
   int largerCollisionArea = 12;
-  int FrameWidth = 550;
-  int FrameHeight = 550;
-  int ALL_DOTS = 600;
-  int x[] = new int[ALL_DOTS];
-  int y[] = new int[ALL_DOTS];
+  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+  int FrameWidth = (int) screenSize.getWidth();
+  int FrameHeight = (int) screenSize.getHeight();
+  int ALL_DOTS_Width = (int) screenSize.getWidth();
+  int ALL_DOTS_Height = (int) screenSize.getHeight();
+  int x[] = new int[ALL_DOTS_Width];
+  int y[] = new int[ALL_DOTS_Height];
   Boolean[] Direcoes = new Boolean[4];
   Rectangle headCollisionArea;
   Rectangle headCollisionAreaPO;
@@ -74,7 +79,7 @@ public class Game extends JPanel implements Runnable {
   public ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public int direction = KeyEvent.VK_RIGHT;
-  public Node[] nodeSnake = new Node[40];
+  public Node[] nodeSnake = new Node[2000];
   public int score = 0;
   public int macaX = 0, macaY = 0;
   public int macaENX = 0, macaENY = 0;
@@ -155,6 +160,7 @@ public class Game extends JPanel implements Runnable {
   }
 
   public Game() {
+
     // Iniciar Imagens do JOGO
     Image[] imagens = loadImages.Images(WIDTH, HEIGHT);
     snakeHead = imagens[0];
@@ -183,24 +189,24 @@ public class Game extends JPanel implements Runnable {
     quantidadeDeco = (int) (Math.random() * 3 + 1);
     quantidadeDeco2 = (int) (Math.random() * 4 + 1);
     for (int i = 0; i < quantidadeDeco; i++) {
-      randomX[i] = random.nextInt(ALL_DOTS - 150);
-      randomY[i] = random.nextInt(ALL_DOTS - 150);
+      randomX[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomY[i] = random.nextInt(ALL_DOTS_Height - 150);
     }
 
     for (int i = 0; i < quantidadeDeco2; i++) {
-      randomX2[i] = random.nextInt(ALL_DOTS - 150);
-      randomY2[i] = random.nextInt(ALL_DOTS - 150);
+      randomX2[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomY2[i] = random.nextInt(ALL_DOTS_Height - 150);
     }
 
-    this.setPreferredSize(new Dimension(ALL_DOTS, ALL_DOTS));
+    this.setPreferredSize(new Dimension(ALL_DOTS_Width, ALL_DOTS_Height));
     this.setFocusable(true);
-    buffer = new BufferedImage(ALL_DOTS, ALL_DOTS, BufferedImage.TYPE_INT_ARGB); // Initialize buffer
+    buffer = new BufferedImage(ALL_DOTS_Width, ALL_DOTS_Height, BufferedImage.TYPE_INT_ARGB); // Initialize buffer
 
     // iniciar a parede
-    // ArrayList<ArrayList<Integer>> walls = LocaleUtils.LocateWall(FrameWidth,
-    // FrameHeight, WIDTH, HEIGHT, 20);
-    // walls_x = walls.get(0);
-    // walls_y = walls.get(1);
+    ArrayList<ArrayList<Integer>> walls = LocaleUtils.LocateWall(FrameWidth,
+        FrameHeight, WIDTH, HEIGHT, 20);
+    walls_x = walls.get(0);
+    walls_y = walls.get(1);
 
     // iniciar a cobra
     StartSnake();
@@ -266,6 +272,7 @@ public class Game extends JPanel implements Runnable {
       if (VerificDistance) {
         VerificDistance = false;
       }
+
       tick();
 
       boolean[] collisionResult = checkedColisson.CheckedColisson(gameOver, WIDTH, HEIGHT, FrameWidth, FrameHeight,
@@ -287,9 +294,9 @@ public class Game extends JPanel implements Runnable {
       if (keyListener != null) {
         this.removeKeyListener(keyListener);
       }
+
       // Renderiza a animação de colisão no buffer
       drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
-
       // Renderiza o buffer na tela
       repaint();
 
@@ -301,48 +308,30 @@ public class Game extends JPanel implements Runnable {
     }
   }
 
-  // Método para desenhar os elementos do jogo na tela
-  @Override
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    if (buffer == null) {
-      return;
+  public void Animation() {
+    if (!animationFinished && poisonDeathAnimationPlaying) {
+      int positionX = 0;
+      int positionY = 0;
+      for (int i = 0; i < nodeSnake.length; i++) {
+        positionX = nodeSnake[0].x;
+        positionY = nodeSnake[0].y;
+      }
+
+      if (!ControlOneAnimationPoison) {
+        Animation.AnimationColidianPoisonFood(buffer, ColidianPoisonFood, nodeSnake, PosColidianPoisonX,
+            PosColidianPoisonY);
+      }
+      animationFinished = Animation.AnimationPoisonDeath(buffer, DeathPoison, animationFinished, positionX,
+          positionY, keyListener);
     }
-
-    // Desenha os elementos do jogo no buffer
-    map.mapLawn(buffer, ALL_DOTS, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY, quantidadeDeco, randomX2,
-        randomY2, quantidadeDeco2);
-
-    // Desenha a COBRA
-    snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraight, bodyCorner, tailImage, snakeHead, keyListener);
-
-    // Desenha as animação do jogo
-    if (!gameOver) {
-      if (!animationFinished && poisonDeathAnimationPlaying) {
-        int positionX = 0;
-        int positionY = 0;
-        for (int i = 0; i < nodeSnake.length; i++) {
-          positionX = nodeSnake[0].x;
-          positionY = nodeSnake[0].y;
-        }
-
-        if (!ControlOneAnimationPoison) {
-          Animation.AnimationColidianPoisonFood(buffer, ColidianPoisonFood, nodeSnake, PosColidianPoisonX,
-              PosColidianPoisonY);
-        }
-        animationFinished = Animation.AnimationPoisonDeath(buffer, DeathPoison, animationFinished, positionX,
-            positionY, keyListener);
+    if (ControlEnergyColidianBoolean) {
+      if (!ControlOneAnimation) {
+        Animation.AnimationColidianEnergyFood(buffer, ColidianEnergyFood, nodeSnake, PosColidianEnergyX,
+            PosColidianEnergyY);
       }
-      if (ControlEnergyColidianBoolean) {
-        if (!ControlOneAnimation) {
-          Animation.AnimationColidianEnergyFood(buffer, ColidianEnergyFood, nodeSnake, PosColidianEnergyX,
-              PosColidianEnergyY);
-        }
-        Animation.AnimationColisionEnergy(this, buffer,
-            ColidianEnergy,
-            nodeSnake, PosColidianEnergyX, PosColidianEnergyY);
-      }
-
+      Animation.AnimationColisionEnergy(this, buffer,
+          ColidianEnergy,
+          nodeSnake, PosColidianEnergyX, PosColidianEnergyY);
     }
     if (SpreetSheetInitial) {
       Animation.AnimationEnergyTemporary(this, buffer,
@@ -360,25 +349,59 @@ public class Game extends JPanel implements Runnable {
 
       }
     }
+    if (gameOver) {
+      if (keyListener != null) {
+        this.removeKeyListener(keyListener);
+      }
+      repaint();
+    }
+
+  }
+
+  // Método para desenhar os elementos do jogo na tela
+  @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    if (buffer == null) {
+      return;
+    }
+
+    // Desenha os elementos do jogo no buffer
+    map.mapLawn(buffer, ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY,
+        quantidadeDeco, randomX2,
+        randomY2, quantidadeDeco2);
+
+    // Desenha a COBRA
+    snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraight, bodyCorner, tailImage, snakeHead, keyListener);
+
     // Desenha a comidas
     food.classicFood(g, buffer, macaX, macaY, appleSprit, poisonFruitWidthCla, poisonFruitHeightCla);
-    food.PoisonFood(g, buffer, macaPOX, macaPOY, applePoison, poisonFruitWidthVen, poisonFruitHeightVen);
+    food.PoisonFood(g, buffer, macaPOX, macaPOY, applePoison,
+        poisonFruitWidthVen, poisonFruitHeightVen);
     food.EnergyFood(this, g, buffer, macaENX, macaENY, appleEnergy,
         poisonFruitWidthErn, poisonFruitHeightErn);
     // Desenha as paredes
     walls.lawnWalls(buffer.getGraphics(), walls_x, walls_y, rockSprit);
-    if (nodeSnake.length < 30) {
-      gameOver = true;
-    }
+    // Desenha as animação do jogo
+    Animation();
     // Renderiza o buffer na tela
     g.drawImage(buffer, 0, 0, null);
+    // Desenha uma borda no jogo
+    Graphics2D g2d = (Graphics2D) g;
+    Color borderColor = Color.RED;
+    int borderWidth = 10;
+    int screenHeight = 1050; // Obtém a altura da tela
+    g2d.setColor(borderColor);
+    g2d.fillRect(0, 0, getWidth(), borderWidth); // Borda superior
+    g2d.fillRect(0, screenHeight - borderWidth, getWidth(), borderWidth); // Borda inferior
+    g2d.fillRect(0, 0, borderWidth, screenHeight); // Borda esquerda
+    g2d.fillRect(getWidth() - borderWidth, 0, borderWidth, screenHeight); // Borda direita
 
     // Se o jogo terminou, desenha a animação de colisão e a tela de game over
     if (gameOver) {
 
       // Desenha a animação de colisão no buffer
       if (!poisonDeathAnimationPlaying) {
-
         drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
       }
 
@@ -501,14 +524,11 @@ public class Game extends JPanel implements Runnable {
       }
     }
 
-    if (!gameOver) {
+    AnimationControlPoison animationControlPoison = new AnimationControlPoison();
+    animationControlPoison.updateVenomAnimation(this);
 
-      AnimationControlPoison animationControlPoison = new AnimationControlPoison();
-      animationControlPoison.updateVenomAnimation(this);
-
-      AnimationEnergyControl animationEnergyControl = new AnimationEnergyControl();
-      animationEnergyControl.updateEnergyAnimation(this);
-    }
+    AnimationEnergyControl animationEnergyControl = new AnimationEnergyControl();
+    animationEnergyControl.updateEnergyAnimation(this);
 
   }
 
@@ -562,23 +582,24 @@ public class Game extends JPanel implements Runnable {
     nodeSnake = new Node[40];
     walls_x.clear();
     walls_y.clear();
-    // ArrayList<ArrayList<Integer>> walls = LocaleUtils.LocateWall(FrameWidth,
-    // FrameHeight, WIDTH, HEIGHT, 20);
-    // walls_x = walls.get(0);
-    // walls_y = walls.get(1);
+    ArrayList<ArrayList<Integer>> walls = LocaleUtils.LocateWall(FrameWidth,
+        FrameHeight, WIDTH, HEIGHT, 20);
+    walls_x = walls.get(0);
+    walls_y = walls.get(1);
     StartSnake();
     Random random = new Random();
     quantidadeDeco = (int) (Math.random() * 3 + 1);
     quantidadeDeco2 = (int) (Math.random() * 4 + 1);
     for (int i = 0; i < quantidadeDeco; i++) {
-      randomX[i] = random.nextInt(ALL_DOTS - 150);
-      randomY[i] = random.nextInt(ALL_DOTS - 150);
+      randomX[i] = random.nextInt(ALL_DOTS_Width);
+      randomY[i] = random.nextInt(ALL_DOTS_Height);
     }
     for (int i = 0; i < quantidadeDeco2; i++) {
-      randomX2[i] = random.nextInt(ALL_DOTS - 150);
-      randomY2[i] = random.nextInt(ALL_DOTS - 150);
+      randomX2[i] = random.nextInt(ALL_DOTS_Width);
+      randomY2[i] = random.nextInt(ALL_DOTS_Height);
     }
-    map.mapLawn(buffer, ALL_DOTS, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY, quantidadeDeco, randomX2,
+    map.mapLawn(buffer,
+        ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY, quantidadeDeco, randomX2,
         randomY2, quantidadeDeco2);
     ArrayList<Point> foodPositions = LocaleUtils.LocateFood(FrameWidth, FrameHeight, WIDTH, HEIGHT, walls_x, walls_y,
         nodeSnake);

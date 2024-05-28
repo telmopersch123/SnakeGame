@@ -10,10 +10,10 @@ public class loadImages {
       int WIDTH, int HEIGHT) {
     BufferedImage[] images = new BufferedImage[20];
     try {
-      images[0] = ImageIO.read(new File("resources/snakes/head.png"));
-      images[1] = ImageIO.read(new File("resources/snakes/tail.png"));
-      images[2] = ImageIO.read(new File("resources/snakes/body.png"));
-      images[3] = ImageIO.read(new File("resources/snakes/fold.png"));
+      images[0] = ImageIO.read(new File("resources/snakes/snakeGreen/head.png"));
+      images[1] = ImageIO.read(new File("resources/snakes/snakeGreen/tail.png"));
+      images[2] = ImageIO.read(new File("resources/snakes/snakeGreen/body.png"));
+      images[3] = ImageIO.read(new File("resources/snakes/snakeGreen/fold.png"));
 
       images[4] = ImageIO.read(new File("resources/map_lawn/gram.png"));
       images[5] = ImageIO.read(new File("resources/map_lawn/rock.png"));

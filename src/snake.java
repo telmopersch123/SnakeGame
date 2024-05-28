@@ -7,81 +7,88 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class snake {
+  public static int angle = 0;
+  public static Graphics2D snakeBody;
+  public static Graphics2D rotated;
+  public static Graphics2D Corner;
+  public static Graphics2D tail;
+  public static Graphics2D head;
+  public static int currX;
+  public static int currY;
+  public static int prevX;
+  public static int prevY;
+  public static int nextX;
+  public static int nextY;
+  public static boolean isCorner;
+  public static boolean isHorizontal;
+  public static int shadowSize;
+  public static Color shadowColor;
+  public static int centerX;
+  public static int centerY;
+  public static RadialGradientPaint gradientPaint;
+  ////////////////////////////
+  public static boolean isHorizontal1;
+  public static AffineTransform rotation;
+  ////////////////////////////
+  public static boolean horizontal;
+  public static boolean vertical;
+  public static boolean rightTurn;
+  public static boolean leftTurn;
+  public static int width = 14;
+  ///////////////////////////
+  public static int imageWidth;
+  public static int imageHeight;
+  public static int centerX2;
+  public static int centerY2;
+  public static int xPos;
+  public static int yPos;
+
   public static void snakePaint(Node[] nodeSnake, BufferedImage buffer, int WIDTH, int HEIGHT, Image bodyStraight,
       Image bodyCorner, Image tailImage, Image snakeHead,
       MyKeyBoardListener keyListener) {
-    Graphics2D snakeBody = buffer.createGraphics();
-    for (int z = 1; z < nodeSnake.length; z++) {
 
-      int currX = nodeSnake[z].x;
-      int currY = nodeSnake[z].y;
-      int prevX = z > 0 ? nodeSnake[z - 1].x : currX;
-      int prevY = z > 0 ? nodeSnake[z - 1].y : currY;
-      int nextX = z < nodeSnake.length - 1 ? nodeSnake[z + 1].x : currX;
-      int nextY = z < nodeSnake.length - 1 ? nodeSnake[z + 1].y : currY;
-      boolean isCorner = (prevX != nextX) && (prevY != nextY);
-      boolean isHorizontal = currY == prevY;
-      int shadowSize = 10;
-      Color shadowColor = new Color(0, 0, 0, 20); // Cor padrão da sombra
-      if (isHorizontal) {
-        // Se a cobra estiver na horizontal, ajuste a cor da sombra para ser mais suave
-        shadowColor = new Color(0, 0, 0, 20); // Ou qualquer outro valor que você preferir
-      }
-      if (isCorner) {
-        shadowColor = new Color(0, 0, 0, 5);
-      }
-      int centerX = nodeSnake[z].x + 12 / 2;
-      int centerY = nodeSnake[z].y + 12 / 2 - 10;
-      RadialGradientPaint gradientPaint = new RadialGradientPaint(
-          centerX, centerY + shadowSize, shadowSize, // Posição e tamanho do gradiente
-          new float[] { 0.0f, 1.0f }, // Frações de cores
-          new Color[] { shadowColor, new Color(0, 0, 0, 0) } // Cores da sombra (começa opaca e termina
-                                                             // transparente)
-      );
-      snakeBody.setPaint(gradientPaint);
-      snakeBody.fillRect(currX - shadowSize / 2, currY - shadowSize / 2, WIDTH + shadowSize, HEIGHT + shadowSize);
-    }
-    // Desenha o corpo da cobra
-    int angle = 0;
-    // Desenhar a cobra
+    snakeBody = buffer.createGraphics();
 
+    angle = 0;
+
+    // Desenhar O CORPO
     for (int z = 1; z < nodeSnake.length; z++) {
       // transparente)
-      int currX = nodeSnake[z].x;
-      int currY = nodeSnake[z].y;
-      int prevY = z > 0 ? nodeSnake[z - 1].y : currY;
-
-      boolean isHorizontal = currY == prevY;
-      if (isHorizontal) {
+      currX = nodeSnake[z].x;
+      currY = nodeSnake[z].y;
+      prevY = z > 0 ? nodeSnake[z - 1].y : currY;
+      isHorizontal1 = currY == prevY;
+      if (isHorizontal1) {
         // Rotaciona a imagem em 90 graus;
-        AffineTransform rotation = AffineTransform.getQuadrantRotateInstance(1, currX + 14 / 2, currY + 14 / 2);
-        Graphics2D rotated = (Graphics2D) snakeBody.create();
+        rotation = AffineTransform.getQuadrantRotateInstance(1, currX + 14 / 2, currY + 14 / 2);
+        rotated = (Graphics2D) snakeBody.create();
         rotated.transform(rotation);
         rotated.drawImage(bodyStraight, currX, currY, WIDTH + 4, HEIGHT + 4, null);
         rotated.dispose();
       } else {
         // Aplica uma transformação semelhante para movimentos verticais
-        AffineTransform rotation = AffineTransform.getQuadrantRotateInstance(0, currX + 14 / 2, currY + 14 / 2);
-        Graphics2D rotated = (Graphics2D) snakeBody.create();
+        rotation = AffineTransform.getQuadrantRotateInstance(0, currX + 14 / 2, currY + 14 / 2);
+        rotated = (Graphics2D) snakeBody.create();
         rotated.transform(rotation);
         rotated.drawImage(bodyStraight, currX, currY, WIDTH + 4, HEIGHT + 4, null);
         rotated.dispose();
       }
 
     }
+    // Desenhar a CURVATURA
     for (int z = 0; z < nodeSnake.length; z++) {
-      Graphics2D Corner = buffer.createGraphics();
-      int currX = nodeSnake[z].x;
-      int currY = nodeSnake[z].y;
-      int prevX = z > 0 ? nodeSnake[z - 1].x : currX;
-      int prevY = z > 0 ? nodeSnake[z - 1].y : currY;
-      int nextX = z < nodeSnake.length - 1 ? nodeSnake[z + 1].x : currX;
-      int nextY = z < nodeSnake.length - 1 ? nodeSnake[z + 1].y : currY;
-      boolean isCorner = (prevX != nextX) && (prevY != nextY);
-      boolean horizontal = prevX != nextX;
-      boolean vertical = prevY != nextY;
-      boolean rightTurn = (prevX < currX && nextY > currY) || (prevY > currY && nextX < currX);
-      boolean leftTurn = (prevX > currX && nextY < currY) || (prevY < currY && nextX > currX);
+      Corner = buffer.createGraphics();
+      currX = nodeSnake[z].x;
+      currY = nodeSnake[z].y;
+      prevX = z > 0 ? nodeSnake[z - 1].x : currX;
+      prevY = z > 0 ? nodeSnake[z - 1].y : currY;
+      nextX = z < nodeSnake.length - 1 ? nodeSnake[z + 1].x : currX;
+      nextY = z < nodeSnake.length - 1 ? nodeSnake[z + 1].y : currY;
+      isCorner = (prevX != nextX) && (prevY != nextY);
+      horizontal = prevX != nextX;
+      vertical = prevY != nextY;
+      rightTurn = (prevX < currX && nextY > currY) || (prevY > currY && nextX < currX);
+      leftTurn = (prevX > currX && nextY < currY) || (prevY < currY && nextX > currX);
       if (isCorner) {
         if (vertical && rightTurn) {
           angle = 90;
@@ -108,16 +115,15 @@ public class snake {
     }
     // DESENHAR O RABO
     for (int z = 0; z < nodeSnake.length; z++) {
-      int currX = nodeSnake[z].x;
-      int currY = nodeSnake[z].y;
-      int prevX = z > 0 ? nodeSnake[z - 1].x : currX;
-      int prevY = z > 0 ? nodeSnake[z - 1].y : currY;
-      int nextX = z < nodeSnake.length - 1 ? nodeSnake[z + 1].x : currX;
-      int nextY = z < nodeSnake.length - 1 ? nodeSnake[z + 1].y : currY;
-      boolean horizontal = prevX != nextX;
-      boolean vertical = prevY != nextY;
-      Graphics2D tail = (Graphics2D) buffer.createGraphics();
-      int width = 14;
+      currX = nodeSnake[z].x;
+      currY = nodeSnake[z].y;
+      prevX = z > 0 ? nodeSnake[z - 1].x : currX;
+      prevY = z > 0 ? nodeSnake[z - 1].y : currY;
+      nextX = z < nodeSnake.length - 1 ? nodeSnake[z + 1].x : currX;
+      nextY = z < nodeSnake.length - 1 ? nodeSnake[z + 1].y : currY;
+      horizontal = prevX != nextX;
+      vertical = prevY != nextY;
+      tail = (Graphics2D) buffer.createGraphics();
 
       if (z == nodeSnake.length - 1) {
         if (horizontal && prevX < currX) {
@@ -138,7 +144,7 @@ public class snake {
       }
     }
     // DESENHE A CABEÇA
-    Graphics2D head = buffer.createGraphics();
+    head = buffer.createGraphics();
     // Ajusta a posição da cabeça com base na direção
     if (keyListener.getDirection() == KeyEvent.VK_LEFT) {
       angle = 180;
@@ -149,14 +155,14 @@ public class snake {
     } else if (keyListener.getDirection() == KeyEvent.VK_DOWN) {
       angle = 90;
     }
-    int imageWidth = (int) (12 * 1.7); // Reduz a largura da imagem
-    int imageHeight = (int) (12 * 1.5); // Reduz a altura da imagem
-    int centerX = nodeSnake[0].x + 15 / 2;
-    int centerY = nodeSnake[0].y + 15 / 2;
+    imageWidth = (int) (12 * 1.7); // Reduz a largura da imagem
+    imageHeight = (int) (12 * 1.5); // Reduz a altura da imagem
+    centerX = nodeSnake[0].x + 15 / 2;
+    centerY = nodeSnake[0].y + 15 / 2;
 
     // Ajusta a posição da cabeça para o centro do corpo da cobra
-    int xPos = centerX - imageWidth / 2;
-    int yPos = centerY - imageHeight / 2;
+    xPos = centerX - imageWidth / 2;
+    yPos = centerY - imageHeight / 2;
     // Rotação da cabeça
     head.rotate(Math.toRadians(angle), xPos + imageWidth / 2, yPos + imageHeight / 2); // Rotação em torno do centro da
     head.drawImage(snakeHead, xPos + 3, yPos, imageWidth, imageHeight, null); // Desenha a cabeça da cobra

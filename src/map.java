@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 
 public class map {
 
-  public static void mapLawn(BufferedImage buffer, int ALL_DOTS, Image gramSprit, Image DecoLawn01, Image DecoLawn02,
+  public static void mapLawn(BufferedImage buffer, int ALL_DOTS_Width, int ALL_DOTS_Height, Image gramSprit,
+      Image DecoLawn01, Image DecoLawn02,
       int[] randomX, int[] randomY, int quantidadeDeco, int[] randomX2, int[] randomY2, int quantidadeDeco2) {
 
     Graphics2D g2d = buffer.createGraphics();
@@ -17,8 +18,8 @@ public class map {
       int scaledBackgroundImageHeight = (int) (backgroundImageHeight * scale);
 
       // Desenha as imagens de fundo
-      for (int y = 0; y < ALL_DOTS; y += scaledBackgroundImageHeight) {
-        for (int x = 0; x < ALL_DOTS; x += scaledBackgroundImageWidth) {
+      for (int y = 0; y < ALL_DOTS_Height; y += scaledBackgroundImageHeight) {
+        for (int x = 0; x < ALL_DOTS_Width; x += scaledBackgroundImageWidth) {
           g2d.drawImage(gramSprit, x, y, scaledBackgroundImageWidth, scaledBackgroundImageHeight, null);
         }
       }
