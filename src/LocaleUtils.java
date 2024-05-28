@@ -27,13 +27,13 @@ public class LocaleUtils {
     do {
       tooCloseToWall = false; // Define como falso para cada iteração
       // Gera uma posição aleatória para a comida dentro da área do jogo
-      foodX[0] = (int) (Math.random() * (FrameWidth - 100)) + 1;
-      foodX[1] = (int) (Math.random() * (FrameWidth - 100)) + 1;
-      foodX[2] = (int) (Math.random() * (FrameWidth - 100)) + 1;
+      foodX[0] = (int) (Math.random() * (FrameWidth - 100)) + 15;
+      foodX[1] = (int) (Math.random() * (FrameWidth - 100)) + 15;
+      foodX[2] = (int) (Math.random() * (FrameWidth - 100)) + 15;
 
-      foodY[0] = (int) (Math.random() * (FrameHeight - 100)) + 1;
-      foodY[1] = (int) (Math.random() * (FrameHeight - 100)) + 1;
-      foodY[2] = (int) (Math.random() * (FrameHeight - 100)) + 1;
+      foodY[0] = (int) (Math.random() * (FrameHeight - 100)) + 15;
+      foodY[1] = (int) (Math.random() * (FrameHeight - 100)) + 15;
+      foodY[2] = (int) (Math.random() * (FrameHeight - 100)) + 15;
       for (int i = 0; i < nodeSnake.length; i++) {
         Rectangle SnakeRect = new Rectangle(snake_x.get(i), snake_y.get(i), WIDTH, HEIGHT);
         Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], WIDTH, HEIGHT);

@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -48,7 +47,7 @@ public class Game extends JPanel implements Runnable {
   private Image rockSprit;
   private Image DecoLawn01;
   private Image DecoLawn02;
-
+  private Image painelRock;
   // FOODS
   private Image appleSprit;
   private Image applePoison;
@@ -79,7 +78,7 @@ public class Game extends JPanel implements Runnable {
   public ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public int direction = KeyEvent.VK_RIGHT;
-  public Node[] nodeSnake = new Node[2000];
+  public Node[] nodeSnake = new Node[40];
   public int score = 0;
   public int macaX = 0, macaY = 0;
   public int macaENX = 0, macaENY = 0;
@@ -150,6 +149,8 @@ public class Game extends JPanel implements Runnable {
   public static boolean ControlOneAnimationPoison = false;
   public static boolean ControlOneAnimationClassic = false;
   public static boolean ControlOneAnimationClassicAtivar = false;
+  public static Graphics2D painelBordas;
+  public static int borderWidth = 20;
 
   private void initializeKeyListener() {
     if (!gameOver) {
@@ -160,7 +161,6 @@ public class Game extends JPanel implements Runnable {
   }
 
   public Game() {
-
     // Iniciar Imagens do JOGO
     Image[] imagens = loadImages.Images(WIDTH, HEIGHT);
     snakeHead = imagens[0];
@@ -183,6 +183,7 @@ public class Game extends JPanel implements Runnable {
     ColidianEnergyFood = imagens[17];
     ColidianPoisonFood = imagens[18];
     colidianClassic = imagens[19];
+    painelRock = imagens[20];
     ///////////////////////////////////
     initializeKeyListener();
     Random random = new Random();
@@ -245,9 +246,10 @@ public class Game extends JPanel implements Runnable {
     JFrame frame = new JFrame("Snake");
     frame.add(game);
     frame.setResizable(false);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.pack();
-    frame.setLocationRelativeTo(null);
+    frame.setUndecorated(true); // Remove as bordas da janela
+    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Define a janela para tela
+    // cheia
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define o comportamento ao fechar a janela
     frame.setVisible(true);
 
     new Thread(game).start();
@@ -276,7 +278,8 @@ public class Game extends JPanel implements Runnable {
       tick();
 
       boolean[] collisionResult = checkedColisson.CheckedColisson(gameOver, WIDTH, HEIGHT, FrameWidth, FrameHeight,
-          walls_x, walls_y, nodeSnake, largerCollisionArea, headCollisionArea, poisonDeathAnimationPlaying);
+          walls_x, walls_y, nodeSnake, largerCollisionArea, headCollisionArea, poisonDeathAnimationPlaying,
+          borderWidth, FrameWidth, FrameHeight);
       gameOver = collisionResult[0];
       poisonDeathAnimationPlaying = collisionResult[1];
       repaint();
@@ -386,16 +389,6 @@ public class Game extends JPanel implements Runnable {
     Animation();
     // Renderiza o buffer na tela
     g.drawImage(buffer, 0, 0, null);
-    // Desenha uma borda no jogo
-    Graphics2D g2d = (Graphics2D) g;
-    Color borderColor = Color.RED;
-    int borderWidth = 10;
-    int screenHeight = 1050; // Obtém a altura da tela
-    g2d.setColor(borderColor);
-    g2d.fillRect(0, 0, getWidth(), borderWidth); // Borda superior
-    g2d.fillRect(0, screenHeight - borderWidth, getWidth(), borderWidth); // Borda inferior
-    g2d.fillRect(0, 0, borderWidth, screenHeight); // Borda esquerda
-    g2d.fillRect(getWidth() - borderWidth, 0, borderWidth, screenHeight); // Borda direita
 
     // Se o jogo terminou, desenha a animação de colisão e a tela de game over
     if (gameOver) {
@@ -409,9 +402,27 @@ public class Game extends JPanel implements Runnable {
       g.drawImage(buffer, 0, 0, null);
 
       // Desenha a tela de game over
-      GameOver.drawGameOver(g, getWidth(), getHeight(), FrameWidth, FrameHeight, gameOver, score, direction, nodeSnake,
+      GameOver.drawGameOver(g,
+          FrameWidth,
+          FrameHeight, FrameWidth, FrameHeight, gameOver, score, direction, nodeSnake,
           walls_x, walls_y, macaX, macaY, WIDTH, HEIGHT, this, this);
     }
+
+    painelBordas = (Graphics2D) buffer.getGraphics();
+    for (int x = 0; x < FrameWidth; x += borderWidth) {
+      g.drawImage(painelRock, x, 0, borderWidth, borderWidth, null); // Borda superior
+      g.drawImage(painelRock, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
+                                                                                             // inferior
+    }
+    for (int y = 0; y < FrameHeight; y += borderWidth) {
+      g.drawImage(painelRock, 0, y, borderWidth, borderWidth, null); // Borda esquerda
+      g.drawImage(painelRock, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
+    }
+    painelBordas.fillRect(0, 0, FrameWidth, borderWidth); // Borda superior
+    painelBordas.fillRect(0, FrameHeight - borderWidth, FrameWidth, borderWidth); // Borda inferior
+    painelBordas.fillRect(0, 0, borderWidth, FrameHeight); // Borda esquerda
+    painelBordas.fillRect(FrameWidth - borderWidth, 0, borderWidth, FrameHeight); // Borda direita
+
   }
 
   // Método para atualizar a lógica do jogo

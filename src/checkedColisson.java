@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class checkedColisson {
   public static boolean[] CheckedColisson(boolean gameOver, int WIDTH, int HEIGHT, int FrameWidth, int FrameHeight,
       ArrayList<Integer> walls_x, ArrayList<Integer> walls_y, Node[] nodeSnake, int largerCollisionArea,
-      Rectangle headCollisionArea, boolean poisonDeathAnimationPlaying) {
+      Rectangle headCollisionArea, boolean poisonDeathAnimationPlaying, int borderWidth, int getWidth, int getHeight) {
 
     if (nodeSnake.length < 30) {
       gameOver = true;
@@ -12,10 +12,8 @@ public class checkedColisson {
     }
 
     // colisão com o painel
-    if (nodeSnake[0].x >= -10 && nodeSnake[0].x <= -3
-        || nodeSnake[0].x >= FrameWidth - 10 && nodeSnake[0].x <= FrameWidth
-        || nodeSnake[0].y >= -10 && nodeSnake[0].y <= -3
-        || nodeSnake[0].y >= FrameHeight - 70 && nodeSnake[0].y <= FrameHeight) {
+    if (nodeSnake[0].y <= borderWidth || nodeSnake[0].y >= getHeight - 30 || nodeSnake[0].x <= borderWidth
+        || nodeSnake[0].x >= getWidth - 30) {
       gameOver = true;
       poisonDeathAnimationPlaying = false;
     }
