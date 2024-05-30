@@ -142,20 +142,28 @@ public class Animation {
     return animationFinished;
   }
 
-  public static void AnimationColidion(BufferedImage buffer, Image BeatEffect, double angle, int x,
+  public static int drawX;
+  public static int drawY;
+  public static int imageCenterX;
+  public static int imageCenterY;
+  public static Graphics2D g2d;
+  public static double rotationAngle = 0;
+
+  public static void AnimationColidion(BufferedImage buffer, Image BeatEffect, int x,
       int y) {
-    Graphics2D g2d = buffer.createGraphics();
+    rotationAngle = (rotationAngle + 1) % 360;
+    g2d = buffer.createGraphics();
     // Define a rotação
-    int imageCenterX = x; // Calcula o centro da imagem no eixo X
-    int imageCenterY = y; // Calcula o centro da imagem no eixo Y
-    g2d.rotate(Math.toRadians(angle), imageCenterX, imageCenterY); // Define o ponto de rotação como o centro da
-                                                                   // imagem
-                                                                   // Desenha a imagem rotacionada
-    int drawX = x - BeatEffect.getWidth(null) / 50; // Centraliza a imagem horizontalmente
-    int drawY = y - BeatEffect.getHeight(null) / 50; // Centraliza a imagem verticalmente
+    imageCenterX = x; // Calcula o centro da imagem no eixo X
+    imageCenterY = y; // Calcula o centro da imagem no eixo Y
+    g2d.rotate(Math.toRadians(rotationAngle), imageCenterX, imageCenterY); // Define o ponto de rotação como o centro da
+    // imagem
+    // Desenha a imagem rotacionada
+    drawX = x - BeatEffect.getWidth(null) / 50; // Centraliza a imagem horizontalmente
+    drawY = y - BeatEffect.getHeight(null) / 50; // Centraliza a imagem verticalmente
     g2d.drawImage(BeatEffect, drawX, drawY, 30, 30, null);
     // Reinicia a transformação para evitar acumulação de transformações
-    g2d.rotate(-Math.toRadians(angle), imageCenterX, imageCenterY); // Reverte a rotação
+    g2d.rotate(-Math.toRadians(rotationAngle), imageCenterX, imageCenterY); // Reverte a rotação
     g2d.dispose();
   }
 

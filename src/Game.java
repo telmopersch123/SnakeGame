@@ -1,10 +1,14 @@
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -12,6 +16,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Timer;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -112,7 +117,7 @@ public class Game extends JPanel implements Runnable {
   int segmentsToRemove = 0;
   int segmentsToRemoveTemporary = 0;
   public static int ControlVelocity = 700;
-  private double rotationAngle = 0;
+
   static boolean poisonFruitAnimationRunning = false;
   public boolean Segunds = false;
   public boolean ControlTeleport = false;
@@ -151,6 +156,15 @@ public class Game extends JPanel implements Runnable {
   public static boolean ControlOneAnimationClassicAtivar = false;
   public static Graphics2D painelBordas;
   public static int borderWidth = 20;
+  public static int drawX;
+  public static int drawY;
+  public static int positionX;
+  public static int positionY;
+  public static Graphics2D g2d;
+  public static boolean NewButtonGame;
+  JButton newGameButton;
+  JButton button;
+  JPanel meuPainel = this;
 
   private void initializeKeyListener() {
     if (!gameOver) {
@@ -255,54 +269,45 @@ public class Game extends JPanel implements Runnable {
     new Thread(game).start();
   }
 
-  // Loop principal do jogo, onde a lógica e renderização são atualizadas
-  public void drawCollisionAnimation(Graphics g, double rotationAngle) {
+  public void drawCollisionAnimation(Graphics g) {
     if (nodeSnake.length > 0) { // Verifica se há algum nó no array
-      int positionX = nodeSnake[0].x; // Coordenada X do primeiro nó
-      int positionY = nodeSnake[0].y; // Coordenada Y do primeiro nó
+      positionX = nodeSnake[0].x; // Coordenada X do primeiro nó
+      positionY = nodeSnake[0].y; // Coordenada Y do primeiro nó
       // Calcula as coordenadas de desenho para centralizar a animação em torno do nó
-      int drawX = positionX - BeatEffect.getWidth(null) / 40 + 26; // Centraliza a imagem horizontalmente
-      int drawY = positionY - BeatEffect.getHeight(null) / 40 / 40 + 5; // Centraliza a imagem verticalmente
-      Animation.AnimationColidion(buffer, BeatEffect, rotationAngle, drawX, drawY);
+      drawX = positionX - BeatEffect.getWidth(null) / 40 + 26; // Centraliza a imagem horizontalmente
+      drawY = positionY - BeatEffect.getHeight(null) / 40 / 40 + 5; // Centraliza a imagem verticalmente
+      Animation.AnimationColidion(buffer, BeatEffect, drawX, drawY);
     }
   }
 
+  // Loop principal do jogo, onde a lógica e renderização são atualizadas
   @Override
   public void run() {
     while (!gameOver) {
-
       if (VerificDistance) {
         VerificDistance = false;
       }
-
       tick();
-
-      boolean[] collisionResult = checkedColisson.CheckedColisson(gameOver, WIDTH, HEIGHT, FrameWidth, FrameHeight,
-          walls_x, walls_y, nodeSnake, largerCollisionArea, headCollisionArea, poisonDeathAnimationPlaying,
+      ResultadoColisao resultadoColisao = checkedColisson.verificarColisao(gameOver, WIDTH, HEIGHT, FrameWidth,
+          FrameHeight,
+          walls_x, walls_y, nodeSnake, largerCollisionArea, headCollisionArea,
+          poisonDeathAnimationPlaying,
           borderWidth, FrameWidth, FrameHeight);
-      gameOver = collisionResult[0];
-      poisonDeathAnimationPlaying = collisionResult[1];
-      repaint();
+      gameOver = resultadoColisao.gameOver;
+      poisonDeathAnimationPlaying = resultadoColisao.animacaoMorteVenenoAtiva;
       try {
         Thread.sleep(ControlVelocity / 60);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
     }
-
+    // Renderizar a animação de colisão
     while (gameOver && !poisonDeathAnimationPlaying) {
-      // Renderize a animação de colisão
-      rotationAngle += 1;
-      rotationAngle %= 360;
       if (keyListener != null) {
         this.removeKeyListener(keyListener);
       }
-
-      // Renderiza a animação de colisão no buffer
-      drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
-      // Renderiza o buffer na tela
+      drawCollisionAnimation(buffer.getGraphics());
       repaint();
-
       try {
         Thread.sleep(10); // Ajuste conforme necessário para a taxa de atualização da animação
       } catch (InterruptedException e) {
@@ -376,9 +381,9 @@ public class Game extends JPanel implements Runnable {
 
     // Desenha a COBRA
     snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraight, bodyCorner, tailImage, snakeHead, keyListener);
-
     // Desenha a comidas
-    food.classicFood(g, buffer, macaX, macaY, appleSprit, poisonFruitWidthCla, poisonFruitHeightCla);
+    food.classicFood(g, buffer, macaX, macaY, appleSprit, poisonFruitWidthCla,
+        poisonFruitHeightCla);
     food.PoisonFood(g, buffer, macaPOX, macaPOY, applePoison,
         poisonFruitWidthVen, poisonFruitHeightVen);
     food.EnergyFood(this, g, buffer, macaENX, macaENY, appleEnergy,
@@ -387,48 +392,79 @@ public class Game extends JPanel implements Runnable {
     walls.lawnWalls(buffer.getGraphics(), walls_x, walls_y, rockSprit);
     // Desenha as animação do jogo
     Animation();
+    Colidian();
     // Renderiza o buffer na tela
     g.drawImage(buffer, 0, 0, null);
-
     // Se o jogo terminou, desenha a animação de colisão e a tela de game over
+
     if (gameOver) {
-
-      // Desenha a animação de colisão no buffer
       if (!poisonDeathAnimationPlaying) {
-        drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
+        drawCollisionAnimation(buffer.getGraphics());
       }
-
-      // Renderiza o buffer na tela novamente para mostrar a animação de colisão
       g.drawImage(buffer, 0, 0, null);
-
-      // Desenha a tela de game over
-      GameOver.drawGameOver(g,
-          FrameWidth,
-          FrameHeight, FrameWidth, FrameHeight, gameOver, score, direction, nodeSnake,
-          walls_x, walls_y, macaX, macaY, WIDTH, HEIGHT, this, this);
+      GameOver(g);
     }
 
-    painelBordas = (Graphics2D) buffer.getGraphics();
+  }
+
+  public void GameOver(Graphics g) {
+    Game game = this;
+    // Fundo Transparente-Preto 50%
+    g.setColor(new Color(0, 0, 0, 127));
+    g.fillRect(0, 0, getWidth(), getHeight());
+
+    // Texto de gameOver
+    String text = "Você Perdeu";
+    Font font = new Font("Arial", Font.PLAIN, 20);
+    g.setFont(font);
+    g.setColor(Color.WHITE);
+    java.awt.FontMetrics metrics = g.getFontMetrics(font);
+    int x = (getWidth() - metrics.stringWidth(text)) / 2;
+    int y = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+    g.drawString(text, x, y);
+
+    // Botão de Reiniciar
+    boolean newGameButtonExists = false;
+    for (int i = 0; i < this.getComponentCount(); i++) {
+      if (this.getComponent(i) instanceof JButton) {
+        button = (JButton) this.getComponent(i);
+        if (button.getText().equals("Reiniciar")) {
+          newGameButtonExists = true;
+          break;
+        }
+      }
+    }
+    if (!newGameButtonExists) {
+      newGameButton = new JButton("Reiniciar");
+      newGameButton.setBounds((getWidth() - 100) / 2, getHeight() / 2 + 50, 100, 30);
+      newGameButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+
+          meuPainel.remove(newGameButton);
+          restartGame();
+          new Thread(game).start();
+        }
+      });
+      meuPainel.add(newGameButton);
+    }
+  }
+
+  public void Colidian() {
+    g2d = buffer.createGraphics();
     for (int x = 0; x < FrameWidth; x += borderWidth) {
-      g.drawImage(painelRock, x, 0, borderWidth, borderWidth, null); // Borda superior
-      g.drawImage(painelRock, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
-                                                                                             // inferior
+      g2d.drawImage(painelRock, x, 0, borderWidth, borderWidth, null); // Borda superior
+      g2d.drawImage(painelRock, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
+      // inferior
     }
     for (int y = 0; y < FrameHeight; y += borderWidth) {
-      g.drawImage(painelRock, 0, y, borderWidth, borderWidth, null); // Borda esquerda
-      g.drawImage(painelRock, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
+      g2d.drawImage(painelRock, 0, y, borderWidth, borderWidth, null); // Borda esquerda
+      g2d.drawImage(painelRock, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
     }
-    painelBordas.fillRect(0, 0, FrameWidth, borderWidth); // Borda superior
-    painelBordas.fillRect(0, FrameHeight - borderWidth, FrameWidth, borderWidth); // Borda inferior
-    painelBordas.fillRect(0, 0, borderWidth, FrameHeight); // Borda esquerda
-    painelBordas.fillRect(FrameWidth - borderWidth, 0, borderWidth, FrameHeight); // Borda direita
-
   }
 
   // Método para atualizar a lógica do jogo
   public void tick() {
     // Movendo o corpo da cobra
-
     VerificDistance = keyListener.getVerif();
     for (int z = 0; z < nodeSnake.length; z++) {
       int currX = nodeSnake[z].x;

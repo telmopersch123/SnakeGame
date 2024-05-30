@@ -34,7 +34,7 @@ public class AnimationEnergyControl {
       game.ControlTimerVelocity = System.currentTimeMillis();
     }
     if (TeleportEnergy >= 1800 && !game.ernegyAnimationPlayed) {
-      AnimationEnergyFim.AnimationFoodErnFim();
+      // AnimationEnergyFim.AnimationFoodErnFim();
       game.ernegyAnimationPlayed = true;
     }
     if (game.ColidionEnergyCla) {
@@ -46,7 +46,7 @@ public class AnimationEnergyControl {
         game.macaENX = foodPosition2.x;
         game.macaENY = foodPosition2.y;
         if (!Game.colidionEneControlTimerAnimation) {
-          AnimationEnergy.AnimationFoodErnInic(this);
+          // AnimationEnergy.AnimationFoodErnInic(this);
         }
         game.ColidionEnergyCla = false;
         game.ColidionEnergyConfirmed = true;
@@ -97,7 +97,7 @@ public class AnimationEnergyControl {
 
           game.TeleportEnergyVerif = System.currentTimeMillis();
           if (!Game.colidionEneControlTimerAnimation) {
-            AnimationEnergy.AnimationFoodErnInic(this);
+            // AnimationEnergy.AnimationFoodErnInic(this);
           }
         }
       }
