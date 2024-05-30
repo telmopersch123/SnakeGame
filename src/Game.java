@@ -395,7 +395,7 @@ public class Game extends JPanel implements Runnable {
     Colidian();
     // Renderiza o buffer na tela
     g.drawImage(buffer, 0, 0, null);
-    // Se o jogo terminou, desenha a animação de colisão e a tela de game over
+    // Se o jogo terminou, desenha a animação de colisão se a tela de game over
 
     if (gameOver) {
       if (!poisonDeathAnimationPlaying) {
@@ -576,7 +576,6 @@ public class Game extends JPanel implements Runnable {
 
     AnimationEnergyControl animationEnergyControl = new AnimationEnergyControl();
     animationEnergyControl.updateEnergyAnimation(this);
-
   }
 
   public void StartSnake() {

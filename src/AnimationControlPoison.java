@@ -23,7 +23,7 @@ public class AnimationControlPoison {
     }
 
     if (currentTime - game.lastVenomAnimationTime1 > 3900 && !game.venomAnimationPlayed) {
-      // AnimationPOisonffim.AnimationFoodVenFim();
+      AnimationPOisonffim.AnimationFoodVenFim();
       game.venomAnimationPlayed = true;
       currentTime = System.currentTimeMillis();
     }
@@ -49,7 +49,7 @@ public class AnimationControlPoison {
         }
       }
       if (!Game.colidionPoiControlTimerAnimation) {
-        // AnimationPOison.AnimationFoodVenInic(this);
+        AnimationPOison.AnimationFoodVenInic(this);
       }
       game.lastVenomAnimationTime1 = System.currentTimeMillis();
     }
