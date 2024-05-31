@@ -19,6 +19,7 @@ import java.util.Timer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class Game extends JPanel implements Runnable {
   int DISTANCE = 0;
@@ -163,6 +164,7 @@ public class Game extends JPanel implements Runnable {
   public static Graphics2D g2d;
   public static boolean NewButtonGame;
   JButton newGameButton;
+  JButton RevertMenuButton;
   JButton button;
   JPanel meuPainel = this;
 
@@ -257,16 +259,16 @@ public class Game extends JPanel implements Runnable {
   // Método principal para iniciar o jogo
   public static void main(String args[]) {
     Game game = new Game();
-    JFrame frame = new JFrame("Snake");
+    JFrame frame = new JFrame("Snake Game");
     frame.add(game);
     frame.setResizable(false);
     frame.setUndecorated(true); // Remove as bordas da janela
     frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Define a janela para tela
     // cheia
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define o comportamento ao fechar a janela
+    MenuPanel menuPanel = new MenuPanel();
+    frame.add(menuPanel);
     frame.setVisible(true);
-
-    new Thread(game).start();
   }
 
   public void drawCollisionAnimation(Graphics g) {
@@ -439,13 +441,26 @@ public class Game extends JPanel implements Runnable {
       newGameButton.setBounds((getWidth() - 100) / 2, getHeight() / 2 + 50, 100, 30);
       newGameButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-
+          meuPainel.remove(RevertMenuButton);
           meuPainel.remove(newGameButton);
           restartGame();
           new Thread(game).start();
         }
       });
+      RevertMenuButton = new JButton("Inicio");
+      RevertMenuButton.setBounds((getWidth() - 100) / 2, getHeight() / 2 + 100, 100, 30);
+      RevertMenuButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          meuPainel.remove(RevertMenuButton);
+          JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
+          GameSnake.getContentPane().removeAll();
+          GameSnake.add(new MenuPanel());
+          GameSnake.revalidate();
+          GameSnake.repaint();
+        }
+      });
       meuPainel.add(newGameButton);
+      meuPainel.add(RevertMenuButton);
     }
   }
 
