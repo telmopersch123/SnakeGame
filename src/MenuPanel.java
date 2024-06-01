@@ -1,9 +1,9 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -32,19 +32,14 @@ public class MenuPanel extends JPanel {
   private JButton MapButton;
   private JButton OutfitButton;
   private JLabel backgroundLabel;
-  private Border border;
-  private int raio;
-  private Graphics2D g2d;
-
-  public void BordaArredondada(int raio) {
-    this.raio = raio;
-  }
 
   public MenuPanel() {
     setLayout(new GridBagLayout());
     GridBagConstraints Menu = new GridBagConstraints();
 
     try {
+      // Carregue a imagem dos botoes
+      ImageIcon buttonImage = new StretchIcon("resources/buttonRock.png");
       // Carregue a imagem do fundo
       Image backgroundImage = ImageIO.read(new File("resources/thumbMenu.png"));
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -64,32 +59,10 @@ public class MenuPanel extends JPanel {
       bgConstraints.weighty = 1.0;
       add(backgroundLabel, bgConstraints);
 
-      // Adicione os botões sobre a imagem de fundo
-
-      ImageIcon buttonImage = new StretchIcon("resources/buttonRock.png");
-
+      // SOMBREAMENTO NORMAL
       startButton = new JButton("Iniciar Jogo", buttonImage);
-      startButton.setBorder(BorderFactory.createEmptyBorder());
-      Color borderColor = Color.decode("#8B4513");
-      border = BorderFactory.createLineBorder(borderColor, 2);
-      startButton.setBorder(border);
-      // Define a nova borda do botão
-      startButton.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseEntered(MouseEvent e) {
-          border = BorderFactory.createLineBorder(Color.WHITE, 2);
-          startButton.setBorder(border);
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-          border = BorderFactory.createLineBorder(borderColor, 2);
-          startButton.setBorder(border);
-        }
-      });
-
-      startButton.setForeground(Color.WHITE);
-      startButton.setFont(new Font("Arial", Font.PLAIN, 24));
+      addShadow(startButton, "Iniciar Jogo", new Font("Arial", Font.PLAIN, 24), 150, 50);
+      ////////////////////////////////////////////////
       startButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -107,45 +80,104 @@ public class MenuPanel extends JPanel {
       Menu.insets = new Insets(10, 0, 10, 0);
       backgroundLabel.add(startButton, Menu);
 
-      buttonImage = new StretchIcon("resources/buttonTexture.jpg");
       MapButton = new JButton("Mapa", buttonImage);
-      MapButton.setFont(new Font("Arial", Font.PLAIN, 24));
       MapButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          // Ação para o botão de mapa
+          JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+          MenuPanel.this.setVisible(false);
+          MapPanel mapPanel = new MapPanel(buttonImage);
+          topFrame.add(mapPanel);
+          topFrame.revalidate();
+          topFrame.repaint();
         }
       });
+      addShadow(MapButton, "Mapa", new Font("Arial", Font.PLAIN, 24), 150, 50);
       Menu.gridy = 1;
       backgroundLabel.add(MapButton, Menu);
 
-      buttonImage = new StretchIcon("resources/buttonTexture.jpg");
       OutfitButton = new JButton("Skin", buttonImage);
-      OutfitButton.setFont(new Font("Arial", Font.PLAIN, 24));
       OutfitButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
           // Ação para o botão de skins
         }
       });
+      addShadow(OutfitButton, "Skin", new Font("Arial", Font.PLAIN, 24), 150, 50);
       Menu.gridy = 2;
       backgroundLabel.add(OutfitButton, Menu);
 
-      buttonImage = new StretchIcon("resources/buttonTexture.jpg");
       settingsButton = new JButton("Configurações", buttonImage);
-      settingsButton.setFont(new Font("Arial", Font.PLAIN, 24));
       settingsButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
           // Ação para o botão de configurações
         }
       });
+      addShadow(settingsButton, "Configurações", new Font("Arial", Font.PLAIN, 24), 180, 50);
       Menu.gridy = 3;
       backgroundLabel.add(settingsButton, Menu);
 
     } catch (IOException ex) {
       ex.printStackTrace();
     }
+  }
+
+  public static void addShadow(JButton button, String text, Font font, int width, int height) {
+    // Adicione os botões sobre a imagem de fundo
+    button.setForeground(new Color(0, 0, 0));
+    Font originalFont = font; // Armazena a fonte original do botão
+    button.setFont(originalFont);
+    // DESENHAR BOTAO
+    button.setPreferredSize(new Dimension(width, height));
+    button.setBorder(BorderFactory.createEmptyBorder());
+    // Configuração do botão para ser transparente
+    button.setOpaque(false);
+    button.setContentAreaFilled(false);
+    button.setBorderPainted(false);
+    // Configuração da SOMBRA SIMPLES
+    JPanel textPanel = new JPanel();
+    textPanel.setOpaque(false);
+    JLabel textLabel = new JLabel(text);
+    textLabel.setForeground(Color.WHITE);
+    textLabel.setFont(font);
+    textPanel.add(textLabel);
+    Border border = BorderFactory.createEmptyBorder(6, 11, 5, 10); // Ajuste conforme necessário
+    textPanel.setBorder(border);
+    // Configuração do hover;
+    button.setLayout(new BorderLayout());
+    button.add(textPanel, BorderLayout.CENTER);
+    button.setFocusPainted(false);
+    Border defaultBorder = button.getBorder();
+    Border hoverBorder = BorderFactory.createLineBorder(Color.YELLOW, 2);
+    if (text != "Reiniciar" && text != "Inicio") {
+      button.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          button.setBorder(hoverBorder);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+          button.setBorder(defaultBorder);
+        }
+      });
+    } else {
+      if (text == "Reiniciar" || text == "Inicio") {
+        button.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseEntered(MouseEvent e) {
+            textLabel.setForeground(Color.BLACK);
+          }
+
+          @Override
+          public void mouseExited(MouseEvent e) {
+            textLabel.setForeground(Color.WHITE);
+          }
+        });
+      }
+    }
+
   }
 }
 

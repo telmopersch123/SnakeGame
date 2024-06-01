@@ -147,11 +147,10 @@ public class Animation {
   public static int imageCenterX;
   public static int imageCenterY;
   public static Graphics2D g2d;
-  public static double rotationAngle = 0;
 
   public static void AnimationColidion(BufferedImage buffer, Image BeatEffect, int x,
-      int y) {
-    rotationAngle = (rotationAngle + 1) % 360;
+      int y, double rotationAngle) {
+
     g2d = buffer.createGraphics();
     // Define a rotação
     imageCenterX = x; // Calcula o centro da imagem no eixo X

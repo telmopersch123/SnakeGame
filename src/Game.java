@@ -1,9 +1,14 @@
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -16,8 +21,10 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Timer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -163,10 +170,17 @@ public class Game extends JPanel implements Runnable {
   public static int positionY;
   public static Graphics2D g2d;
   public static boolean NewButtonGame;
+
   JButton newGameButton;
   JButton RevertMenuButton;
   JButton button;
   JPanel meuPainel = this;
+  JLabel messageLabel;
+  Font newgameFont;
+  Font revertmenuFont;
+  ImageIcon buttonImage;
+  JLabel label;
+  double rotationAngle = 0;
 
   private void initializeKeyListener() {
     if (!gameOver) {
@@ -271,14 +285,15 @@ public class Game extends JPanel implements Runnable {
     frame.setVisible(true);
   }
 
-  public void drawCollisionAnimation(Graphics g) {
+  public void drawCollisionAnimation(Graphics g, double rotationAngle) {
     if (nodeSnake.length > 0) { // Verifica se há algum nó no array
+
       positionX = nodeSnake[0].x; // Coordenada X do primeiro nó
       positionY = nodeSnake[0].y; // Coordenada Y do primeiro nó
       // Calcula as coordenadas de desenho para centralizar a animação em torno do nó
       drawX = positionX - BeatEffect.getWidth(null) / 40 + 26; // Centraliza a imagem horizontalmente
       drawY = positionY - BeatEffect.getHeight(null) / 40 / 40 + 5; // Centraliza a imagem verticalmente
-      Animation.AnimationColidion(buffer, BeatEffect, drawX, drawY);
+      Animation.AnimationColidion(buffer, BeatEffect, drawX, drawY, rotationAngle);
     }
   }
 
@@ -297,6 +312,7 @@ public class Game extends JPanel implements Runnable {
           borderWidth, FrameWidth, FrameHeight);
       gameOver = resultadoColisao.gameOver;
       poisonDeathAnimationPlaying = resultadoColisao.animacaoMorteVenenoAtiva;
+
       try {
         Thread.sleep(ControlVelocity / 60);
       } catch (InterruptedException e) {
@@ -305,11 +321,12 @@ public class Game extends JPanel implements Runnable {
     }
     // Renderizar a animação de colisão
     while (gameOver && !poisonDeathAnimationPlaying) {
+      rotationAngle += 1;
+      rotationAngle %= 360;
       if (keyListener != null) {
         this.removeKeyListener(keyListener);
       }
-      drawCollisionAnimation(buffer.getGraphics());
-      repaint();
+      drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
       try {
         Thread.sleep(10); // Ajuste conforme necessário para a taxa de atualização da animação
       } catch (InterruptedException e) {
@@ -401,7 +418,7 @@ public class Game extends JPanel implements Runnable {
 
     if (gameOver) {
       if (!poisonDeathAnimationPlaying) {
-        drawCollisionAnimation(buffer.getGraphics());
+        drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
       }
       g.drawImage(buffer, 0, 0, null);
       GameOver(g);
@@ -409,22 +426,22 @@ public class Game extends JPanel implements Runnable {
 
   }
 
+  private void addCenteredComponent(Container container, Component component, int gridy) {
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.gridx = 0;
+    constraints.gridy = gridy;
+    constraints.anchor = GridBagConstraints.CENTER;
+    constraints.insets = new Insets(10, 0, 10, 0);
+    container.add(component, constraints);
+  }
+
   public void GameOver(Graphics g) {
+    meuPainel.setLayout(new GridBagLayout());
+    /////
     Game game = this;
     // Fundo Transparente-Preto 50%
     g.setColor(new Color(0, 0, 0, 127));
     g.fillRect(0, 0, getWidth(), getHeight());
-
-    // Texto de gameOver
-    String text = "Você Perdeu";
-    Font font = new Font("Arial", Font.PLAIN, 20);
-    g.setFont(font);
-    g.setColor(Color.WHITE);
-    java.awt.FontMetrics metrics = g.getFontMetrics(font);
-    int x = (getWidth() - metrics.stringWidth(text)) / 2;
-    int y = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
-    g.drawString(text, x, y);
-
     // Botão de Reiniciar
     boolean newGameButtonExists = false;
     for (int i = 0; i < this.getComponentCount(); i++) {
@@ -437,30 +454,49 @@ public class Game extends JPanel implements Runnable {
       }
     }
     if (!newGameButtonExists) {
-      newGameButton = new JButton("Reiniciar");
-      newGameButton.setBounds((getWidth() - 100) / 2, getHeight() / 2 + 50, 100, 30);
+      // Texto de gameOver
+      meuPainel.removeAll();
+      label = new JLabel("Você Morreu!");
+      label.setFont(new Font("Arial", Font.BOLD, 24));
+      label.setForeground(Color.WHITE);
+      meuPainel.add(label);
+
+      buttonImage = new StretchIcon("resources/buttonRock.png");
+      newGameButton = new JButton("Reiniciar", buttonImage);
+      newgameFont = new Font("Arial", Font.BOLD, 24);
+
       newGameButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           meuPainel.remove(RevertMenuButton);
           meuPainel.remove(newGameButton);
+          meuPainel.remove(label);
           restartGame();
           new Thread(game).start();
         }
       });
-      RevertMenuButton = new JButton("Inicio");
-      RevertMenuButton.setBounds((getWidth() - 100) / 2, getHeight() / 2 + 100, 100, 30);
+      meuPainel.add(newGameButton); // Add the button to the panel
+      MenuPanel.addShadow(newGameButton, "Reiniciar", newgameFont, 150, 50);
+      addCenteredComponent(meuPainel, newGameButton, 1);
+
+      RevertMenuButton = new JButton("Inicio", buttonImage);
+      revertmenuFont = new Font("Arial", Font.BOLD, 24);
+      MenuPanel.addShadow(RevertMenuButton, "Inicio", revertmenuFont, 150, 50);
       RevertMenuButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          meuPainel.remove(RevertMenuButton);
           JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
+          meuPainel.remove(RevertMenuButton);
+          restartGame();
           GameSnake.getContentPane().removeAll();
           GameSnake.add(new MenuPanel());
           GameSnake.revalidate();
           GameSnake.repaint();
         }
       });
-      meuPainel.add(newGameButton);
-      meuPainel.add(RevertMenuButton);
+      meuPainel.add(RevertMenuButton); // Add the button to the panel
+      addCenteredComponent(meuPainel, RevertMenuButton, 2);
+
+      meuPainel.revalidate(); // Revalidate the panel
+      meuPainel.repaint(); // Repaint the panel
     }
   }
 
@@ -708,7 +744,6 @@ public class Game extends JPanel implements Runnable {
     currentFrame7 = 0;
     currentFrame8 = 0;
     currentFrame9 = 0;
-
     if (timer != null) {
       timer.cancel();
       timer.purge();
