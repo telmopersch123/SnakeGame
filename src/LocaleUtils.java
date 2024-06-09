@@ -27,13 +27,13 @@ public class LocaleUtils {
     do {
       tooCloseToWall = false; // Define como falso para cada iteração
       // Gera uma posição aleatória para a comida dentro da área do jogo
-      foodX[0] = (int) (Math.random() * (FrameWidth - 100)) + 15;
-      foodX[1] = (int) (Math.random() * (FrameWidth - 100)) + 15;
-      foodX[2] = (int) (Math.random() * (FrameWidth - 100)) + 15;
+      foodX[0] = (int) (Math.random() * (FrameWidth - 100)) + 25;
+      foodX[1] = (int) (Math.random() * (FrameWidth - 100)) + 25;
+      foodX[2] = (int) (Math.random() * (FrameWidth - 100)) + 25;
 
-      foodY[0] = (int) (Math.random() * (FrameHeight - 100)) + 15;
-      foodY[1] = (int) (Math.random() * (FrameHeight - 100)) + 15;
-      foodY[2] = (int) (Math.random() * (FrameHeight - 100)) + 15;
+      foodY[0] = (int) (Math.random() * (FrameHeight - 100)) + 25;
+      foodY[1] = (int) (Math.random() * (FrameHeight - 100)) + 25;
+      foodY[2] = (int) (Math.random() * (FrameHeight - 100)) + 25;
       for (int i = 0; i < nodeSnake.length; i++) {
         Rectangle SnakeRect = new Rectangle(snake_x.get(i), snake_y.get(i), WIDTH, HEIGHT);
         Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], WIDTH, HEIGHT);
@@ -46,7 +46,28 @@ public class LocaleUtils {
           break;
         }
       }
-
+      if (Game.DecoracaoX != null && Game.DecoracaoY != null) {
+        for (int i = 0; i < Game.DecoracaoX.length; i++) {
+          Rectangle Decoracao = new Rectangle(Game.DecoracaoX[i], Game.DecoracaoY[i], 50, 50);
+          Rectangle DecoracaoCom = new Rectangle(Game.DecoComplexoX[i],
+              Game.DecoComplexoY[i], 70, 70);
+          Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], WIDTH, HEIGHT);
+          Rectangle foodRect2 = new Rectangle(foodX[1], foodY[1], 30, 50);
+          Rectangle foodRect3 = new Rectangle(foodX[2], foodY[2], 30, 30);
+          if (foodRect1.intersects(Decoracao) || foodRect1.contains(Decoracao) ||
+              foodRect2.intersects(Decoracao) || foodRect2.contains(Decoracao) ||
+              foodRect3.intersects(Decoracao) || foodRect3.contains(Decoracao)) {
+            tooCloseToWall = true;
+            break; // Interrompe o loop assim que uma decoração próxima é encontrada
+          }
+          if (foodRect1.intersects(DecoracaoCom) || foodRect1.contains(DecoracaoCom) ||
+              foodRect2.intersects(DecoracaoCom) || foodRect2.contains(DecoracaoCom) ||
+              foodRect3.intersects(DecoracaoCom) || foodRect3.contains(DecoracaoCom)) {
+            tooCloseToWall = true;
+            break; // Interrompe o loop assim que uma decoração próxima é encontrada
+          }
+        }
+      }
       // Verifica se a comida está dentro ou muito próxima de alguma parede
       for (int i = 0; i < walls_x.size(); i++) {
         // Cria um retângulo para representar a parede atual

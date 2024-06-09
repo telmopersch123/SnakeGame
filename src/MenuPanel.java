@@ -39,6 +39,7 @@ public class MenuPanel extends JPanel {
 
     try {
       // Carregue a imagem dos botoes
+      ImageIcon buttonReturn = new StretchIcon("resources/return.png");
       ImageIcon buttonImage = new StretchIcon("resources/buttonRock.png");
       // Carregue a imagem do fundo
       Image backgroundImage = ImageIO.read(new File("resources/thumbMenu.png"));
@@ -73,6 +74,10 @@ public class MenuPanel extends JPanel {
           topFrame.revalidate();
           new Thread(game).start();
           game.requestFocusInWindow();
+          if (Game.MapField) {
+            decoracao.posicoesDeco(Game.FrameWidth,
+                Game.FrameHeight, Game.ALL_DOTS_Width, Game.ALL_DOTS_Height, Game.walls_x, Game.walls_y);
+          }
         }
       });
       Menu.gridx = 0;
@@ -86,7 +91,7 @@ public class MenuPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
           MenuPanel.this.setVisible(false);
-          MapPanel mapPanel = new MapPanel(buttonImage);
+          MapPanel mapPanel = new MapPanel(buttonReturn);
           topFrame.add(mapPanel);
           topFrame.revalidate();
           topFrame.repaint();

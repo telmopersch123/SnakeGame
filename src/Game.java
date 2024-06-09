@@ -33,22 +33,26 @@ public class Game extends JPanel implements Runnable {
   int WIDTH = 10;
   int HEIGHT = 10;
   int largerCollisionArea = 12;
-  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-  int FrameWidth = (int) screenSize.getWidth();
-  int FrameHeight = (int) screenSize.getHeight();
-  int ALL_DOTS_Width = (int) screenSize.getWidth();
-  int ALL_DOTS_Height = (int) screenSize.getHeight();
+  public static int ValueFinal;
+  public static int ValueDecoNormal;
+  static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+  public static int FrameWidth = (int) screenSize.getWidth();
+  public static int FrameHeight = (int) screenSize.getHeight();
+  static int ALL_DOTS_Width = (int) screenSize.getWidth();
+  static int ALL_DOTS_Height = (int) screenSize.getHeight();
   int x[] = new int[ALL_DOTS_Width];
   int y[] = new int[ALL_DOTS_Height];
   Boolean[] Direcoes = new Boolean[4];
   Rectangle headCollisionArea;
   Rectangle headCollisionAreaPO;
-  int quantidadeDeco = 0;
-  int quantidadeDeco2 = 0;
-  int[] randomX2 = new int[4];
-  int[] randomY2 = new int[4];
-  int[] randomX = new int[3];
-  int[] randomY = new int[3];
+  static int quantidadeDeco = 0;
+  static int quantidadeDeco2 = 0;
+  static int[] randomX2 = new int[4];
+  static int[] randomY2 = new int[4];
+  static int[] randomX = new int[3];
+  static int[] randomY = new int[3];
+  int[] randomXS0 = new int[4];
+  int[] randomYS0 = new int[4];
   // SNAKES
   private Image snakeHead;
   private Image bodyStraight;
@@ -84,11 +88,27 @@ public class Game extends JPanel implements Runnable {
   Image ColidianEnergyFood;
   Image ColidianPoisonFood;
   Image colidianClassic;
+  //////
+  Image chao_swamp;
+  Image rock_swamp;
+
+  Image small_trunk;
+  Image chao1;
+  Image chao2;
+  Image chao3;
+  /////
+  Image chao_dungeon;
+  Image rock_dungeon;
+
+  Image dragon_bone;
+  Image skull_bone;
+  Image tibia_bone;
+  //////
   private boolean VerificDistance = false;
   boolean gameOver = false;
   BufferedImage buffer; // Buffer for double buffering
-  public ArrayList<Integer> walls_x = new ArrayList<>();
-  public ArrayList<Integer> walls_y = new ArrayList<>();
+  public static ArrayList<Integer> walls_x = new ArrayList<>();
+  public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public int direction = KeyEvent.VK_RIGHT;
   public Node[] nodeSnake = new Node[40];
@@ -148,6 +168,7 @@ public class Game extends JPanel implements Runnable {
   public static int PosColidianPoisonY = 0;
   public static int PosColidianClassicX = 0;
   public static int PosColidianClassicY = 0;
+  public static int currentFrame10 = 0;
   public static int currentFrame9 = 0;
   public static int currentFrame8 = 0;
   public static int currentFrame7 = 0;
@@ -170,7 +191,35 @@ public class Game extends JPanel implements Runnable {
   public static int positionY;
   public static Graphics2D g2d;
   public static boolean NewButtonGame;
-
+  public static boolean MapDungeon = false;
+  public static boolean MapSwamp = false;
+  public static boolean MapField = true;
+  private static int quantidadeDecoSmallTrunk;
+  private static int quantidadeDecoChao1;
+  private static int quantidadeDecoChao2;
+  private static int quantidadeDecoChao3;
+  static int[] randomSX = new int[7];
+  static int[] randomSY = new int[7];
+  static int[] randomSX1 = new int[2];
+  static int[] randomSY1 = new int[2];
+  static int[] randomSX2 = new int[3];
+  static int[] randomSY2 = new int[3];
+  static int[] randomSX3 = new int[1];
+  static int[] randomSY3 = new int[1];
+  ///
+  static int[] randomDX = new int[1];
+  static int[] randomDY = new int[1];
+  static int[] randomDX1 = new int[10];
+  static int[] randomDY1 = new int[10];
+  static int[] randomDX2 = new int[10];
+  static int[] randomDY2 = new int[10];
+  public static int[] DecoracaoX = new int[0];
+  public static int[] DecoracaoY = new int[0];
+  public static int[] DecoComplexoX = new int[0];
+  public static int[] DecoComplexoY = new int[0];
+  private static int quantidadeDecoDragonBone;
+  private static int quantidadeDecoSkullBone;
+  private static int quantidadeDecoTibiaBone;
   JButton newGameButton;
   JButton RevertMenuButton;
   JButton button;
@@ -181,6 +230,8 @@ public class Game extends JPanel implements Runnable {
   ImageIcon buttonImage;
   JLabel label;
   double rotationAngle = 0;
+  public static ArrayList<Integer> quanti = new ArrayList<>();
+  public static ArrayList<Integer> quantiComplexo = new ArrayList<>();
 
   private void initializeKeyListener() {
     if (!gameOver) {
@@ -214,30 +265,32 @@ public class Game extends JPanel implements Runnable {
     ColidianPoisonFood = imagens[18];
     colidianClassic = imagens[19];
     painelRock = imagens[20];
+    chao_swamp = imagens[21];
+    rock_swamp = imagens[22];
+    chao_dungeon = imagens[23];
+    rock_dungeon = imagens[24];
+    small_trunk = imagens[25];
+    chao1 = imagens[26];
+    chao2 = imagens[27];
+    chao3 = imagens[28];
+    dragon_bone = imagens[29];
+    skull_bone = imagens[30];
+    tibia_bone = imagens[31];
+
     ///////////////////////////////////
     initializeKeyListener();
-    Random random = new Random();
-    quantidadeDeco = (int) (Math.random() * 3 + 1);
-    quantidadeDeco2 = (int) (Math.random() * 4 + 1);
-    for (int i = 0; i < quantidadeDeco; i++) {
-      randomX[i] = random.nextInt(ALL_DOTS_Width - 150);
-      randomY[i] = random.nextInt(ALL_DOTS_Height - 150);
-    }
-
-    for (int i = 0; i < quantidadeDeco2; i++) {
-      randomX2[i] = random.nextInt(ALL_DOTS_Width - 150);
-      randomY2[i] = random.nextInt(ALL_DOTS_Height - 150);
-    }
 
     this.setPreferredSize(new Dimension(ALL_DOTS_Width, ALL_DOTS_Height));
     this.setFocusable(true);
     buffer = new BufferedImage(ALL_DOTS_Width, ALL_DOTS_Height, BufferedImage.TYPE_INT_ARGB); // Initialize buffer
-
     // iniciar a parede
-    ArrayList<ArrayList<Integer>> walls = LocaleUtils.LocateWall(FrameWidth,
-        FrameHeight, WIDTH, HEIGHT, 20);
-    walls_x = walls.get(0);
-    walls_y = walls.get(1);
+    if (MapField) {
+      ArrayList<ArrayList<Integer>> walls = LocaleUtils.LocateWall(FrameWidth,
+          FrameHeight, WIDTH, HEIGHT, 20);
+      walls_x = walls.get(0);
+      walls_y = walls.get(1);
+    }
+    Location_deco();
 
     // iniciar a cobra
     StartSnake();
@@ -268,6 +321,62 @@ public class Game extends JPanel implements Runnable {
       }
     }
 
+  }
+
+  public static void Location_deco() {
+    Random random = new Random();
+    //////////////////
+    quantidadeDeco = (int) (Math.random() * 3 + 1);
+    quantidadeDeco2 = (int) (Math.random() * 4 + 1);
+    for (int i = 0; i < quantidadeDeco; i++) {
+      randomX[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomY[i] = random.nextInt(ALL_DOTS_Height - 150);
+    }
+    ///
+    for (int i = 0; i < quantidadeDeco2; i++) {
+      randomX2[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomY2[i] = random.nextInt(ALL_DOTS_Height - 150);
+    }
+    ////// Swamp
+    quantidadeDecoSmallTrunk = (int) (Math.random() * 6 + 2);
+    quantidadeDecoChao1 = (int) (Math.random() * 2 + 1);
+    quantidadeDecoChao2 = (int) (Math.random() * 3 + 1);
+    quantidadeDecoChao3 = (int) (Math.random() * 1 + 1);
+    for (int i = 0; i < quantidadeDecoSmallTrunk; i++) {
+      randomSX[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomSY[i] = random.nextInt(ALL_DOTS_Height - 150);
+    }
+    ///
+    for (int i = 0; i < quantidadeDecoChao1; i++) {
+      randomSX1[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomSY1[i] = random.nextInt(ALL_DOTS_Height - 150);
+    }
+    ///
+    for (int i = 0; i < quantidadeDecoChao2; i++) {
+      randomSX2[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomSY2[i] = random.nextInt(ALL_DOTS_Height - 150);
+    }
+    ///
+    for (int i = 0; i < quantidadeDecoChao3; i++) {
+      randomSX3[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomSY3[i] = random.nextInt(ALL_DOTS_Height - 150);
+    }
+    ////// Dungeon
+    quantidadeDecoDragonBone = (int) (Math.random() * 1 + 1);
+    quantidadeDecoSkullBone = (int) (Math.random() * 10 + 1);
+    quantidadeDecoTibiaBone = (int) (Math.random() * 10 + 1);
+    for (int i = 0; i < quantidadeDecoDragonBone; i++) {
+      randomDX[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomDY[i] = random.nextInt(ALL_DOTS_Height - 150);
+    }
+    for (int i = 0; i < quantidadeDecoSkullBone; i++) {
+      randomDX1[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomDY1[i] = random.nextInt(ALL_DOTS_Height - 150);
+    }
+    for (int i = 0; i < quantidadeDecoTibiaBone; i++) {
+      randomDX2[i] = random.nextInt(ALL_DOTS_Width - 150);
+      randomDY2[i] = random.nextInt(ALL_DOTS_Height - 150);
+    }
   }
 
   // Método principal para iniciar o jogo
@@ -394,9 +503,21 @@ public class Game extends JPanel implements Runnable {
     }
 
     // Desenha os elementos do jogo no buffer
-    map.mapLawn(buffer, ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY,
-        quantidadeDeco, randomX2,
-        randomY2, quantidadeDeco2);
+    if (MapField) {
+      map.mapField(buffer, ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY,
+          quantidadeDeco, randomX2,
+          randomY2, quantidadeDeco2);
+    }
+    if (MapSwamp) {
+      map.mapSwamp(buffer, ALL_DOTS_Width, ALL_DOTS_Height, chao_swamp, small_trunk, chao1, chao2, chao3,
+          quantidadeDecoSmallTrunk, quantidadeDecoChao1, quantidadeDecoChao2, quantidadeDecoChao3, randomSX, randomSY,
+          randomSX1, randomSY1, randomSX2, randomSY2, randomSX3, randomSY3);
+    }
+    if (MapDungeon) {
+      map.mapDungeon(buffer, ALL_DOTS_Width, ALL_DOTS_Height, chao_dungeon, dragon_bone, skull_bone, tibia_bone,
+          quantidadeDecoDragonBone, quantidadeDecoSkullBone, quantidadeDecoTibiaBone, randomDX, randomDY, randomDX1,
+          randomDY1, randomDX2, randomDY2);
+    }
 
     // Desenha a COBRA
     snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraight, bodyCorner, tailImage, snakeHead, keyListener);
@@ -408,10 +529,20 @@ public class Game extends JPanel implements Runnable {
     food.EnergyFood(this, g, buffer, macaENX, macaENY, appleEnergy,
         poisonFruitWidthErn, poisonFruitHeightErn);
     // Desenha as paredes
-    walls.lawnWalls(buffer.getGraphics(), walls_x, walls_y, rockSprit);
+    if (MapField) {
+      walls.lawnWalls(buffer.getGraphics(), walls_x, walls_y, rockSprit);
+      decoracao.decoracaoField(buffer);
+    }
+    if (MapSwamp) {
+      decoracao.decoracaoSwamp();
+    }
+    if (MapDungeon) {
+      decoracao.decoracaoDungeon();
+    }
+
     // Desenha as animação do jogo
     Animation();
-    Colidian();
+    Colidian(rock_swamp, rock_dungeon);
     // Renderiza o buffer na tela
     g.drawImage(buffer, 0, 0, null);
     // Se o jogo terminou, desenha a animação de colisão se a tela de game over
@@ -500,16 +631,40 @@ public class Game extends JPanel implements Runnable {
     }
   }
 
-  public void Colidian() {
+  public void Colidian(Image rock_swamp, Image rock_dungeon) {
     g2d = buffer.createGraphics();
-    for (int x = 0; x < FrameWidth; x += borderWidth) {
-      g2d.drawImage(painelRock, x, 0, borderWidth, borderWidth, null); // Borda superior
-      g2d.drawImage(painelRock, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
-      // inferior
+    if (MapField) {
+      for (int x = 0; x < FrameWidth; x += borderWidth) {
+        g2d.drawImage(painelRock, x, 0, borderWidth, borderWidth, null); // Borda superior
+        g2d.drawImage(painelRock, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
+        // inferior
+      }
+      for (int y = 0; y < FrameHeight; y += borderWidth) {
+        g2d.drawImage(painelRock, 0, y, borderWidth, borderWidth, null); // Borda esquerda
+        g2d.drawImage(painelRock, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
+      }
     }
-    for (int y = 0; y < FrameHeight; y += borderWidth) {
-      g2d.drawImage(painelRock, 0, y, borderWidth, borderWidth, null); // Borda esquerda
-      g2d.drawImage(painelRock, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
+    if (MapSwamp) {
+      for (int x = 0; x < FrameWidth; x += borderWidth) {
+        g2d.drawImage(rock_swamp, x, 0, borderWidth, borderWidth, null); // Borda superior
+        g2d.drawImage(rock_swamp, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
+        // inferior
+      }
+      for (int y = 0; y < FrameHeight; y += borderWidth) {
+        g2d.drawImage(rock_swamp, 0, y, borderWidth, borderWidth, null); // Borda esquerda
+        g2d.drawImage(rock_swamp, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
+      }
+    }
+    if (MapDungeon) {
+      for (int x = 0; x < FrameWidth; x += borderWidth) {
+        g2d.drawImage(rock_dungeon, x, 0, borderWidth, borderWidth, null); // Borda superior
+        g2d.drawImage(rock_dungeon, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
+        // inferior
+      }
+      for (int y = 0; y < FrameHeight; y += borderWidth) {
+        g2d.drawImage(rock_dungeon, 0, y, borderWidth, borderWidth, null); // Borda esquerda
+        g2d.drawImage(rock_dungeon, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
+      }
     }
   }
 
@@ -642,24 +797,22 @@ public class Game extends JPanel implements Runnable {
       snakeY = new Random().nextInt(FrameWidth - WIDTH);
 
       tooCloseToWallSnake = false; // Inicializa a variável como falsa
-      // Verifica se a cobra está muito próxima de uma parede
+
+      // Verifica se a cabeça da cobra está próxima de uma parede
       for (int i = 0; i < walls_x.size(); i++) {
         Rectangle wallRect = new Rectangle(walls_x.get(i), walls_y.get(i), WIDTH, HEIGHT);
         Rectangle snakeRect = new Rectangle(snakeX, snakeY, WIDTH, HEIGHT);
+
         if (wallRect.contains(snakeRect)) {
-          tooCloseToWallSnake = true; // Define como verdadeiro se a cobra está perto de uma parede
+          tooCloseToWallSnake = true; // Define como verdadeiro se a cabeça da cobra está perto de uma parede
           break; // Sai do loop, já que encontrou uma parede próxima
         }
       }
-    } while (tooCloseToWallSnake || // Repete o processo se a cobra estiver muito próxima de uma parede
-        CollisionUtils.ThisNearBorder(snakeX, snakeY, FrameWidth, FrameHeight, WIDTH, HEIGHT) ||
-        // Verifica se a cobra
-        // está muito próxima
-        // da borda do quadro
-        CollisionUtils.ThisNearWalls(snakeX, snakeY, walls_x, walls_y, WIDTH, HEIGHT));
-    // Verifica se a cobra está
-    // muito próxima de outras
-    // paredes
+
+    } while (tooCloseToWallSnake
+        || CollisionUtils.ThisNearBorder(snakeX, snakeY, FrameWidth, FrameHeight, WIDTH, HEIGHT)
+        || CollisionUtils.ThisNearWalls(snakeX, snakeY, walls_x, walls_y, WIDTH, HEIGHT) || CollisionUtils
+            .ThisDecoration(snakeX, snakeY, DecoracaoX, DecoracaoY, WIDTH, HEIGHT));
 
     // Define as coordenadas da cabeça da cobra
     nodeSnake[0] = new Node(snakeX, snakeY);
@@ -677,27 +830,30 @@ public class Game extends JPanel implements Runnable {
     direction = KeyEvent.VK_RIGHT;
     initializeKeyListener();
     nodeSnake = new Node[40];
-    walls_x.clear();
-    walls_y.clear();
-    ArrayList<ArrayList<Integer>> walls = LocaleUtils.LocateWall(FrameWidth,
-        FrameHeight, WIDTH, HEIGHT, 20);
-    walls_x = walls.get(0);
-    walls_y = walls.get(1);
+    if (MapField) {
+      walls_x.clear();
+      walls_y.clear();
+      ArrayList<ArrayList<Integer>> walls = LocaleUtils.LocateWall(FrameWidth,
+          FrameHeight, WIDTH, HEIGHT, 20);
+      walls_x = walls.get(0);
+      walls_y = walls.get(1);
+    }
+
     StartSnake();
-    Random random = new Random();
-    quantidadeDeco = (int) (Math.random() * 3 + 1);
-    quantidadeDeco2 = (int) (Math.random() * 4 + 1);
-    for (int i = 0; i < quantidadeDeco; i++) {
-      randomX[i] = random.nextInt(ALL_DOTS_Width);
-      randomY[i] = random.nextInt(ALL_DOTS_Height);
-    }
-    for (int i = 0; i < quantidadeDeco2; i++) {
-      randomX2[i] = random.nextInt(ALL_DOTS_Width);
-      randomY2[i] = random.nextInt(ALL_DOTS_Height);
-    }
-    map.mapLawn(buffer,
-        ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY, quantidadeDeco, randomX2,
-        randomY2, quantidadeDeco2);
+    Location_deco();
+    ValueFinal = 0;
+    ValueDecoNormal = 0;
+    quanti.clear();
+    quantiComplexo.clear();
+    Game.DecoracaoX = new int[0];
+    Game.DecoracaoY = new int[0];
+    Game.DecoComplexoX = new int[0];
+    Game.DecoComplexoY = new int[0];
+    decoracao.posicoesDeco(FrameWidth, FrameHeight, ALL_DOTS_Width, ALL_DOTS_Height, walls_x, walls_y);
+    // map.mapField(buffer,
+    // ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX,
+    // randomY, quantidadeDeco, randomX2,
+    // randomY2, quantidadeDeco2);
     ArrayList<Point> foodPositions = LocaleUtils.LocateFood(FrameWidth, FrameHeight, WIDTH, HEIGHT, walls_x, walls_y,
         nodeSnake);
     if (foodPositions.size() >= 2) {
@@ -744,6 +900,8 @@ public class Game extends JPanel implements Runnable {
     currentFrame7 = 0;
     currentFrame8 = 0;
     currentFrame9 = 0;
+    currentFrame10 = 0;
+
     if (timer != null) {
       timer.cancel();
       timer.purge();
