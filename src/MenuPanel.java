@@ -74,10 +74,16 @@ public class MenuPanel extends JPanel {
           topFrame.revalidate();
           new Thread(game).start();
           game.requestFocusInWindow();
-          if (Game.MapField) {
-            decoracao.posicoesDeco(Game.FrameWidth,
-                Game.FrameHeight, Game.ALL_DOTS_Width, Game.ALL_DOTS_Height, Game.walls_x, Game.walls_y);
-          }
+          Game.ValueFinal = 0;
+          Game.ValueDecoNormal = 0;
+          Game.quanti.clear();
+          Game.quantiComplexo.clear();
+          Game.DecoracaoX = new int[0];
+          Game.DecoracaoY = new int[0];
+          Game.DecoComplexoX = new int[0];
+          Game.DecoComplexoY = new int[0];
+          decoracao.posicoesDeco(Game.FrameWidth,
+              Game.FrameHeight, Game.ALL_DOTS_Width, Game.ALL_DOTS_Height, Game.walls_x, Game.walls_y);
         }
       });
       Menu.gridx = 0;

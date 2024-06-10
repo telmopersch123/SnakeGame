@@ -39,9 +39,13 @@ public class map {
   }
 
   public static void mapSwamp(BufferedImage buffer, int ALL_DOTS_Width, int ALL_DOTS_Height, Image chao_swamp,
-      Image small_trunk, Image chao1, Image chao2, Image chao3, int quantidadeDecoSmallTrunk, int quantidadeDecoChao1,
+      Image small_trunk, Image chao1, Image chao2, Image chao3, Image swamp1, Image swamp2, Image swamp3,
+      Image swamp4, int quantidadeDecoSmallTrunk, int quantidadeDecoChao1,
       int quantidadeDecoChao2, int quantidadeDecoChao3, int[] randomSX, int[] randomSY,
-      int[] randomSX1, int[] randomSY1, int[] randomSX2, int[] randomSY2, int[] randomSX3, int[] randomSY3) {
+      int[] randomSX1, int[] randomSY1, int[] randomSX2, int[] randomSY2, int[] randomSX3, int[] randomSY3,
+      int[] randomSX4, int[] randomSY4, int[] randomSX5, int[] randomSY5, int[] randomSX6, int[] randomSY6,
+      int[] randomSX7, int[] randomSY7, int quantidadeDecoSwamp1,
+      int quantidadeDecoSwamp2, int quantidadeDecoSwamp3, int quantidadeDecoSwamp4) {
     g2d = buffer.createGraphics();
     try {
       bufferedImage = (BufferedImage) chao_swamp;
@@ -57,16 +61,28 @@ public class map {
       }
 
       for (int i = 0; i < quantidadeDecoChao1; i++) {
-        g2d.drawImage(chao1, randomSX1[i], randomSY1[i], 274, 369, null);
+        g2d.drawImage(chao1, randomSX1[i], randomSY1[i], 1000, 700, null);
       }
       for (int i = 0; i < quantidadeDecoChao2; i++) {
-        g2d.drawImage(chao2, randomSX2[i], randomSY2[i], 44, 170, null);
+        g2d.drawImage(chao2, randomSX2[i], randomSY2[i], 40, 44, null);
       }
       for (int i = 0; i < quantidadeDecoChao3; i++) {
-        g2d.drawImage(chao3, randomSX3[i], randomSY3[i], 519, 369, null);
+        g2d.drawImage(chao3, randomSX3[i], randomSY3[i], 900, 520, null);
       }
       for (int i = 0; i < quantidadeDecoSmallTrunk; i++) {
-        g2d.drawImage(small_trunk, randomSX[i], randomSY[i], 64, 64, null);
+        g2d.drawImage(small_trunk, randomSX[i], randomSY[i], 41, 24, null);
+      }
+      for (int i = 0; i < quantidadeDecoSwamp1; i++) {
+        g2d.drawImage(swamp1, randomSX4[i], randomSY4[i], 18, 22, null);
+      }
+      for (int i = 0; i < quantidadeDecoSwamp2; i++) {
+        g2d.drawImage(swamp2, randomSX5[i], randomSY5[i], 24, 21, null);
+      }
+      for (int i = 0; i < quantidadeDecoSwamp3; i++) {
+        g2d.drawImage(swamp3, randomSX6[i], randomSY6[i], 26, 30, null);
+      }
+      for (int i = 0; i < quantidadeDecoSwamp4; i++) {
+        g2d.drawImage(swamp4, randomSX7[i], randomSY7[i], 32, 33, null);
       }
     } finally {
       g2d.dispose();

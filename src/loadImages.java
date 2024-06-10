@@ -8,7 +8,7 @@ public class loadImages {
 
   public static BufferedImage[] Images(
       int WIDTH, int HEIGHT) {
-    BufferedImage[] images = new BufferedImage[32];
+    BufferedImage[] images = new BufferedImage[36];
     try {
       images[0] = ImageIO.read(new File("resources/snakes/snakeGreen/head.png"));
       images[1] = ImageIO.read(new File("resources/snakes/snakeGreen/tail.png"));
@@ -52,6 +52,10 @@ public class loadImages {
       images[30] = ImageIO.read(new File("resources/map_dungeon/decoração/skull-bone.png"));
       images[31] = ImageIO.read(new File("resources/map_dungeon/decoração/tibia-bone.png"));
       ////
+      images[32] = ImageIO.read(new File("resources/map_swamp/decoração/swamp1.png"));
+      images[33] = ImageIO.read(new File("resources/map_swamp/decoração/swamp2.png"));
+      images[34] = ImageIO.read(new File("resources/map_swamp/decoração/swamp3.png"));
+      images[35] = ImageIO.read(new File("resources/map_swamp/decoração/swamp4.png"));
     } catch (IOException e) {
       e.printStackTrace();
     }

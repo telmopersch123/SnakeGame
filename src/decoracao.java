@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 public class decoracao {
   public static Graphics2D g2d;
 
-  // public static int[] quantiComplexo = new int[21];
   public static List<Imagem> imagens = new ArrayList<>();
   private static Image Bush_blue_flowers;
   private static Image Bush_orange_flowers1;
@@ -39,45 +38,68 @@ public class decoracao {
   private static BufferedImage sprite_sheet_moinho;
   private static BufferedImage sprite_sheet_placa;
   private static BufferedImage casadamonga;
-  private static int imagensGeradas;
+  // ----------------IMAGENS SWAMP
+  private static BufferedImage Broken_tree_shadow2_3;
+  private static BufferedImage Broken_tree_shadow2_4;
+  private static BufferedImage Orange_mushrooms1_grass_shadow;
+  private static BufferedImage Oval_leaf_tree33;
+  private static BufferedImage Rock4_grass_shadow34;
 
   static {
     try {
-      if (Game.MapField) {
-        ///// decorações simples
-        Bush_blue_flowers = ImageIO.read(new File("resources/map_field/obstaculos_normal/Bush_blue_flowers2.png"));
-        Bush_orange_flowers1 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Bush_orange_flowers1.png"));
-        Bush_simple1_1 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Bush_simple1_1.png"));
-        Bush_simple2_1 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Bush_simple2_1.png"));
-        Fruit_tree3 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Fruit_tree3.png"));
-        Glade_Objects_Top_Down_Pixel_Art2 = ImageIO
-            .read(new File("resources/map_field/obstaculos_normal/Glade_Objects_Top_Down_Pixel_Art2.png"));
-        Glade_Objects_Top_Down_Pixel_Art3 = ImageIO
-            .read(new File("resources/map_field/obstaculos_normal/Glade_Objects_Top_Down_Pixe_Art3.png"));
-        Rock1_grass_shadow1 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Rock1_grass_shadow1.png"));
-        Rock1_grass_shadow3 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Rock1_grass_shadow3.png"));
-        ///// decorações complexas
-        Christmas_tree2 = ImageIO.read(new File("resources/map_field/obstaculos_complexos/Christmas_tree2.png"));
-        Glade_Objects_Top_Down_Pixel_Art66 = ImageIO
-            .read(new File("resources/map_field/obstaculos_complexos/Glade_Objects_Top_Down_Pixel_Art66.png"));
-        Tree2 = ImageIO.read(new File("resources/map_field/obstaculos_complexos/Tree2.png"));
-        Glade_Objects_Top_Down_Pixel_Art3_2 = ImageIO
-            .read(new File("resources/map_field/obstaculos_complexos/Glade_Objects_Top_Down_Pixel_Art3_2.png"));
-        Glade_Objects_OTop_ODown_OPixel_OArt3_O1 = ImageIO
-            .read(new File("resources/map_field/obstaculos_complexos/Glade_Objects_OTop_ODown_OPixel_OArt3_O1.png"));
-        Glade_Objects_Top_Down_Pixel_Art44 = ImageIO
-            .read(new File("resources/map_field/obstaculos_complexos/Glade_Objects_Top_Down_Pixel_Art44.png"));
-        Brown_gray_ruins3 = ImageIO.read(new File("resources/map_field/obstaculos_complexos/Brown_gray_ruins3.png"));
-        Brown_gray_ruins1 = ImageIO.read(new File("resources/map_field/obstaculos_complexos/Brown_gray_ruins1.png"));
-        dragao_rock = ImageIO.read(new File("resources/map_field/obstaculos_complexos/dragao_rock.png"));
-        sprite_sheet_moinho = ImageIO
-            .read(new File("resources/map_field/obstaculos_complexos/sprite_sheet_moinho.png"));
-        sprite_sheet_placa = ImageIO.read(new File("resources/map_field/obstaculos_complexos/sprite_sheet_placa.png"));
-        casadamonga = ImageIO.read(new File("resources/map_field/obstaculos_complexos/casadamonga.png"));
-      }
+      // MAPA FIELD
+
+      ///// decorações simples
+
+      Bush_blue_flowers = ImageIO.read(new File("resources/map_field/obstaculos_normal/Bush_blue_flowers2.png"));
+      Bush_orange_flowers1 = ImageIO
+          .read(new File("resources/map_field/obstaculos_normal/Bush_orange_flowers1.png"));
+      Bush_simple1_1 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Bush_simple1_1.png"));
+      Bush_simple2_1 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Bush_simple2_1.png"));
+      Fruit_tree3 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Fruit_tree3.png"));
+      Glade_Objects_Top_Down_Pixel_Art2 = ImageIO
+          .read(new File("resources/map_field/obstaculos_normal/Glade_Objects_Top_Down_Pixel_Art2.png"));
+      Glade_Objects_Top_Down_Pixel_Art3 = ImageIO
+          .read(new File("resources/map_field/obstaculos_normal/Glade_Objects_Top_Down_Pixe_Art3.png"));
+      Rock1_grass_shadow1 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Rock1_grass_shadow1.png"));
+      Rock1_grass_shadow3 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Rock1_grass_shadow3.png"));
+      ///// decorações complexas
+      Christmas_tree2 = ImageIO.read(new File("resources/map_field/obstaculos_complexos/Christmas_tree2.png"));
+      Glade_Objects_Top_Down_Pixel_Art66 = ImageIO
+          .read(new File("resources/map_field/obstaculos_complexos/Glade_Objects_Top_Down_Pixel_Art66.png"));
+      Tree2 = ImageIO.read(new File("resources/map_field/obstaculos_complexos/Tree2.png"));
+      Glade_Objects_Top_Down_Pixel_Art3_2 = ImageIO
+          .read(new File("resources/map_field/obstaculos_complexos/Glade_Objects_Top_Down_Pixel_Art3_2.png"));
+      Glade_Objects_OTop_ODown_OPixel_OArt3_O1 = ImageIO
+          .read(new File("resources/map_field/obstaculos_complexos/Glade_Objects_OTop_ODown_OPixel_OArt3_O1.png"));
+      Glade_Objects_Top_Down_Pixel_Art44 = ImageIO
+          .read(new File("resources/map_field/obstaculos_complexos/Glade_Objects_Top_Down_Pixel_Art44.png"));
+      Brown_gray_ruins3 = ImageIO.read(new File("resources/map_field/obstaculos_complexos/Brown_gray_ruins3.png"));
+      Brown_gray_ruins1 = ImageIO.read(new File("resources/map_field/obstaculos_complexos/Brown_gray_ruins1.png"));
+      dragao_rock = ImageIO.read(new File("resources/map_field/obstaculos_complexos/dragao_rock.png"));
+      sprite_sheet_moinho = ImageIO
+          .read(new File("resources/map_field/obstaculos_complexos/sprite_sheet_moinho.png"));
+      sprite_sheet_placa = ImageIO
+          .read(new File("resources/map_field/obstaculos_complexos/sprite_sheet_placa.png"));
+      casadamonga = ImageIO.read(new File("resources/map_field/obstaculos_complexos/casadamonga.png"));
+      ////
+      // MAPA SWAMP - DECORAÇÃO SIMPLES
+      Broken_tree_shadow2_3 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_normal/Broken_tree_shadow2_3.png"));
+      Broken_tree_shadow2_4 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_normal/Broken_tree_shadow2_4.png"));
+      Orange_mushrooms1_grass_shadow = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_normal/Orange_mushrooms1_grass_shadow.png"));
+      Oval_leaf_tree33 = ImageIO.read(new File("resources/map_swamp/obstaculos_normal/Oval_leaf_tree33.png"));
+      Rock4_grass_shadow34 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_normal/Rock4_grass_shadow34.png"));
+
+      ///// decorações complexas
+
     } catch (IOException ex) {
       ex.printStackTrace();
     }
+
   }
 
   public static void posicoesDeco(int FrameWidth, int FrameHeight, int ALL_DOTS_Width, int ALL_DOTS_Height,
@@ -88,22 +110,39 @@ public class decoracao {
     int PorcentagemCOMX = (15 * FrameWidth) / 100;
     int PorcentagemCOMY = (15 * FrameWidth) / 100;
     ///
-    for (int i = 0; i < 9; i++) {
+    int valueDecoSimples = 0;
+    int valueDecoComplexo = 0;
+    if (Game.MapField) {
+      valueDecoSimples = 9;
+    } else if (Game.MapSwamp) {
+      valueDecoSimples = 5;
+    } else if (Game.MapDungeon) {
+      valueDecoSimples = 0;
+    }
+    if (Game.MapField) {
+      valueDecoComplexo = 12;
+    } else if (Game.MapSwamp) {
+      valueDecoComplexo = 0;
+    } else if (Game.MapDungeon) {
+      valueDecoComplexo = 0;
+    }
+
+    for (int i = 0; i < valueDecoSimples; i++) {
       Game.quanti.add((int) (Math.random() * 3) + 1);
     }
+
     for (int i = 0; i < Game.quanti.size(); i++) {
       Game.ValueFinal += Game.quanti.get(i);
       Game.ValueDecoNormal += Game.quanti.get(i);
     }
     ///
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < valueDecoComplexo; i++) {
       Game.quantiComplexo.add((int) (Math.random() + 0.5));
     }
 
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       Game.ValueFinal += Game.quantiComplexo.get(i);
     }
-
     if (Game.DecoracaoX != null && Game.DecoracaoY != null && Game.DecoComplexoX != null
         && Game.DecoComplexoY != null) {
       Game.DecoracaoX = new int[Game.ValueFinal];
@@ -159,16 +198,24 @@ public class decoracao {
     return false;
   }
 
-  public static int numFramesX = 6; // Ajuste conforme necessário
-  public static int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-  public static int frameWidth = 200; // Largura do frame redimensionado
-  public static int frameHeight = 330; // Altura do frame redimensionado
-  private static int frameInterval = 2000;
-  public static int totalFrames = numFramesX * numFramesY;
+  public static int numFramesXMo = 6; // Ajuste conforme necessário
+  public static int numFramesYMo = 1; // Supondo que todas as animações estão na mesma linha
+  public static int frameWidthMo = 200; // Largura do frame redimensionado
+  public static int frameHeightMo = 330; // Altura do frame redimensionado
+  private static int frameIntervalMo = 1000;
+  public static int totalFramesMo = numFramesXMo * numFramesYMo;
   public static long currentTimeMoinho = System.currentTimeMillis();
-  public static long currentTimeBandeira = System.currentTimeMillis();
-  private static long lastFrameTime = 0;
+  private static long lastFrameTimeMo = 0;
   public static Graphics2D ImagemMoinho;
+  ///
+  public static int numFramesXBan = 6; // Ajuste conforme necessário
+  public static int numFramesYBan = 1; // Supondo que todas as animações estão na mesma linha
+  public static int frameWidthBan = 200; // Largura do frame redimensionado
+  public static int frameHeightBan = 330; // Altura do frame redimensionado
+  private static int frameIntervalBan = 1000;
+  public static int totalFramesBan = numFramesXBan * numFramesYBan;
+  public static long currentTimeBandeira = System.currentTimeMillis();
+  private static long lastFrameTimeBan = 0;
   public static Graphics2D ImagemBandeira;
 
   public static void decoracaoField(BufferedImage buffer) {
@@ -258,12 +305,12 @@ public class decoracao {
             break;
           case 9:
             BufferedImage Moinho = (BufferedImage) sprite_sheet_moinho;
-            int sx = (Game.currentFrame5 % numFramesX) * (Moinho.getWidth() /
-                numFramesX);
-            int sy = (Game.currentFrame5 / numFramesX) * (Moinho.getHeight() /
-                numFramesY);
-            int sw = Moinho.getWidth() / numFramesX;
-            int sh = Moinho.getHeight() / numFramesY;
+            int sx = (Game.currentFrame10 % numFramesXMo) * (Moinho.getWidth() /
+                numFramesXMo);
+            int sy = (Game.currentFrame10 / numFramesXMo) * (Moinho.getHeight() /
+                numFramesYMo);
+            int sw = Moinho.getWidth() / numFramesXMo;
+            int sh = Moinho.getHeight() / numFramesYMo;
             ImagemMoinho = buffer.createGraphics();
             AffineTransform at = new AffineTransform();
             at.scale((double) (100 + 2) / sw, (double) (134 + 2) / sh);
@@ -276,19 +323,20 @@ public class decoracao {
             ImagemMoinho.drawImage(scaledImage, Game.DecoComplexoX[10],
                 Game.DecoComplexoY[10], null);
             long currentTimeMoinho = System.currentTimeMillis();
-            if (currentTimeMoinho - lastFrameTime >= frameInterval) {
-              lastFrameTime = currentTimeMoinho - (currentTimeMoinho % frameInterval);
-              Game.currentFrame5 = (Game.currentFrame5 + 1) % totalFrames;
+            Game.currentFrame10 = (Game.currentFrame10 + 1) % totalFramesMo;
+            if (currentTimeMoinho - lastFrameTimeMo >= frameIntervalMo) {
+              lastFrameTimeMo = currentTimeMoinho - (currentTimeMoinho % frameIntervalMo);
+              Game.currentFrame10 = (Game.currentFrame10 + 1) % totalFramesMo;
             }
             break;
           case 10:
             BufferedImage bandeira = (BufferedImage) sprite_sheet_placa;
-            int sx1 = (Game.currentFrame5 % numFramesX) * (bandeira.getWidth() /
-                numFramesX);
-            int sy1 = (Game.currentFrame5 / numFramesX) * (bandeira.getHeight() /
-                numFramesY);
-            int sw1 = bandeira.getWidth() / numFramesX;
-            int sh1 = bandeira.getHeight() / numFramesY;
+            int sx1 = (Game.currentFrame11 % numFramesXBan) * (bandeira.getWidth() /
+                numFramesXBan);
+            int sy1 = (Game.currentFrame11 / numFramesXBan) * (bandeira.getHeight() /
+                numFramesYBan);
+            int sw1 = bandeira.getWidth() / numFramesXBan;
+            int sh1 = bandeira.getHeight() / numFramesYBan;
             ImagemBandeira = buffer.createGraphics();
             AffineTransform at1 = new AffineTransform();
             at1.scale((double) (30 + 2) / sw1, (double) (54 + 2) / sh1);
@@ -296,14 +344,17 @@ public class decoracao {
             AffineTransformOp op1 = new AffineTransformOp(at1,
                 AffineTransformOp.TYPE_BILINEAR);
             // Apply the transform to the image
-            BufferedImage scaledImage1 = op1.filter(bandeira.getSubimage(sx1, sy1, sw1, sh1),
+            BufferedImage scaledImage1 = op1.filter(bandeira.getSubimage(sx1, sy1, sw1,
+                sh1),
                 null);
             ImagemBandeira.drawImage(scaledImage1, Game.DecoComplexoX[11],
                 Game.DecoComplexoY[11], null);
             long currentTimeBandeira = System.currentTimeMillis();
-            if (currentTimeBandeira - lastFrameTime >= frameInterval) {
-              lastFrameTime = currentTimeBandeira - (currentTimeBandeira % frameInterval);
-              Game.currentFrame5 = (Game.currentFrame5 + 1) % totalFrames;
+            Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesBan;
+            if (currentTimeBandeira - lastFrameTimeBan >= frameIntervalBan) {
+              lastFrameTimeBan = currentTimeBandeira - (currentTimeBandeira %
+                  frameIntervalBan);
+              Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesBan;
             }
             break;
           case 11:
@@ -313,17 +364,46 @@ public class decoracao {
             break;
         }
       }
+
     }
 
     ///////////////////////
     for (Imagem imagem : imagens) {
       g2d.drawImage(imagem.getImagem(), imagem.getX(), imagem.getY(), imagem.getWidth(), imagem.getHeight(), null);
     }
-
+    g2d.dispose();
   }
 
-  public static void decoracaoSwamp() {
-
+  public static void decoracaoSwamp(BufferedImage buffer) {
+    g2d = buffer.createGraphics();
+    imagens.clear();
+    int index = 0;
+    /// -Simples
+    for (int i = 0; i < Game.quanti.get(0); i++) {
+      imagens.add(new Imagem(Broken_tree_shadow2_3, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(1); i++) {
+      imagens.add(new Imagem(Broken_tree_shadow2_4, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(2); i++) {
+      imagens.add(new Imagem(Orange_mushrooms1_grass_shadow, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(3); i++) {
+      imagens.add(new Imagem(Oval_leaf_tree33, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(4); i++) {
+      imagens.add(new Imagem(Rock4_grass_shadow34, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    /// -Complexas
+    for (Imagem imagem : imagens) {
+      g2d.drawImage(imagem.getImagem(), imagem.getX(), imagem.getY(), imagem.getWidth(), imagem.getHeight(), null);
+    }
+    g2d.dispose();
   }
 
   public static void decoracaoDungeon() {
