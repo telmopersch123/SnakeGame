@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class LocaleUtils {
   static boolean teste = false;
+  static Rectangle Decoracao;
+  static Rectangle DecoracaoCom;
 
   public static ArrayList<Point> LocateFood(int FrameWidth, int FrameHeight, int WIDTH, int HEIGHT,
       ArrayList<Integer> walls_x,
@@ -48,9 +50,11 @@ public class LocaleUtils {
       }
       if (Game.DecoracaoX != null && Game.DecoracaoY != null) {
         for (int i = 0; i < Game.DecoracaoX.length; i++) {
-          Rectangle Decoracao = new Rectangle(Game.DecoracaoX[i], Game.DecoracaoY[i], 50, 50);
-          Rectangle DecoracaoCom = new Rectangle(Game.DecoComplexoX[i],
-              Game.DecoComplexoY[i], 70, 70);
+          if (i < Game.DecoComplexoX.length && i < Game.DecoComplexoY.length) {
+            Decoracao = new Rectangle(Game.DecoracaoX[i], Game.DecoracaoY[i], 50, 50);
+            DecoracaoCom = new Rectangle(Game.DecoComplexoX[i],
+                Game.DecoComplexoY[i], 70, 70);
+          }
           Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], WIDTH, HEIGHT);
           Rectangle foodRect2 = new Rectangle(foodX[1], foodY[1], 30, 50);
           Rectangle foodRect3 = new Rectangle(foodX[2], foodY[2], 30, 30);

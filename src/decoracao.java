@@ -44,6 +44,38 @@ public class decoracao {
   private static BufferedImage Orange_mushrooms1_grass_shadow;
   private static BufferedImage Oval_leaf_tree33;
   private static BufferedImage Rock4_grass_shadow34;
+  private static BufferedImage aglomerado_cogubranco;
+  private static BufferedImage aglomerado_coguroxo;
+  private static BufferedImage Blue_green_balls_tree1;
+  private static BufferedImage Brown_ruins1;
+  private static BufferedImage cemiterio;
+  private static BufferedImage Luminous_tree1;
+  private static BufferedImage Luminous_tree2;
+  private static BufferedImage Luminous_tree3;
+  private static BufferedImage Mega_tree2;
+  private static BufferedImage Rock_statue_deer_ground_shadow;
+  private static BufferedImage SwampObjectsTopDownPixelArt3;
+  private static BufferedImage SwampObjectsTopDownPixelArt4;
+  private static BufferedImage SwamppObjectsTopDownPixelArt2;
+  private static BufferedImage SwampTopDownTilesetPixelArt3;
+  private static BufferedImage SwampTopDownTilesetPixelArt31;
+  private static BufferedImage SwampTopDownTilesetPixelArt32;
+  private static BufferedImage SwampTopDownTilesetPixelArt33;
+  private static BufferedImage SwampTopDownTilesetPixelArt34;
+  private static BufferedImage SwampTopDownTilesetPixelArt35;
+  private static BufferedImage SwampTopDownTilesetPixelArt36;
+  private static BufferedImage SwampTopDownTilesetPixelArt42;
+  private static BufferedImage Willow1;
+  private static BufferedImage Willow2;
+  private static BufferedImage Willow3;
+  private static BufferedImage Yellow_ruins1;
+  private static BufferedImage spritesheet1;
+  private static BufferedImage spritesheet2;
+  private static BufferedImage spritesheetarvore1;
+  private static BufferedImage spritesheetarvore3;
+  private static BufferedImage spritesheetarvore2;
+  private static BufferedImage spriteshetlago1;
+  private static BufferedImage spritsheethomemcristal;
 
   static {
     try {
@@ -93,9 +125,71 @@ public class decoracao {
       Oval_leaf_tree33 = ImageIO.read(new File("resources/map_swamp/obstaculos_normal/Oval_leaf_tree33.png"));
       Rock4_grass_shadow34 = ImageIO
           .read(new File("resources/map_swamp/obstaculos_normal/Rock4_grass_shadow34.png"));
-
       ///// decorações complexas
-
+      aglomerado_cogubranco = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/aglomerado_cogubranco.png"));
+      aglomerado_coguroxo = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/aglomerado_coguroxo.png"));
+      Blue_green_balls_tree1 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Blue_green_balls_tree1.png"));
+      Brown_ruins1 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Brown_ruins1.png"));
+      cemiterio = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/cemiterio.png"));
+      Luminous_tree1 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Luminous_tree1.png"));
+      Luminous_tree2 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Luminous_tree2.png"));
+      Luminous_tree3 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Luminous_tree3.png"));
+      Mega_tree2 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Mega_tree2.png"));
+      Rock_statue_deer_ground_shadow = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Rock_statue_deer_ground_shadow.png"));
+      SwampObjectsTopDownPixelArt3 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampObjectsTopDownPixelArt3.png"));
+      SwampObjectsTopDownPixelArt4 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampObjectsTopDownPixelArt4.png"));
+      SwamppObjectsTopDownPixelArt2 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwamppObjectsTopDownPixelArt2.png"));
+      SwampTopDownTilesetPixelArt3 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampTopDownTilesetPixelArt3.png"));
+      SwampTopDownTilesetPixelArt31 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampTopDownTilesetPixelArt31.png"));
+      SwampTopDownTilesetPixelArt32 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampTopDownTilesetPixelArt32.png"));
+      SwampTopDownTilesetPixelArt33 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampTopDownTilesetPixelArt33.png"));
+      SwampTopDownTilesetPixelArt34 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampTopDownTilesetPixelArt34.png"));
+      SwampTopDownTilesetPixelArt35 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampTopDownTilesetPixelArt35.png"));
+      SwampTopDownTilesetPixelArt36 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampTopDownTilesetPixelArt36.png"));
+      SwampTopDownTilesetPixelArt42 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/SwampTopDownTilesetPixelArt42.png"));
+      Willow1 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Willow1.png"));
+      Willow2 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Willow2.png"));
+      Willow3 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Willow3.png"));
+      Yellow_ruins1 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Yellow_ruins1.png"));
+      spritesheet1 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/spritesheet1.png"));
+      spritesheet2 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/spritesheet2.png"));
+      spritesheetarvore1 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/spritesheetarvore1.png"));
+      spritesheetarvore2 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/spritesheetarvore2.png"));
+      spritesheetarvore3 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/spritesheetarvore3.png"));
+      spriteshetlago1 = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/Yellow_ruins1.png"));
+      spritsheethomemcristal = ImageIO
+          .read(new File("resources/map_swamp/obstaculos_complexos/spritsheethomemcristal.png"));
     } catch (IOException ex) {
       ex.printStackTrace();
     }
@@ -105,10 +199,10 @@ public class decoracao {
   public static void posicoesDeco(int FrameWidth, int FrameHeight, int ALL_DOTS_Width, int ALL_DOTS_Height,
       ArrayList<Integer> walls_x,
       ArrayList<Integer> walls_y) {
-    int PorcentagemX = (15 * FrameWidth) / 100;
+    int PorcentagemX = (10 * FrameWidth) / 100;
     int PorcentagemY = (10 * FrameWidth) / 100;
-    int PorcentagemCOMX = (15 * FrameWidth) / 100;
-    int PorcentagemCOMY = (15 * FrameWidth) / 100;
+    int PorcentagemCOMX = (10 * FrameWidth) / 100;
+    int PorcentagemCOMY = (10 * FrameWidth) / 100;
     ///
     int valueDecoSimples = 0;
     int valueDecoComplexo = 0;
@@ -122,7 +216,7 @@ public class decoracao {
     if (Game.MapField) {
       valueDecoComplexo = 12;
     } else if (Game.MapSwamp) {
-      valueDecoComplexo = 0;
+      valueDecoComplexo = 26;
     } else if (Game.MapDungeon) {
       valueDecoComplexo = 0;
     }
@@ -137,29 +231,30 @@ public class decoracao {
     }
     ///
     for (int i = 0; i < valueDecoComplexo; i++) {
-      Game.quantiComplexo.add((int) (Math.random() + 0.5));
+      Game.quantiComplexo.add(1);
     }
 
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       Game.ValueFinal += Game.quantiComplexo.get(i);
     }
+
     if (Game.DecoracaoX != null && Game.DecoracaoY != null && Game.DecoComplexoX != null
         && Game.DecoComplexoY != null) {
-      Game.DecoracaoX = new int[Game.ValueFinal];
-      Game.DecoracaoY = new int[Game.ValueFinal];
+      Game.DecoracaoX = new int[Game.ValueDecoNormal];
+      Game.DecoracaoY = new int[Game.ValueDecoNormal];
       Game.DecoComplexoX = new int[Game.ValueFinal];
       Game.DecoComplexoY = new int[Game.ValueFinal];
+
       for (int i = 0; i < Game.ValueFinal; i++) {
         int x, y;
         int x1, y1;
         do {
-          x = (int) (Math.random() * (FrameWidth - PorcentagemX)) + 100;
+          x = (int) (Math.random() * (FrameWidth - PorcentagemX)) + 50;
           y = (int) (Math.random() * (FrameHeight - PorcentagemY)) + 50;
-          x1 = (int) (Math.random() * (FrameWidth - PorcentagemCOMX)) + 150;
-          y1 = (int) (Math.random() * (FrameHeight - PorcentagemCOMY)) + 150;
-        } while (isWallPosition(x, y, walls_x, walls_y, x1, y1)
-            || containsPosition(x, y, Game.DecoracaoX, Game.DecoracaoY, x1, y1, Game.DecoComplexoX,
-                Game.DecoComplexoY));
+          x1 = (int) (Math.random() * (FrameWidth - PorcentagemCOMX)) + 70;
+          y1 = (int) (Math.random() * (FrameHeight - PorcentagemCOMY)) + 70;
+        } while (isWallPosition(x, y, walls_x, walls_y, x1, y1) || containsPosition(x, y, Game.DecoracaoX,
+            Game.DecoracaoY, x1, y1, Game.DecoComplexoX, Game.DecoComplexoY));
         if (i < Game.ValueDecoNormal) {
           Game.DecoracaoX[i] = x;
           Game.DecoracaoY[i] = y;
@@ -168,12 +263,13 @@ public class decoracao {
         Game.DecoComplexoY[i] = y1;
       }
     }
+
   }
 
   private static boolean isWallPosition(int x, int y, ArrayList<Integer> walls_x, ArrayList<Integer> walls_y, int x1,
       int y1) {
     Rectangle imageRect = new Rectangle(x, y, 30, 30); // tamanho da imagem decorativa
-    Rectangle imageRectComplexa = new Rectangle(x1, y1, 100, 100);
+    Rectangle imageRectComplexa = new Rectangle(x1, y1, 150, 150);
     for (int i = 0; i < walls_x.size(); i++) {
       Rectangle wallRect = new Rectangle(walls_x.get(i), walls_y.get(i), 10, 10);
       if (imageRect.intersects(wallRect) || imageRectComplexa.intersects(wallRect)) {
@@ -183,15 +279,28 @@ public class decoracao {
     return false;
   }
 
+  static Rectangle otherRect;
+  static Rectangle otherRectComplexa;
+
   private static boolean containsPosition(int x, int y, int[] DecoracaoX, int[] DecoracaoY, int x1,
       int y1, int[] DecoComplexoX, int[] DecoComplexoY) {
     Rectangle imageRect = new Rectangle(x, y, 30, 30); // tamanho da imagem decorativa
-    Rectangle imageRectComplexa = new Rectangle(x1, y1, 100, 100);
-    for (int i = 0; i < DecoracaoX.length; i++) {
-      Rectangle otherRect = new Rectangle(DecoracaoX[i], DecoracaoY[i], 30, 30);
-      Rectangle otherRectComplexa = new Rectangle(DecoComplexoX[i], DecoComplexoY[i], 100, 100);
-      if (imageRect.intersects(otherRect) || imageRect.intersects(otherRectComplexa) || imageRectComplexa
-          .intersects(otherRectComplexa) || imageRectComplexa.intersects(otherRect)) {
+    Rectangle imageRectComplexa = new Rectangle(x1, y1, 120, 120);
+    for (int i = 0; i < Game.ValueFinal; i++) {
+      if (i < DecoComplexoY.length && i < DecoComplexoY.length) {
+        if (i < Game.ValueDecoNormal) {
+          otherRect = new Rectangle(DecoracaoX[i], DecoracaoY[i], 30, 30);
+        }
+
+        otherRectComplexa = new Rectangle(DecoComplexoX[i], DecoComplexoY[i], 120, 120);
+      }
+      if (imageRect.intersects(otherRect)) {
+        return true;
+      } else if (imageRect.intersects(otherRectComplexa)) {
+        return true;
+      } else if (imageRectComplexa.intersects(otherRectComplexa)) {
+        return true;
+      } else if (imageRectComplexa.intersects(otherRect)) {
         return true;
       }
     }
@@ -217,6 +326,16 @@ public class decoracao {
   public static long currentTimeBandeira = System.currentTimeMillis();
   private static long lastFrameTimeBan = 0;
   public static Graphics2D ImagemBandeira;
+  //
+  public static Graphics2D ImagemArvore1;
+  public static int numFramesXArv = 6; // Ajuste conforme necessário
+  public static int numFramesYArv = 1; // Supondo que todas as animações estão na mesma linha
+  public static int frameWidthArv = 64; // Largura do frame redimensionado
+  public static int frameHeightArv = 64; // Altura do frame redimensionado
+  private static int frameIntervalArv = 5000;
+  public static int totalFramesArv = numFramesXArv * numFramesYArv;
+  public static long currentTimeArv = System.currentTimeMillis();
+  private static long lastFrameTimeArv = 0;
 
   public static void decoracaoField(BufferedImage buffer) {
     g2d = buffer.createGraphics();
@@ -400,6 +519,245 @@ public class decoracao {
       index++;
     }
     /// -Complexas
+    for (int i = 0; i < Game.quantiComplexo.size(); i++) {
+      if (Game.quantiComplexo.get(i) > 0) {
+        switch (i) {
+          case 0:
+            if (Game.DecoComplexoX.length > 1 && Game.DecoComplexoY.length > 1) {
+
+              imagens.add(new Imagem(aglomerado_cogubranco, Game.DecoComplexoX[1],
+                  Game.DecoComplexoY[1], 38, 49));
+            }
+            break;
+          case 1:
+            if (Game.DecoComplexoX.length > 2 && Game.DecoComplexoY.length > 2) {
+
+              imagens.add(new Imagem(aglomerado_coguroxo, Game.DecoComplexoX[2],
+                  Game.DecoComplexoY[2], 47, 45));
+            }
+            break;
+          case 2:
+            if (Game.DecoComplexoX.length > 3 && Game.DecoComplexoY.length > 3) {
+
+              imagens.add(new Imagem(Blue_green_balls_tree1, Game.DecoComplexoX[3],
+                  Game.DecoComplexoY[3], 50, 64));
+            }
+            break;
+          case 3:
+            if (Game.DecoComplexoX.length > 4 && Game.DecoComplexoY.length > 4) {
+
+              imagens.add(
+                  new Imagem(Brown_ruins1, Game.DecoComplexoX[4], Game.DecoComplexoY[4], 112,
+                      112));
+            }
+            break;
+          case 4:
+            if (Game.DecoComplexoX.length > 5 && Game.DecoComplexoY.length > 5) {
+
+              imagens.add(
+                  new Imagem(cemiterio, Game.DecoComplexoX[5], Game.DecoComplexoY[5], 99, 83));
+            }
+            break;
+          case 5:
+            if (Game.DecoComplexoX.length > 6 && Game.DecoComplexoY.length > 6) {
+
+              imagens.add(new Imagem(Yellow_ruins1,
+                  Game.DecoComplexoX[6],
+                  Game.DecoComplexoY[6], 112, 112));
+            }
+
+            break;
+          case 6:
+            if (Game.DecoComplexoX.length > 7 && Game.DecoComplexoY.length > 7) {
+              imagens.add(
+                  new Imagem(Rock_statue_deer_ground_shadow,
+                      Game.DecoComplexoX[7],
+                      Game.DecoComplexoY[7], 94, 94));
+            }
+            break;
+          case 7:
+            if (Game.DecoComplexoX.length > 8 && Game.DecoComplexoY.length > 8) {
+              imagens
+                  .add(new Imagem(SwamppObjectsTopDownPixelArt2,
+                      Game.DecoComplexoX[8],
+                      Game.DecoComplexoY[8], 50,
+                      60));
+            }
+            break;
+          case 8:
+            if (Game.DecoComplexoX.length > 9 && Game.DecoComplexoY.length > 9) {
+
+              imagens
+                  .add(new Imagem(SwampObjectsTopDownPixelArt3,
+                      Game.DecoComplexoX[9],
+                      Game.DecoComplexoY[9], 98, 123));
+            }
+            break;
+          case 9:
+            if (Game.DecoComplexoX.length > 10 && Game.DecoComplexoY.length > 10) {
+
+              imagens
+                  .add(new Imagem(SwampObjectsTopDownPixelArt4,
+                      Game.DecoComplexoX[10],
+                      Game.DecoComplexoY[10], 63, 52));
+            }
+            break;
+          case 10:
+            if (Game.DecoComplexoX.length > 11 && Game.DecoComplexoY.length > 11) {
+
+              imagens.add(new Imagem(Mega_tree2,
+                  Game.DecoComplexoX[11],
+                  Game.DecoComplexoY[11], 123, 123));
+            }
+
+            break;
+          case 11:
+            if (Game.DecoComplexoX.length > 12 && Game.DecoComplexoY.length > 12) {
+            }
+            imagens
+                .add(
+                    new Imagem(SwampTopDownTilesetPixelArt3,
+                        Game.DecoComplexoX[12],
+                        Game.DecoComplexoY[12], 81, 91));
+            break;
+          case 12:
+            if (Game.DecoComplexoX.length > 13 && Game.DecoComplexoY.length > 13) {
+            }
+            imagens.add(
+                new Imagem(SwampTopDownTilesetPixelArt31,
+                    Game.DecoComplexoX[13],
+                    Game.DecoComplexoY[13], 32, 49));
+            break;
+          case 13:
+            if (Game.DecoComplexoX.length > 14 && Game.DecoComplexoY.length > 14) {
+              imagens.add(
+                  new Imagem(SwampTopDownTilesetPixelArt32,
+                      Game.DecoComplexoX[14],
+                      Game.DecoComplexoY[14], 81, 131));
+            }
+
+            break;
+          case 14:
+            if (Game.DecoComplexoX.length > 15 && Game.DecoComplexoY.length > 5) {
+            }
+            imagens.add(
+                new Imagem(SwampTopDownTilesetPixelArt33,
+                    Game.DecoComplexoX[15],
+                    Game.DecoComplexoY[15], 68, 67));
+            break;
+          case 15:
+            if (Game.DecoComplexoX.length > 16 && Game.DecoComplexoY.length > 16) {
+            }
+            imagens
+                .add(new Imagem(SwampTopDownTilesetPixelArt34,
+                    Game.DecoComplexoX[16],
+                    Game.DecoComplexoY[16], 49,
+                    60));
+            break;
+          case 16:
+            if (Game.DecoComplexoX.length > 17 && Game.DecoComplexoY.length > 17) {
+              imagens
+                  .add(new Imagem(SwampTopDownTilesetPixelArt35,
+                      Game.DecoComplexoX[17],
+                      Game.DecoComplexoY[17], 62,
+                      81));
+            }
+            break;
+          case 17:
+            if (Game.DecoComplexoX.length > 18 && Game.DecoComplexoY.length > 18) {
+              imagens
+                  .add(new Imagem(SwampTopDownTilesetPixelArt36, Game.DecoComplexoX[18],
+                      Game.DecoComplexoY[18], 32,
+                      56));
+            }
+            break;
+          case 18:
+            if (Game.DecoComplexoX.length > 19 && Game.DecoComplexoY.length > 19) {
+              imagens
+                  .add(new Imagem(SwampTopDownTilesetPixelArt42,
+                      Game.DecoComplexoX[19],
+                      Game.DecoComplexoY[19], 77,
+                      44));
+            }
+            break;
+          case 19:
+            if (Game.DecoComplexoX.length > 20 && Game.DecoComplexoY.length > 20) {
+              imagens.add(new Imagem(Luminous_tree3,
+                  Game.DecoComplexoX[20],
+                  Game.DecoComplexoY[20], 63, 85));
+            }
+            break;
+          case 20:
+            if (Game.DecoComplexoX.length > 21 && Game.DecoComplexoY.length > 21) {
+
+              imagens.add(new Imagem(Luminous_tree2,
+                  Game.DecoComplexoX[21],
+                  Game.DecoComplexoY[21], 64, 83));
+            }
+
+            break;
+          case 21:
+            if (Game.DecoComplexoX.length > 22 && Game.DecoComplexoY.length > 22) {
+              imagens.add(new Imagem(Willow1,
+                  Game.DecoComplexoX[22],
+                  Game.DecoComplexoY[22], 79, 81));
+            }
+            break;
+          case 22:
+            if (Game.DecoComplexoX.length > 23 && Game.DecoComplexoY.length > 23) {
+              imagens.add(new Imagem(Willow2, Game.DecoComplexoX[23],
+                  Game.DecoComplexoY[23], 67, 75));
+            }
+            break;
+          case 23:
+            if (Game.DecoComplexoX.length > 24 && Game.DecoComplexoY.length > 24) {
+              imagens.add(new Imagem(Willow3, Game.DecoComplexoX[24],
+                  Game.DecoComplexoY[24], 63, 64));
+            }
+            break;
+          case 24:
+            if (Game.DecoComplexoX.length > 25 && Game.DecoComplexoY.length > 25) {
+
+              imagens.add(
+                  new Imagem(Luminous_tree1, Game.DecoComplexoX[25], Game.DecoComplexoY[25], 70,
+                      93));
+            }
+            break;
+          case 25:
+            if (Game.DecoComplexoX.length > 26 && Game.DecoComplexoY.length > 26) {
+              BufferedImage arvore1 = (BufferedImage) spritesheetarvore1;
+              int sx1 = (Game.currentFrame11 % numFramesXArv) * (arvore1.getWidth() /
+                  numFramesXArv);
+              int sy1 = (Game.currentFrame11 / numFramesXArv) * (arvore1.getHeight() /
+                  numFramesYArv);
+              int sw1 = arvore1.getWidth() / numFramesXArv;
+              int sh1 = arvore1.getHeight() / numFramesYArv;
+              ImagemArvore1 = buffer.createGraphics();
+              AffineTransform at1 = new AffineTransform();
+              at1.scale((double) (66 + 2) / sw1, (double) (65 + 2) / sh1);
+              // Create an AffineTransformOp object with the AffineTransform
+              AffineTransformOp op1 = new AffineTransformOp(at1,
+                  AffineTransformOp.TYPE_BILINEAR);
+              // Apply the transform to the image
+              BufferedImage scaledImage1 = op1.filter(arvore1.getSubimage(sx1, sy1, sw1,
+                  sh1),
+                  null);
+              ImagemArvore1.drawImage(scaledImage1, Game.DecoComplexoX[26],
+                  Game.DecoComplexoY[26], null);
+              long currentTimeArv = System.currentTimeMillis();
+              Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesArv;
+              if (currentTimeArv - lastFrameTimeArv >= frameIntervalArv) {
+                lastFrameTimeArv = currentTimeArv - (currentTimeArv %
+                    frameIntervalArv);
+                Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesArv;
+              }
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    }
     for (Imagem imagem : imagens) {
       g2d.drawImage(imagem.getImagem(), imagem.getX(), imagem.getY(), imagem.getWidth(), imagem.getHeight(), null);
     }

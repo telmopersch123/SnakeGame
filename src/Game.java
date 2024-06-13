@@ -35,6 +35,7 @@ public class Game extends JPanel implements Runnable {
   int largerCollisionArea = 12;
   public static int ValueFinal;
   public static int ValueDecoNormal;
+  public static int ValueDecoComplexo;
   static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
   public static int FrameWidth = (int) screenSize.getWidth();
   public static int FrameHeight = (int) screenSize.getHeight();
@@ -874,6 +875,7 @@ public class Game extends JPanel implements Runnable {
 
     // Define as coordenadas da cabeça da cobra
     nodeSnake[0] = new Node(snakeX, snakeY);
+
     // Inicializa o restante do corpo da cobra com as mesmas coordenadas da cabeça
     for (int i = 1; i < nodeSnake.length; i++) {
       nodeSnake[i] = new Node(snakeX, snakeY);
@@ -900,6 +902,7 @@ public class Game extends JPanel implements Runnable {
     StartSnake();
     Location_deco();
     ValueFinal = 0;
+    ValueDecoComplexo = 0;
     ValueDecoNormal = 0;
     quanti.clear();
     quantiComplexo.clear();
