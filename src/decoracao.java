@@ -176,10 +176,6 @@ public class decoracao {
           .read(new File("resources/map_swamp/obstaculos_complexos/Willow3.png"));
       Yellow_ruins1 = ImageIO
           .read(new File("resources/map_swamp/obstaculos_complexos/Yellow_ruins1.png"));
-      spritesheet1 = ImageIO
-          .read(new File("resources/map_swamp/obstaculos_complexos/spritesheet1.png"));
-      spritesheet2 = ImageIO
-          .read(new File("resources/map_swamp/obstaculos_complexos/spritesheet2.png"));
       spritesheetarvore1 = ImageIO
           .read(new File("resources/map_swamp/obstaculos_complexos/spritesheetarvore1.png"));
       spritesheetarvore2 = ImageIO
@@ -187,7 +183,7 @@ public class decoracao {
       spritesheetarvore3 = ImageIO
           .read(new File("resources/map_swamp/obstaculos_complexos/spritesheetarvore3.png"));
       spriteshetlago1 = ImageIO
-          .read(new File("resources/map_swamp/obstaculos_complexos/Yellow_ruins1.png"));
+          .read(new File("resources/map_swamp/obstaculos_complexos/spriteshetlago1.png"));
       spritsheethomemcristal = ImageIO
           .read(new File("resources/map_swamp/obstaculos_complexos/spritsheethomemcristal.png"));
     } catch (IOException ex) {
@@ -216,7 +212,7 @@ public class decoracao {
     if (Game.MapField) {
       valueDecoComplexo = 12;
     } else if (Game.MapSwamp) {
-      valueDecoComplexo = 26;
+      valueDecoComplexo = 32;
     } else if (Game.MapDungeon) {
       valueDecoComplexo = 0;
     }
@@ -328,14 +324,26 @@ public class decoracao {
   public static Graphics2D ImagemBandeira;
   //
   public static Graphics2D ImagemArvore1;
+  public static Graphics2D ImagemArvore2;
+  public static Graphics2D ImagemArvore3;
+
   public static int numFramesXArv = 6; // Ajuste conforme necessário
   public static int numFramesYArv = 1; // Supondo que todas as animações estão na mesma linha
-  public static int frameWidthArv = 64; // Largura do frame redimensionado
-  public static int frameHeightArv = 64; // Altura do frame redimensionado
-  private static int frameIntervalArv = 5000;
+  public static int frameWidthArv = 500; // Largura do frame redimensionado
+  public static int frameHeightArv = 500; // Altura do frame redimensionado
+  private static int frameIntervalArv = 100;
+  private static int frameIntervalArv1 = 100;
+  private static int frameIntervalArv2 = 100;
+
   public static int totalFramesArv = numFramesXArv * numFramesYArv;
+
   public static long currentTimeArv = System.currentTimeMillis();
+  public static long currentTimeArv1 = System.currentTimeMillis();
+  public static long currentTimeArv2 = System.currentTimeMillis();
+
   private static long lastFrameTimeArv = 0;
+  private static long lastFrameTimeArv1 = 0;
+  private static long lastFrameTimeArv2 = 0;
 
   public static void decoracaoField(BufferedImage buffer) {
     g2d = buffer.createGraphics();
@@ -719,7 +727,8 @@ public class decoracao {
             if (Game.DecoComplexoX.length > 25 && Game.DecoComplexoY.length > 25) {
 
               imagens.add(
-                  new Imagem(Luminous_tree1, Game.DecoComplexoX[25], Game.DecoComplexoY[25], 70,
+                  new Imagem(Luminous_tree1, Game.DecoComplexoX[25], Game.DecoComplexoY[25],
+                      70,
                       93));
             }
             break;
@@ -745,13 +754,84 @@ public class decoracao {
               ImagemArvore1.drawImage(scaledImage1, Game.DecoComplexoX[26],
                   Game.DecoComplexoY[26], null);
               long currentTimeArv = System.currentTimeMillis();
-              Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesArv;
+
               if (currentTimeArv - lastFrameTimeArv >= frameIntervalArv) {
                 lastFrameTimeArv = currentTimeArv - (currentTimeArv %
                     frameIntervalArv);
                 Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesArv;
               }
             }
+            break;
+          case 26:
+            if (Game.DecoComplexoX.length > 27 && Game.DecoComplexoY.length > 27) {
+              BufferedImage arvore1 = (BufferedImage) spritesheetarvore2;
+              int sx1 = (Game.currentFrame12 % numFramesXArv) * (arvore1.getWidth() /
+                  numFramesXArv);
+              int sy1 = (Game.currentFrame12 / numFramesXArv) * (arvore1.getHeight() /
+                  numFramesYArv);
+              int sw1 = arvore1.getWidth() / numFramesXArv;
+              int sh1 = arvore1.getHeight() / numFramesYArv;
+              ImagemArvore2 = buffer.createGraphics();
+              AffineTransform at1 = new AffineTransform();
+              at1.scale((double) (80 + 2) / sw1, (double) (96 + 2) / sh1);
+              // Create an AffineTransformOp object with the AffineTransform
+              AffineTransformOp op1 = new AffineTransformOp(at1,
+                  AffineTransformOp.TYPE_BILINEAR);
+              // Apply the transform to the image
+              BufferedImage scaledImage1 = op1.filter(arvore1.getSubimage(sx1, sy1, sw1,
+                  sh1),
+                  null);
+              ImagemArvore2.drawImage(scaledImage1,
+                  Game.DecoComplexoX[27],
+                  Game.DecoComplexoY[27], null);
+              long currentTimeArv1 = System.currentTimeMillis();
+
+              if (currentTimeArv1 - lastFrameTimeArv1 >= frameIntervalArv1) {
+                lastFrameTimeArv1 = currentTimeArv1 - (currentTimeArv1 %
+                    frameIntervalArv1);
+                Game.currentFrame12 = (Game.currentFrame12 + 1) % totalFramesArv;
+              }
+            }
+            break;
+          case 27:
+            if (Game.DecoComplexoX.length > 28 && Game.DecoComplexoY.length > 28) {
+              BufferedImage arvore2 = (BufferedImage) spritesheetarvore3;
+              int sx1 = (Game.currentFrame13 % numFramesXArv) * (arvore2.getWidth() /
+                  numFramesXArv);
+              int sy1 = (Game.currentFrame13 / numFramesXArv) * (arvore2.getHeight() /
+                  numFramesYArv);
+              int sw1 = arvore2.getWidth() / numFramesXArv;
+              int sh1 = arvore2.getHeight() / numFramesYArv;
+              ImagemArvore3 = buffer.createGraphics();
+              AffineTransform at1 = new AffineTransform();
+              at1.scale((double) (92 + 2) / sw1, (double) (128 + 2) / sh1);
+              // Create an AffineTransformOp object with the AffineTransform
+              AffineTransformOp op1 = new AffineTransformOp(at1,
+                  AffineTransformOp.TYPE_BILINEAR);
+              // Apply the transform to the image
+              BufferedImage scaledImage1 = op1.filter(arvore2.getSubimage(sx1, sy1, sw1,
+                  sh1),
+                  null);
+              ImagemArvore3.drawImage(scaledImage1,
+                  Game.DecoComplexoX[28],
+                  Game.DecoComplexoY[28], null);
+              long currentTimeArv2 = System.currentTimeMillis();
+
+              if (currentTimeArv2 - lastFrameTimeArv2 >= frameIntervalArv2) {
+                lastFrameTimeArv2 = currentTimeArv2 - (currentTimeArv2 %
+                    frameIntervalArv2);
+                Game.currentFrame13 = (Game.currentFrame13 + 1) % totalFramesArv;
+              }
+            }
+            break;
+          case 28:
+            //////
+            break;
+          case 29:
+            //////
+            break;
+          case 30:
+            //////
             break;
           default:
             break;

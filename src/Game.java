@@ -92,15 +92,20 @@ public class Game extends JPanel implements Runnable {
   //////
   Image chao_swamp;
   Image rock_swamp;
-
+  Image spriteshetlago1;
+  Image spriteshetlago2;
+  Image spriteshetlago3;
   Image small_trunk;
   Image chao1;
   Image chao2;
   Image chao3;
+  Image chao4;
+  Image chao5;
   Image swamp1;
   Image swamp2;
   Image swamp3;
   Image swamp4;
+
   /////
   Image chao_dungeon;
   Image rock_dungeon;
@@ -173,6 +178,11 @@ public class Game extends JPanel implements Runnable {
   public static int PosColidianPoisonY = 0;
   public static int PosColidianClassicX = 0;
   public static int PosColidianClassicY = 0;
+  public static int currentFrame16 = 0;
+  public static int currentFrame15 = 0;
+  public static int currentFrame14 = 0;
+  public static int currentFrame13 = 0;
+  public static int currentFrame12 = 0;
   public static int currentFrame11 = 0;
   public static int currentFrame10 = 0;
   public static int currentFrame9 = 0;
@@ -204,6 +214,8 @@ public class Game extends JPanel implements Runnable {
   private static int quantidadeDecoChao1;
   private static int quantidadeDecoChao2;
   private static int quantidadeDecoChao3;
+  private static int quantidadeDecoChao4;
+  private static int quantidadeDecoChao5;
   static int[] randomSX = new int[7];
   static int[] randomSY = new int[7];
   static int[] randomSX1 = new int[2];
@@ -227,6 +239,10 @@ public class Game extends JPanel implements Runnable {
   static int[] randomSY6 = new int[16];
   static int[] randomSX7 = new int[16];
   static int[] randomSY7 = new int[16];
+  static int[] randomSX8 = new int[10];
+  static int[] randomSY8 = new int[10];
+  static int[] randomSX9 = new int[10];
+  static int[] randomSY9 = new int[10];
   public static int[] DecoracaoX = new int[0];
   public static int[] DecoracaoY = new int[0];
   public static int[] DecoComplexoX = new int[0];
@@ -248,6 +264,7 @@ public class Game extends JPanel implements Runnable {
   ImageIcon buttonImage;
   JLabel label;
   double rotationAngle = 0;
+
   public static ArrayList<Integer> quanti = new ArrayList<>();
   public static ArrayList<Integer> quantiComplexo = new ArrayList<>();
 
@@ -298,6 +315,11 @@ public class Game extends JPanel implements Runnable {
     swamp2 = imagens[33];
     swamp3 = imagens[34];
     swamp4 = imagens[35];
+    spriteshetlago1 = imagens[36];
+    spriteshetlago2 = imagens[37];
+    spriteshetlago3 = imagens[38];
+    chao4 = imagens[39];
+    chao5 = imagens[40];
     ///////////////////////////////////
     initializeKeyListener();
 
@@ -368,6 +390,8 @@ public class Game extends JPanel implements Runnable {
       quantidadeDecoChao1 = (int) (Math.random() * 2 + 1);
       quantidadeDecoChao2 = (int) (Math.random() * 3 + 1);
       quantidadeDecoChao3 = (int) (Math.random() * 1 + 1);
+      quantidadeDecoChao4 = (int) (Math.random() * 6 + 3);
+      quantidadeDecoChao5 = (int) (Math.random() * 6 + 3);
       quantidadeDecoSwamp1 = (int) (Math.random() * 10 + 5);
       quantidadeDecoSwamp2 = (int) (Math.random() * 10 + 5);
       quantidadeDecoSwamp3 = (int) (Math.random() * 10 + 5);
@@ -390,6 +414,16 @@ public class Game extends JPanel implements Runnable {
       for (int i = 0; i < quantidadeDecoChao3; i++) {
         randomSX3[i] = random.nextInt(ALL_DOTS_Width - 150);
         randomSY3[i] = random.nextInt(ALL_DOTS_Height - 150);
+      }
+      ///
+      for (int i = 0; i < quantidadeDecoChao4; i++) {
+        randomSX8[i] = random.nextInt(ALL_DOTS_Width - 150);
+        randomSY8[i] = random.nextInt(ALL_DOTS_Height - 150);
+      }
+      ///
+      for (int i = 0; i < quantidadeDecoChao5; i++) {
+        randomSX9[i] = random.nextInt(ALL_DOTS_Width - 150);
+        randomSY9[i] = random.nextInt(ALL_DOTS_Height - 150);
       }
       ///
       for (int i = 0; i < quantidadeDecoSwamp1; i++) {
@@ -565,12 +599,15 @@ public class Game extends JPanel implements Runnable {
           randomY2, quantidadeDeco2);
     }
     if (MapSwamp) {
-      map.mapSwamp(buffer, ALL_DOTS_Width, ALL_DOTS_Height, chao_swamp, small_trunk, chao1, chao2, chao3, swamp1,
-          swamp2, swamp3, swamp4,
-          quantidadeDecoSmallTrunk, quantidadeDecoChao1, quantidadeDecoChao2, quantidadeDecoChao3, randomSX, randomSY,
+      map.mapSwamp(buffer, ALL_DOTS_Width, ALL_DOTS_Height, chao_swamp, small_trunk, chao1, chao2, chao3, chao4, chao5,
+          swamp1, swamp2, swamp3, swamp4,
+          quantidadeDecoSmallTrunk, quantidadeDecoChao1, quantidadeDecoChao2, quantidadeDecoChao3, quantidadeDecoChao4,
+          quantidadeDecoChao5, randomSX, randomSY,
           randomSX1, randomSY1, randomSX2, randomSY2, randomSX3, randomSY3, randomSX4, randomSY4, randomSX5, randomSY5,
-          randomSX6, randomSY6, randomSX7, randomSY7, quantidadeDecoSwamp1, quantidadeDecoSwamp2,
+          randomSX6, randomSY6, randomSX7, randomSY7, randomSX8, randomSY8, randomSX9, randomSY9, quantidadeDecoSwamp1,
+          quantidadeDecoSwamp2,
           quantidadeDecoSwamp3, quantidadeDecoSwamp4);
+      decoracaoComplexaAcima.Acima(buffer, spriteshetlago1, spriteshetlago2, spriteshetlago3);
     }
     if (MapDungeon) {
       map.mapDungeon(buffer, ALL_DOTS_Width, ALL_DOTS_Height, chao_dungeon, dragon_bone, skull_bone, tibia_bone,
@@ -874,6 +911,7 @@ public class Game extends JPanel implements Runnable {
             .ThisDecoration(snakeX, snakeY, DecoracaoX, DecoracaoY, WIDTH, HEIGHT));
 
     // Define as coordenadas da cabeça da cobra
+    // nodeSnake[0] = new Node(300, 300);
     nodeSnake[0] = new Node(snakeX, snakeY);
 
     // Inicializa o restante do corpo da cobra com as mesmas coordenadas da cabeça
@@ -959,6 +997,11 @@ public class Game extends JPanel implements Runnable {
     currentFrame9 = 0;
     currentFrame10 = 0;
     currentFrame11 = 0;
+    currentFrame12 = 0;
+    currentFrame13 = 0;
+    currentFrame14 = 0;
+    currentFrame15 = 0;
+    currentFrame16 = 0;
     if (timer != null) {
       timer.cancel();
       timer.purge();

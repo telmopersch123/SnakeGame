@@ -45,6 +45,11 @@ public class checkedColisson {
   private static Rectangle Willow3;
   private static Rectangle Yellow_ruins1;
   private static Rectangle spritesheetarvore1;
+  private static Rectangle spritesheetarvore2;
+  private static Rectangle spritesheetarvore3;
+  private static Rectangle spriteshetlago1;
+  private static Rectangle spriteshetlago2;
+  private static Rectangle spriteshetlago3;
 
   public static ResultadoColisao verificarColisao(boolean gameOver, int WIDTH, int HEIGHT, int FrameWidth,
       int FrameHeight,
@@ -464,6 +469,51 @@ public class checkedColisson {
               spritesheetarvore1 = new Rectangle(Game.DecoComplexoX[26] + 5,
                   Game.DecoComplexoY[26] + 45, 40, 25);
               if (headCollisionAreaDeco.intersects(spritesheetarvore1)) {
+                return true;
+              }
+            }
+            break;
+          case 26:
+            if (Game.DecoComplexoX.length > 27 && Game.DecoComplexoY.length > 27) {
+              spritesheetarvore2 = new Rectangle(Game.DecoComplexoX[27] + 5,
+                  Game.DecoComplexoY[27] + 65, 50, 35);
+              if (headCollisionAreaDeco.intersects(spritesheetarvore2)) {
+                return true;
+              }
+            }
+            break;
+          case 27:
+            if (Game.DecoComplexoX.length > 28 && Game.DecoComplexoY.length > 28) {
+              spritesheetarvore3 = new Rectangle(Game.DecoComplexoX[28] + 5,
+                  Game.DecoComplexoY[28] + 100, 40, 30);
+              if (headCollisionAreaDeco.intersects(spritesheetarvore3)) {
+                return true;
+              }
+            }
+            break;
+          case 28:
+            if (Game.DecoComplexoX.length > 29 && Game.DecoComplexoY.length > 29) {
+              spriteshetlago1 = new Rectangle(Game.DecoComplexoX[29] + 25,
+                  Game.DecoComplexoY[29] + 25, 100, 100);
+              if (headCollisionAreaDeco.intersects(spriteshetlago1)) {
+                return true;
+              }
+            }
+            break;
+          case 29:
+            if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
+              spriteshetlago2 = new Rectangle(Game.DecoComplexoX[30] + 25,
+                  Game.DecoComplexoY[30] + 25, 100, 100);
+              if (headCollisionAreaDeco.intersects(spriteshetlago2)) {
+                return true;
+              }
+            }
+            break;
+          case 30:
+            if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
+              spriteshetlago3 = new Rectangle(Game.DecoComplexoX[31] + 25,
+                  Game.DecoComplexoY[31] + 25, 100, 100);
+              if (headCollisionAreaDeco.intersects(spriteshetlago3)) {
                 return true;
               }
             }
