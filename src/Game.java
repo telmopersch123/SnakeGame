@@ -113,6 +113,9 @@ public class Game extends JPanel implements Runnable {
   Image dragon_bone;
   Image skull_bone;
   Image tibia_bone;
+  Image gold1;
+  Image gold2;
+  Image gold3;
   //////
   private boolean VerificDistance = false;
   boolean gameOver = false;
@@ -178,6 +181,9 @@ public class Game extends JPanel implements Runnable {
   public static int PosColidianPoisonY = 0;
   public static int PosColidianClassicX = 0;
   public static int PosColidianClassicY = 0;
+  public static int currentFrame19 = 0;
+  public static int currentFrame18 = 0;
+  public static int currentFrame17 = 0;
   public static int currentFrame16 = 0;
   public static int currentFrame15 = 0;
   public static int currentFrame14 = 0;
@@ -207,8 +213,8 @@ public class Game extends JPanel implements Runnable {
   public static int positionY;
   public static Graphics2D g2d;
   public static boolean NewButtonGame;
-  public static boolean MapDungeon = false;
-  public static boolean MapSwamp = true;
+  public static boolean MapDungeon = true;
+  public static boolean MapSwamp = false;
   public static boolean MapField = false;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
@@ -216,6 +222,9 @@ public class Game extends JPanel implements Runnable {
   private static int quantidadeDecoChao3;
   private static int quantidadeDecoChao4;
   private static int quantidadeDecoChao5;
+  private static int quantidadeDecoGold1;
+  private static int quantidadeDecoGold2;
+  private static int quantidadeDecoGold3;
   static int[] randomSX = new int[7];
   static int[] randomSY = new int[7];
   static int[] randomSX1 = new int[2];
@@ -227,10 +236,10 @@ public class Game extends JPanel implements Runnable {
   ///
   static int[] randomDX = new int[1];
   static int[] randomDY = new int[1];
-  static int[] randomDX1 = new int[10];
-  static int[] randomDY1 = new int[10];
-  static int[] randomDX2 = new int[10];
-  static int[] randomDY2 = new int[10];
+  static int[] randomDX1 = new int[15];
+  static int[] randomDY1 = new int[15];
+  static int[] randomDX2 = new int[15];
+  static int[] randomDY2 = new int[15];
   static int[] randomSX4 = new int[16];
   static int[] randomSY4 = new int[16];
   static int[] randomSX5 = new int[16];
@@ -243,6 +252,12 @@ public class Game extends JPanel implements Runnable {
   static int[] randomSY8 = new int[10];
   static int[] randomSX9 = new int[10];
   static int[] randomSY9 = new int[10];
+  static int[] randomDX3 = new int[10];
+  static int[] randomDY3 = new int[10];
+  static int[] randomDX4 = new int[10];
+  static int[] randomDY4 = new int[10];
+  static int[] randomDX5 = new int[10];
+  static int[] randomDY5 = new int[10];
   public static int[] DecoracaoX = new int[0];
   public static int[] DecoracaoY = new int[0];
   public static int[] DecoComplexoX = new int[0];
@@ -320,6 +335,9 @@ public class Game extends JPanel implements Runnable {
     spriteshetlago3 = imagens[38];
     chao4 = imagens[39];
     chao5 = imagens[40];
+    gold1 = imagens[41];
+    gold2 = imagens[42];
+    gold3 = imagens[43];
     ///////////////////////////////////
     initializeKeyListener();
 
@@ -374,13 +392,13 @@ public class Game extends JPanel implements Runnable {
       quantidadeDeco = (int) (Math.random() * 3 + 1);
       quantidadeDeco2 = (int) (Math.random() * 4 + 1);
       for (int i = 0; i < quantidadeDeco; i++) {
-        randomX[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomY[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomX[i] = random.nextInt(ALL_DOTS_Width);
+        randomY[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDeco2; i++) {
-        randomX2[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomY2[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomX2[i] = random.nextInt(ALL_DOTS_Width);
+        randomY2[i] = random.nextInt(ALL_DOTS_Height);
       }
     }
     if (MapSwamp) {
@@ -396,54 +414,55 @@ public class Game extends JPanel implements Runnable {
       quantidadeDecoSwamp2 = (int) (Math.random() * 10 + 5);
       quantidadeDecoSwamp3 = (int) (Math.random() * 10 + 5);
       quantidadeDecoSwamp4 = (int) (Math.random() * 10 + 5);
+
       for (int i = 0; i < quantidadeDecoSmallTrunk; i++) {
-        randomSX[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDecoChao1; i++) {
-        randomSX1[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY1[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX1[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY1[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDecoChao2; i++) {
-        randomSX2[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY2[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX2[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY2[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDecoChao3; i++) {
-        randomSX3[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY3[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX3[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY3[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDecoChao4; i++) {
-        randomSX8[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY8[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX8[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY8[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDecoChao5; i++) {
-        randomSX9[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY9[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX9[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY9[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDecoSwamp1; i++) {
-        randomSX4[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY4[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX4[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY4[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDecoSwamp2; i++) {
-        randomSX5[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY5[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX5[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY5[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDecoSwamp3; i++) {
-        randomSX6[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY6[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX6[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY6[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
       for (int i = 0; i < quantidadeDecoSwamp4; i++) {
-        randomSX7[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomSY7[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomSX7[i] = random.nextInt(ALL_DOTS_Width);
+        randomSY7[i] = random.nextInt(ALL_DOTS_Height);
       }
       ///
     }
@@ -451,19 +470,34 @@ public class Game extends JPanel implements Runnable {
 
       ////// Dungeon
       quantidadeDecoDragonBone = (int) (Math.random() * 1 + 1);
-      quantidadeDecoSkullBone = (int) (Math.random() * 10 + 1);
-      quantidadeDecoTibiaBone = (int) (Math.random() * 10 + 1);
+      quantidadeDecoSkullBone = (int) (Math.random() * 10 + 5);
+      quantidadeDecoTibiaBone = (int) (Math.random() * 10 + 5);
+      quantidadeDecoGold1 = (int) (Math.random() * 6 + 3);
+      quantidadeDecoGold2 = (int) (Math.random() * 6 + 3);
+      quantidadeDecoGold3 = (int) (Math.random() * 6 + 3);
       for (int i = 0; i < quantidadeDecoDragonBone; i++) {
-        randomDX[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomDY[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomDX[i] = random.nextInt(ALL_DOTS_Width);
+        randomDY[i] = random.nextInt(ALL_DOTS_Height);
       }
       for (int i = 0; i < quantidadeDecoSkullBone; i++) {
-        randomDX1[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomDY1[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomDX1[i] = random.nextInt(ALL_DOTS_Width);
+        randomDY1[i] = random.nextInt(ALL_DOTS_Height);
       }
       for (int i = 0; i < quantidadeDecoTibiaBone; i++) {
-        randomDX2[i] = random.nextInt(ALL_DOTS_Width - 150);
-        randomDY2[i] = random.nextInt(ALL_DOTS_Height - 150);
+        randomDX2[i] = random.nextInt(ALL_DOTS_Width);
+        randomDY2[i] = random.nextInt(ALL_DOTS_Height);
+      }
+      for (int i = 0; i < quantidadeDecoGold1; i++) {
+        randomDX3[i] = random.nextInt(ALL_DOTS_Width);
+        randomDY3[i] = random.nextInt(ALL_DOTS_Height);
+      }
+      for (int i = 0; i < quantidadeDecoGold2; i++) {
+        randomDX4[i] = random.nextInt(ALL_DOTS_Width);
+        randomDY4[i] = random.nextInt(ALL_DOTS_Height);
+      }
+      for (int i = 0; i < quantidadeDecoGold3; i++) {
+        randomDX5[i] = random.nextInt(ALL_DOTS_Width);
+        randomDY5[i] = random.nextInt(ALL_DOTS_Height);
       }
     }
   }
@@ -610,9 +644,11 @@ public class Game extends JPanel implements Runnable {
       decoracaoComplexaAcima.Acima(buffer, spriteshetlago1, spriteshetlago2, spriteshetlago3);
     }
     if (MapDungeon) {
-      map.mapDungeon(buffer, ALL_DOTS_Width, ALL_DOTS_Height, chao_dungeon, dragon_bone, skull_bone, tibia_bone,
-          quantidadeDecoDragonBone, quantidadeDecoSkullBone, quantidadeDecoTibiaBone, randomDX, randomDY, randomDX1,
-          randomDY1, randomDX2, randomDY2);
+      map.mapDungeon(buffer, ALL_DOTS_Width, ALL_DOTS_Height, chao_dungeon, dragon_bone, skull_bone, tibia_bone, gold1,
+          gold2, gold3,
+          quantidadeDecoDragonBone, quantidadeDecoSkullBone, quantidadeDecoTibiaBone,
+          quantidadeDecoGold1, quantidadeDecoGold2, quantidadeDecoGold3, randomDX, randomDY, randomDX1,
+          randomDY1, randomDX2, randomDY2, randomDX3, randomDY3, randomDX4, randomDY4, randomDX5, randomDY5);
     }
 
     // Desenha a COBRA
@@ -633,7 +669,7 @@ public class Game extends JPanel implements Runnable {
       decoracao.decoracaoSwamp(buffer);
     }
     if (MapDungeon) {
-      decoracao.decoracaoDungeon();
+      decoracao.decoracaoDungeon(buffer);
     }
 
     // Desenha as animação do jogo
@@ -908,7 +944,7 @@ public class Game extends JPanel implements Runnable {
     } while (tooCloseToWallSnake
         || CollisionUtils.ThisNearBorder(snakeX, snakeY, FrameWidth, FrameHeight, WIDTH, HEIGHT)
         || CollisionUtils.ThisNearWalls(snakeX, snakeY, walls_x, walls_y, WIDTH, HEIGHT) || CollisionUtils
-            .ThisDecoration(snakeX, snakeY, DecoracaoX, DecoracaoY, WIDTH, HEIGHT));
+            .ThisDecoration(snakeX, snakeY, DecoracaoX, DecoracaoY, DecoComplexoY, DecoComplexoX, WIDTH, HEIGHT));
 
     // Define as coordenadas da cabeça da cobra
     // nodeSnake[0] = new Node(300, 300);
@@ -937,7 +973,6 @@ public class Game extends JPanel implements Runnable {
       walls_y = walls.get(1);
     }
 
-    StartSnake();
     Location_deco();
     ValueFinal = 0;
     ValueDecoComplexo = 0;
@@ -949,6 +984,7 @@ public class Game extends JPanel implements Runnable {
     Game.DecoComplexoX = new int[0];
     Game.DecoComplexoY = new int[0];
     decoracao.posicoesDeco(FrameWidth, FrameHeight, ALL_DOTS_Width, ALL_DOTS_Height, walls_x, walls_y);
+    StartSnake();
     ArrayList<Point> foodPositions = LocaleUtils.LocateFood(FrameWidth, FrameHeight, WIDTH, HEIGHT, walls_x, walls_y,
         nodeSnake);
     if (foodPositions.size() >= 2) {
@@ -1002,6 +1038,9 @@ public class Game extends JPanel implements Runnable {
     currentFrame14 = 0;
     currentFrame15 = 0;
     currentFrame16 = 0;
+    currentFrame17 = 0;
+    currentFrame18 = 0;
+    currentFrame19 = 0;
     if (timer != null) {
       timer.cancel();
       timer.purge();

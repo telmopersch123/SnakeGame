@@ -48,12 +48,19 @@ public class LocaleUtils {
           break;
         }
       }
-      if (Game.DecoracaoX != null && Game.DecoracaoY != null) {
-        for (int i = 0; i < Game.DecoracaoX.length; i++) {
+      /////
+      if (Game.DecoracaoX != null && Game.DecoracaoY != null && Game.DecoComplexoX != null
+          && Game.DecoComplexoY != null && Game.quantiComplexo != null) {
+        for (int i = 0; i < Game.ValueFinal; i++) {
+          if (i < Game.ValueDecoNormal) {
+            if (i < Game.DecoracaoX.length && i < Game.DecoracaoY.length) {
+              Decoracao = new Rectangle(Game.DecoracaoX[i],
+                  Game.DecoracaoY[i], 50, 50);
+            }
+          }
           if (i < Game.DecoComplexoX.length && i < Game.DecoComplexoY.length) {
-            Decoracao = new Rectangle(Game.DecoracaoX[i], Game.DecoracaoY[i], 50, 50);
             DecoracaoCom = new Rectangle(Game.DecoComplexoX[i],
-                Game.DecoComplexoY[i], 70, 70);
+                Game.DecoComplexoY[i], 132, 132);
           }
           Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], WIDTH, HEIGHT);
           Rectangle foodRect2 = new Rectangle(foodX[1], foodY[1], 30, 50);
@@ -72,6 +79,7 @@ public class LocaleUtils {
           }
         }
       }
+      ///////
       // Verifica se a comida está dentro ou muito próxima de alguma parede
       for (int i = 0; i < walls_x.size(); i++) {
         // Cria um retângulo para representar a parede atual

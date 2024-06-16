@@ -50,6 +50,7 @@ public class checkedColisson {
   private static Rectangle spriteshetlago1;
   private static Rectangle spriteshetlago2;
   private static Rectangle spriteshetlago3;
+  private static Rectangle spriteshetHcristal;
 
   public static ResultadoColisao verificarColisao(boolean gameOver, int WIDTH, int HEIGHT, int FrameWidth,
       int FrameHeight,
@@ -78,6 +79,10 @@ public class checkedColisson {
       }
     } else if (Game.MapSwamp) {
       if (colisaoDecoSwamp(nodeSnake, largerCollisionArea)) {
+        return new ResultadoColisao(true, false);
+      }
+    } else if (Game.MapDungeon) {
+      if (colisaoDecoDungeon(nodeSnake, largerCollisionArea)) {
         return new ResultadoColisao(true, false);
       }
     }
@@ -493,8 +498,8 @@ public class checkedColisson {
             break;
           case 28:
             if (Game.DecoComplexoX.length > 29 && Game.DecoComplexoY.length > 29) {
-              spriteshetlago1 = new Rectangle(Game.DecoComplexoX[29] + 25,
-                  Game.DecoComplexoY[29] + 25, 100, 100);
+              spriteshetlago1 = new Rectangle(Game.DecoComplexoX[29] + 45,
+                  Game.DecoComplexoY[29] + 45, 65, 65);
               if (headCollisionAreaDeco.intersects(spriteshetlago1)) {
                 return true;
               }
@@ -502,8 +507,8 @@ public class checkedColisson {
             break;
           case 29:
             if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
-              spriteshetlago2 = new Rectangle(Game.DecoComplexoX[30] + 25,
-                  Game.DecoComplexoY[30] + 25, 100, 100);
+              spriteshetlago2 = new Rectangle(Game.DecoComplexoX[30] + 45,
+                  Game.DecoComplexoY[30] + 45, 65, 65);
               if (headCollisionAreaDeco.intersects(spriteshetlago2)) {
                 return true;
               }
@@ -511,15 +516,39 @@ public class checkedColisson {
             break;
           case 30:
             if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
-              spriteshetlago3 = new Rectangle(Game.DecoComplexoX[31] + 25,
-                  Game.DecoComplexoY[31] + 25, 100, 100);
+              spriteshetlago3 = new Rectangle(Game.DecoComplexoX[31] + 45,
+                  Game.DecoComplexoY[31] + 45, 65, 65);
               if (headCollisionAreaDeco.intersects(spriteshetlago3)) {
+                return true;
+              }
+            }
+            break;
+          case 31:
+            if (Game.DecoComplexoX.length > 32 && Game.DecoComplexoY.length > 32) {
+              spriteshetHcristal = new Rectangle(Game.DecoComplexoX[32] + 18,
+                  Game.DecoComplexoY[32] + 48, 90, 60);
+              if (headCollisionAreaDeco.intersects(spriteshetHcristal)) {
                 return true;
               }
             }
             break;
           default:
             break;
+        }
+      }
+    }
+    return false;
+  }
+
+  private static boolean colisaoDecoDungeon(Node[] nodeSnake, int largerCollisionArea) {
+    headCollisionAreaDeco = new Rectangle(nodeSnake[0].x, nodeSnake[0].y, 15, 15);
+    if (Game.DecoracaoX != null && Game.DecoracaoY != null && Game.DecoComplexoX != null
+        && Game.DecoComplexoY != null && Game.quantiComplexo != null) {
+      for (int i = 0; i < Game.DecoracaoX.length; i++) {
+        Rectangle Decoracao = new Rectangle(Game.DecoracaoX[i], Game.DecoracaoY[i],
+            30, 30);
+        if (headCollisionAreaDeco.intersects(Decoracao)) {
+          return true;
         }
       }
     }

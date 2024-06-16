@@ -99,9 +99,12 @@ public class map {
   }
 
   public static void mapDungeon(BufferedImage buffer, int ALL_DOTS_Width, int ALL_DOTS_Height, Image chao_dungeon,
-      Image dragon_bone, Image skull_bone, Image tibia_bone, int quantidadeDecoDragonBone, int quantidadeDecoSkullBone,
-      int quantidadeDecoTibiaBone, int[] randomDX, int[] randomDY, int[] randomDX1, int[] randomDY1, int[] randomDX2,
-      int[] randomDY2) {
+      Image dragon_bone, Image skull_bone, Image tibia_bone, Image gold1, Image gold2, Image gold3,
+      int quantidadeDecoDragonBone, int quantidadeDecoSkullBone,
+      int quantidadeDecoTibiaBone, int quantidadeDecoGold1, int quantidadeDecoGold2, int quantidadeDecoGold3,
+      int[] randomDX, int[] randomDY, int[] randomDX1, int[] randomDY1, int[] randomDX2,
+      int[] randomDY2, int[] randomDX3, int[] randomDY3, int[] randomDX4, int[] randomDY4, int[] randomDX5,
+      int[] randomDY5) {
     g2d = buffer.createGraphics();
     try {
       bufferedImage = (BufferedImage) chao_dungeon;
@@ -123,6 +126,15 @@ public class map {
       }
       for (int i = 0; i < quantidadeDecoDragonBone; i++) {
         g2d.drawImage(dragon_bone, randomDX[i], randomDY[i], 212, 176, null);
+      }
+      for (int i = 0; i < quantidadeDecoGold1; i++) {
+        g2d.drawImage(gold1, randomDX3[i], randomDY3[i], 72, 34, null);
+      }
+      for (int i = 0; i < quantidadeDecoGold2; i++) {
+        g2d.drawImage(gold2, randomDX4[i], randomDY4[i], 55, 33, null);
+      }
+      for (int i = 0; i < quantidadeDecoGold3; i++) {
+        g2d.drawImage(gold3, randomDX5[i], randomDY5[i], 40, 32, null);
       }
     } finally {
       g2d.dispose();

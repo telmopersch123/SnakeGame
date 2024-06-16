@@ -2,6 +2,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class CollisionUtils {
+  static Rectangle imageRect;
+  static Rectangle imageRectComplexa;
+
   public static boolean ThisNearBorder(int x, int y, int FrameWidth, int FrameHeight, int WIDTH, int HEIGHT) {
     return x < 50 || x > FrameWidth - 50 || y < 50 || y > FrameHeight - 50;
   }
@@ -17,18 +20,25 @@ public class CollisionUtils {
     return false;
   }
 
-  public static boolean ThisDecoration(int x, int y, int[] DecoracaoX, int[] DecoracaoY, int WIDTH, int HEIGHT) {
-    for (int i = 0; i < DecoracaoX.length; i++) {
-      Rectangle imageRect = new Rectangle(DecoracaoX[i], DecoracaoY[i], 70, 70);
+  public static boolean ThisDecoration(int x, int y, int[] DecoracaoX, int[] DecoracaoY, int[] DecoComplexoY,
+      int[] DecoComplexoX, int WIDTH, int HEIGHT) {
+    if (Game.DecoracaoX != null && Game.DecoracaoY != null && Game.DecoComplexoX != null
+        && Game.DecoComplexoY != null && Game.quantiComplexo != null) {
       Rectangle snakeRect = new Rectangle(x, y, WIDTH, HEIGHT);
-      if (imageRect.intersects(snakeRect) || distance(x, y, DecoracaoX[i], DecoracaoY[i]) < 200) {
-        return true;
+      for (int i = 0; i < Game.ValueFinal; i++) {
+        if (i < Game.ValueDecoNormal) {
+          imageRect = new Rectangle(DecoracaoX[i], DecoracaoY[i], 70, 70);
+        }
+        imageRectComplexa = new Rectangle(DecoComplexoX[i], DecoComplexoY[i], 132, 132);
+        if (imageRect.intersects(snakeRect) || imageRectComplexa.intersects(snakeRect)) {
+          return true;
+        }
       }
     }
     return false;
   }
 
-  private static int distance(int x1, int y1, int x2, int y2) {
-    return (int) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-  }
+  // private static int distance(int x1, int y1, int x2, int y2) {
+  // return (int) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  // }
 }

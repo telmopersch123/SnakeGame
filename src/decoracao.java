@@ -77,6 +77,38 @@ public class decoracao {
   private static BufferedImage spriteshetlago1;
   private static BufferedImage spritsheethomemcristal;
 
+  private static BufferedImage Black_crystal1;
+
+  private static BufferedImage Blue_crystal1;
+
+  private static BufferedImage Green_crystal1;
+
+  private static BufferedImage Pink_crystal1;
+
+  private static BufferedImage Red_crystal1;
+
+  private static BufferedImage Violet_crystal1;
+
+  private static BufferedImage White_crystal2;
+
+  private static BufferedImage Yellow_green_crystal1;
+
+  private static BufferedImage skeleton;
+
+  private static BufferedImage skullcabra;
+
+  private static BufferedImage skullsheads;
+
+  private static BufferedImage skullsbirdy;
+
+  private static BufferedImage caixao1;
+
+  private static BufferedImage caixao2;
+
+  private static BufferedImage spritedungeonnormal;
+
+  private static BufferedImage firedungeon;
+
   static {
     try {
       // MAPA FIELD
@@ -186,6 +218,39 @@ public class decoracao {
           .read(new File("resources/map_swamp/obstaculos_complexos/spriteshetlago1.png"));
       spritsheethomemcristal = ImageIO
           .read(new File("resources/map_swamp/obstaculos_complexos/spritsheethomemcristal.png"));
+      // MAPA DUNGEON - DECORAÇÃO SIMPLES
+      Black_crystal1 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/Black_crystal1.png"));
+      Blue_crystal1 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/Blue_crystal1.png"));
+      Green_crystal1 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/Green_crystal1.png"));
+      Pink_crystal1 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/Pink_crystal1.png"));
+      Red_crystal1 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/Red_crystal1.png"));
+      Violet_crystal1 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/Violet_crystal1.png"));
+      White_crystal2 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/White_crystal2.png"));
+      Yellow_green_crystal1 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/Yellow_green_crystal1.png"));
+      skeleton = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/skeleton.png"));
+      skullcabra = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/skullcabra.png"));
+      skullsbirdy = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/skullsbirdy.png"));
+      skullsheads = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/skullsheads.png"));
+      caixao1 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/caixao1.png"));
+      caixao2 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/caixao2.png"));
+      spritedungeonnormal = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/spritedungeonnormal.png"));
+      firedungeon = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_normal/firedungeon.png"));
     } catch (IOException ex) {
       ex.printStackTrace();
     }
@@ -207,12 +272,12 @@ public class decoracao {
     } else if (Game.MapSwamp) {
       valueDecoSimples = 5;
     } else if (Game.MapDungeon) {
-      valueDecoSimples = 0;
+      valueDecoSimples = 16;
     }
     if (Game.MapField) {
       valueDecoComplexo = 12;
     } else if (Game.MapSwamp) {
-      valueDecoComplexo = 32;
+      valueDecoComplexo = 33;
     } else if (Game.MapDungeon) {
       valueDecoComplexo = 0;
     }
@@ -225,6 +290,7 @@ public class decoracao {
       Game.ValueFinal += Game.quanti.get(i);
       Game.ValueDecoNormal += Game.quanti.get(i);
     }
+
     ///
     for (int i = 0; i < valueDecoComplexo; i++) {
       Game.quantiComplexo.add(1);
@@ -233,7 +299,6 @@ public class decoracao {
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       Game.ValueFinal += Game.quantiComplexo.get(i);
     }
-
     if (Game.DecoracaoX != null && Game.DecoracaoY != null && Game.DecoComplexoX != null
         && Game.DecoComplexoY != null) {
       Game.DecoracaoX = new int[Game.ValueDecoNormal];
@@ -305,8 +370,6 @@ public class decoracao {
 
   public static int numFramesXMo = 6; // Ajuste conforme necessário
   public static int numFramesYMo = 1; // Supondo que todas as animações estão na mesma linha
-  public static int frameWidthMo = 200; // Largura do frame redimensionado
-  public static int frameHeightMo = 330; // Altura do frame redimensionado
   private static int frameIntervalMo = 1000;
   public static int totalFramesMo = numFramesXMo * numFramesYMo;
   public static long currentTimeMoinho = System.currentTimeMillis();
@@ -315,8 +378,6 @@ public class decoracao {
   ///
   public static int numFramesXBan = 6; // Ajuste conforme necessário
   public static int numFramesYBan = 1; // Supondo que todas as animações estão na mesma linha
-  public static int frameWidthBan = 200; // Largura do frame redimensionado
-  public static int frameHeightBan = 330; // Altura do frame redimensionado
   private static int frameIntervalBan = 1000;
   public static int totalFramesBan = numFramesXBan * numFramesYBan;
   public static long currentTimeBandeira = System.currentTimeMillis();
@@ -326,24 +387,39 @@ public class decoracao {
   public static Graphics2D ImagemArvore1;
   public static Graphics2D ImagemArvore2;
   public static Graphics2D ImagemArvore3;
-
+  public static Graphics2D ImagemCris;
+  public static Graphics2D fireFogo;
+  public static Graphics2D vulcanfire;
   public static int numFramesXArv = 6; // Ajuste conforme necessário
   public static int numFramesYArv = 1; // Supondo que todas as animações estão na mesma linha
-  public static int frameWidthArv = 500; // Largura do frame redimensionado
-  public static int frameHeightArv = 500; // Altura do frame redimensionado
+  public static int numFramesXCris = 3;
+  public static int numFramesYCris = 9;
+  public static int numFramesXfire = 7;
+  public static int numFramesYfire = 7;
+  public static int numFramesXvulcan = 6;
+  public static int numFramesYvulcan = 2;
   private static int frameIntervalArv = 100;
   private static int frameIntervalArv1 = 100;
   private static int frameIntervalArv2 = 100;
-
+  private static int frameIntervalcris = 100;
+  private static int frameIntervalfire = 50;
+  private static int frameIntervalvulcan = 50;
   public static int totalFramesArv = numFramesXArv * numFramesYArv;
-
+  public static int totalFramescris = numFramesXCris * numFramesYCris;
+  public static int totalFramesfire = numFramesXfire * numFramesYfire;
+  public static int totalFramesvulcan = numFramesXvulcan * numFramesYvulcan;
   public static long currentTimeArv = System.currentTimeMillis();
   public static long currentTimeArv1 = System.currentTimeMillis();
   public static long currentTimeArv2 = System.currentTimeMillis();
-
+  public static long currentTimecris = System.currentTimeMillis();
+  public static long currentTimefire = System.currentTimeMillis();
+  public static long currentTimevulcan = System.currentTimeMillis();
   private static long lastFrameTimeArv = 0;
   private static long lastFrameTimeArv1 = 0;
   private static long lastFrameTimeArv2 = 0;
+  private static long lastFrameTimecris = 0;
+  private static long lastFrameTimefire = 0;
+  private static long lastFrameTimevulcan = 0;
 
   public static void decoracaoField(BufferedImage buffer) {
     g2d = buffer.createGraphics();
@@ -833,6 +909,36 @@ public class decoracao {
           case 30:
             //////
             break;
+          case 31:
+            if (Game.DecoComplexoX.length > 32 && Game.DecoComplexoY.length > 32) {
+              BufferedImage homemcristal = (BufferedImage) spritsheethomemcristal;
+              int sxc = (Game.currentFrame17 % numFramesXCris) * (homemcristal.getWidth() /
+                  numFramesXCris);
+              int syc = (Game.currentFrame17 / numFramesXCris) * (homemcristal.getHeight() /
+                  numFramesYCris);
+              int swc = homemcristal.getWidth() / numFramesXCris;
+              int shc = homemcristal.getHeight() / numFramesYCris;
+              ImagemCris = buffer.createGraphics();
+              AffineTransform atc = new AffineTransform();
+              atc.scale((double) (128 + 2) / swc, (double) (128 + 2) / shc);
+              // Create an AffineTransformOp object with the AffineTransform
+              AffineTransformOp opc = new AffineTransformOp(atc,
+                  AffineTransformOp.TYPE_BILINEAR);
+              // Apply the transform to the image
+              BufferedImage scaledImagecris = opc.filter(homemcristal.getSubimage(sxc, syc, swc,
+                  shc),
+                  null);
+              ImagemCris.drawImage(scaledImagecris,
+                  Game.DecoComplexoX[32],
+                  Game.DecoComplexoY[32], null);
+              long currentTimecris = System.currentTimeMillis();
+
+              if (currentTimecris - lastFrameTimecris >= frameIntervalcris) {
+                lastFrameTimecris = currentTimecris - (currentTimecris %
+                    frameIntervalcris);
+                Game.currentFrame17 = (Game.currentFrame17 + 1) % totalFramescris;
+              }
+            }
           default:
             break;
         }
@@ -844,8 +950,129 @@ public class decoracao {
     g2d.dispose();
   }
 
-  public static void decoracaoDungeon() {
+  public static void decoracaoDungeon(BufferedImage buffer) {
+    g2d = buffer.createGraphics();
+    imagens.clear();
+    int index = 0;
+    /// -Simples
+    for (int i = 0; i < Game.quanti.get(0); i++) {
+      imagens.add(new Imagem(Black_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(1); i++) {
+      imagens.add(new Imagem(Blue_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(2); i++) {
+      imagens.add(new Imagem(Green_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(3); i++) {
+      imagens.add(new Imagem(Pink_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(4); i++) {
+      imagens.add(new Imagem(Red_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(5); i++) {
+      imagens.add(new Imagem(Violet_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(6); i++) {
+      imagens.add(new Imagem(White_crystal2, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(7); i++) {
+      imagens.add(new Imagem(Yellow_green_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(8); i++) {
+      imagens.add(new Imagem(skeleton, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(9); i++) {
+      imagens.add(new Imagem(skullcabra, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(10); i++) {
+      imagens.add(new Imagem(skullsbirdy, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(11); i++) {
+      imagens.add(new Imagem(skullsheads, Game.DecoracaoX[index], Game.DecoracaoY[index], 35, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(12); i++) {
+      imagens.add(new Imagem(caixao1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(13); i++) {
+      imagens.add(new Imagem(caixao2, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(14); i++) {
+      BufferedImage fire = (BufferedImage) firedungeon;
+      int sx1 = (Game.currentFrame18 % numFramesXfire) * (fire.getWidth() /
+          numFramesXfire);
+      int sy1 = (Game.currentFrame18 / numFramesXfire) * (fire.getHeight() /
+          numFramesYfire);
+      int sw1 = fire.getWidth() / numFramesXfire;
+      int sh1 = fire.getHeight() / numFramesYfire;
+      fireFogo = buffer.createGraphics();
+      AffineTransform at1 = new AffineTransform();
+      at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
+      // Create an AffineTransformOp object with the AffineTransform
+      AffineTransformOp op1 = new AffineTransformOp(at1,
+          AffineTransformOp.TYPE_BILINEAR);
+      // Apply the transform to the image
+      BufferedImage scaledImage1 = op1.filter(fire.getSubimage(sx1, sy1, sw1,
+          sh1),
+          null);
+      fireFogo.drawImage(scaledImage1, Game.DecoracaoX[index],
+          Game.DecoracaoY[index], null);
+      long currentTimefire = System.currentTimeMillis();
 
+      if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
+        lastFrameTimefire = currentTimefire - (currentTimefire %
+            frameIntervalfire);
+        Game.currentFrame18 = (Game.currentFrame18 + 1) % totalFramesfire;
+      }
+      index++;
+    }
+    for (int i = 0; i < Game.quanti.get(15); i++) {
+      BufferedImage vulcan = (BufferedImage) spritedungeonnormal;
+      int sx1 = (Game.currentFrame19 % numFramesXvulcan) * (vulcan.getWidth() /
+          numFramesXvulcan);
+      int sy1 = (Game.currentFrame19 / numFramesXvulcan) * (vulcan.getHeight() /
+          numFramesYvulcan);
+      int sw1 = vulcan.getWidth() / numFramesXvulcan;
+      int sh1 = vulcan.getHeight() / numFramesYvulcan;
+      vulcanfire = buffer.createGraphics();
+      AffineTransform at1 = new AffineTransform();
+      at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
+      // Create an AffineTransformOp object with the AffineTransform
+      AffineTransformOp op1 = new AffineTransformOp(at1,
+          AffineTransformOp.TYPE_BILINEAR);
+      // Apply the transform to the image
+      BufferedImage scaledImage1 = op1.filter(vulcan.getSubimage(sx1, sy1, sw1,
+          sh1),
+          null);
+      vulcanfire.drawImage(scaledImage1, Game.DecoracaoX[index],
+          Game.DecoracaoY[index], null);
+      long currentTimevulcan = System.currentTimeMillis();
+
+      if (currentTimevulcan - lastFrameTimevulcan >= frameIntervalvulcan) {
+        lastFrameTimevulcan = currentTimevulcan - (currentTimevulcan %
+            frameIntervalvulcan);
+        Game.currentFrame19 = (Game.currentFrame19 + 1) % totalFramesvulcan;
+      }
+      index++;
+    }
+    for (Imagem imagem : imagens) {
+      g2d.drawImage(imagem.getImagem(), imagem.getX(), imagem.getY(), imagem.getWidth(), imagem.getHeight(), null);
+    }
+    g2d.dispose();
   }
 }
 
