@@ -153,7 +153,7 @@ public class decoracaoComplexaAcima {
       if (Game.quantiComplexo.get(i) > 0) {
         switch (i) {
           case 12:
-            if (Game.DecoComplexoX.length > 13 && Game.DecoComplexoY.length > 13) {
+            if (Game.DecoComplexoX.length > 19 && Game.DecoComplexoY.length > 19) {
               BufferedImage lava = (BufferedImage) lavaNormal;
               int sx1 = (Game.currentFrame23 % numFramesXlava) * (lava.getWidth()
                   /
@@ -175,8 +175,8 @@ public class decoracaoComplexaAcima {
                   sh1),
                   null);
               lavaLava.drawImage(scaledImage1,
-                  Game.DecoComplexoX[13],
-                  Game.DecoComplexoY[13], null);
+                  Game.DecoComplexoX[19],
+                  Game.DecoComplexoY[19], null);
               long currentTimelava = System.currentTimeMillis();
 
               if (currentTimelava - lastFrameTimelava >= frameIntervallava) {
@@ -188,7 +188,7 @@ public class decoracaoComplexaAcima {
             }
             break;
           case 13:
-            if (Game.DecoComplexoX.length > 14 && Game.DecoComplexoY.length > 14) {
+            if (Game.DecoComplexoX.length > 20 && Game.DecoComplexoY.length > 20) {
               BufferedImage lava1 = (BufferedImage) lavaSkull;
               int sx1 = (Game.currentFrame24 % numFramesXlava) * (lava1.getWidth()
                   /
@@ -210,8 +210,8 @@ public class decoracaoComplexaAcima {
                   sh1),
                   null);
               lavaskull.drawImage(scaledImage1,
-                  Game.DecoComplexoX[14],
-                  Game.DecoComplexoY[14], null);
+                  Game.DecoComplexoX[20],
+                  Game.DecoComplexoY[20], null);
               long currentTimelava2 = System.currentTimeMillis();
 
               if (currentTimelava2 - lastFrameTimelava2 >= frameIntervallava2) {

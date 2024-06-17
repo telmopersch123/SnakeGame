@@ -1174,61 +1174,67 @@ public class decoracao {
             }
             break;
           case 3:
-            if (Game.DecoComplexoX.length > 4 && Game.DecoComplexoY.length > 4) {
-
-              imagens.add(new Imagem(
-                  picodungeon,
-                  Game.DecoComplexoX[4],
-                  Game.DecoComplexoY[4], 60, 100));
+            int pos = 4;
+            if (Game.DecoComplexoX.length > pos && Game.DecoComplexoY.length > pos) {
+              for (int y = 0; y < 4; y++) {
+                imagens.add(new Imagem(
+                    picodungeon,
+                    Game.DecoComplexoX[pos],
+                    Game.DecoComplexoY[pos], 60, 100));
+                pos++;
+              }
             }
             break;
           case 4:
-            if (Game.DecoComplexoX.length > 5 && Game.DecoComplexoY.length > 5) {
-
-              imagens.add(new Imagem(
-                  picomedio,
-                  Game.DecoComplexoX[5],
-                  Game.DecoComplexoY[5], 39, 63));
-            }
-            break;
-          case 5:
-            if (Game.DecoComplexoX.length > 6 && Game.DecoComplexoY.length > 6) {
-
-              imagens.add(new Imagem(
-                  pilardungeon,
-                  Game.DecoComplexoX[6],
-                  Game.DecoComplexoY[6], 75, 90));
-            }
-            break;
-          case 6:
-            if (Game.DecoComplexoX.length > 7 && Game.DecoComplexoY.length > 7) {
-
-              imagens.add(new Imagem(
-                  skullcostela,
-                  Game.DecoComplexoX[7],
-                  Game.DecoComplexoY[7], 60, 92));
-            }
-            break;
-          case 7:
             if (Game.DecoComplexoX.length > 8 && Game.DecoComplexoY.length > 8) {
 
               imagens.add(new Imagem(
-                  templedungeon,
+                  picomedio,
                   Game.DecoComplexoX[8],
-                  Game.DecoComplexoY[8], 90, 115));
+                  Game.DecoComplexoY[8], 39, 63));
+            }
+            break;
+          case 5:
+            int pos1 = 9;
+            if (Game.DecoComplexoX.length > pos1 && Game.DecoComplexoY.length > pos1) {
+              for (int y = 0; y < 4; y++) {
+                imagens.add(new Imagem(
+                    pilardungeon,
+                    Game.DecoComplexoX[pos1],
+                    Game.DecoComplexoY[pos1], 75, 90));
+                pos1++;
+              }
+            }
+            break;
+          case 6:
+            if (Game.DecoComplexoX.length > 13 && Game.DecoComplexoY.length > 13) {
+
+              imagens.add(new Imagem(
+                  skullcostela,
+                  Game.DecoComplexoX[13],
+                  Game.DecoComplexoY[13], 60, 92));
+            }
+            break;
+          case 7:
+            if (Game.DecoComplexoX.length > 14 && Game.DecoComplexoY.length > 14) {
+
+              imagens.add(new Imagem(
+                  templedungeon,
+                  Game.DecoComplexoX[14],
+                  Game.DecoComplexoY[14], 90, 115));
             }
             break;
           case 8:
-            if (Game.DecoComplexoX.length > 9 && Game.DecoComplexoY.length > 9) {
+            if (Game.DecoComplexoX.length > 15 && Game.DecoComplexoY.length > 15) {
 
               imagens.add(new Imagem(
                   swordskeleton,
-                  Game.DecoComplexoX[9],
-                  Game.DecoComplexoY[9], 40, 60));
+                  Game.DecoComplexoX[15],
+                  Game.DecoComplexoY[15], 40, 60));
             }
             break;
           case 9:
-            if (Game.DecoComplexoX.length > 10 && Game.DecoComplexoY.length > 10) {
+            if (Game.DecoComplexoX.length > 16 && Game.DecoComplexoY.length > 16) {
               BufferedImage skullTemple1 = (BufferedImage) spritesheetskull1;
               int sx1 = (Game.currentFrame20 % numFramesXtemple) * (skullTemple1.getWidth()
                   /
@@ -1250,8 +1256,8 @@ public class decoracao {
                   sh1),
                   null);
               temple1.drawImage(scaledImage1,
-                  Game.DecoComplexoX[10],
-                  Game.DecoComplexoX[10], null);
+                  Game.DecoComplexoX[16],
+                  Game.DecoComplexoY[16], null);
               long currentTimeTemple1 = System.currentTimeMillis();
 
               if (currentTimeTemple1 - lastFrameTimetemple >= frameIntervaltemple) {
@@ -1263,7 +1269,7 @@ public class decoracao {
             }
             break;
           case 10:
-            if (Game.DecoComplexoX.length > 11 && Game.DecoComplexoY.length > 11) {
+            if (Game.DecoComplexoX.length > 17 && Game.DecoComplexoY.length > 17) {
               BufferedImage skullTemple2 = (BufferedImage) spritesheetskull2;
               int sx1 = (Game.currentFrame21 % numFramesXtemple) * (skullTemple2.getWidth()
                   /
@@ -1284,8 +1290,8 @@ public class decoracao {
                   sw1,
                   sh1),
                   null);
-              temple2.drawImage(scaledImage1, Game.DecoComplexoX[11],
-                  Game.DecoComplexoY[11], null);
+              temple2.drawImage(scaledImage1, Game.DecoComplexoX[17],
+                  Game.DecoComplexoY[17], null);
               long currentTimeTemple2 = System.currentTimeMillis();
 
               if (currentTimeTemple2 - lastFrameTimetemple1 >= frameIntervaltemple1) {
@@ -1297,7 +1303,7 @@ public class decoracao {
             }
             break;
           case 11:
-            if (Game.DecoComplexoX.length > 12 && Game.DecoComplexoY.length > 12) {
+            if (Game.DecoComplexoX.length > 18 && Game.DecoComplexoY.length > 18) {
               BufferedImage skullTemple3 = (BufferedImage) spritesheetskull3;
               int sx1 = (Game.currentFrame22 % numFramesXtemple) * (skullTemple3.getWidth()
                   /
@@ -1319,8 +1325,8 @@ public class decoracao {
                   sh1),
                   null);
               temple3.drawImage(scaledImage1,
-                  Game.DecoComplexoX[12],
-                  Game.DecoComplexoY[12], null);
+                  Game.DecoComplexoX[18],
+                  Game.DecoComplexoY[18], null);
               long currentTimeTemple3 = System.currentTimeMillis();
 
               if (currentTimeTemple3 - lastFrameTimetemple2 >= frameIntervaltemple2) {

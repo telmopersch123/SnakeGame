@@ -60,9 +60,9 @@ public class LocaleUtils {
           }
           if (i < Game.DecoComplexoX.length && i < Game.DecoComplexoY.length) {
             DecoracaoCom = new Rectangle(Game.DecoComplexoX[i],
-                Game.DecoComplexoY[i], 132, 132);
+                Game.DecoComplexoY[i], 152, 152);
           }
-          Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], WIDTH, HEIGHT);
+          Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], 15, 15);
           Rectangle foodRect2 = new Rectangle(foodX[1], foodY[1], 30, 50);
           Rectangle foodRect3 = new Rectangle(foodX[2], foodY[2], 30, 30);
           if (foodRect1.intersects(Decoracao) || foodRect1.contains(Decoracao) ||

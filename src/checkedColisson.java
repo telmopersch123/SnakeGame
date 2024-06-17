@@ -584,99 +584,107 @@ public class checkedColisson {
             }
             break;
           case 3:
-            if (Game.DecoComplexoX.length > 4 && Game.DecoComplexoY.length > 4) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[4] + 5,
-                  Game.DecoComplexoY[4] + 20, 55, 80);
-              if (headCollisionAreaDeco.intersects(complexasDungeon)) {
-                return true;
+            int pos = 4;
+            if (Game.DecoComplexoX.length > pos && Game.DecoComplexoY.length > pos) {
+              for (int y = 0; y < 4; y++) {
+                complexasDungeon = new Rectangle(Game.DecoComplexoX[pos] + 5,
+                    Game.DecoComplexoY[pos] + 20, 55, 80);
+                if (headCollisionAreaDeco.intersects(complexasDungeon)) {
+                  return true;
+                }
+                pos++;
               }
             }
             break;
           case 4:
-            if (Game.DecoComplexoX.length > 5 && Game.DecoComplexoY.length > 5) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[5] + 9,
-                  Game.DecoComplexoY[5] + 23, 30, 40);
+            if (Game.DecoComplexoX.length > 8 && Game.DecoComplexoY.length > 8) {
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[8] + 9,
+                  Game.DecoComplexoY[8] + 23, 30, 40);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
             }
             break;
           case 5:
-            if (Game.DecoComplexoX.length > 6 && Game.DecoComplexoY.length > 6) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[6] + 4,
-                  Game.DecoComplexoY[6] + 25, 65, 60);
-              if (headCollisionAreaDeco.intersects(complexasDungeon)) {
-                return true;
+            int pos1 = 9;
+            if (Game.DecoComplexoX.length > pos1 && Game.DecoComplexoY.length > pos1) {
+              for (int y = 0; y < 4; y++) {
+                complexasDungeon = new Rectangle(Game.DecoComplexoX[pos1] + 4,
+                    Game.DecoComplexoY[pos1] + 25, 65, 60);
+                if (headCollisionAreaDeco.intersects(complexasDungeon)) {
+                  return true;
+                }
+                pos1++;
               }
             }
             break;
           case 6:
-            if (Game.DecoComplexoX.length > 7 && Game.DecoComplexoY.length > 7) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[7] + 5,
-                  Game.DecoComplexoY[7] + 30, 55, 62);
+            if (Game.DecoComplexoX.length > 13 && Game.DecoComplexoY.length > 13) {
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[13] + 5,
+                  Game.DecoComplexoY[13] + 30, 55, 62);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
             }
             break;
           case 7:
-            if (Game.DecoComplexoX.length > 8 && Game.DecoComplexoY.length > 8) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[8] + 4,
-                  Game.DecoComplexoY[8] + 35, 36, 25);
+            if (Game.DecoComplexoX.length > 14 && Game.DecoComplexoY.length > 14) {
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[14] + 4,
+                  Game.DecoComplexoY[14] + 35, 36, 25);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
             }
             break;
           case 8:
-            if (Game.DecoComplexoX.length > 9 && Game.DecoComplexoY.length > 9) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[9] + 4,
-                  Game.DecoComplexoY[9] + 35, 36, 25);
+            if (Game.DecoComplexoX.length > 15 && Game.DecoComplexoY.length > 15) {
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[15] + 4,
+                  Game.DecoComplexoY[15] + 35, 36, 25);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
             }
             break;
           case 9:
-            if (Game.DecoComplexoX.length > 10 && Game.DecoComplexoY.length > 10) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[10] + 10,
-                  Game.DecoComplexoX[10] + 40, 45, 60);
+            if (Game.DecoComplexoX.length > 16 && Game.DecoComplexoY.length > 16) {
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[16] + 10,
+                  Game.DecoComplexoY[16] + 40, 45, 60);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
             }
             break;
           case 10:
-            if (Game.DecoComplexoX.length > 11 && Game.DecoComplexoY.length > 11) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[11] + 15,
-                  Game.DecoComplexoX[11] + 40, 50, 60);
+            if (Game.DecoComplexoX.length > 17 && Game.DecoComplexoY.length > 17) {
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[17] + 15,
+                  Game.DecoComplexoY[17] + 40, 50, 60);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
             }
             break;
           case 11:
-            if (Game.DecoComplexoX.length > 12 && Game.DecoComplexoY.length > 12) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[12] + 15,
-                  Game.DecoComplexoY[12] + 40, 50, 60);
+            if (Game.DecoComplexoX.length > 18 && Game.DecoComplexoY.length > 18) {
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[18] + 15,
+                  Game.DecoComplexoY[18] + 40, 50, 60);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
             }
             break;
           case 12:
-            if (Game.DecoComplexoX.length > 13 && Game.DecoComplexoY.length > 13) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[13] + 20,
-                  Game.DecoComplexoY[13] + 20, 115, 60);
+            if (Game.DecoComplexoX.length > 19 && Game.DecoComplexoY.length > 19) {
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[19] + 20,
+                  Game.DecoComplexoY[19] + 20, 115, 60);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
             }
             break;
           case 13:
-            if (Game.DecoComplexoX.length > 14 && Game.DecoComplexoY.length > 14) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[14] + 20,
-                  Game.DecoComplexoX[14] + 20, 115, 60);
+            if (Game.DecoComplexoX.length > 20 && Game.DecoComplexoY.length > 20) {
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[20] + 20,
+                  Game.DecoComplexoY[20] + 20, 115, 60);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
