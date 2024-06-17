@@ -109,6 +109,32 @@ public class decoracao {
 
   private static BufferedImage firedungeon;
 
+  private static BufferedImage arvoreskull;
+
+  private static BufferedImage craniodino;
+
+  private static BufferedImage espinhal;
+
+  private static BufferedImage picodungeon;
+
+  private static BufferedImage picomedio;
+
+  private static BufferedImage pilardungeon;
+
+  private static BufferedImage skullcostela;
+
+  private static BufferedImage swordskeleton;
+
+  private static BufferedImage templedungeon;
+
+  private static BufferedImage spritesheetskull1;
+
+  private static BufferedImage spritesheetskull2;
+
+  private static BufferedImage spritesheetskull3;
+
+  private static BufferedImage lavaNormal;
+
   static {
     try {
       // MAPA FIELD
@@ -251,6 +277,31 @@ public class decoracao {
           .read(new File("resources/map_dungeon/obstaculos_normal/spritedungeonnormal.png"));
       firedungeon = ImageIO
           .read(new File("resources/map_dungeon/obstaculos_normal/firedungeon.png"));
+      // MAPA DUNGEON - DECORAÇÃO COMPLEXA
+      arvoreskull = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/arvoreskull.png"));
+      craniodino = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/craniodino.png"));
+      espinhal = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/espinhal.png"));
+      picodungeon = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/picodungeon.png"));
+      picomedio = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/picomedio.png"));
+      pilardungeon = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/pilardungeon.png"));
+      skullcostela = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/skullcostela.png"));
+      swordskeleton = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/swordskeleton.png"));
+      templedungeon = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/templedungeon.png"));
+      spritesheetskull1 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/spritesheetskull1.png"));
+      spritesheetskull2 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/spritesheetskull2.png"));
+      spritesheetskull3 = ImageIO
+          .read(new File("resources/map_dungeon/obstaculos_complexos/spritesheetskull3.png"));
     } catch (IOException ex) {
       ex.printStackTrace();
     }
@@ -279,11 +330,12 @@ public class decoracao {
     } else if (Game.MapSwamp) {
       valueDecoComplexo = 33;
     } else if (Game.MapDungeon) {
-      valueDecoComplexo = 0;
+      valueDecoComplexo = 14;
     }
 
     for (int i = 0; i < valueDecoSimples; i++) {
       Game.quanti.add((int) (Math.random() * 3) + 1);
+
     }
 
     for (int i = 0; i < Game.quanti.size(); i++) {
@@ -390,6 +442,10 @@ public class decoracao {
   public static Graphics2D ImagemCris;
   public static Graphics2D fireFogo;
   public static Graphics2D vulcanfire;
+  public static Graphics2D temple1;
+  public static Graphics2D temple2;
+  public static Graphics2D temple3;
+
   public static int numFramesXArv = 6; // Ajuste conforme necessário
   public static int numFramesYArv = 1; // Supondo que todas as animações estão na mesma linha
   public static int numFramesXCris = 3;
@@ -398,28 +454,46 @@ public class decoracao {
   public static int numFramesYfire = 7;
   public static int numFramesXvulcan = 6;
   public static int numFramesYvulcan = 2;
+  public static int numFramesXtemple = 6;
+  public static int numFramesYtemple = 3;
+
   private static int frameIntervalArv = 100;
   private static int frameIntervalArv1 = 100;
   private static int frameIntervalArv2 = 100;
   private static int frameIntervalcris = 100;
   private static int frameIntervalfire = 50;
   private static int frameIntervalvulcan = 50;
+  private static int frameIntervaltemple = 100;
+  private static int frameIntervaltemple1 = 100;
+  private static int frameIntervaltemple2 = 100;
+
   public static int totalFramesArv = numFramesXArv * numFramesYArv;
   public static int totalFramescris = numFramesXCris * numFramesYCris;
   public static int totalFramesfire = numFramesXfire * numFramesYfire;
   public static int totalFramesvulcan = numFramesXvulcan * numFramesYvulcan;
+  public static int totalFramestemple = numFramesXtemple * numFramesYtemple;
+  public static int totalFramestemple1 = numFramesXtemple * numFramesYtemple;
+  public static int totalFramestemple2 = numFramesXtemple * numFramesYtemple;
+
   public static long currentTimeArv = System.currentTimeMillis();
   public static long currentTimeArv1 = System.currentTimeMillis();
   public static long currentTimeArv2 = System.currentTimeMillis();
   public static long currentTimecris = System.currentTimeMillis();
   public static long currentTimefire = System.currentTimeMillis();
   public static long currentTimevulcan = System.currentTimeMillis();
+  public static long currentTimetemple1 = System.currentTimeMillis();
+  public static long currentTimetemple2 = System.currentTimeMillis();
+  public static long currentTimetemple3 = System.currentTimeMillis();
+
   private static long lastFrameTimeArv = 0;
   private static long lastFrameTimeArv1 = 0;
   private static long lastFrameTimeArv2 = 0;
   private static long lastFrameTimecris = 0;
   private static long lastFrameTimefire = 0;
   private static long lastFrameTimevulcan = 0;
+  private static long lastFrameTimetemple = 0;
+  private static long lastFrameTimetemple1 = 0;
+  private static long lastFrameTimetemple2 = 0;
 
   public static void decoracaoField(BufferedImage buffer) {
     g2d = buffer.createGraphics();
@@ -1068,6 +1142,205 @@ public class decoracao {
         Game.currentFrame19 = (Game.currentFrame19 + 1) % totalFramesvulcan;
       }
       index++;
+    }
+    for (int i = 0; i < Game.quantiComplexo.size(); i++) {
+      if (Game.quantiComplexo.get(i) > 0) {
+        switch (i) {
+          case 0:
+            if (Game.DecoComplexoX.length > 1 && Game.DecoComplexoY.length > 1) {
+
+              imagens.add(new Imagem(
+                  arvoreskull,
+                  Game.DecoComplexoX[1],
+                  Game.DecoComplexoY[1], 64, 92));
+            }
+            break;
+          case 1:
+            if (Game.DecoComplexoX.length > 2 && Game.DecoComplexoY.length > 2) {
+
+              imagens.add(new Imagem(
+                  craniodino,
+                  Game.DecoComplexoX[2],
+                  Game.DecoComplexoY[2], 100, 92));
+            }
+            break;
+          case 2:
+            if (Game.DecoComplexoX.length > 3 && Game.DecoComplexoY.length > 3) {
+
+              imagens.add(new Imagem(
+                  espinhal,
+                  Game.DecoComplexoX[3],
+                  Game.DecoComplexoY[3], 48, 49));
+            }
+            break;
+          case 3:
+            if (Game.DecoComplexoX.length > 4 && Game.DecoComplexoY.length > 4) {
+
+              imagens.add(new Imagem(
+                  picodungeon,
+                  Game.DecoComplexoX[4],
+                  Game.DecoComplexoY[4], 60, 100));
+            }
+            break;
+          case 4:
+            if (Game.DecoComplexoX.length > 5 && Game.DecoComplexoY.length > 5) {
+
+              imagens.add(new Imagem(
+                  picomedio,
+                  Game.DecoComplexoX[5],
+                  Game.DecoComplexoY[5], 39, 63));
+            }
+            break;
+          case 5:
+            if (Game.DecoComplexoX.length > 6 && Game.DecoComplexoY.length > 6) {
+
+              imagens.add(new Imagem(
+                  pilardungeon,
+                  Game.DecoComplexoX[6],
+                  Game.DecoComplexoY[6], 75, 90));
+            }
+            break;
+          case 6:
+            if (Game.DecoComplexoX.length > 7 && Game.DecoComplexoY.length > 7) {
+
+              imagens.add(new Imagem(
+                  skullcostela,
+                  Game.DecoComplexoX[7],
+                  Game.DecoComplexoY[7], 60, 92));
+            }
+            break;
+          case 7:
+            if (Game.DecoComplexoX.length > 8 && Game.DecoComplexoY.length > 8) {
+
+              imagens.add(new Imagem(
+                  templedungeon,
+                  Game.DecoComplexoX[8],
+                  Game.DecoComplexoY[8], 90, 115));
+            }
+            break;
+          case 8:
+            if (Game.DecoComplexoX.length > 9 && Game.DecoComplexoY.length > 9) {
+
+              imagens.add(new Imagem(
+                  swordskeleton,
+                  Game.DecoComplexoX[9],
+                  Game.DecoComplexoY[9], 40, 60));
+            }
+            break;
+          case 9:
+            if (Game.DecoComplexoX.length > 10 && Game.DecoComplexoY.length > 10) {
+              BufferedImage skullTemple1 = (BufferedImage) spritesheetskull1;
+              int sx1 = (Game.currentFrame20 % numFramesXtemple) * (skullTemple1.getWidth()
+                  /
+                  numFramesXtemple);
+              int sy1 = (Game.currentFrame20 / numFramesXtemple) *
+                  (skullTemple1.getHeight() /
+                      numFramesYtemple);
+              int sw1 = skullTemple1.getWidth() / numFramesXtemple;
+              int sh1 = skullTemple1.getHeight() / numFramesYtemple;
+              temple1 = buffer.createGraphics();
+              AffineTransform at1 = new AffineTransform();
+              at1.scale((double) (60 + 2) / sw1, (double) (100 + 2) / sh1);
+              // Create an AffineTransformOp object with the AffineTransform
+              AffineTransformOp op1 = new AffineTransformOp(at1,
+                  AffineTransformOp.TYPE_BILINEAR);
+              // Apply the transform to the image
+              BufferedImage scaledImage1 = op1.filter(skullTemple1.getSubimage(sx1, sy1,
+                  sw1,
+                  sh1),
+                  null);
+              temple1.drawImage(scaledImage1,
+                  Game.DecoComplexoX[10],
+                  Game.DecoComplexoX[10], null);
+              long currentTimeTemple1 = System.currentTimeMillis();
+
+              if (currentTimeTemple1 - lastFrameTimetemple >= frameIntervaltemple) {
+                lastFrameTimetemple = currentTimeTemple1 - (currentTimeTemple1 %
+                    frameIntervaltemple);
+                Game.currentFrame20 = (Game.currentFrame20 + 1) % totalFramestemple;
+              }
+
+            }
+            break;
+          case 10:
+            if (Game.DecoComplexoX.length > 11 && Game.DecoComplexoY.length > 11) {
+              BufferedImage skullTemple2 = (BufferedImage) spritesheetskull2;
+              int sx1 = (Game.currentFrame21 % numFramesXtemple) * (skullTemple2.getWidth()
+                  /
+                  numFramesXtemple);
+              int sy1 = (Game.currentFrame21 / numFramesXtemple) *
+                  (skullTemple2.getHeight() /
+                      numFramesYtemple);
+              int sw1 = skullTemple2.getWidth() / numFramesXtemple;
+              int sh1 = skullTemple2.getHeight() / numFramesYtemple;
+              temple2 = buffer.createGraphics();
+              AffineTransform at1 = new AffineTransform();
+              at1.scale((double) (70 + 2) / sw1, (double) (100 + 2) / sh1);
+              // Create an AffineTransformOp object with the AffineTransform
+              AffineTransformOp op1 = new AffineTransformOp(at1,
+                  AffineTransformOp.TYPE_BILINEAR);
+              // Apply the transform to the image
+              BufferedImage scaledImage1 = op1.filter(skullTemple2.getSubimage(sx1, sy1,
+                  sw1,
+                  sh1),
+                  null);
+              temple2.drawImage(scaledImage1, Game.DecoComplexoX[11],
+                  Game.DecoComplexoY[11], null);
+              long currentTimeTemple2 = System.currentTimeMillis();
+
+              if (currentTimeTemple2 - lastFrameTimetemple1 >= frameIntervaltemple1) {
+                lastFrameTimetemple1 = currentTimeTemple2 - (currentTimeTemple2 %
+                    frameIntervaltemple1);
+                Game.currentFrame21 = (Game.currentFrame21 + 1) % totalFramestemple1;
+              }
+
+            }
+            break;
+          case 11:
+            if (Game.DecoComplexoX.length > 12 && Game.DecoComplexoY.length > 12) {
+              BufferedImage skullTemple3 = (BufferedImage) spritesheetskull3;
+              int sx1 = (Game.currentFrame22 % numFramesXtemple) * (skullTemple3.getWidth()
+                  /
+                  numFramesXtemple);
+              int sy1 = (Game.currentFrame22 / numFramesXtemple) *
+                  (skullTemple3.getHeight() /
+                      numFramesYtemple);
+              int sw1 = skullTemple3.getWidth() / numFramesXtemple;
+              int sh1 = skullTemple3.getHeight() / numFramesYtemple;
+              temple3 = buffer.createGraphics();
+              AffineTransform at1 = new AffineTransform();
+              at1.scale((double) (70 + 2) / sw1, (double) (100 + 2) / sh1);
+              // Create an AffineTransformOp object with the AffineTransform
+              AffineTransformOp op1 = new AffineTransformOp(at1,
+                  AffineTransformOp.TYPE_BILINEAR);
+              // Apply the transform to the image
+              BufferedImage scaledImage1 = op1.filter(skullTemple3.getSubimage(sx1, sy1,
+                  sw1,
+                  sh1),
+                  null);
+              temple3.drawImage(scaledImage1,
+                  Game.DecoComplexoX[12],
+                  Game.DecoComplexoY[12], null);
+              long currentTimeTemple3 = System.currentTimeMillis();
+
+              if (currentTimeTemple3 - lastFrameTimetemple2 >= frameIntervaltemple2) {
+                lastFrameTimetemple2 = currentTimeTemple3 - (currentTimeTemple3 %
+                    frameIntervaltemple2);
+                Game.currentFrame22 = (Game.currentFrame22 + 1) % totalFramestemple2;
+              }
+
+            }
+            break;
+          case 12:
+            ////
+            break;
+          case 13:
+            ////
+            break;
+          default:
+            break;
+        }
+      }
     }
     for (Imagem imagem : imagens) {
       g2d.drawImage(imagem.getImagem(), imagem.getX(), imagem.getY(), imagem.getWidth(), imagem.getHeight(), null);

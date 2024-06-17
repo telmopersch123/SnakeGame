@@ -181,6 +181,11 @@ public class Game extends JPanel implements Runnable {
   public static int PosColidianPoisonY = 0;
   public static int PosColidianClassicX = 0;
   public static int PosColidianClassicY = 0;
+  public static int currentFrame24 = 0;
+  public static int currentFrame23 = 0;
+  public static int currentFrame22 = 0;
+  public static int currentFrame21 = 0;
+  public static int currentFrame20 = 0;
   public static int currentFrame19 = 0;
   public static int currentFrame18 = 0;
   public static int currentFrame17 = 0;
@@ -279,7 +284,8 @@ public class Game extends JPanel implements Runnable {
   ImageIcon buttonImage;
   JLabel label;
   double rotationAngle = 0;
-
+  Image lavaNormal;
+  Image lavaSkull;
   public static ArrayList<Integer> quanti = new ArrayList<>();
   public static ArrayList<Integer> quantiComplexo = new ArrayList<>();
 
@@ -338,6 +344,8 @@ public class Game extends JPanel implements Runnable {
     gold1 = imagens[41];
     gold2 = imagens[42];
     gold3 = imagens[43];
+    lavaNormal = imagens[44];
+    lavaSkull = imagens[45];
     ///////////////////////////////////
     initializeKeyListener();
 
@@ -641,7 +649,7 @@ public class Game extends JPanel implements Runnable {
           randomSX6, randomSY6, randomSX7, randomSY7, randomSX8, randomSY8, randomSX9, randomSY9, quantidadeDecoSwamp1,
           quantidadeDecoSwamp2,
           quantidadeDecoSwamp3, quantidadeDecoSwamp4);
-      decoracaoComplexaAcima.Acima(buffer, spriteshetlago1, spriteshetlago2, spriteshetlago3);
+      decoracaoComplexaAcima.AcimaSwamp(buffer, spriteshetlago1, spriteshetlago2, spriteshetlago3);
     }
     if (MapDungeon) {
       map.mapDungeon(buffer, ALL_DOTS_Width, ALL_DOTS_Height, chao_dungeon, dragon_bone, skull_bone, tibia_bone, gold1,
@@ -649,6 +657,7 @@ public class Game extends JPanel implements Runnable {
           quantidadeDecoDragonBone, quantidadeDecoSkullBone, quantidadeDecoTibiaBone,
           quantidadeDecoGold1, quantidadeDecoGold2, quantidadeDecoGold3, randomDX, randomDY, randomDX1,
           randomDY1, randomDX2, randomDY2, randomDX3, randomDY3, randomDX4, randomDY4, randomDX5, randomDY5);
+      decoracaoComplexaAcima.AcimaDungeon(buffer, lavaNormal, lavaSkull);
     }
 
     // Desenha a COBRA
@@ -947,7 +956,7 @@ public class Game extends JPanel implements Runnable {
             .ThisDecoration(snakeX, snakeY, DecoracaoX, DecoracaoY, DecoComplexoY, DecoComplexoX, WIDTH, HEIGHT));
 
     // Define as coordenadas da cabeça da cobra
-    // nodeSnake[0] = new Node(300, 300);
+
     nodeSnake[0] = new Node(snakeX, snakeY);
 
     // Inicializa o restante do corpo da cobra com as mesmas coordenadas da cabeça
@@ -1041,6 +1050,11 @@ public class Game extends JPanel implements Runnable {
     currentFrame17 = 0;
     currentFrame18 = 0;
     currentFrame19 = 0;
+    currentFrame20 = 0;
+    currentFrame21 = 0;
+    currentFrame22 = 0;
+    currentFrame23 = 0;
+    currentFrame24 = 0;
     if (timer != null) {
       timer.cancel();
       timer.purge();

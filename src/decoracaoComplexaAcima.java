@@ -7,25 +7,41 @@ import java.awt.image.BufferedImage;
 public class decoracaoComplexaAcima {
   public static int numFramesXArv = 6; // Ajuste conforme necessário
   public static int numFramesYArv = 1; // Supondo que todas as animações estão na mesma linha
-  public static int frameWidthArv = 500; // Largura do frame redimensionado
-  public static int frameHeightArv = 500; // Altura do frame redimensionado
+  public static int numFramesXlava = 4;
+  public static int numFramesYlava = 3;
   private static long lastFrameTimeArv3 = 0;
-  private static int frameIntervalArv3 = 150;
+
   private static long lastFrameTimeArv4 = 0;
   private static long lastFrameTimeArv5 = 0;
+  private static long lastFrameTimelava = 0;
+  private static long lastFrameTimelava2 = 0;
+
   private static int frameIntervalArv4 = 150;
   private static int frameIntervalArv5 = 150;
+  private static int frameIntervalArv3 = 150;
+  private static int frameIntervallava = 100;
+  private static int frameIntervallava2 = 100;
+
   public static long currentTimeArv3 = System.currentTimeMillis();
   public static long currentTimeArv4 = System.currentTimeMillis();
   public static long currentTimeArv5 = System.currentTimeMillis();
+  public static long currentTimelava = System.currentTimeMillis();
+  public static long currentTimelava2 = System.currentTimeMillis();
+
   public static int totalFramesArv1 = numFramesXArv * numFramesYArv;
   public static int totalFramesArv2 = numFramesXArv * numFramesYArv;
   public static int totalFramesArv3 = numFramesXArv * numFramesYArv;
+  public static int totalFrameslava = numFramesXlava * numFramesYlava;
+  public static int totalFrameslava2 = numFramesXlava * numFramesYlava;
+
   public static Graphics2D lagoPantano;
   public static Graphics2D lagoPantano1;
   public static Graphics2D lagoPantano2;
+  public static Graphics2D lavaLava;
+  public static Graphics2D lavaskull;
 
-  public static void Acima(BufferedImage buffer, Image spriteshetlago1, Image spriteshetlago2, Image spriteshetlago3) {
+  public static void AcimaSwamp(BufferedImage buffer, Image spriteshetlago1, Image spriteshetlago2,
+      Image spriteshetlago3) {
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       if (Game.quantiComplexo.get(i) > 0) {
         switch (i) {
@@ -125,6 +141,85 @@ public class decoracaoComplexaAcima {
             }
             break;
           default:
+            break;
+        }
+      }
+    }
+  }
+
+  public static void AcimaDungeon(BufferedImage buffer, Image lavaNormal, Image lavaSkull) {
+
+    for (int i = 0; i < Game.quantiComplexo.size(); i++) {
+      if (Game.quantiComplexo.get(i) > 0) {
+        switch (i) {
+          case 12:
+            if (Game.DecoComplexoX.length > 13 && Game.DecoComplexoY.length > 13) {
+              BufferedImage lava = (BufferedImage) lavaNormal;
+              int sx1 = (Game.currentFrame23 % numFramesXlava) * (lava.getWidth()
+                  /
+                  numFramesXlava);
+              int sy1 = (Game.currentFrame23 / numFramesXlava) *
+                  (lava.getHeight() /
+                      numFramesYlava);
+              int sw1 = lava.getWidth() / numFramesXlava;
+              int sh1 = lava.getHeight() / numFramesYlava;
+              lavaLava = buffer.createGraphics();
+              AffineTransform at1 = new AffineTransform();
+              at1.scale((double) (150 + 2) / sw1, (double) (100 + 2) / sh1);
+              // Create an AffineTransformOp object with the AffineTransform
+              AffineTransformOp op1 = new AffineTransformOp(at1,
+                  AffineTransformOp.TYPE_BILINEAR);
+              // Apply the transform to the image
+              BufferedImage scaledImage1 = op1.filter(lava.getSubimage(sx1, sy1,
+                  sw1,
+                  sh1),
+                  null);
+              lavaLava.drawImage(scaledImage1,
+                  Game.DecoComplexoX[13],
+                  Game.DecoComplexoY[13], null);
+              long currentTimelava = System.currentTimeMillis();
+
+              if (currentTimelava - lastFrameTimelava >= frameIntervallava) {
+                lastFrameTimelava = currentTimelava - (currentTimelava %
+                    frameIntervallava);
+                Game.currentFrame23 = (Game.currentFrame23 + 1) % totalFrameslava;
+              }
+
+            }
+            break;
+          case 13:
+            if (Game.DecoComplexoX.length > 14 && Game.DecoComplexoY.length > 14) {
+              BufferedImage lava1 = (BufferedImage) lavaSkull;
+              int sx1 = (Game.currentFrame24 % numFramesXlava) * (lava1.getWidth()
+                  /
+                  numFramesXlava);
+              int sy1 = (Game.currentFrame24 / numFramesXlava) *
+                  (lava1.getHeight() /
+                      numFramesYlava);
+              int sw1 = lava1.getWidth() / numFramesXlava;
+              int sh1 = lava1.getHeight() / numFramesYlava;
+              lavaskull = buffer.createGraphics();
+              AffineTransform at1 = new AffineTransform();
+              at1.scale((double) (150 + 2) / sw1, (double) (100 + 2) / sh1);
+              // Create an AffineTransformOp object with the AffineTransform
+              AffineTransformOp op1 = new AffineTransformOp(at1,
+                  AffineTransformOp.TYPE_BILINEAR);
+              // Apply the transform to the image
+              BufferedImage scaledImage1 = op1.filter(lava1.getSubimage(sx1, sy1,
+                  sw1,
+                  sh1),
+                  null);
+              lavaskull.drawImage(scaledImage1,
+                  Game.DecoComplexoX[14],
+                  Game.DecoComplexoY[14], null);
+              long currentTimelava2 = System.currentTimeMillis();
+
+              if (currentTimelava2 - lastFrameTimelava2 >= frameIntervallava2) {
+                lastFrameTimelava2 = currentTimelava2 - (currentTimelava2 %
+                    frameIntervallava2);
+                Game.currentFrame24 = (Game.currentFrame24 + 1) % totalFrameslava2;
+              }
+            }
             break;
         }
       }
