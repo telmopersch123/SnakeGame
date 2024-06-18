@@ -218,9 +218,12 @@ public class Game extends JPanel implements Runnable {
   public static int positionY;
   public static Graphics2D g2d;
   public static boolean NewButtonGame;
-  public static boolean MapDungeon = true;
+  public static boolean MapDungeon = false;
   public static boolean MapSwamp = false;
-  public static boolean MapField = false;
+  public static boolean MapField = true;
+  public static boolean snakeClassica = true;
+  public static boolean snakePoison = false;
+  public static boolean snakeFire = false;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
   private static int quantidadeDecoChao2;
@@ -733,7 +736,7 @@ public class Game extends JPanel implements Runnable {
       label.setForeground(Color.WHITE);
       meuPainel.add(label);
 
-      buttonImage = new StretchIcon("resources/buttonRock.png");
+      buttonImage = new StretchIcon("resources/Menu/buttonRock.png");
       newGameButton = new JButton("Reiniciar", buttonImage);
       newgameFont = new Font("Arial", Font.BOLD, 24);
 

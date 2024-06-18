@@ -39,10 +39,10 @@ public class MenuPanel extends JPanel {
 
     try {
       // Carregue a imagem dos botoes
-      ImageIcon buttonReturn = new StretchIcon("resources/return.png");
-      ImageIcon buttonImage = new StretchIcon("resources/buttonRock.png");
+      ImageIcon buttonReturn = new StretchIcon("resources/Menu/return.png");
+      ImageIcon buttonImage = new StretchIcon("resources/Menu/buttonRock.png");
       // Carregue a imagem do fundo
-      Image backgroundImage = ImageIO.read(new File("resources/thumbMenu.png"));
+      Image backgroundImage = ImageIO.read(new File("resources/Menu/thumbMenu.png"));
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
       backgroundImage = backgroundImage.getScaledInstance((int) screenSize.getWidth(), (int) screenSize.getHeight(),
           Image.SCALE_SMOOTH); // Redimensionar a imagem
@@ -111,7 +111,12 @@ public class MenuPanel extends JPanel {
       OutfitButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          // Ação para o botão de skins
+          JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+          MenuPanel.this.setVisible(false);
+          SkinPanel skinPanel = new SkinPanel(buttonReturn);
+          topFrame.add(skinPanel);
+          topFrame.revalidate();
+          topFrame.repaint();
         }
       });
       addShadow(OutfitButton, "Skin", new Font("Arial", Font.PLAIN, 24), 150, 50);

@@ -40,15 +40,15 @@ public class MapPanel extends JPanel {
 
     // Imagem de fundo
     try {
-      ImageIcon buttonDungeonINCBack = new StretchIcon("resources/buttonInactive-Dungeon.png");
-      ImageIcon buttonFieldINCBack = new StretchIcon("resources/buttonInactive-field.png");
-      ImageIcon buttonSwampINCBack = new StretchIcon("resources/buttonInactive-swamp.png");
+      ImageIcon buttonDungeonINCBack = new StretchIcon("resources/Menu/buttonInactive-Dungeon.png");
+      ImageIcon buttonFieldINCBack = new StretchIcon("resources/Menu/buttonInactive-field.png");
+      ImageIcon buttonSwampINCBack = new StretchIcon("resources/Menu/buttonInactive-swamp.png");
       /////
-      ImageIcon buttonSwampBack = new StretchIcon("resources/button-swamp.png");
-      ImageIcon buttonFieldBack = new StretchIcon("resources/button-field.png");
-      ImageIcon buttonDungeonBack = new StretchIcon("resources/button-dungeon.png");
+      ImageIcon buttonSwampBack = new StretchIcon("resources/Menu/button-swamp.png");
+      ImageIcon buttonFieldBack = new StretchIcon("resources/Menu/button-field.png");
+      ImageIcon buttonDungeonBack = new StretchIcon("resources/Menu/button-dungeon.png");
       //////
-      Image backgroundImage = ImageIO.read(new File("resources/backgroundMenu.png"));
+      Image backgroundImage = ImageIO.read(new File("resources/Menu/backgroundMenu.png"));
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
       backgroundImage = backgroundImage.getScaledInstance((int) screenSize.getWidth(), (int) screenSize.getHeight(),
           Image.SCALE_SMOOTH); // Redimensionar a imagem
