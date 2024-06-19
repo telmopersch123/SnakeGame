@@ -67,12 +67,14 @@ public class MenuPanel extends JPanel {
       startButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
           topFrame.getContentPane().removeAll();
           Game game = new Game();
+          new Thread(game).start();
           topFrame.add(game);
           topFrame.revalidate();
-          new Thread(game).start();
+          topFrame.repaint();
           game.requestFocusInWindow();
           Game.ValueFinal = 0;
           Game.ValueDecoNormal = 0;

@@ -55,7 +55,7 @@ public class LocaleUtils {
           if (i < Game.ValueDecoNormal) {
             if (i < Game.DecoracaoX.length && i < Game.DecoracaoY.length) {
               Decoracao = new Rectangle(Game.DecoracaoX[i],
-                  Game.DecoracaoY[i], 50, 50);
+                  Game.DecoracaoY[i], 30, 30);
             }
           }
           if (i < Game.DecoComplexoX.length && i < Game.DecoComplexoY.length) {

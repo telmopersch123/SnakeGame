@@ -8,7 +8,7 @@ public class loadImages {
 
   public static BufferedImage[] Images(
       int WIDTH, int HEIGHT) {
-    BufferedImage[] images = new BufferedImage[46];
+    BufferedImage[] images = new BufferedImage[56];
     try {
       images[0] = ImageIO.read(new File("resources/snakes/snakeGreen/head.png"));
       images[1] = ImageIO.read(new File("resources/snakes/snakeGreen/tail.png"));
@@ -66,6 +66,18 @@ public class loadImages {
       images[43] = ImageIO.read(new File("resources/map_dungeon/decoração/gold3.png"));
       images[44] = ImageIO.read(new File("resources/map_dungeon/obstaculos_complexos/lava.png"));
       images[45] = ImageIO.read(new File("resources/map_dungeon/obstaculos_complexos/lavaskull.png"));
+      //
+      images[46] = ImageIO.read(new File("resources/snakes/snakePoison/tail.png"));
+      images[47] = ImageIO.read(new File("resources/snakes/snakePoison/fold.png"));
+      images[48] = ImageIO.read(new File("resources/snakes/snakePoison/body.png"));
+      images[49] = ImageIO.read(new File("resources/snakes/snakePoison/head.png"));
+      //
+      images[50] = ImageIO.read(new File("resources/snakes/snakeFire/tail.png"));
+      images[51] = ImageIO.read(new File("resources/snakes/snakeFire/fold.png"));
+      images[52] = ImageIO.read(new File("resources/snakes/snakeFire/body.png"));
+      images[53] = ImageIO.read(new File("resources/snakes/snakeFire/head.png"));
+      images[54] = ImageIO.read(new File("resources/snakes/snakeFire/fogocomplementar.png"));
+      images[55] = ImageIO.read(new File("resources/snakes/snakeFire/fogofinal.png"));
     } catch (IOException e) {
       e.printStackTrace();
     }

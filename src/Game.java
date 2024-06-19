@@ -59,7 +59,18 @@ public class Game extends JPanel implements Runnable {
   private Image bodyStraight;
   private Image bodyCorner;
   private Image tailImage;
-
+  //
+  private Image snakeHeadPoison;
+  private Image bodyStraightPoison;
+  private Image bodyCornerPoison;
+  private Image tailImagePoison;
+  //
+  private Image fogoComplementar;
+  private Image fogoFinal;
+  private Image snakeHeadFire;
+  private Image bodyStraightFire;
+  private Image bodyCornerFire;
+  private Image tailImageFire;
   // MAP - LAWN
   private Image gramSprit;
   private Image rockSprit;
@@ -221,9 +232,9 @@ public class Game extends JPanel implements Runnable {
   public static boolean MapDungeon = false;
   public static boolean MapSwamp = false;
   public static boolean MapField = true;
-  public static boolean snakeClassica = true;
+  public static boolean snakeClassica = false;
   public static boolean snakePoison = false;
-  public static boolean snakeFire = false;
+  public static boolean snakeFire = true;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
   private static int quantidadeDecoChao2;
@@ -349,6 +360,16 @@ public class Game extends JPanel implements Runnable {
     gold3 = imagens[43];
     lavaNormal = imagens[44];
     lavaSkull = imagens[45];
+    tailImagePoison = imagens[46];
+    bodyCornerPoison = imagens[47];
+    bodyStraightPoison = imagens[48];
+    snakeHeadPoison = imagens[49];
+    tailImageFire = imagens[50];
+    bodyCornerFire = imagens[51];
+    bodyStraightFire = imagens[52];
+    snakeHeadFire = imagens[53];
+    fogoComplementar = imagens[54];
+    fogoFinal = imagens[55];
     ///////////////////////////////////
     initializeKeyListener();
 
@@ -664,7 +685,17 @@ public class Game extends JPanel implements Runnable {
     }
 
     // Desenha a COBRA
-    snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraight, bodyCorner, tailImage, snakeHead, keyListener);
+    if (snakeClassica) {
+      snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraight, bodyCorner, tailImage, snakeHead, keyListener,
+          null, null);
+    } else if (snakePoison) {
+      snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraightPoison, bodyCornerPoison, tailImagePoison,
+          snakeHeadPoison, keyListener, null, null);
+    } else if (snakeFire) {
+      snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraightFire, bodyCornerFire, tailImageFire, snakeHeadFire,
+          keyListener, fogoComplementar, fogoFinal);
+    }
+
     // Desenha a comidas
     food.classicFood(g, buffer, macaX, macaY, appleSprit, poisonFruitWidthCla,
         poisonFruitHeightCla);

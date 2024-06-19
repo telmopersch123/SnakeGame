@@ -334,8 +334,13 @@ public class decoracao {
     }
 
     for (int i = 0; i < valueDecoSimples; i++) {
-      Game.quanti.add((int) (Math.random() * 3) + 1);
-
+      if (Game.MapField) {
+        Game.quanti.add((int) (Math.random() * 4) + 1);
+      } else if (Game.MapSwamp) {
+        Game.quanti.add((int) (Math.random() * 3) + 1);
+      } else if (Game.MapDungeon) {
+        Game.quanti.add((int) (Math.random() * 2) + 1);
+      }
     }
 
     for (int i = 0; i < Game.quanti.size(); i++) {
@@ -381,7 +386,7 @@ public class decoracao {
 
   private static boolean isWallPosition(int x, int y, ArrayList<Integer> walls_x, ArrayList<Integer> walls_y, int x1,
       int y1) {
-    Rectangle imageRect = new Rectangle(x, y, 30, 30); // tamanho da imagem decorativa
+    Rectangle imageRect = new Rectangle(x, y, 50, 50); // tamanho da imagem decorativa
     Rectangle imageRectComplexa = new Rectangle(x1, y1, 150, 150);
     for (int i = 0; i < walls_x.size(); i++) {
       Rectangle wallRect = new Rectangle(walls_x.get(i), walls_y.get(i), 10, 10);

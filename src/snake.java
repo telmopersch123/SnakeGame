@@ -10,6 +10,7 @@ public class snake {
   public static int angle = 0;
   public static Graphics2D snakeBody;
   public static Graphics2D rotated;
+  public static Graphics2D rotated2;
   public static Graphics2D Corner;
   public static Graphics2D tail;
   public static Graphics2D head;
@@ -29,6 +30,7 @@ public class snake {
   ////////////////////////////
   public static boolean isHorizontal1;
   public static AffineTransform rotation;
+  public static AffineTransform rotationfire;
   ////////////////////////////
   public static boolean horizontal;
   public static boolean vertical;
@@ -45,10 +47,10 @@ public class snake {
 
   public static void snakePaint(Node[] nodeSnake, BufferedImage buffer, int WIDTH, int HEIGHT, Image bodyStraight,
       Image bodyCorner, Image tailImage, Image snakeHead,
-      MyKeyBoardListener keyListener) {
+      MyKeyBoardListener keyListener, Image fogoComplementar, Image fogoFinal) {
 
     snakeBody = buffer.createGraphics();
-
+    Graphics2D g2d = buffer.createGraphics();
     angle = 0;
 
     // Desenhar O CORPO
@@ -64,17 +66,20 @@ public class snake {
         rotated = (Graphics2D) snakeBody.create();
         rotated.transform(rotation);
         rotated.drawImage(bodyStraight, currX, currY, WIDTH + 4, HEIGHT + 4, null);
+
         rotated.dispose();
       } else {
         // Aplica uma transformação semelhante para movimentos verticais
+
         rotation = AffineTransform.getQuadrantRotateInstance(0, currX + 14 / 2, currY + 14 / 2);
         rotated = (Graphics2D) snakeBody.create();
         rotated.transform(rotation);
         rotated.drawImage(bodyStraight, currX, currY, WIDTH + 4, HEIGHT + 4, null);
+
         rotated.dispose();
       }
-
     }
+
     // Desenhar a CURVATURA
     for (int z = 0; z < nodeSnake.length; z++) {
       Corner = buffer.createGraphics();
@@ -166,5 +171,27 @@ public class snake {
     // Rotação da cabeça
     head.rotate(Math.toRadians(angle), xPos + imageWidth / 2, yPos + imageHeight / 2); // Rotação em torno do centro da
     head.drawImage(snakeHead, xPos + 3, yPos, imageWidth, imageHeight, null); // Desenha a cabeça da cobra
+
+    ///
+    for (int f = 10; f < nodeSnake.length; f += 10) {
+      currX = nodeSnake[f].x;
+      currY = nodeSnake[f].y;
+      prevY = f > 0 ? nodeSnake[f - 1].y : currY;
+      isHorizontal1 = currY == prevY;
+      if (isHorizontal1) {
+        rotationfire = AffineTransform.getRotateInstance(Math.toRadians(180), currX + 18 / 2, currY + 27 / 2);
+        rotated2 = (Graphics2D) g2d.create();
+        rotated2.transform(rotationfire);
+        rotated2.drawImage(fogoComplementar, currX, currY, 20, 40, null);
+
+        rotated2.dispose();
+      } else {
+        rotationfire = AffineTransform.getRotateInstance(Math.toRadians(90), currX + 28 / 2, currY + 27 / 2);
+        rotated2 = (Graphics2D) g2d.create();
+        rotated2.transform(rotationfire);
+        rotated2.drawImage(fogoComplementar, currX, currY, 20, 40, null);
+        rotated2.dispose();
+      }
+    }
   }
 }
