@@ -15,132 +15,94 @@ public class decoracao {
   public static Graphics2D g2d;
 
   public static List<Imagem> imagens = new ArrayList<>();
-  private static Image Bush_blue_flowers;
-  private static Image Bush_orange_flowers1;
-  private static Image Bush_simple1_1;
+  private static BufferedImage Bush_blue_flowers;
+  private static BufferedImage Bush_orange_flowers1;
+  private static BufferedImage Bush_simple1_1;
   private static BufferedImage Bush_simple2_1;
+  private static BufferedImage Fruit_tree3;
   private static BufferedImage Glade_Objects_Top_Down_Pixel_Art2;
   private static BufferedImage Glade_Objects_Top_Down_Pixel_Art3;
   private static BufferedImage Rock1_grass_shadow1;
   private static BufferedImage Rock1_grass_shadow3;
-  private static BufferedImage Fruit_tree3;
-  ///
   private static BufferedImage Christmas_tree2;
-  private static BufferedImage Swamp_Objects_Top_Down_Pixel_Art2;
-  private static BufferedImage Glade_Objects_Top_Down_Pixel_Art66;
   private static BufferedImage Tree2;
   private static BufferedImage Glade_Objects_OTop_ODown_OPixel_OArt3_O1;
   private static BufferedImage Glade_Objects_Top_Down_Pixel_Art3_2;
+  private static BufferedImage Glade_Objects_Top_Down_Pixel_Art66;
   private static BufferedImage Glade_Objects_Top_Down_Pixel_Art44;
+  private static BufferedImage dragao_rock;
   private static BufferedImage Brown_gray_ruins3;
   private static BufferedImage Brown_gray_ruins1;
-  private static BufferedImage dragao_rock;
   private static BufferedImage sprite_sheet_moinho;
   private static BufferedImage sprite_sheet_placa;
   private static BufferedImage casadamonga;
-  // ----------------IMAGENS SWAMP
-  private static BufferedImage Broken_tree_shadow2_3;
-  private static BufferedImage Broken_tree_shadow2_4;
-  private static BufferedImage Orange_mushrooms1_grass_shadow;
-  private static BufferedImage Oval_leaf_tree33;
-  private static BufferedImage Rock4_grass_shadow34;
-  private static BufferedImage aglomerado_cogubranco;
-  private static BufferedImage aglomerado_coguroxo;
-  private static BufferedImage Blue_green_balls_tree1;
-  private static BufferedImage Brown_ruins1;
-  private static BufferedImage cemiterio;
-  private static BufferedImage Luminous_tree1;
-  private static BufferedImage Luminous_tree2;
-  private static BufferedImage Luminous_tree3;
-  private static BufferedImage Mega_tree2;
-  private static BufferedImage Rock_statue_deer_ground_shadow;
-  private static BufferedImage SwampObjectsTopDownPixelArt3;
-  private static BufferedImage SwampObjectsTopDownPixelArt4;
-  private static BufferedImage SwamppObjectsTopDownPixelArt2;
-  private static BufferedImage SwampTopDownTilesetPixelArt3;
-  private static BufferedImage SwampTopDownTilesetPixelArt31;
-  private static BufferedImage SwampTopDownTilesetPixelArt32;
-  private static BufferedImage SwampTopDownTilesetPixelArt33;
-  private static BufferedImage SwampTopDownTilesetPixelArt34;
-  private static BufferedImage SwampTopDownTilesetPixelArt35;
-  private static BufferedImage SwampTopDownTilesetPixelArt36;
-  private static BufferedImage SwampTopDownTilesetPixelArt42;
-  private static BufferedImage Willow1;
-  private static BufferedImage Willow2;
-  private static BufferedImage Willow3;
-  private static BufferedImage Yellow_ruins1;
-  private static BufferedImage spritesheet1;
-  private static BufferedImage spritesheet2;
-  private static BufferedImage spritesheetarvore1;
-  private static BufferedImage spritesheetarvore3;
-  private static BufferedImage spritesheetarvore2;
-  private static BufferedImage spriteshetlago1;
-  private static BufferedImage spritsheethomemcristal;
-
-  private static BufferedImage Black_crystal1;
-
-  private static BufferedImage Blue_crystal1;
-
-  private static BufferedImage Green_crystal1;
-
-  private static BufferedImage Pink_crystal1;
-
-  private static BufferedImage Red_crystal1;
-
-  private static BufferedImage Violet_crystal1;
-
-  private static BufferedImage White_crystal2;
-
-  private static BufferedImage Yellow_green_crystal1;
-
-  private static BufferedImage skeleton;
-
-  private static BufferedImage skullcabra;
-
-  private static BufferedImage skullsheads;
-
-  private static BufferedImage skullsbirdy;
-
-  private static BufferedImage caixao1;
-
-  private static BufferedImage caixao2;
-
-  private static BufferedImage spritedungeonnormal;
-
-  private static BufferedImage firedungeon;
-
-  private static BufferedImage arvoreskull;
-
-  private static BufferedImage craniodino;
-
-  private static BufferedImage espinhal;
-
-  private static BufferedImage picodungeon;
-
-  private static BufferedImage picomedio;
-
-  private static BufferedImage pilardungeon;
-
-  private static BufferedImage skullcostela;
-
-  private static BufferedImage swordskeleton;
-
-  private static BufferedImage templedungeon;
-
-  private static BufferedImage spritesheetskull1;
-
-  private static BufferedImage spritesheetskull2;
-
-  private static BufferedImage spritesheetskull3;
-
-  private static BufferedImage lavaNormal;
-
+  //
+  private static BufferedImage Broken_tree_shadow2_3 = null;
+  private static BufferedImage Broken_tree_shadow2_4 = null;
+  private static BufferedImage Orange_mushrooms1_grass_shadow = null;
+  private static BufferedImage Oval_leaf_tree33 = null;
+  private static BufferedImage Rock4_grass_shadow34 = null;
+  private static BufferedImage aglomerado_cogubranco = null;
+  private static BufferedImage aglomerado_coguroxo = null;
+  private static BufferedImage Blue_green_balls_tree1 = null;
+  private static BufferedImage Brown_ruins1 = null;
+  private static BufferedImage cemiterio = null;
+  private static BufferedImage Luminous_tree1 = null;
+  private static BufferedImage Luminous_tree2 = null;
+  private static BufferedImage Luminous_tree3 = null;
+  private static BufferedImage Mega_tree2 = null;
+  private static BufferedImage Rock_statue_deer_ground_shadow = null;
+  private static BufferedImage SwampObjectsTopDownPixelArt3 = null;
+  private static BufferedImage SwampObjectsTopDownPixelArt4 = null;
+  private static BufferedImage SwamppObjectsTopDownPixelArt2 = null;
+  private static BufferedImage SwampTopDownTilesetPixelArt3 = null;
+  private static BufferedImage SwampTopDownTilesetPixelArt31 = null;
+  private static BufferedImage SwampTopDownTilesetPixelArt32 = null;
+  private static BufferedImage SwampTopDownTilesetPixelArt33 = null;
+  private static BufferedImage SwampTopDownTilesetPixelArt34 = null;
+  private static BufferedImage SwampTopDownTilesetPixelArt35 = null;
+  private static BufferedImage SwampTopDownTilesetPixelArt36 = null;
+  private static BufferedImage SwampTopDownTilesetPixelArt42 = null;
+  private static BufferedImage Willow1 = null;
+  private static BufferedImage Willow2 = null;
+  private static BufferedImage Willow3 = null;
+  private static BufferedImage Yellow_ruins1 = null;
+  private static BufferedImage spritesheetarvore1 = null;
+  private static BufferedImage spritesheetarvore3 = null;
+  private static BufferedImage spritesheetarvore2 = null;
+  private static BufferedImage spritsheethomemcristal = null;
+  //
+  private static BufferedImage Black_crystal1 = null;
+  private static BufferedImage Blue_crystal1 = null;
+  private static BufferedImage Green_crystal1 = null;
+  private static BufferedImage Pink_crystal1 = null;
+  private static BufferedImage Red_crystal1 = null;
+  private static BufferedImage Violet_crystal1 = null;
+  private static BufferedImage White_crystal2 = null;
+  private static BufferedImage Yellow_green_crystal1 = null;
+  private static BufferedImage skeleton = null;
+  private static BufferedImage skullcabra = null;
+  private static BufferedImage skullsheads = null;
+  private static BufferedImage skullsbirdy = null;
+  private static BufferedImage caixao1 = null;
+  private static BufferedImage caixao2 = null;
+  private static BufferedImage spritedungeonnormal = null;
+  private static BufferedImage firedungeon = null;
+  private static BufferedImage arvoreskull = null;
+  private static BufferedImage craniodino = null;
+  private static BufferedImage espinhal = null;
+  private static BufferedImage picodungeon = null;
+  private static BufferedImage picomedio = null;
+  private static BufferedImage pilardungeon = null;
+  private static BufferedImage skullcostela = null;
+  private static BufferedImage swordskeleton = null;
+  private static BufferedImage templedungeon = null;
+  private static BufferedImage spritesheetskull1 = null;
+  private static BufferedImage spritesheetskull2 = null;
+  private static BufferedImage spritesheetskull3 = null;
   static {
     try {
-      // MAPA FIELD
-
-      ///// decorações simples
-
+      // mapa field
       Bush_blue_flowers = ImageIO.read(new File("resources/map_field/obstaculos_normal/Bush_blue_flowers2.png"));
       Bush_orange_flowers1 = ImageIO
           .read(new File("resources/map_field/obstaculos_normal/Bush_orange_flowers1.png"));
@@ -172,8 +134,8 @@ public class decoracao {
       sprite_sheet_placa = ImageIO
           .read(new File("resources/map_field/obstaculos_complexos/sprite_sheet_placa.png"));
       casadamonga = ImageIO.read(new File("resources/map_field/obstaculos_complexos/casadamonga.png"));
-      ////
-      // MAPA SWAMP - DECORAÇÃO SIMPLES
+
+      // mapa swamp
       Broken_tree_shadow2_3 = ImageIO
           .read(new File("resources/map_swamp/obstaculos_normal/Broken_tree_shadow2_3.png"));
       Broken_tree_shadow2_4 = ImageIO
@@ -240,11 +202,9 @@ public class decoracao {
           .read(new File("resources/map_swamp/obstaculos_complexos/spritesheetarvore2.png"));
       spritesheetarvore3 = ImageIO
           .read(new File("resources/map_swamp/obstaculos_complexos/spritesheetarvore3.png"));
-      spriteshetlago1 = ImageIO
-          .read(new File("resources/map_swamp/obstaculos_complexos/spriteshetlago1.png"));
       spritsheethomemcristal = ImageIO
           .read(new File("resources/map_swamp/obstaculos_complexos/spritsheethomemcristal.png"));
-      // MAPA DUNGEON - DECORAÇÃO SIMPLES
+      //
       Black_crystal1 = ImageIO
           .read(new File("resources/map_dungeon/obstaculos_normal/Black_crystal1.png"));
       Blue_crystal1 = ImageIO
@@ -305,7 +265,6 @@ public class decoracao {
     } catch (IOException ex) {
       ex.printStackTrace();
     }
-
   }
 
   public static void posicoesDeco(int FrameWidth, int FrameHeight, int ALL_DOTS_Width, int ALL_DOTS_Height,
@@ -319,10 +278,13 @@ public class decoracao {
     int valueDecoSimples = 0;
     int valueDecoComplexo = 0;
     if (Game.MapField) {
+
       valueDecoSimples = 9;
     } else if (Game.MapSwamp) {
+
       valueDecoSimples = 5;
     } else if (Game.MapDungeon) {
+
       valueDecoSimples = 16;
     }
     if (Game.MapField) {
@@ -502,7 +464,6 @@ public class decoracao {
 
   public static void decoracaoField(BufferedImage buffer) {
     g2d = buffer.createGraphics();
-
     imagens.clear(); // Limpa a lista de imagens
     int index = 0;
 
@@ -659,6 +620,7 @@ public class decoracao {
   public static void decoracaoSwamp(BufferedImage buffer) {
     g2d = buffer.createGraphics();
     imagens.clear();
+
     int index = 0;
     /// -Simples
     for (int i = 0; i < Game.quanti.get(0); i++) {
@@ -1032,6 +994,7 @@ public class decoracao {
   public static void decoracaoDungeon(BufferedImage buffer) {
     g2d = buffer.createGraphics();
     imagens.clear();
+
     int index = 0;
     /// -Simples
     for (int i = 0; i < Game.quanti.get(0); i++) {

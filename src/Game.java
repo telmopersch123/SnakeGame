@@ -64,6 +64,7 @@ public class Game extends JPanel implements Runnable {
   private Image bodyStraightPoison;
   private Image bodyCornerPoison;
   private Image tailImagePoison;
+  private Image manchasAmarelas;
   //
   private Image fogoComplementar;
   private Image fogoFinal;
@@ -192,6 +193,8 @@ public class Game extends JPanel implements Runnable {
   public static int PosColidianPoisonY = 0;
   public static int PosColidianClassicX = 0;
   public static int PosColidianClassicY = 0;
+  public static int currentFrame26 = 0;
+  public static int currentFrame25 = 0;
   public static int currentFrame24 = 0;
   public static int currentFrame23 = 0;
   public static int currentFrame22 = 0;
@@ -232,9 +235,9 @@ public class Game extends JPanel implements Runnable {
   public static boolean MapDungeon = false;
   public static boolean MapSwamp = false;
   public static boolean MapField = true;
-  public static boolean snakeClassica = false;
+  public static boolean snakeClassica = true;
   public static boolean snakePoison = false;
-  public static boolean snakeFire = true;
+  public static boolean snakeFire = false;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
   private static int quantidadeDecoChao2;
@@ -370,6 +373,8 @@ public class Game extends JPanel implements Runnable {
     snakeHeadFire = imagens[53];
     fogoComplementar = imagens[54];
     fogoFinal = imagens[55];
+    manchasAmarelas = imagens[56];
+
     ///////////////////////////////////
     initializeKeyListener();
 
@@ -687,13 +692,13 @@ public class Game extends JPanel implements Runnable {
     // Desenha a COBRA
     if (snakeClassica) {
       snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraight, bodyCorner, tailImage, snakeHead, keyListener,
-          null, null);
+          null, null, null);
     } else if (snakePoison) {
       snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraightPoison, bodyCornerPoison, tailImagePoison,
-          snakeHeadPoison, keyListener, null, null);
+          snakeHeadPoison, keyListener, manchasAmarelas, null, null);
     } else if (snakeFire) {
       snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraightFire, bodyCornerFire, tailImageFire, snakeHeadFire,
-          keyListener, fogoComplementar, fogoFinal);
+          keyListener, null, fogoComplementar, fogoFinal);
     }
 
     // Desenha a comidas
@@ -1089,6 +1094,8 @@ public class Game extends JPanel implements Runnable {
     currentFrame22 = 0;
     currentFrame23 = 0;
     currentFrame24 = 0;
+    currentFrame25 = 0;
+    currentFrame26 = 0;
     if (timer != null) {
       timer.cancel();
       timer.purge();
