@@ -11,6 +11,7 @@ public class AnimationPOisonffim {
     poisonFruitAnimationTimer.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
+
         if (Game.poisonFruitWidthVen > 0 || Game.poisonFruitHeightVen > 0) {
           Game.poisonFruitWidthVen -= 1;
           Game.poisonFruitHeightVen -= 2;
@@ -19,9 +20,8 @@ public class AnimationPOisonffim {
         } else {
           poisonFruitAnimationTimer.cancel();
           poisonFruitAnimationTimer.purge();
-        }
 
-        // animationControlPoison.repaint();
+        }
       }
     }, 0, poisonFruitAnimationInterval1);
   }

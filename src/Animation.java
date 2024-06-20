@@ -25,7 +25,7 @@ public class Animation {
   private static final int frameInterval2 = 100;
   private static int frameInterval3 = 80;
   private static int frameInterval4 = 80;
-  private static int frameInterval5 = 100;
+  private static int frameInterval5 = 80;
   private static int frameInterval6 = 80;
 
   public static void AnimationFoodCla(Game game) {
@@ -417,30 +417,30 @@ public class Animation {
       int x, int y) {
     BufferedImage PoisonAnimationColision = (BufferedImage) ColidianPoisonFood;
     Graphics2D g2d = buffer.createGraphics();
-    int numFramesX = 8; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 500; // Largura do frame redimensionado
-    int frameHeight = 500; // Altura do frame redimensionado
-    int totalFrames = numFramesX * numFramesY;
-    long currentTime = System.currentTimeMillis();
+    int numFramesX1 = 7; // Ajuste conforme necessário
+    int numFramesY1 = 1; // Supondo que todas as animações estão na mesma linha
+    int frameWidth1 = 200; // Largura do frame redimensionado
+    int frameHeight1 = 200; // Altura do frame redimensionado
+    int totalFrames1 = numFramesX1 * numFramesY1;
 
-    int sx = (Game.currentFrame8 % numFramesX) * (PoisonAnimationColision.getWidth() / numFramesX);
-    int sy = (Game.currentFrame8 / numFramesX) * (PoisonAnimationColision.getWidth() / numFramesX);
-    int sw = PoisonAnimationColision.getWidth() / numFramesX;
-    int sh = PoisonAnimationColision.getHeight() / numFramesY;
+    int sx1 = (Game.currentFrame8 % numFramesX1) * (PoisonAnimationColision.getWidth() / numFramesX1);
+    int sy1 = (Game.currentFrame8 / numFramesX1) * (PoisonAnimationColision.getWidth() / numFramesX1);
+    int sw1 = PoisonAnimationColision.getWidth() / numFramesX1;
+    int sh1 = PoisonAnimationColision.getHeight() / numFramesY1;
     BufferedImage resizedImageColision = resizeImage(
-        PoisonAnimationColision.getSubimage(sx, sy, sw, sh),
-        frameWidth,
-        frameHeight);
+        PoisonAnimationColision.getSubimage(sx1, sy1, sw1, sh1),
+        frameWidth1,
+        frameHeight1);
     for (int i = 0; i < nodeSnake.length; i++) {
       if (i == 0) {
-        g2d.drawImage(resizedImageColision, x + 5, y + 8, 35, 35, null);
+        g2d.drawImage(resizedImageColision, x - 10, y + 12, 50, 50, null);
       }
     }
-    if (currentTime - lastFrameTime5 > frameInterval5) {
-      Game.currentFrame8 = (Game.currentFrame8 + 1) % totalFrames;
-      lastFrameTime5 = currentTime;
-      if (Game.currentFrame8 == totalFrames - 1) {
+    long currentTime1 = System.currentTimeMillis();
+    if (currentTime1 - lastFrameTime5 > frameInterval5) {
+      Game.currentFrame8 = (Game.currentFrame8 + 1) % totalFrames1;
+      lastFrameTime5 = currentTime1;
+      if (Game.currentFrame8 == totalFrames1 - 1) {
         Game.ControlOneAnimationPoison = true;
       }
     }

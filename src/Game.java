@@ -235,8 +235,8 @@ public class Game extends JPanel implements Runnable {
   public static boolean MapDungeon = false;
   public static boolean MapSwamp = false;
   public static boolean MapField = true;
-  public static boolean snakeClassica = true;
-  public static boolean snakePoison = false;
+  public static boolean snakeClassica = false;
+  public static boolean snakePoison = true;
   public static boolean snakeFire = false;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
@@ -407,15 +407,22 @@ public class Game extends JPanel implements Runnable {
 
       macaX = foodPosition0.x;
       macaY = foodPosition0.y;
+      if (snakePoison) {
+        macaPOX = foodPosition1.x;
+        macaPOY = foodPosition1.y;
+      }
       macaENX = -100;
       macaENY = -100;
       if (!TimerVerif) {
-        macaPOX = -100;
-        macaPOY = -100;
+        if (Game.snakeClassica || Game.snakeFire) {
+          macaPOX = -100;
+          macaPOY = -100;
+        }
       } else if (TimerVerif) {
-        macaPOX = foodPosition1.x;
-        macaPOY = foodPosition1.y;
-
+        if (Game.snakeClassica || Game.snakeFire) {
+          macaPOX = foodPosition1.x;
+          macaPOY = foodPosition1.y;
+        }
       }
     }
 
@@ -606,6 +613,14 @@ public class Game extends JPanel implements Runnable {
   }
 
   public void Animation() {
+    if (!animationFinished && snakePoison) {
+      if (!ControlOneAnimationPoison) {
+        Animation.AnimationColidianPoisonFood(buffer, ColidianPoisonFood, nodeSnake,
+            PosColidianPoisonX,
+            PosColidianPoisonY);
+      }
+    }
+
     if (!animationFinished && poisonDeathAnimationPlaying) {
       int positionX = 0;
       int positionY = 0;
@@ -618,9 +633,11 @@ public class Game extends JPanel implements Runnable {
         Animation.AnimationColidianPoisonFood(buffer, ColidianPoisonFood, nodeSnake, PosColidianPoisonX,
             PosColidianPoisonY);
       }
+
       animationFinished = Animation.AnimationPoisonDeath(buffer, DeathPoison, animationFinished, positionX,
           positionY, keyListener);
     }
+
     if (ControlEnergyColidianBoolean) {
       if (!ControlOneAnimation) {
         Animation.AnimationColidianEnergyFood(buffer, ColidianEnergyFood, nodeSnake, PosColidianEnergyX,
@@ -888,7 +905,9 @@ public class Game extends JPanel implements Runnable {
 
     Rectangle fruitArea = new Rectangle(macaX, macaY, WIDTH, HEIGHT);
     Rectangle fruitPOArea = new Rectangle(macaPOX, macaPOY, 20, 20);
-
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
     if (headCollisionArea.intersects(fruitArea)) {
       ControlOneAnimationClassicAtivar = true;
       PosColidianClassicX = macaX;
@@ -929,6 +948,7 @@ public class Game extends JPanel implements Runnable {
       // Aumente o tamanho da cobra, ajuste a pontuação, etc.
       // Restante do código...
     }
+    ///////////////////////////////////////////////
     if (headCollisionAreaPO.intersects(fruitPOArea)) {
       Game.PosColidianPoisonX = macaPOX;
       Game.PosColidianPoisonY = macaPOY;
@@ -945,14 +965,21 @@ public class Game extends JPanel implements Runnable {
           ControlOneAnimationPoison = false;
         }
         animationFinished = false;
-        poisonDeathAnimationPlaying = true;
+        if (Game.snakeClassica || Game.snakeFire) {
+          poisonDeathAnimationPlaying = true;
+
+        }
         venomAnimationPlayed = true;
         lastVenomAnimationTime1 = System.currentTimeMillis();
+
         if (!colidionPoiControlTimerAnimation) {
           AnimationPOison.AnimationFoodVenInicColision(this);
         }
-        if (!gameOver) {
-          AnimationSnakeDeath.AnimationSnake(this, foodPositions);
+
+        if (Game.snakeClassica || Game.snakeFire) {
+          if (!gameOver) {
+            AnimationSnakeDeath.AnimationSnake(this, foodPositions);
+          }
         }
       }
     }
@@ -1037,10 +1064,16 @@ public class Game extends JPanel implements Runnable {
         nodeSnake);
     if (foodPositions.size() >= 2) {
       Point foodPosition0 = foodPositions.get(0);
+      Point foodPosition1 = foodPositions.get(1);
       macaX = foodPosition0.x;
       macaY = foodPosition0.y;
-      macaPOX = -100;
-      macaPOY = -100;
+      if (snakeClassica || snakeFire) {
+        macaPOX = -100;
+        macaPOY = -100;
+      } else {
+        macaPOX = foodPosition1.x;
+        macaPOY = foodPosition1.y;
+      }
       macaENX = -100;
       macaENY = -100;
     }

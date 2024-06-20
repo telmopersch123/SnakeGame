@@ -15,6 +15,7 @@ public class AnimationPOison {
     poisonFruitAnimationTimer.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
+
         if (increaseSizeVen) {
           if (Game.poisonFruitWidthVen < 35 || Game.poisonFruitHeightVen < 60) {
             Game.poisonFruitWidthVen++;
@@ -37,7 +38,6 @@ public class AnimationPOison {
           }
         }
 
-        // animationControlPoison.repaint();
       }
     }, 0, poisonFruitAnimationInterval0);
   }
@@ -49,6 +49,7 @@ public class AnimationPOison {
     poisonFruitAnimationTimer2.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
+
         if (increaseSizeVen) {
           if (Game.poisonFruitWidthVen < 35 || Game.poisonFruitHeightVen < 60) {
             Game.poisonFruitWidthVen++;
@@ -72,6 +73,7 @@ public class AnimationPOison {
         }
 
         game.repaint();
+
       }
     }, 0, poisonFruitAnimationInterval1);
   }
