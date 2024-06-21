@@ -27,6 +27,7 @@ public class Animation {
   private static int frameInterval4 = 80;
   private static int frameInterval5 = 80;
   private static int frameInterval6 = 80;
+  public static BufferedImage bufferedSpriteSheet;
 
   public static void AnimationFoodCla(Game game) {
     Game.poisonFruitAnimationTimer = new Timer();
@@ -72,12 +73,16 @@ public class Animation {
     return resizedImage;
   }
 
-  public static boolean AnimationPoisonDeath(BufferedImage buffer, Image spriteSheet,
+  public static boolean AnimationPoisonDeath(BufferedImage buffer, Image spriteSheet, Image spriteSheet2,
       boolean animationFinished, int x, int y, MyKeyBoardListener keyListener) {
     Graphics2D g2d = buffer.createGraphics();
 
     // Converte a imagem da folha de sprite para BufferedImage
-    BufferedImage bufferedSpriteSheet = (BufferedImage) spriteSheet;
+    if (Game.snakePoison) {
+      bufferedSpriteSheet = (BufferedImage) spriteSheet2;
+    } else {
+      bufferedSpriteSheet = (BufferedImage) spriteSheet;
+    }
 
     // Variáveis para manipulação de ângulo e deslocamento da imagem
     int angle = 0;

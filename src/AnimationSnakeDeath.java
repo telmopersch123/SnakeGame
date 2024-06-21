@@ -10,13 +10,22 @@ public class AnimationSnakeDeath {
   private final static int REMOVE_SEGMENT_INTERVAL = 20;
 
   public static void AnimationSnake(Game game, ArrayList<Point> foodPositions) {
+
     if (foodPositions.size() >= 2) {
-      Point foodPosition1 = foodPositions.get(1);
-      game.macaPOX = foodPosition1.x;
-      game.macaPOY = foodPosition1.y;
+      if (Game.snakeClassica || Game.snakeFire) {
+        Point foodPosition1 = foodPositions.get(1);
+        game.macaPOX = foodPosition1.x;
+        game.macaPOY = foodPosition1.y;
+      } else {
+        Point foodPosition0 = foodPositions.get(0);
+        game.macaX = foodPosition0.x;
+        game.macaY = foodPosition0.y;
+      }
     }
+
     game.segmentsToRemove = game.nodeSnake.length / 2;
     // Inicialize o timer para remover os segmentos gradativamente
+
     removeSegmentTimer = new Timer();
     removeSegmentTimer.scheduleAtFixedRate(new TimerTask() {
       @Override

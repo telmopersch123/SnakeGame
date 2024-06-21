@@ -93,6 +93,7 @@ public class Game extends JPanel implements Runnable {
 
   /// Animations
   private Image DeathPoison;
+  private Image DeathPoison2;
   private Image BeatEffect;
   Image EnergyAnimationBody;
   Image EnergyAnimationTail;
@@ -136,7 +137,7 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public int direction = KeyEvent.VK_RIGHT;
-  public Node[] nodeSnake = new Node[40];
+  public Node[] nodeSnake = new Node[70];
   public int score = 0;
   public int macaX = 0, macaY = 0;
   public int macaENX = 0, macaENY = 0;
@@ -235,8 +236,8 @@ public class Game extends JPanel implements Runnable {
   public static boolean MapDungeon = false;
   public static boolean MapSwamp = false;
   public static boolean MapField = true;
-  public static boolean snakeClassica = false;
-  public static boolean snakePoison = true;
+  public static boolean snakeClassica = true;
+  public static boolean snakePoison = false;
   public static boolean snakeFire = false;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
@@ -374,7 +375,7 @@ public class Game extends JPanel implements Runnable {
     fogoComplementar = imagens[54];
     fogoFinal = imagens[55];
     manchasAmarelas = imagens[56];
-
+    DeathPoison2 = imagens[57];
     ///////////////////////////////////
     initializeKeyListener();
 
@@ -404,9 +405,13 @@ public class Game extends JPanel implements Runnable {
     if (foodPositions.size() >= 2) {
       Point foodPosition0 = foodPositions.get(0);
       Point foodPosition1 = foodPositions.get(1);
-
-      macaX = foodPosition0.x;
-      macaY = foodPosition0.y;
+      if (snakePoison) {
+        macaX = -100;
+        macaY = -100;
+      } else {
+        macaX = foodPosition0.x;
+        macaY = foodPosition0.y;
+      }
       if (snakePoison) {
         macaPOX = foodPosition1.x;
         macaPOY = foodPosition1.y;
@@ -414,11 +419,20 @@ public class Game extends JPanel implements Runnable {
       macaENX = -100;
       macaENY = -100;
       if (!TimerVerif) {
+        if (snakePoison) {
+          macaX = -100;
+          macaY = -100;
+        }
         if (Game.snakeClassica || Game.snakeFire) {
           macaPOX = -100;
           macaPOY = -100;
         }
       } else if (TimerVerif) {
+        if (snakePoison) {
+          macaX = foodPosition0.x;
+          macaY = foodPosition0.y;
+
+        }
         if (Game.snakeClassica || Game.snakeFire) {
           macaPOX = foodPosition1.x;
           macaPOY = foodPosition1.y;
@@ -629,15 +643,16 @@ public class Game extends JPanel implements Runnable {
         positionY = nodeSnake[0].y;
       }
 
-      if (!ControlOneAnimationPoison) {
-        Animation.AnimationColidianPoisonFood(buffer, ColidianPoisonFood, nodeSnake, PosColidianPoisonX,
-            PosColidianPoisonY);
+      if (snakeClassica || snakeFire) {
+        if (!ControlOneAnimationPoison) {
+          Animation.AnimationColidianPoisonFood(buffer, ColidianPoisonFood, nodeSnake, PosColidianPoisonX,
+              PosColidianPoisonY);
+        }
       }
-
-      animationFinished = Animation.AnimationPoisonDeath(buffer, DeathPoison, animationFinished, positionX,
+      animationFinished = Animation.AnimationPoisonDeath(buffer, DeathPoison, DeathPoison2, animationFinished,
+          positionX,
           positionY, keyListener);
     }
-
     if (ControlEnergyColidianBoolean) {
       if (!ControlOneAnimation) {
         Animation.AnimationColidianEnergyFood(buffer, ColidianEnergyFood, nodeSnake, PosColidianEnergyX,
@@ -905,82 +920,113 @@ public class Game extends JPanel implements Runnable {
 
     Rectangle fruitArea = new Rectangle(macaX, macaY, WIDTH, HEIGHT);
     Rectangle fruitPOArea = new Rectangle(macaPOX, macaPOY, 20, 20);
-    ///////////////////////////////////////////////
-    ///////////////////////////////////////////////
-    ///////////////////////////////////////////////
+    ////////////
     if (headCollisionArea.intersects(fruitArea)) {
       ControlOneAnimationClassicAtivar = true;
       PosColidianClassicX = macaX;
       PosColidianClassicY = macaY;
-
-      if (!colidionClaControlTimerAnimation) {
-        Animation.AnimationFoodCla(this);
-      }
-
-      if (!ColidionEnergyConfirmed) {
-        ColidionEnergyCla = true;
-      }
-
       if (foodPositions.size() >= 2) {
         Point foodPosition0 = foodPositions.get(0);
         macaX = foodPosition0.x;
         macaY = foodPosition0.y;
         ControlOneAnimationClassic = false;
       }
-
-      for (int i = 0; i < 10; i++) {
-        // Adiciona um novo nó ao final da cobra
-        int lastIndex = nodeSnake.length - 1;
-        Node newTailNode = new Node(nodeSnake[lastIndex].x, nodeSnake[lastIndex].y);
-
-        // Calcula a direção do último segmento em relação ao penúltimo segmento
-        int dx = nodeSnake[lastIndex].x - nodeSnake[lastIndex - 1].x;
-        int dy = nodeSnake[lastIndex].y - nodeSnake[lastIndex - 1].y;
-
-        // Adiciona o novo segmento na direção oposta ao último segmento
-        newTailNode.x += dx;
-        newTailNode.y += dy;
-
-        // Adiciona o novo segmento ao final da cobra
-        nodeSnake = Arrays.copyOf(nodeSnake, nodeSnake.length + 1);
-        nodeSnake[lastIndex + 1] = newTailNode;
+      if (snakeClassica || snakeFire) {
+        if (!colidionClaControlTimerAnimation) {
+          Animation.AnimationFoodCla(this);
+        }
       }
-      // Aumente o tamanho da cobra, ajuste a pontuação, etc.
-      // Restante do código...
+
+      if (!ColidionEnergyConfirmed) {
+        ColidionEnergyCla = true;
+      }
+      if (Game.snakePoison) {
+        ControlOneAnimationPoison = true;
+        animationFinished = false;
+        poisonDeathAnimationPlaying = true;
+        venomAnimationPlayed = true;
+        if (!gameOver) {
+          AnimationSnakeDeath.AnimationSnake(this, foodPositions);
+        }
+        lastVenomAnimationTime1 = System.currentTimeMillis();
+      }
+
+      if (Game.snakeClassica || Game.snakeFire) {
+        for (int i = 0; i < 10; i++) {
+          // Adiciona um novo nó ao final da cobra
+          int lastIndex = nodeSnake.length - 1;
+          Node newTailNode = new Node(nodeSnake[lastIndex].x, nodeSnake[lastIndex].y);
+
+          // Calcula a direção do último segmento em relação ao penúltimo segmento
+          int dx = nodeSnake[lastIndex].x - nodeSnake[lastIndex - 1].x;
+          int dy = nodeSnake[lastIndex].y - nodeSnake[lastIndex - 1].y;
+
+          // Adiciona o novo segmento na direção oposta ao último segmento
+          newTailNode.x += dx;
+          newTailNode.y += dy;
+
+          // Adiciona o novo segmento ao final da cobra
+          nodeSnake = Arrays.copyOf(nodeSnake, nodeSnake.length + 1);
+          nodeSnake[lastIndex + 1] = newTailNode;
+        }
+      }
     }
     ///////////////////////////////////////////////
     if (headCollisionAreaPO.intersects(fruitPOArea)) {
-      Game.PosColidianPoisonX = macaPOX;
-      Game.PosColidianPoisonY = macaPOY;
+      PosColidianPoisonX = macaPOX;
+      PosColidianPoisonY = macaPOY;
+
     }
     if (!colisionControlPoison) {
       if (headCollisionAreaPO.intersects(fruitPOArea)) {
-
         if (foodPositions.size() >= 2) {
           Point foodPosition1 = foodPositions.get(1);
 
           macaPOX = foodPosition1.x;
           macaPOY = foodPosition1.y;
-
           ControlOneAnimationPoison = false;
         }
+        if (snakePoison) {
+          for (int i = 0; i < 10; i++) {
+            // Adiciona um novo nó ao final da cobra
+            int lastIndex = nodeSnake.length - 1;
+            Node newTailNode = new Node(nodeSnake[lastIndex].x, nodeSnake[lastIndex].y);
+
+            // Calcula a direção do último segmento em relação ao penúltimo segmento
+            int dx = nodeSnake[lastIndex].x - nodeSnake[lastIndex - 1].x;
+            int dy = nodeSnake[lastIndex].y - nodeSnake[lastIndex - 1].y;
+
+            // Adiciona o novo segmento na direção oposta ao último segmento
+            newTailNode.x += dx;
+            newTailNode.y += dy;
+
+            // Adiciona o novo segmento ao final da cobra
+            nodeSnake = Arrays.copyOf(nodeSnake, nodeSnake.length + 1);
+            nodeSnake[lastIndex + 1] = newTailNode;
+          }
+          if (!ColidionEnergyConfirmed) {
+            ColidionEnergyCla = true;
+          }
+        }
+
         animationFinished = false;
+        venomAnimationPlayed = false;
+        if (snakePoison) {
+          AnimationPOison.AnimationFoodClaInicColision(this);
+        }
         if (Game.snakeClassica || Game.snakeFire) {
           poisonDeathAnimationPlaying = true;
-
-        }
-        venomAnimationPlayed = true;
-        lastVenomAnimationTime1 = System.currentTimeMillis();
-
-        if (!colidionPoiControlTimerAnimation) {
-          AnimationPOison.AnimationFoodVenInicColision(this);
-        }
-
-        if (Game.snakeClassica || Game.snakeFire) {
+          if (!colidionPoiControlTimerAnimation) {
+            AnimationPOison.AnimationFoodVenInicColision(this);
+          }
+          lastVenomAnimationTime1 = System.currentTimeMillis();
           if (!gameOver) {
             AnimationSnakeDeath.AnimationSnake(this, foodPositions);
           }
+        } else {
+          poisonDeathAnimationPlaying = false;
         }
+
       }
     }
 
@@ -1065,12 +1111,18 @@ public class Game extends JPanel implements Runnable {
     if (foodPositions.size() >= 2) {
       Point foodPosition0 = foodPositions.get(0);
       Point foodPosition1 = foodPositions.get(1);
-      macaX = foodPosition0.x;
-      macaY = foodPosition0.y;
+      if (snakePoison) {
+        macaX = -100;
+        macaY = -100;
+      } else {
+        macaX = foodPosition0.x;
+        macaY = foodPosition0.y;
+      }
       if (snakeClassica || snakeFire) {
         macaPOX = -100;
         macaPOY = -100;
       } else {
+
         macaPOX = foodPosition1.x;
         macaPOY = foodPosition1.y;
       }
