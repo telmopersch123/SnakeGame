@@ -21,6 +21,10 @@ public class checkedColisson {
       return new ResultadoColisao(true, true);
     }
 
+    if (Game.colisianEnergy) {
+      return new ResultadoColisao(true, false);
+    }
+
     if (colisaoPainel(nodeSnake, borderWidth, getWidth, getHeight)) {
       return new ResultadoColisao(true, false);
     }

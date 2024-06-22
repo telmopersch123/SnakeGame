@@ -1,10 +1,14 @@
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class AnimationEnergyControl {
+  static boolean checkedEsplo;
 
-  void updateEnergyAnimation(Game game) {
+  void updateEnergyAnimation(Game game, BufferedImage buffer, Image explosionDeath) {
 
     ArrayList<Point> foodPositions = LocaleUtils.LocateFood(game.FrameWidth,
         game.FrameHeight,
@@ -43,8 +47,10 @@ public class AnimationEnergyControl {
         game.Segunds = true;
       }
       if (game.Segunds) {
-        game.macaENX = foodPosition2.x;
-        game.macaENY = foodPosition2.y;
+        // game.macaENX = foodPosition2.x;
+        // game.macaENY = foodPosition2.y;
+        game.macaENX = 150;
+        game.macaENY = 150;
         if (!Game.colidionEneControlTimerAnimation) {
           AnimationEnergy.AnimationFoodErnInic(this);
         }
@@ -89,12 +95,10 @@ public class AnimationEnergyControl {
       if (game.ControlColisionEnergy) {
         if (headCollisionAreaEN.intersects(fruitEnergyArea)) {
           game.ernegyAnimationPlayed = true;
-
           Game.ColisionEnergy = true;
           Game.ControlAPOSColidionTimer = true;
           game.macaENX = -100;
           game.macaENY = -100;
-
           game.TeleportEnergyVerif = System.currentTimeMillis();
           if (!Game.colidionEneControlTimerAnimation) {
             AnimationEnergy.AnimationFoodErnInic(this);
@@ -104,20 +108,44 @@ public class AnimationEnergyControl {
     }
 
     if (Game.ControlAPOSColidionTimer) {
+
       if (ControlEnergySpreet > 1000 && ControlEnergySpreet < 5000) {
-        Game.SpreetSheetInitial = true;
+        if (Game.snakeClassica || Game.snakePoison) {
+          Game.SpreetSheetInitial = true;
+          Game.SpreetSheetFinale = false;
+        }
         game.VelocityControl = true;
-        Game.SpreetSheetFinale = false;
+
+        if (ControlEnergySpreet >= 1100 && ControlEnergySpreet <= 1150) {
+          if (Game.snakeFire) {
+            checkedEsplo = true;
+            Game.ControlOneAnimationESPLO = false;
+          }
+        }
+        if (ControlEnergySpreet >= 1800) {
+          if (Game.snakeFire) {
+            Game.colisianEnergy = true;
+          }
+        }
       } else if (ControlEnergySpreet >= 5000 && ControlEnergySpreet <= 5700) {
-        Game.SpreetSheetInitial = false;
-        Game.SpreetSheetFinale = true;
-      } else if (ControlEnergySpreet > 5700) {
-        Game.SpreetSheetFinale = false;
-      } else if (ControlEnergySpreet >= 6000) {
-        game.ControlSpriteSheet = System.currentTimeMillis();
+        if (Game.snakeClassica || Game.snakePoison) {
+          Game.SpreetSheetInitial = false;
+          Game.SpreetSheetFinale = true;
+
+        } else if (ControlEnergySpreet > 5700) {
+          Game.SpreetSheetFinale = false;
+        } else if (ControlEnergySpreet >= 6000) {
+          game.ControlSpriteSheet = System.currentTimeMillis();
+        }
+      }
+    }
+    if (checkedEsplo) {
+      if (!Game.ControlOneAnimationESPLO) {
+        animationDeathExplosion(buffer, explosionDeath);
       }
     }
 
+    /////
     if (Game.ColisionEnergy) {
       if (ControlAPOS <= 6000) {
         Game.ControlAPOSColidionTimer = true;
@@ -126,6 +154,7 @@ public class AnimationEnergyControl {
         if (!Game.ControlAPOSColidionTimer) {
           game.macaENX = foodPosition2.x;
           game.macaENY = foodPosition2.y;
+
         }
         Game.ColisionEnergy = false;
         game.ControlSpriteSheet = System.currentTimeMillis();
@@ -146,8 +175,10 @@ public class AnimationEnergyControl {
           AnimationEnergy.AnimationFoodErnInic(this);
         }
         if (!Game.ControlAPOSColidionTimer) {
-          game.macaENX = foodPosition2.x;
-          game.macaENY = foodPosition2.y;
+          // game.macaENX = foodPosition2.x;
+          // game.macaENY = foodPosition2.y;
+          game.macaENX = 150;
+          game.macaENY = 150;
         }
 
         game.TeleportEnergyVerif = System.currentTimeMillis();
@@ -158,5 +189,43 @@ public class AnimationEnergyControl {
       game.TeleportEnergyVerif = System.currentTimeMillis();
     }
 
+  }
+
+  private static long lastFrameTimees = System.currentTimeMillis();
+  private static int frameIntervales = 100;
+  static int numFramesXes = 8; // Ajuste conforme necessário
+  static int numFramesYes = 1; // Supondo que todas as animações estão na mesma linha
+  static int totalFrameses = numFramesXes * numFramesYes;
+
+  public static void animationDeathExplosion(BufferedImage buffer, Image explosionDeath) {
+    BufferedImage EnergyAnimationColision = (BufferedImage) explosionDeath;
+    Graphics2D Explosao = buffer.createGraphics();
+    int numFramesX = 8; // Ajuste conforme necessário
+    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
+    int frameWidth = 500; // Largura do frame redimensionado
+    int frameHeight = 500; // Altura do frame redimensionado
+    int totalFrameses = numFramesX * numFramesY;
+    long currentTimees = System.currentTimeMillis();
+
+    int sx = (Game.currentFrame27 % numFramesX) * (EnergyAnimationColision.getWidth() / numFramesX);
+    int sy = (Game.currentFrame27 / numFramesX) * (EnergyAnimationColision.getWidth() / numFramesX);
+    int sw = EnergyAnimationColision.getWidth() / numFramesX;
+    int sh = EnergyAnimationColision.getHeight() / numFramesY;
+    BufferedImage resizedImageColision = Animation.resizeImage(
+        EnergyAnimationColision.getSubimage(sx, sy, sw, sh),
+        frameWidth,
+        frameHeight);
+    for (int i = 0; i < Game.nodeSnake.length; i += 10) {
+      Explosao.drawImage(resizedImageColision, Game.nodeSnake[i].x - 15, Game.nodeSnake[i].y - 13, 40, 40, null);
+    }
+
+    if (currentTimees - lastFrameTimees > frameIntervales) {
+      Game.currentFrame27 = (Game.currentFrame27 + 1) % totalFrameses;
+      lastFrameTimees = currentTimees;
+      if (Game.currentFrame27 == totalFrameses - 1) {
+        Game.ControlOneAnimationESPLO = true;
+        lastFrameTimees = System.currentTimeMillis();
+      }
+    }
   }
 }

@@ -189,7 +189,7 @@ public class snake {
     head.rotate(Math.toRadians(angle), xPos + imageWidth / 2, yPos + imageHeight / 2); // Rotação em torno do centro da
     head.drawImage(snakeHead, xPos + 3, yPos, imageWidth, imageHeight, null); // Desenha a cabeça da cobra
 
-    /// FOGO fireSnake
+    /// manchas amarelas PoisonSnake
     if (Game.snakePoison) {
       for (int f = 10; f < nodeSnake.length; f += 10) {
         currX = nodeSnake[f].x;
@@ -211,6 +211,7 @@ public class snake {
         }
       }
     }
+    /// FOGO fireSnake
     if (Game.snakeFire) {
       for (int f = 10; f < nodeSnake.length; f += 10) {
         currX = nodeSnake[f].x;
