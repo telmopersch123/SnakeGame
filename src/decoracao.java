@@ -100,6 +100,8 @@ public class decoracao {
   private static BufferedImage spritesheetskull1 = null;
   private static BufferedImage spritesheetskull2 = null;
   private static BufferedImage spritesheetskull3 = null;
+
+  private static BufferedImage arvoreLago;
   static {
     try {
       // mapa field
@@ -204,6 +206,8 @@ public class decoracao {
           .read(new File("resources/map_swamp/obstaculos_complexos/spritesheetarvore3.png"));
       spritsheethomemcristal = ImageIO
           .read(new File("resources/map_swamp/obstaculos_complexos/spritsheethomemcristal.png"));
+      arvoreLago = ImageIO
+          .read(new File("resources/map_Swamp/obstaculos_complexos/arvoreLago.png"));
       //
       Black_crystal1 = ImageIO
           .read(new File("resources/map_dungeon/obstaculos_normal/Black_crystal1.png"));
@@ -262,6 +266,7 @@ public class decoracao {
           .read(new File("resources/map_dungeon/obstaculos_complexos/spritesheetskull2.png"));
       spritesheetskull3 = ImageIO
           .read(new File("resources/map_dungeon/obstaculos_complexos/spritesheetskull3.png"));
+
     } catch (IOException ex) {
       ex.printStackTrace();
     }
@@ -278,19 +283,16 @@ public class decoracao {
     int valueDecoSimples = 0;
     int valueDecoComplexo = 0;
     if (Game.MapField) {
-
       valueDecoSimples = 9;
     } else if (Game.MapSwamp) {
-
       valueDecoSimples = 5;
     } else if (Game.MapDungeon) {
-
-      valueDecoSimples = 16;
+      valueDecoSimples = 17;
     }
     if (Game.MapField) {
       valueDecoComplexo = 12;
     } else if (Game.MapSwamp) {
-      valueDecoComplexo = 33;
+      valueDecoComplexo = 34;
     } else if (Game.MapDungeon) {
       valueDecoComplexo = 14;
     }
@@ -301,7 +303,7 @@ public class decoracao {
       } else if (Game.MapSwamp) {
         Game.quanti.add((int) (Math.random() * 3) + 1);
       } else if (Game.MapDungeon) {
-        Game.quanti.add((int) (Math.random() * 2) + 1);
+        Game.quanti.add((int) (Math.random() * 3) + 1);
       }
     }
 
@@ -341,6 +343,10 @@ public class decoracao {
         }
         Game.DecoComplexoX[i] = x1;
         Game.DecoComplexoY[i] = y1;
+        if (Game.DecoComplexoX.length > 33 && Game.DecoComplexoY.length > 33) {
+          Game.DecoComplexoX[33] = Game.DecoComplexoX[30];
+          Game.DecoComplexoY[33] = Game.DecoComplexoY[30];
+        }
       }
     }
 
@@ -408,6 +414,7 @@ public class decoracao {
   public static Graphics2D ImagemArvore3;
   public static Graphics2D ImagemCris;
   public static Graphics2D fireFogo;
+  public static Graphics2D fireFogo1;
   public static Graphics2D vulcanfire;
   public static Graphics2D temple1;
   public static Graphics2D temple2;
@@ -429,6 +436,7 @@ public class decoracao {
   private static int frameIntervalArv2 = 100;
   private static int frameIntervalcris = 100;
   private static int frameIntervalfire = 50;
+  private static int frameIntervalfire1 = 50;
   private static int frameIntervalvulcan = 50;
   private static int frameIntervaltemple = 100;
   private static int frameIntervaltemple1 = 100;
@@ -437,6 +445,7 @@ public class decoracao {
   public static int totalFramesArv = numFramesXArv * numFramesYArv;
   public static int totalFramescris = numFramesXCris * numFramesYCris;
   public static int totalFramesfire = numFramesXfire * numFramesYfire;
+  public static int totalFramesfire1 = numFramesXfire * numFramesYfire;
   public static int totalFramesvulcan = numFramesXvulcan * numFramesYvulcan;
   public static int totalFramestemple = numFramesXtemple * numFramesYtemple;
   public static int totalFramestemple1 = numFramesXtemple * numFramesYtemple;
@@ -447,6 +456,7 @@ public class decoracao {
   public static long currentTimeArv2 = System.currentTimeMillis();
   public static long currentTimecris = System.currentTimeMillis();
   public static long currentTimefire = System.currentTimeMillis();
+  public static long currentTimefire1 = System.currentTimeMillis();
   public static long currentTimevulcan = System.currentTimeMillis();
   public static long currentTimetemple1 = System.currentTimeMillis();
   public static long currentTimetemple2 = System.currentTimeMillis();
@@ -457,10 +467,13 @@ public class decoracao {
   private static long lastFrameTimeArv2 = 0;
   private static long lastFrameTimecris = 0;
   private static long lastFrameTimefire = 0;
+  private static long lastFrameTimefire1 = 0;
   private static long lastFrameTimevulcan = 0;
   private static long lastFrameTimetemple = 0;
   private static long lastFrameTimetemple1 = 0;
   private static long lastFrameTimetemple2 = 0;
+
+  private static Graphics2D fireFogo2;
 
   public static void decoracaoField(BufferedImage buffer) {
     g2d = buffer.createGraphics();
@@ -980,6 +993,15 @@ public class decoracao {
                 Game.currentFrame17 = (Game.currentFrame17 + 1) % totalFramescris;
               }
             }
+          case 32:
+            if (Game.DecoComplexoX.length > 33 && Game.DecoComplexoY.length > 33) {
+            }
+            imagens.add(
+                new Imagem(
+                    arvoreLago,
+                    Game.DecoComplexoX[33] + 48,
+                    Game.DecoComplexoY[33] + 30, 57, 69));
+            break;
           default:
             break;
         }
@@ -1073,6 +1095,12 @@ public class decoracao {
           null);
       fireFogo.drawImage(scaledImage1, Game.DecoracaoX[index],
           Game.DecoracaoY[index], null);
+
+      if (Game.snakeFire) {
+        Game.valueFireX.add(Game.DecoracaoX[index]);
+        Game.valueFireY.add(Game.DecoracaoY[index]);
+      }
+
       long currentTimefire = System.currentTimeMillis();
 
       if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
@@ -1082,6 +1110,7 @@ public class decoracao {
       }
       index++;
     }
+
     for (int i = 0; i < Game.quanti.get(15); i++) {
       BufferedImage vulcan = (BufferedImage) spritedungeonnormal;
       int sx1 = (Game.currentFrame19 % numFramesXvulcan) * (vulcan.getWidth() /
@@ -1102,6 +1131,7 @@ public class decoracao {
           null);
       vulcanfire.drawImage(scaledImage1, Game.DecoracaoX[index],
           Game.DecoracaoY[index], null);
+
       long currentTimevulcan = System.currentTimeMillis();
 
       if (currentTimevulcan - lastFrameTimevulcan >= frameIntervalvulcan) {
@@ -1111,6 +1141,40 @@ public class decoracao {
       }
       index++;
     }
+    for (int i = 0; i < Game.quanti.get(16); i++) {
+      BufferedImage fire = (BufferedImage) firedungeon;
+      int sx1 = (Game.currentFrame28 % numFramesXfire) * (fire.getWidth() /
+          numFramesXfire);
+      int sy1 = (Game.currentFrame28 / numFramesXfire) * (fire.getHeight() /
+          numFramesYfire);
+      int sw1 = fire.getWidth() / numFramesXfire;
+      int sh1 = fire.getHeight() / numFramesYfire;
+      fireFogo2 = buffer.createGraphics();
+      AffineTransform at1 = new AffineTransform();
+      at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
+      // Create an AffineTransformOp object with the AffineTransform
+      AffineTransformOp op1 = new AffineTransformOp(at1,
+          AffineTransformOp.TYPE_BILINEAR);
+      // Apply the transform to the image
+      BufferedImage scaledImage1 = op1.filter(fire.getSubimage(sx1, sy1, sw1,
+          sh1),
+          null);
+      fireFogo2.drawImage(scaledImage1, Game.DecoracaoX[index],
+          Game.DecoracaoY[index], null);
+      if (Game.snakeFire) {
+        Game.valueFireX.add(Game.DecoracaoX[index]);
+        Game.valueFireY.add(Game.DecoracaoY[index]);
+      }
+      long currentTimefire1 = System.currentTimeMillis();
+
+      if (currentTimefire1 - lastFrameTimefire1 >= frameIntervalfire1) {
+        lastFrameTimefire1 = currentTimefire1 - (currentTimefire1 %
+            frameIntervalfire1);
+        Game.currentFrame28 = (Game.currentFrame28 + 1) % totalFramesfire1;
+      }
+      index++;
+    }
+
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       if (Game.quantiComplexo.get(i) > 0) {
         switch (i) {

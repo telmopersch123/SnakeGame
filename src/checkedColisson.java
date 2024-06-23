@@ -21,7 +21,7 @@ public class checkedColisson {
       return new ResultadoColisao(true, true);
     }
 
-    if (Game.colisianEnergy) {
+    if (Game.colisianEnergyMorrer) {
       return new ResultadoColisao(true, false);
     }
 
@@ -460,29 +460,50 @@ public class checkedColisson {
             }
             break;
           case 28:
-            if (Game.DecoComplexoX.length > 29 && Game.DecoComplexoY.length > 29) {
-              complexasSwamp = new Rectangle(Game.DecoComplexoX[29] + 45,
-                  Game.DecoComplexoY[29] + 45, 65, 65);
-              if (headCollisionAreaDeco.intersects(complexasSwamp)) {
-                return true;
+            if (Game.snakeClassica || Game.snakeFire) {
+              if (Game.DecoComplexoX.length > 29 && Game.DecoComplexoY.length > 29) {
+                complexasSwamp = new Rectangle(Game.DecoComplexoX[29] + 45,
+                    Game.DecoComplexoY[29] + 45, 65, 65);
+                if (headCollisionAreaDeco.intersects(complexasSwamp)) {
+                  return true;
+                }
               }
             }
             break;
           case 29:
-            if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
-              complexasSwamp = new Rectangle(Game.DecoComplexoX[30] + 45,
-                  Game.DecoComplexoY[30] + 45, 65, 65);
-              if (headCollisionAreaDeco.intersects(complexasSwamp)) {
-                return true;
+            if (Game.snakeClassica || Game.snakeFire) {
+              if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
+                complexasSwamp = new Rectangle(Game.DecoComplexoX[30] + 45,
+                    Game.DecoComplexoY[30] + 45, 65, 65);
+                if (headCollisionAreaDeco.intersects(complexasSwamp)) {
+                  return true;
+                }
               }
             }
             break;
           case 30:
-            if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
-              complexasSwamp = new Rectangle(Game.DecoComplexoX[31] + 45,
-                  Game.DecoComplexoY[31] + 45, 65, 65);
-              if (headCollisionAreaDeco.intersects(complexasSwamp)) {
-                return true;
+            if (Game.snakeClassica || Game.snakeFire) {
+              if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
+                complexasSwamp = new Rectangle(Game.DecoComplexoX[31] + 45,
+                    Game.DecoComplexoY[31] + 45, 65, 65);
+                if (headCollisionAreaDeco.intersects(complexasSwamp)) {
+                  return true;
+                }
+              }
+            } else {
+              if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
+                complexasSwamp = new Rectangle(Game.DecoComplexoX[31] + 45,
+                    Game.DecoComplexoY[31] + 35, 40, 30);
+                if (headCollisionAreaDeco.intersects(complexasSwamp)) {
+                  return true;
+                }
+              }
+              if (Game.DecoComplexoX.length > 30 && Game.DecoComplexoY.length > 30) {
+                complexasSwamp = new Rectangle(Game.DecoComplexoX[31] + 75,
+                    Game.DecoComplexoY[31] + 90, 30, 20);
+                if (headCollisionAreaDeco.intersects(complexasSwamp)) {
+                  return true;
+                }
               }
             }
             break;
@@ -490,6 +511,15 @@ public class checkedColisson {
             if (Game.DecoComplexoX.length > 32 && Game.DecoComplexoY.length > 32) {
               complexasSwamp = new Rectangle(Game.DecoComplexoX[32] + 18,
                   Game.DecoComplexoY[32] + 48, 90, 60);
+              if (headCollisionAreaDeco.intersects(complexasSwamp)) {
+                return true;
+              }
+            }
+            break;
+          case 32:
+            if (Game.DecoComplexoX.length > 33 && Game.DecoComplexoY.length > 33) {
+              complexasSwamp = new Rectangle(Game.DecoComplexoX[33] + 60,
+                  Game.DecoComplexoY[33] + 75, 30, 30);
               if (headCollisionAreaDeco.intersects(complexasSwamp)) {
                 return true;
               }
@@ -510,11 +540,31 @@ public class checkedColisson {
       for (int i = 0; i < Game.DecoracaoX.length; i++) {
         Rectangle Decoracao = new Rectangle(Game.DecoracaoX[i], Game.DecoracaoY[i],
             30, 30);
-        if (headCollisionAreaDeco.intersects(Decoracao)) {
-          return true;
+        if (Game.snakeFire) {
+
+          for (int f = 0; f < Game.valueFireX.size(); f++) {
+            Rectangle DecoracaoFire = new Rectangle(Game.valueFireX.get(f), Game.valueFireY.get(f), 30, 30);
+            if (headCollisionAreaDeco.intersects(DecoracaoFire)) {
+              return false;
+            }
+          }
+
+          // Verifica se o índice i é válido para Game.valueFire antes de acessar
+          if (i < Game.valueFireX.size()
+              && (Game.DecoracaoX[i] != Game.valueFireX.get(i) && Game.DecoracaoY[i] != Game.valueFireY.get(i))) {
+            if (headCollisionAreaDeco.intersects(Decoracao)) {
+              return true;
+            }
+          }
+        } else {
+          if (headCollisionAreaDeco.intersects(Decoracao)) {
+            return true;
+          }
         }
+
       }
     }
+
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       if (Game.quantiComplexo.get(i) > 0) {
         switch (i) {
@@ -635,20 +685,36 @@ public class checkedColisson {
             }
             break;
           case 12:
-            if (Game.DecoComplexoX.length > 19 && Game.DecoComplexoY.length > 19) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[19] + 20,
-                  Game.DecoComplexoY[19] + 20, 115, 60);
-              if (headCollisionAreaDeco.intersects(complexasDungeon)) {
-                return true;
+            if (!Game.snakeFire) {
+              int index = 19;
+              for (int y = 0; y < 2; y++) {
+                if (Game.DecoComplexoX.length > 19 && Game.DecoComplexoY.length > 19) {
+                  complexasDungeon = new Rectangle(Game.DecoComplexoX[index] + 20,
+                      Game.DecoComplexoY[index] + 20, 115, 60);
+                  if (headCollisionAreaDeco.intersects(complexasDungeon)) {
+                    return true;
+                  }
+                }
+                index++;
               }
             }
             break;
           case 13:
-            if (Game.DecoComplexoX.length > 20 && Game.DecoComplexoY.length > 20) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[20] + 20,
-                  Game.DecoComplexoY[20] + 20, 115, 60);
-              if (headCollisionAreaDeco.intersects(complexasDungeon)) {
-                return true;
+            if (!Game.snakeFire) {
+              if (Game.DecoComplexoX.length > 21 && Game.DecoComplexoY.length > 21) {
+                complexasDungeon = new Rectangle(Game.DecoComplexoX[21] + 20,
+                    Game.DecoComplexoY[21] + 20, 115, 60);
+                if (headCollisionAreaDeco.intersects(complexasDungeon)) {
+                  return true;
+                }
+              }
+            } else {
+              if (Game.DecoComplexoX.length > 21 && Game.DecoComplexoY.length > 21) {
+                complexasDungeon = new Rectangle(Game.DecoComplexoX[21] + 50,
+                    Game.DecoComplexoY[21] + 15, 80, 50);
+                if (headCollisionAreaDeco.intersects(complexasDungeon)) {
+                  return true;
+                }
               }
             }
             break;

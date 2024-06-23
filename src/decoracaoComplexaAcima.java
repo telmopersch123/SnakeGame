@@ -151,44 +151,49 @@ public class decoracaoComplexaAcima {
 
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       if (Game.quantiComplexo.get(i) > 0) {
+
         switch (i) {
           case 12:
-            if (Game.DecoComplexoX.length > 19 && Game.DecoComplexoY.length > 19) {
-              BufferedImage lava = (BufferedImage) lavaNormal;
-              int sx1 = (Game.currentFrame23 % numFramesXlava) * (lava.getWidth()
-                  /
-                  numFramesXlava);
-              int sy1 = (Game.currentFrame23 / numFramesXlava) *
-                  (lava.getHeight() /
-                      numFramesYlava);
-              int sw1 = lava.getWidth() / numFramesXlava;
-              int sh1 = lava.getHeight() / numFramesYlava;
-              lavaLava = buffer.createGraphics();
-              AffineTransform at1 = new AffineTransform();
-              at1.scale((double) (150 + 2) / sw1, (double) (100 + 2) / sh1);
-              // Create an AffineTransformOp object with the AffineTransform
-              AffineTransformOp op1 = new AffineTransformOp(at1,
-                  AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
-              BufferedImage scaledImage1 = op1.filter(lava.getSubimage(sx1, sy1,
-                  sw1,
-                  sh1),
-                  null);
-              lavaLava.drawImage(scaledImage1,
-                  Game.DecoComplexoX[19],
-                  Game.DecoComplexoY[19], null);
-              long currentTimelava = System.currentTimeMillis();
+            int index = 19;
+            for (int y = 0; y < 2; y++) {
+              if (Game.DecoComplexoX.length > 19 && Game.DecoComplexoY.length > 19) {
+                BufferedImage lava = (BufferedImage) lavaNormal;
+                int sx1 = (Game.currentFrame23 % numFramesXlava) * (lava.getWidth()
+                    /
+                    numFramesXlava);
+                int sy1 = (Game.currentFrame23 / numFramesXlava) *
+                    (lava.getHeight() /
+                        numFramesYlava);
+                int sw1 = lava.getWidth() / numFramesXlava;
+                int sh1 = lava.getHeight() / numFramesYlava;
+                lavaLava = buffer.createGraphics();
+                AffineTransform at1 = new AffineTransform();
+                at1.scale((double) (150 + 2) / sw1, (double) (100 + 2) / sh1);
+                // Create an AffineTransformOp object with the AffineTransform
+                AffineTransformOp op1 = new AffineTransformOp(at1,
+                    AffineTransformOp.TYPE_BILINEAR);
+                // Apply the transform to the image
+                BufferedImage scaledImage1 = op1.filter(lava.getSubimage(sx1, sy1,
+                    sw1,
+                    sh1),
+                    null);
+                lavaLava.drawImage(scaledImage1,
+                    Game.DecoComplexoX[index],
+                    Game.DecoComplexoY[index], null);
+                long currentTimelava = System.currentTimeMillis();
 
-              if (currentTimelava - lastFrameTimelava >= frameIntervallava) {
-                lastFrameTimelava = currentTimelava - (currentTimelava %
-                    frameIntervallava);
-                Game.currentFrame23 = (Game.currentFrame23 + 1) % totalFrameslava;
+                if (currentTimelava - lastFrameTimelava >= frameIntervallava) {
+                  lastFrameTimelava = currentTimelava - (currentTimelava %
+                      frameIntervallava);
+                  Game.currentFrame23 = (Game.currentFrame23 + 1) % totalFrameslava;
+                }
+
               }
-
+              index++;
             }
             break;
           case 13:
-            if (Game.DecoComplexoX.length > 20 && Game.DecoComplexoY.length > 20) {
+            if (Game.DecoComplexoX.length > 21 && Game.DecoComplexoY.length > 21) {
               BufferedImage lava1 = (BufferedImage) lavaSkull;
               int sx1 = (Game.currentFrame24 % numFramesXlava) * (lava1.getWidth()
                   /
@@ -210,8 +215,8 @@ public class decoracaoComplexaAcima {
                   sh1),
                   null);
               lavaskull.drawImage(scaledImage1,
-                  Game.DecoComplexoX[20],
-                  Game.DecoComplexoY[20], null);
+                  Game.DecoComplexoX[21],
+                  Game.DecoComplexoY[21], null);
               long currentTimelava2 = System.currentTimeMillis();
 
               if (currentTimelava2 - lastFrameTimelava2 >= frameIntervallava2) {

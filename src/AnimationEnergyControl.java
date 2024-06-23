@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class AnimationEnergyControl {
-  static boolean checkedEsplo;
 
   void updateEnergyAnimation(Game game, BufferedImage buffer, Image explosionDeath) {
 
@@ -47,10 +46,8 @@ public class AnimationEnergyControl {
         game.Segunds = true;
       }
       if (game.Segunds) {
-        // game.macaENX = foodPosition2.x;
-        // game.macaENY = foodPosition2.y;
-        game.macaENX = 150;
-        game.macaENY = 150;
+        game.macaENX = foodPosition2.x;
+        game.macaENY = foodPosition2.y;
         if (!Game.colidionEneControlTimerAnimation) {
           AnimationEnergy.AnimationFoodErnInic(this);
         }
@@ -74,8 +71,12 @@ public class AnimationEnergyControl {
     }
     if (Game.ControlEnergyColidianBoolean) {
       if (ControlEnergyColidion <= 1500) {
+        if (!Game.snakeFire) {
+          Game.ControlVelocity = 2000;
+        } else {
+          Game.ControlVelocity = 10000;
+        }
 
-        Game.ControlVelocity = 2000;
         Game.currentFrame4 = 0;
       }
       if (ControlEnergyColidion <= 2500) {
@@ -114,17 +115,20 @@ public class AnimationEnergyControl {
           Game.SpreetSheetInitial = true;
           Game.SpreetSheetFinale = false;
         }
+
         game.VelocityControl = true;
 
-        if (ControlEnergySpreet >= 1100 && ControlEnergySpreet <= 1150) {
-          if (Game.snakeFire) {
-            checkedEsplo = true;
+        if (Game.snakeFire) {
+          if (ControlEnergySpreet >= 1000 && ControlEnergySpreet <= 1050) {
+            Game.checkedEsplo = true;
             Game.ControlOneAnimationESPLO = false;
+
           }
-        }
-        if (ControlEnergySpreet >= 1800) {
-          if (Game.snakeFire) {
-            Game.colisianEnergy = true;
+          if (ControlEnergySpreet >= 1500) {
+            Game.colisianEnergySumir = true;
+          }
+          if (ControlEnergySpreet >= 2200) {
+            Game.colisianEnergyMorrer = true;
           }
         }
       } else if (ControlEnergySpreet >= 5000 && ControlEnergySpreet <= 5700) {
@@ -139,12 +143,13 @@ public class AnimationEnergyControl {
         }
       }
     }
-    if (checkedEsplo) {
-      if (!Game.ControlOneAnimationESPLO) {
-        animationDeathExplosion(buffer, explosionDeath);
+    if (Game.snakeFire) {
+      if (Game.checkedEsplo) {
+        if (!Game.ControlOneAnimationESPLO) {
+          AnimationEnergyControl.animationDeathExplosion(buffer, explosionDeath);
+        }
       }
     }
-
     /////
     if (Game.ColisionEnergy) {
       if (ControlAPOS <= 6000) {
@@ -154,7 +159,6 @@ public class AnimationEnergyControl {
         if (!Game.ControlAPOSColidionTimer) {
           game.macaENX = foodPosition2.x;
           game.macaENY = foodPosition2.y;
-
         }
         Game.ColisionEnergy = false;
         game.ControlSpriteSheet = System.currentTimeMillis();
@@ -175,10 +179,8 @@ public class AnimationEnergyControl {
           AnimationEnergy.AnimationFoodErnInic(this);
         }
         if (!Game.ControlAPOSColidionTimer) {
-          // game.macaENX = foodPosition2.x;
-          // game.macaENY = foodPosition2.y;
-          game.macaENX = 150;
-          game.macaENY = 150;
+          game.macaENX = foodPosition2.x;
+          game.macaENY = foodPosition2.y;
         }
 
         game.TeleportEnergyVerif = System.currentTimeMillis();

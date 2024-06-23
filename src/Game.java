@@ -178,6 +178,7 @@ public class Game extends JPanel implements Runnable {
   public boolean ControlTeleport = false;
   public boolean ControlColisionEnergy = false;
   public boolean VelocityControl = false;
+
   public static Timer poisonFruitAnimationTimer;
   public boolean colidionClaControlTimerAnimation = false;
   public static boolean colidionPoiControlTimerAnimation = false;
@@ -195,6 +196,7 @@ public class Game extends JPanel implements Runnable {
   public static int PosColidianPoisonY = 0;
   public static int PosColidianClassicX = 0;
   public static int PosColidianClassicY = 0;
+  public static int currentFrame28 = 0;
   public static int currentFrame27 = 0;
   public static int currentFrame26 = 0;
   public static int currentFrame25 = 0;
@@ -236,12 +238,12 @@ public class Game extends JPanel implements Runnable {
   public static int positionY;
   public static Graphics2D g2d;
   public static boolean NewButtonGame;
-  public static boolean MapDungeon = false;
+  public static boolean MapDungeon = true;
   public static boolean MapSwamp = false;
-  public static boolean MapField = true;
-  public static boolean snakeClassica = true;
+  public static boolean MapField = false;
+  public static boolean snakeClassica = false;
   public static boolean snakePoison = false;
-  public static boolean snakeFire = false;
+  public static boolean snakeFire = true;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
   private static int quantidadeDecoChao2;
@@ -288,6 +290,7 @@ public class Game extends JPanel implements Runnable {
   public static int[] DecoracaoY = new int[0];
   public static int[] DecoComplexoX = new int[0];
   public static int[] DecoComplexoY = new int[0];
+
   private static int quantidadeDecoDragonBone;
   private static int quantidadeDecoSkullBone;
   private static int quantidadeDecoTibiaBone;
@@ -307,10 +310,13 @@ public class Game extends JPanel implements Runnable {
   double rotationAngle = 0;
   Image lavaNormal;
   Image lavaSkull;
-
-  public static boolean colisianEnergy = false;
+  public static boolean checkedEsplo;
+  public static boolean colisianEnergySumir = false;
+  public static boolean colisianEnergyMorrer = false;
   public static ArrayList<Integer> quanti = new ArrayList<>();
   public static ArrayList<Integer> quantiComplexo = new ArrayList<>();
+  public static ArrayList<Integer> valueFireX = new ArrayList<>();
+  public static ArrayList<Integer> valueFireY = new ArrayList<>();
 
   private void initializeKeyListener() {
     if (!gameOver) {
@@ -617,7 +623,7 @@ public class Game extends JPanel implements Runnable {
       }
     }
     // Renderizar a animação de colisão
-    while (gameOver && !poisonDeathAnimationPlaying && !Game.snakeFire) {
+    while (gameOver && !poisonDeathAnimationPlaying && !checkedEsplo) {
       rotationAngle += 1;
       rotationAngle %= 360;
       if (keyListener != null) {
@@ -654,6 +660,7 @@ public class Game extends JPanel implements Runnable {
           Animation.AnimationColidianPoisonFood(buffer, ColidianPoisonFood, nodeSnake, PosColidianPoisonX,
               PosColidianPoisonY);
         }
+
       }
       animationFinished = Animation.AnimationPoisonDeath(buffer, DeathPoison, DeathPoison2, animationFinished,
           positionX,
@@ -737,7 +744,7 @@ public class Game extends JPanel implements Runnable {
       snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraightPoison, bodyCornerPoison, tailImagePoison,
           snakeHeadPoison, keyListener, manchasAmarelas, null, null);
     }
-    if (!colisianEnergy) {
+    if (!colisianEnergySumir) {
       if (snakeFire) {
         snake.snakePaint(nodeSnake, buffer, WIDTH, HEIGHT, bodyStraightFire, bodyCornerFire, tailImageFire,
             snakeHeadFire,
@@ -771,7 +778,7 @@ public class Game extends JPanel implements Runnable {
     // Se o jogo terminou, desenha a animação de colisão se a tela de game over
 
     if (gameOver) {
-      if (!poisonDeathAnimationPlaying && !Game.snakeFire) {
+      if (!poisonDeathAnimationPlaying && !checkedEsplo) {
         drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
       }
       g.drawImage(buffer, 0, 0, null);
@@ -914,6 +921,7 @@ public class Game extends JPanel implements Runnable {
       } else {
         ControlVelocity = 700;
       }
+
     }
 
     move.SnakeMove(nodeSnake, keyListener.getDirection(), DISTANCE);
@@ -1084,8 +1092,8 @@ public class Game extends JPanel implements Runnable {
             .ThisDecoration(snakeX, snakeY, DecoracaoX, DecoracaoY, DecoComplexoY, DecoComplexoX, WIDTH, HEIGHT));
 
     // Define as coordenadas da cabeça da cobra
-    nodeSnake[0] = new Node(240, 240);
-    // nodeSnake[0] = new Node(snakeX, snakeY);
+
+    nodeSnake[0] = new Node(snakeX, snakeY);
 
     // Inicializa o restante do corpo da cobra com as mesmas coordenadas da cabeça
     for (int i = 1; i < nodeSnake.length; i++) {
@@ -1116,6 +1124,8 @@ public class Game extends JPanel implements Runnable {
     ValueDecoNormal = 0;
     quanti.clear();
     quantiComplexo.clear();
+    valueFireX.clear();
+    valueFireY.clear();
     Game.DecoracaoX = new int[0];
     Game.DecoracaoY = new int[0];
     Game.DecoComplexoX = new int[0];
@@ -1131,21 +1141,19 @@ public class Game extends JPanel implements Runnable {
         macaX = -100;
         macaY = -100;
       } else {
-        macaX = foodPosition0.x;
         macaY = foodPosition0.y;
       }
       if (snakeClassica || snakeFire) {
         macaPOX = -100;
         macaPOY = -100;
       } else {
-
         macaPOX = foodPosition1.x;
         macaPOY = foodPosition1.y;
       }
       macaENX = -100;
       macaENY = -100;
     }
-
+    checkedEsplo = false;
     ControlVelocity = 700;
     animationFinished = true;
     poisonDeathAnimationPlaying = false;
@@ -1161,6 +1169,7 @@ public class Game extends JPanel implements Runnable {
     TimerVerif = false;
     count = 0;
     VelocityControl = false;
+
     ColidionEnergyCla = false;
     ColidionEnergyConfirmed = false;
     ControlTeleport = false;
@@ -1172,7 +1181,8 @@ public class Game extends JPanel implements Runnable {
     ControlAPOSColidionTimer = false;
     ControlEnergyColidianBoolean = false;
     ControlOneAnimationClassicAtivar = false;
-    colisianEnergy = false;
+    colisianEnergyMorrer = false;
+    colisianEnergySumir = false;
     ControlOneAnimationESPLO = true;
     currentFrame1 = 0;
     currentFrame4 = 0;
@@ -1201,6 +1211,7 @@ public class Game extends JPanel implements Runnable {
     currentFrame25 = 0;
     currentFrame26 = 0;
     currentFrame27 = 0;
+    currentFrame28 = 0;
     if (timer != null) {
       timer.cancel();
       timer.purge();
