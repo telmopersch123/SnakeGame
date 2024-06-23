@@ -82,7 +82,9 @@ public class Game extends JPanel implements Runnable {
   private Image appleSprit;
   private Image applePoison;
   private Image appleEnergy;
-
+  // EGG
+  private Image eggAnimation;
+  private Image eggAnimationBreak;
   public static int poisonFruitWidthVen = 25; // Largura original da fruta envenenada
   public static int poisonFruitHeightVen = 50; // Altura original da fruta envenenada
 
@@ -196,6 +198,8 @@ public class Game extends JPanel implements Runnable {
   public static int PosColidianPoisonY = 0;
   public static int PosColidianClassicX = 0;
   public static int PosColidianClassicY = 0;
+  public static int currentFrame30 = 0;
+  public static int currentFrame29 = 0;
   public static int currentFrame28 = 0;
   public static int currentFrame27 = 0;
   public static int currentFrame26 = 0;
@@ -230,6 +234,7 @@ public class Game extends JPanel implements Runnable {
   public static boolean ControlOneAnimationPoison = false;
   public static boolean ControlOneAnimationClassic = false;
   public static boolean ControlOneAnimationClassicAtivar = false;
+  public static boolean ControlOneAnimationEgg = false;
   public static Graphics2D painelBordas;
   public static int borderWidth = 20;
   public static int drawX;
@@ -241,9 +246,9 @@ public class Game extends JPanel implements Runnable {
   public static boolean MapDungeon = false;
   public static boolean MapSwamp = false;
   public static boolean MapField = true;
-  public static boolean snakeClassica = true;
+  public static boolean snakeClassica = false;
   public static boolean snakePoison = false;
-  public static boolean snakeFire = false;
+  public static boolean snakeFire = true;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
   private static int quantidadeDecoChao2;
@@ -318,6 +323,11 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> valueFireX = new ArrayList<>();
   public static ArrayList<Integer> valueFireY = new ArrayList<>();
   public static boolean cobraParada = false;
+  public static boolean cobraParadaFinal = false;
+  /////
+  public static int PosicaoX;
+  public static int PosicaoY;
+  public static boolean IniciouEgg = true;
 
   private void initializeKeyListener() {
     if (!gameOver) {
@@ -389,6 +399,8 @@ public class Game extends JPanel implements Runnable {
     manchasAmarelas = imagens[56];
     DeathPoison2 = imagens[57];
     explosionDeath = imagens[58];
+    eggAnimation = imagens[59];
+    eggAnimationBreak = imagens[60];
     ///////////////////////////////////
     initializeKeyListener();
 
@@ -407,6 +419,8 @@ public class Game extends JPanel implements Runnable {
     // iniciar a cobra
 
     StartSnake();
+    PosicaoX = nodeSnake[0].x;
+    PosicaoY = nodeSnake[0].y;
 
     headCollisionArea = new Rectangle(nodeSnake[0].x - largerCollisionArea / 2,
         nodeSnake[0].y - largerCollisionArea / 2,
@@ -752,6 +766,15 @@ public class Game extends JPanel implements Runnable {
             keyListener, null, fogoComplementar, fogoFinal);
       }
     }
+    // egg
+    if (IniciouEgg) {
+      Eggs.EggStart(buffer, PosicaoX, PosicaoY, eggAnimation);
+    } else {
+      if (!ControlOneAnimationEgg) {
+        Eggs.EggBreak(buffer, PosicaoX, PosicaoY, eggAnimationBreak);
+      }
+    }
+
     // Desenha a comidas
     food.classicFood(g, buffer, macaX, macaY, appleSprit, poisonFruitWidthCla,
         poisonFruitHeightCla);
@@ -925,7 +948,9 @@ public class Game extends JPanel implements Runnable {
 
     }
     if (cobraParada) {
-      move.SnakeMove(nodeSnake, keyListener.getDirection(), DISTANCE);
+      if (cobraParadaFinal) {
+        move.SnakeMove(nodeSnake, keyListener.getDirection(), DISTANCE);
+      }
     }
     headCollisionArea = new Rectangle(nodeSnake[0].x - largerCollisionArea / 2,
         nodeSnake[0].y - largerCollisionArea / 2,
@@ -1107,6 +1132,7 @@ public class Game extends JPanel implements Runnable {
     TimerVerif = false;
     gameOver = false;
     cobraParada = false;
+    cobraParadaFinal = false;
     score = 0;
     direction = KeyEvent.VK_RIGHT;
     initializeKeyListener();
@@ -1120,6 +1146,9 @@ public class Game extends JPanel implements Runnable {
       walls_y = walls.get(1);
     }
     StartSnake();
+    PosicaoX = nodeSnake[0].x;
+    PosicaoY = nodeSnake[0].y;
+    IniciouEgg = true;
     ArrayList<Point> foodPositions = LocaleUtils.LocateFood(FrameWidth, FrameHeight, WIDTH, HEIGHT, walls_x, walls_y,
         nodeSnake);
     if (foodPositions.size() >= 2) {
@@ -1184,6 +1213,7 @@ public class Game extends JPanel implements Runnable {
     ControlAPOSColidionTimer = false;
     ControlEnergyColidianBoolean = false;
     ControlOneAnimationClassicAtivar = false;
+    ControlOneAnimationEgg = false;
     colisianEnergyMorrer = false;
     colisianEnergySumir = false;
     ControlOneAnimationESPLO = true;
@@ -1215,6 +1245,8 @@ public class Game extends JPanel implements Runnable {
     currentFrame26 = 0;
     currentFrame27 = 0;
     currentFrame28 = 0;
+    currentFrame29 = 0;
+    currentFrame30 = 0;
     if (timer != null) {
       timer.cancel();
       timer.purge();
