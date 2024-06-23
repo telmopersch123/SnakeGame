@@ -35,7 +35,7 @@ public class MyKeyBoardListener implements KeyListener {
         || key == KeyEvent.VK_DOWN) && Math.abs(key - initialDirection) != 2 && canPress) {
       // Verifica se a tecla pressionada é uma direção válida e não oposta à direção
       // atual
-
+      Game.cobraParada = true;
       initialDirection = key;
       canPress = false;
       timerBlock.restart();

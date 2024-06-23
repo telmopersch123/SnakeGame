@@ -140,7 +140,7 @@ public class Game extends JPanel implements Runnable {
   public int direction = KeyEvent.VK_RIGHT;
   public static Node[] nodeSnake = new Node[40];
   public int score = 0;
-  public int macaX = 0, macaY = 0;
+  public static int macaX = 0, macaY = 0;
   public int macaENX = 0, macaENY = 0;
   public int macaPOX = 0, macaPOY = 0;
   public int count = 0;
@@ -172,7 +172,7 @@ public class Game extends JPanel implements Runnable {
   int segmentsToRemove = 0;
   int segmentsToRemoveTemporary = 0;
   public static int ControlVelocity = 700;
-
+  public static int ControlVelocityFinal = 700;
   static boolean poisonFruitAnimationRunning = false;
   public boolean Segunds = false;
   public boolean ControlTeleport = false;
@@ -238,12 +238,12 @@ public class Game extends JPanel implements Runnable {
   public static int positionY;
   public static Graphics2D g2d;
   public static boolean NewButtonGame;
-  public static boolean MapDungeon = true;
+  public static boolean MapDungeon = false;
   public static boolean MapSwamp = false;
-  public static boolean MapField = false;
-  public static boolean snakeClassica = false;
+  public static boolean MapField = true;
+  public static boolean snakeClassica = true;
   public static boolean snakePoison = false;
-  public static boolean snakeFire = true;
+  public static boolean snakeFire = false;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
   private static int quantidadeDecoChao2;
@@ -317,6 +317,7 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> quantiComplexo = new ArrayList<>();
   public static ArrayList<Integer> valueFireX = new ArrayList<>();
   public static ArrayList<Integer> valueFireY = new ArrayList<>();
+  public static boolean cobraParada = false;
 
   private void initializeKeyListener() {
     if (!gameOver) {
@@ -404,6 +405,7 @@ public class Game extends JPanel implements Runnable {
     Location_deco();
 
     // iniciar a cobra
+
     StartSnake();
 
     headCollisionArea = new Rectangle(nodeSnake[0].x - largerCollisionArea / 2,
@@ -608,6 +610,7 @@ public class Game extends JPanel implements Runnable {
       }
 
       tick();
+
       ResultadoColisao resultadoColisao = checkedColisson.verificarColisao(gameOver, WIDTH, HEIGHT, FrameWidth,
           FrameHeight,
           walls_x, walls_y, nodeSnake, largerCollisionArea, headCollisionArea,
@@ -617,7 +620,7 @@ public class Game extends JPanel implements Runnable {
       poisonDeathAnimationPlaying = resultadoColisao.animacaoMorteVenenoAtiva;
 
       try {
-        Thread.sleep(ControlVelocity / 60);
+        Thread.sleep(ControlVelocityFinal / 60);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -680,9 +683,7 @@ public class Game extends JPanel implements Runnable {
           EnergyAnimationBody,
           EnergyAnimationTail, nodeSnake);
     } else if (!SpreetSheetInitial && SpreetSheetFinale) {
-
       Animation.AnimationEnergyTemporaryFinal(buffer, EnergyAnimationFinal, nodeSnake);
-
     }
     if (ControlOneAnimationClassicAtivar) {
       if (!ControlOneAnimationClassic) {
@@ -917,15 +918,15 @@ public class Game extends JPanel implements Runnable {
       }
 
       if (VelocityControl) {
-        ControlVelocity = 400;
+        ControlVelocityFinal = ControlVelocity - 300;
       } else {
-        ControlVelocity = 700;
+        ControlVelocityFinal = ControlVelocity;
       }
 
     }
-
-    move.SnakeMove(nodeSnake, keyListener.getDirection(), DISTANCE);
-
+    if (cobraParada) {
+      move.SnakeMove(nodeSnake, keyListener.getDirection(), DISTANCE);
+    }
     headCollisionArea = new Rectangle(nodeSnake[0].x - largerCollisionArea / 2,
         nodeSnake[0].y - largerCollisionArea / 2,
         8 + largerCollisionArea, 8 + largerCollisionArea);
@@ -1105,6 +1106,7 @@ public class Game extends JPanel implements Runnable {
   public void restartGame() {
     TimerVerif = false;
     gameOver = false;
+    cobraParada = false;
     score = 0;
     direction = KeyEvent.VK_RIGHT;
     initializeKeyListener();
@@ -1117,20 +1119,6 @@ public class Game extends JPanel implements Runnable {
       walls_x = walls.get(0);
       walls_y = walls.get(1);
     }
-
-    Location_deco();
-    ValueFinal = 0;
-    ValueDecoComplexo = 0;
-    ValueDecoNormal = 0;
-    quanti.clear();
-    quantiComplexo.clear();
-    valueFireX.clear();
-    valueFireY.clear();
-    Game.DecoracaoX = new int[0];
-    Game.DecoracaoY = new int[0];
-    Game.DecoComplexoX = new int[0];
-    Game.DecoComplexoY = new int[0];
-    decoracao.posicoesDeco(FrameWidth, FrameHeight, ALL_DOTS_Width, ALL_DOTS_Height, walls_x, walls_y);
     StartSnake();
     ArrayList<Point> foodPositions = LocaleUtils.LocateFood(FrameWidth, FrameHeight, WIDTH, HEIGHT, walls_x, walls_y,
         nodeSnake);
@@ -1153,8 +1141,23 @@ public class Game extends JPanel implements Runnable {
       macaENX = -100;
       macaENY = -100;
     }
+    Location_deco();
+    ValueFinal = 0;
+    ValueDecoComplexo = 0;
+    ValueDecoNormal = 0;
+    quanti.clear();
+    quantiComplexo.clear();
+    valueFireX.clear();
+    valueFireY.clear();
+    Game.DecoracaoX = new int[0];
+    Game.DecoracaoY = new int[0];
+    Game.DecoComplexoX = new int[0];
+    Game.DecoComplexoY = new int[0];
+    decoracao.posicoesDeco(FrameWidth, FrameHeight, ALL_DOTS_Width, ALL_DOTS_Height, walls_x, walls_y);
+
     checkedEsplo = false;
     ControlVelocity = 700;
+    ControlVelocityFinal = 700;
     animationFinished = true;
     poisonDeathAnimationPlaying = false;
     venomAnimationPlayed = false;

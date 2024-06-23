@@ -29,14 +29,14 @@ public class AnimationEnergyControl {
     long ControlEnergySpreet = System.currentTimeMillis() - game.ControlSpriteSheet;
     long ControlEnergyColidion = System.currentTimeMillis() - game.ControlSpriteSheetColidion;
     if (game.VelocityControl) {
-      if (ControlTimerVelocity >= 5000) {
+      if (ControlTimerVelocity >= 10000) {
         game.VelocityControl = false;
         game.ControlTimerVelocity = System.currentTimeMillis();
       }
     } else {
       game.ControlTimerVelocity = System.currentTimeMillis();
     }
-    if (TeleportEnergy >= 1800 && !game.ernegyAnimationPlayed) {
+    if (TeleportEnergy >= 4800 && !game.ernegyAnimationPlayed) {
       AnimationEnergyFim.AnimationFoodErnFim();
       game.ernegyAnimationPlayed = true;
     }
@@ -72,9 +72,9 @@ public class AnimationEnergyControl {
     if (Game.ControlEnergyColidianBoolean) {
       if (ControlEnergyColidion <= 1500) {
         if (!Game.snakeFire) {
-          Game.ControlVelocity = 2000;
+          Game.ControlVelocityFinal = 2000;
         } else {
-          Game.ControlVelocity = 10000;
+          Game.ControlVelocityFinal = 10000;
         }
 
         Game.currentFrame4 = 0;
@@ -110,7 +110,7 @@ public class AnimationEnergyControl {
 
     if (Game.ControlAPOSColidionTimer) {
 
-      if (ControlEnergySpreet > 1000 && ControlEnergySpreet < 5000) {
+      if (ControlEnergySpreet > 1000 && ControlEnergySpreet < 10000) {
         if (Game.snakeClassica || Game.snakePoison) {
           Game.SpreetSheetInitial = true;
           Game.SpreetSheetFinale = false;
@@ -131,14 +131,14 @@ public class AnimationEnergyControl {
             Game.colisianEnergyMorrer = true;
           }
         }
-      } else if (ControlEnergySpreet >= 5000 && ControlEnergySpreet <= 5700) {
+      } else if (ControlEnergySpreet >= 10000 && ControlEnergySpreet <= 10700) {
         if (Game.snakeClassica || Game.snakePoison) {
           Game.SpreetSheetInitial = false;
           Game.SpreetSheetFinale = true;
 
-        } else if (ControlEnergySpreet > 5700) {
+        } else if (ControlEnergySpreet > 10700) {
           Game.SpreetSheetFinale = false;
-        } else if (ControlEnergySpreet >= 6000) {
+        } else if (ControlEnergySpreet >= 11000) {
           game.ControlSpriteSheet = System.currentTimeMillis();
         }
       }
@@ -152,7 +152,7 @@ public class AnimationEnergyControl {
     }
     /////
     if (Game.ColisionEnergy) {
-      if (ControlAPOS <= 6000) {
+      if (ControlAPOS <= 10000) {
         Game.ControlAPOSColidionTimer = true;
       } else {
         Game.ControlAPOSColidionTimer = false;
@@ -174,7 +174,7 @@ public class AnimationEnergyControl {
         game.ernegyAnimationPlayed = false;
       }
 
-      if (TeleportEnergy >= 2000) {
+      if (TeleportEnergy >= 5000) {
         if (!Game.colidionEneControlTimerAnimation) {
           AnimationEnergy.AnimationFoodErnInic(this);
         }

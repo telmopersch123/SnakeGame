@@ -336,7 +336,8 @@ public class decoracao {
           x1 = (int) (Math.random() * (FrameWidth - PorcentagemCOMX)) + 70;
           y1 = (int) (Math.random() * (FrameHeight - PorcentagemCOMY)) + 70;
         } while (isWallPosition(x, y, walls_x, walls_y, x1, y1) || containsPosition(x, y, Game.DecoracaoX,
-            Game.DecoracaoY, x1, y1, Game.DecoComplexoX, Game.DecoComplexoY));
+            Game.DecoracaoY, x1, y1, Game.DecoComplexoX, Game.DecoComplexoY) || isSnake(x, y, x1, y1)
+            || isFood(x, y, x1, y1));
         if (i < Game.ValueDecoNormal) {
           Game.DecoracaoX[i] = x;
           Game.DecoracaoY[i] = y;
@@ -367,6 +368,30 @@ public class decoracao {
 
   static Rectangle otherRect;
   static Rectangle otherRectComplexa;
+
+  private static boolean isSnake(int x, int y, int x1,
+      int y1) {
+    Rectangle imageRect = new Rectangle(x, y, 50, 50); // tamanho da imagem decorativa
+    Rectangle imageRectComplexa = new Rectangle(x1, y1, 150, 150);
+    Rectangle Snake = new Rectangle(Game.nodeSnake[0].x, Game.nodeSnake[0].y, 15, 15);
+    if (imageRect.intersects(Snake) || imageRectComplexa.intersects(Snake)) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  private static boolean isFood(int x, int y, int x1, int y1) {
+    Rectangle imageRect = new Rectangle(x, y, 50, 50); // tamanho da imagem decorativa
+    Rectangle imageRectComplexa = new Rectangle(x1, y1, 150, 150);
+    Rectangle Food = new Rectangle(Game.macaX, Game.macaY, 15, 15);
+    if (imageRect.intersects(Food) || imageRectComplexa.intersects(Food)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   private static boolean containsPosition(int x, int y, int[] DecoracaoX, int[] DecoracaoY, int x1,
       int y1, int[] DecoComplexoX, int[] DecoComplexoY) {

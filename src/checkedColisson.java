@@ -28,9 +28,10 @@ public class checkedColisson {
     if (colisaoPainel(nodeSnake, borderWidth, getWidth, getHeight)) {
       return new ResultadoColisao(true, false);
     }
-
-    if (colisaoCobra(nodeSnake)) {
-      return new ResultadoColisao(true, false);
+    if (nodeSnake.length >= 50) {
+      if (colisaoCobra(nodeSnake)) {
+        return new ResultadoColisao(true, false);
+      }
     }
 
     if (Game.MapField) {
@@ -641,8 +642,8 @@ public class checkedColisson {
             break;
           case 7:
             if (Game.DecoComplexoX.length > 14 && Game.DecoComplexoY.length > 14) {
-              complexasDungeon = new Rectangle(Game.DecoComplexoX[14] + 4,
-                  Game.DecoComplexoY[14] + 35, 36, 25);
+              complexasDungeon = new Rectangle(Game.DecoComplexoX[14] + 5,
+                  Game.DecoComplexoY[14] + 45, 85, 75);
               if (headCollisionAreaDeco.intersects(complexasDungeon)) {
                 return true;
               }
