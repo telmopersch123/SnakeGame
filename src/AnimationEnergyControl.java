@@ -65,6 +65,14 @@ public class AnimationEnergyControl {
           Game.PosColidianEnergyX = game.macaENX;
           Game.PosColidianEnergyY = game.macaENY;
           Game.ControlEnergyColidianBoolean = true;
+          Game.posicaoXEnergy = Game.PosColidianEnergyX;
+          Game.posicaoYEnergy = Game.PosColidianEnergyY;
+          Game.NovaPosicaoEnergy0 = Game.posicaoYEnergy - 40;
+          Game.widhtEnergyW = 0;
+          Game.widhtEnergyH = 0;
+          Game.TransparentEnergy = 0.1f;
+          NumberAnimation.restartAnimationEnergy(game);
+          Game.colidianEnergy = true;
         }
 
       }
@@ -174,7 +182,7 @@ public class AnimationEnergyControl {
         game.ernegyAnimationPlayed = false;
       }
 
-      if (TeleportEnergy >= 5000) {
+      if (TeleportEnergy >= 6000) {
         if (!Game.colidionEneControlTimerAnimation) {
           AnimationEnergy.AnimationFoodErnInic(this);
         }
