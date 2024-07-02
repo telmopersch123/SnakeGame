@@ -1,3 +1,4 @@
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -16,11 +17,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,6 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class Game extends JPanel implements Runnable {
+
   int DISTANCE = 0;
   int WIDTH = 10;
   int HEIGHT = 10;
@@ -134,13 +141,14 @@ public class Game extends JPanel implements Runnable {
   Image gold3;
   //////
   Image NumberMais1;
+  static BufferedImage Vitoria;
   private boolean VerificDistance = false;
   boolean gameOver = false;
   BufferedImage buffer; // Buffer for double buffering
   public static ArrayList<Integer> walls_x = new ArrayList<>();
   public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
-  public int direction = KeyEvent.VK_RIGHT;
+  public int direction;
   public static Node[] nodeSnake = new Node[40];
   public int score = 0;
   public static int macaX = 0, macaY = 0;
@@ -174,8 +182,7 @@ public class Game extends JPanel implements Runnable {
   // animation snake
   int segmentsToRemove = 0;
   int segmentsToRemoveTemporary = 0;
-  public static int ControlVelocity = 700;
-  public static int ControlVelocityFinal = 700;
+
   static boolean poisonFruitAnimationRunning = false;
   public boolean Segunds = false;
   public boolean ControlTeleport = false;
@@ -308,6 +315,7 @@ public class Game extends JPanel implements Runnable {
   JButton RevertMenuButton;
   JButton button;
   JPanel meuPainel = this;
+  JPanel meuPainelButtons = this;
   JLabel messageLabel;
   Font newgameFont;
   Font revertmenuFont;
@@ -318,6 +326,10 @@ public class Game extends JPanel implements Runnable {
   Image lavaSkull;
   private Image RaioIcon;
   private Image PoisonDeathIcon;
+  private Image VelocityIcon;
+  private boolean GameFim = false;
+  private boolean VelocityFinal;
+
   public static boolean checkedEsplo;
   public static boolean colisianEnergySumir = false;
   public static boolean colisianEnergyMorrer = false;
@@ -360,10 +372,56 @@ public class Game extends JPanel implements Runnable {
   static boolean colidianEnergy = false;
   static boolean possibilitiEnergyFinal = false;
   static Timer EnergyElevacao;
-  public static Timer NumberElevacao;
+
+  ///
+  static int posicaoXVelocity = 0;
+  static int posicaoYVelocity = 0;
+  static int NovaPosicaoVelocity0 = 0;
+  static int widhtVelocityW = 0;
+  static int widhtVelocityH = 0;
+  static float TransparentVelocity = 0.1f;
+  static boolean colidianVelocity = false;
+  static boolean possibilitiVelocityFinal = false;
+  static int SubindoNivel = 0;
+  public static int ControlVelocity = 800;
+  public static int ControlVelocityFinal = 800;
+  static int vitoriaWidth = 1;
+  static int vitoriaHeight = 1;
+  static ImagePanel imagePanel;
+  static ImagePanel2 animationPanel;
+  private TextShadow textShadowLabel;
+  private TextShadow DificultytextShadowLabel;
+  private TextShadow DificultytextShadowLabel2;
+  private TextShadow TempotextShadowLabel;
+
+  private TextShadow TempotextShadowLabel2;
+  private TextShadow PonttextShadowLabel;
+  private TextShadow PonttextShadowLabel2;
+  private GridBagConstraints gbc;
+  static BufferedImage animatiomVictory;
+  static boolean AparecerVitoriaPainel = false;
+  static boolean AnimationVitoria = false;
+  static int Transper = 0;
+  static String dificulty = "Normal";
+  static int Minutos = 0;
+  static int Segundos = 0;
+  static Timer timerPartida;
+  static int Pontuacao = 0;
+  static String timeText;
+  static boolean colidindoPontuacao = false;
+  static int delay = 1000; // 1 segundo
+  static JLabel tempoLabel;
+  static JPanel GridTimer;
+  static TextShadow textTimer;
+  static JLabel pontLabel;
+  static TextShadow textpont;
+  int seconds = 0;
+  public static boolean componentesTimerPontAdicionado = false; // Variável de controle
+  private Timer timerTempo;
+  static KeyEvent escolha;
 
   private void initializeKeyListener() {
-    if (!gameOver) {
+    if (!gameOver && !GameFim) {
       keyListener = new MyKeyBoardListener(this, direction);
       this.addKeyListener(keyListener);
     }
@@ -437,7 +495,9 @@ public class Game extends JPanel implements Runnable {
     NumberMais1 = imagens[61];
     RaioIcon = imagens[62];
     PoisonDeathIcon = imagens[63];
+    VelocityIcon = imagens[64];
     ///////////////////////////////////
+
     initializeKeyListener();
 
     this.setPreferredSize(new Dimension(ALL_DOTS_Width, ALL_DOTS_Height));
@@ -450,10 +510,9 @@ public class Game extends JPanel implements Runnable {
       walls_x = walls.get(0);
       walls_y = walls.get(1);
     }
+    // iniciar a decoração
     Location_deco();
-
     // iniciar a cobra
-
     StartSnake();
     PosicaoX = nodeSnake[0].x;
     PosicaoY = nodeSnake[0].y;
@@ -652,9 +711,10 @@ public class Game extends JPanel implements Runnable {
   }
 
   // Loop principal do jogo, onde a lógica e renderização são atualizadas
+
   @Override
   public void run() {
-    while (!gameOver) {
+    while (!gameOver && !GameFim) {
       if (VerificDistance) {
         VerificDistance = false;
       }
@@ -694,6 +754,7 @@ public class Game extends JPanel implements Runnable {
   public void Animation() {
     if (!animationFinished && snakePoison) {
       if (!ControlOneAnimationPoison) {
+
         Animation.AnimationColidianPoisonFood(buffer, ColidianPoisonFood, nodeSnake,
             PosColidianPoisonX,
             PosColidianPoisonY);
@@ -710,6 +771,14 @@ public class Game extends JPanel implements Runnable {
 
       if (snakeClassica || snakeFire) {
         if (!ControlOneAnimationPoison) {
+          posicaoXDeath = PosColidianPoisonX;
+          posicaoYDeath = PosColidianPoisonY;
+          NovaPosicaoDeath0 = Game.posicaoYDeath - 40;
+          widhtDeathW = 0;
+          widhtDeathH = 0;
+          Game.TransparentDeath = 0.1f;
+          NumberAnimation.restartAnimationDeath(this);
+          colidianDeath = true;
           Animation.AnimationColidianPoisonFood(buffer, ColidianPoisonFood, nodeSnake, PosColidianPoisonX,
               PosColidianPoisonY);
         }
@@ -724,6 +793,7 @@ public class Game extends JPanel implements Runnable {
         Animation.AnimationColidianEnergyFood(buffer, ColidianEnergyFood, nodeSnake, PosColidianEnergyX,
             PosColidianEnergyY);
       }
+
       Animation.AnimationColisionEnergy(this, buffer,
           ColidianEnergy,
           nodeSnake, PosColidianEnergyX, PosColidianEnergyY);
@@ -737,12 +807,12 @@ public class Game extends JPanel implements Runnable {
     }
     if (ControlOneAnimationClassicAtivar) {
       if (!ControlOneAnimationClassic) {
+
         Animation.AnimationColidianClassicFood(buffer, colidianClassic, nodeSnake,
             PosColidianClassicX, PosColidianClassicY);
-
       }
     }
-    System.out.println(colidianClassico);
+
     if (colidianClassico) {
       NumberAnimation.AnimationNumberInitial(this);
       if (possibilitiNumberFinal) {
@@ -761,8 +831,19 @@ public class Game extends JPanel implements Runnable {
         NumberAnimation.AnimationEnergyFinal(this);
       }
     }
-
+    if (colidianVelocity) {
+      NumberAnimation.AnimationVelocityInitial(this);
+      if (possibilitiVelocityFinal) {
+        NumberAnimation.AnimationVelocityFinal(this);
+      }
+    }
     if (gameOver) {
+      if (keyListener != null) {
+        this.removeKeyListener(keyListener);
+      }
+      repaint();
+    } else if (GameFim) {
+
       if (keyListener != null) {
         this.removeKeyListener(keyListener);
       }
@@ -821,6 +902,7 @@ public class Game extends JPanel implements Runnable {
             keyListener, null, fogoComplementar, fogoFinal);
       }
     }
+
     // egg
     if (IniciouEgg) {
       Eggs.EggStart(buffer, PosicaoX, PosicaoY, eggAnimation);
@@ -829,7 +911,8 @@ public class Game extends JPanel implements Runnable {
         Eggs.EggBreak(buffer, PosicaoX, PosicaoY, eggAnimationBreak);
       }
     }
-
+    // Desenha as animação do jogo
+    Animation();
     // Desenha a comidas
     food.classicFood(g, buffer, macaX, macaY, appleSprit, poisonFruitWidthCla,
         poisonFruitHeightCla);
@@ -855,9 +938,11 @@ public class Game extends JPanel implements Runnable {
         widhtDeathH, TransparentDeath);
     NumberAnimation.NumberAnimationEnergy(buffer, RaioIcon, posicaoXEnergy, posicaoYEnergy, widhtEnergyW,
         widhtEnergyH, TransparentEnergy);
-    // Desenha as animação do jogo
-    Animation();
+    NumberAnimation.NumberAnimationVelocity(buffer,
+        VelocityIcon, posicaoXVelocity, posicaoYVelocity, widhtVelocityW,
+        widhtVelocityH, TransparentVelocity);
     Colidian(rock_swamp, rock_dungeon);
+
     // Renderiza o buffer na tela
     g.drawImage(buffer, 0, 0, null);
     // Se o jogo terminou, desenha a animação de colisão se a tela de game over
@@ -870,6 +955,91 @@ public class Game extends JPanel implements Runnable {
       GameOver(g);
     }
 
+    ComponentesTimerPont(this);
+    atualizarPontuacao();
+
+    //
+    if (GameFim) {
+      AnimationFundoVitoria.AnimationVitoria(this, g, getWidth(), getHeight());
+      GameWinsButtons(g);
+    }
+  }
+
+  public void ComponentesTimerPont(Game game) {
+    if (GameFim) {
+      // Se o jogo terminou, retorna sem fazer nada
+      GridTimer.remove(textpont);
+      GridTimer.remove(textTimer);
+      GridTimer.revalidate();
+      GridTimer.repaint();
+      if (timerTempo != null) {
+        timerTempo.cancel();
+        timerTempo = null;
+      }
+      return;
+    }
+    if (!componentesTimerPontAdicionado) {
+      Font TimerFont = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
+      GridTimer = game;
+      GridTimer.setLayout(new GridBagLayout());
+      gbc = new GridBagConstraints();
+      // Criação do JLabel para exibir a Pontuação
+      pontLabel = new JLabel("Pontuação: " + Pontuacao);
+      pontLabel.setFont(TimerFont);
+      textpont = new TextShadow("Pontuação: " + Pontuacao, Color.WHITE, Color.DARK_GRAY, TimerFont);
+      gbc.gridx = 0;
+      gbc.gridy = 0; // Coloca o pontLabel na primeira linha (gridy = 0)
+      gbc.anchor = GridBagConstraints.NORTHWEST; // Ancora no lado esquerdo
+      gbc.insets = new Insets(5, 5, 0, 0); // Margem superior e esquerda
+      gbc.weightx = 1.0; // Adiciona peso para expandir horizontalmente
+      gbc.weighty = 1.0; // Reduzir peso para não empurrar para o topo
+      GridTimer.add(textpont, gbc);
+      //
+      // Criação do JLabel para exibir o Tempo
+      tempoLabel = new JLabel("00:00");
+      tempoLabel.setFont(TimerFont);
+      textTimer = new TextShadow("00:00", Color.WHITE, Color.DARK_GRAY, TimerFont);
+      gbc.anchor = GridBagConstraints.NORTH;
+      gbc.insets = new Insets(5, 0, 0, 0);
+      gbc.weightx = 0.0;
+      gbc.weighty = 1.0; // Empurrar o componente para o topo
+      GridTimer.add(textTimer, gbc);
+      TimerRelogio();
+      if (!GameFim) {
+        GridTimer.revalidate();
+        GridTimer.repaint();
+      }
+      componentesTimerPontAdicionado = true; // Marcar como adicionado
+    }
+  }
+
+  public void TimerRelogio() {
+    timerTempo = new Timer();
+    timerTempo.scheduleAtFixedRate(new TimerTask() {
+      DecimalFormat df = new DecimalFormat("00");
+
+      @Override
+      public void run() {
+        if (!IniciouEgg) {
+          seconds++;
+          Minutos = seconds / 60;
+          Segundos = seconds % 60;
+        }
+
+        timeText = df.format(Minutos) + ":" + df.format(Segundos);
+        SwingUtilities.invokeLater(() -> tempoLabel.setText(timeText));
+        SwingUtilities.invokeLater(() -> textTimer.setText(timeText));
+      }
+    }, 0, 1000); // Inicia imediatamente e repete a cada 1000ms (1 segundo)
+  }
+
+  public void atualizarPontuacao() {
+    if (colidindoPontuacao) {
+      Pontuacao++;
+      textpont.setText("Pontuação: " + Pontuacao);
+      GridTimer.repaint();
+      colidindoPontuacao = false;
+    }
   }
 
   private void addCenteredComponent(Container container, Component component, int gridy) {
@@ -879,6 +1049,195 @@ public class Game extends JPanel implements Runnable {
     constraints.anchor = GridBagConstraints.CENTER;
     constraints.insets = new Insets(10, 0, 10, 0);
     container.add(component, constraints);
+  }
+
+  private ImageIcon makeTransparent(String imagePath, float Transper) {
+    ImageIcon icon = new ImageIcon(imagePath);
+    Image image = icon.getImage();
+
+    // Cria uma nova BufferedImage com transparência
+    BufferedImage transparentImage = new BufferedImage(300, 100,
+        BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2d = transparentImage.createGraphics();
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Transper)); // Define transparência como 100%
+    g2d.drawImage(image, 0 + 50, 0 + 25, 220, 50, null);
+    g2d.dispose();
+
+    return new ImageIcon(transparentImage);
+  }
+
+  public void GameWinsButtons(Graphics g) {
+    // Defina o fundo verde com transparência
+    g.setColor(new Color(128, 255, 125, Transper));
+    g.fillRect(0, 0, getWidth(), getHeight());
+    // Botão de Reiniciar
+    boolean newGameButtonExists = false;
+    for (int i = 0; i < meuPainelButtons.getComponentCount(); i++) {
+      Component comp = meuPainelButtons.getComponent(i);
+      if (comp instanceof JButton && ((JButton) comp).getText().equals("Inicio")) {
+        newGameButtonExists = true;
+        break;
+      }
+    }
+
+    if (!newGameButtonExists) {
+      meuPainelButtons.setLayout(new GridBagLayout());
+      try {
+        Vitoria = ImageIO.read(new File("resources/fontes/vitoria.png"));
+        animatiomVictory = ImageIO.read(new File("resources/animationVictory.png"));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
+      // Texto de gameOver
+      GridBagConstraints gbc = new GridBagConstraints();
+      gbc.gridx = 0;
+      gbc.gridy = 0;
+      gbc.insets = new Insets(0, 0, 0, 0); // Espaçamento entre componentes
+      gbc.anchor = GridBagConstraints.CENTER;
+      //
+      // Adicionando o texto
+      Font customFont = loadFont.loadFont("resources/fontes/fontGeral.otf", 32);
+      JLabel label = new JLabel("Você Conquistou essa Região");
+      label.setFont(customFont);
+      textShadowLabel = new TextShadow("Você Conquistou essa Região", // Modifique esta linha
+          new Color(255, 255, 255, 0), new Color(0, 0, 0, 0), customFont);
+      gbc.gridy = 0;
+      meuPainelButtons.add(textShadowLabel, gbc);
+      // adicionando Imagem Vitória
+
+      int delay2 = 3000;
+      Timer timer2 = new Timer();
+      timer2.schedule(new TimerTask() {
+        @Override
+        public void run() {
+          SwingUtilities.invokeLater(() -> {
+            if (Vitoria != null) {
+              gbc.gridy = 1;
+              imagePanel = new ImagePanel(Vitoria, vitoriaHeight, vitoriaWidth);
+              meuPainelButtons.add(imagePanel, gbc);
+            }
+          });
+        }
+      }, delay2);
+      // Adicionando Animação
+      int delay1 = 5000;
+      Timer timer1 = new Timer();
+      timer1.schedule(new TimerTask() {
+        @Override
+        public void run() {
+          SwingUtilities.invokeLater(() -> {
+            if (animatiomVictory != null) {
+              gbc.gridy = 1;
+              animationPanel = new ImagePanel2(animatiomVictory, animatiomVictory.getWidth() / 3,
+                  animatiomVictory.getHeight() / 5, 100);
+              meuPainelButtons.add(animationPanel, gbc);
+            }
+
+          });
+        }
+      }, delay1);
+      gbc.gridy = 2;
+      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
+      JLabel DificuldadeLabel = new JLabel("Dificuldade");
+      DificuldadeLabel.setFont(Fonts);
+      DificultytextShadowLabel = new TextShadow("Dificuldade", Color.WHITE, Color.BLACK, Fonts);
+      meuPainelButtons.add(DificultytextShadowLabel, gbc);
+      //
+      gbc.gridy = 3;
+      JLabel dificulting = new JLabel(dificulty);
+      dificulting.setFont(Fonts);
+      Color CorDificulty = Color.YELLOW;
+      if (dificulty == "Normal") {
+        CorDificulty = Color.YELLOW;
+      } else if (dificulty == "Fácil") {
+        CorDificulty = Color.GREEN;
+      }
+      if (dificulty == "Difícil") {
+        CorDificulty = Color.RED;
+      }
+      DificultytextShadowLabel2 = new TextShadow(dificulty, CorDificulty, Color.BLACK, Fonts);
+      gbc.insets = new Insets(0, 0, 5, 0);
+      meuPainelButtons.add(DificultytextShadowLabel2, gbc);
+      //
+      gbc.gridy = 4;
+      JLabel TempoLabel = new JLabel("Tempo de Partida");
+      TempoLabel.setFont(Fonts);
+      TempotextShadowLabel = new TextShadow("Tempo de Partida", Color.WHITE, Color.BLACK, Fonts);
+      gbc.insets = new Insets(0, 0, 0, 0);
+      meuPainelButtons.add(TempotextShadowLabel, gbc);
+      //
+      gbc.gridy = 5;
+      JLabel TempoLabel2 = new JLabel(timeText);
+      TempoLabel2.setFont(Fonts);
+      TempotextShadowLabel2 = new TextShadow(timeText, Color.CYAN, Color.BLACK, Fonts);
+      gbc.insets = new Insets(0, 0, 5, 0);
+      meuPainelButtons.add(TempotextShadowLabel2, gbc);
+      //
+      gbc.gridy = 6;
+      JLabel PontLabel = new JLabel("Pontuação");
+      PontLabel.setFont(Fonts);
+      PonttextShadowLabel = new TextShadow("Pontuação", Color.WHITE, Color.BLACK, Fonts);
+      gbc.insets = new Insets(0, 0, 0, 0);
+      meuPainelButtons.add(PonttextShadowLabel, gbc);
+      //
+      gbc.gridy = 7;
+      JLabel PontLabel2 = new JLabel("" + Game.Pontuacao);
+      PontLabel2.setFont(Fonts);
+      PonttextShadowLabel2 = new TextShadow("" + Game.Pontuacao, Color.LIGHT_GRAY, Color.BLACK, Fonts);
+      gbc.insets = new Insets(0, 0, 10, 0);
+      meuPainelButtons.add(PonttextShadowLabel2, gbc);
+      // Adicionando o botão
+      gbc.gridy = 8;
+      float initialTransparency = 0.0f; // Totalmente transparente inicialmente
+      ImageIcon buttonImage = makeTransparent("resources/Menu/buttonRock.png", initialTransparency);
+      JButton RevertMenuButton = new JButton("Inicio", buttonImage);
+      Font revertmenuFont = new Font("Arial", Font.BOLD, 24);
+      MenuPanel.addShadow(RevertMenuButton, "Inicio", revertmenuFont, 220, 50, false);
+      RevertMenuButton.addActionListener(new ActionListener() {
+
+        public void actionPerformed(ActionEvent e) {
+          JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
+          meuPainelButtons.remove(RevertMenuButton);
+          restartGame();
+          GameSnake.getContentPane().removeAll();
+          GameSnake.add(new MenuPanel());
+          GameSnake.revalidate();
+          GameSnake.repaint();
+        }
+      });
+      meuPainelButtons.add(RevertMenuButton, gbc);
+      meuPainelButtons.revalidate(); // Revalidate the panel
+      meuPainelButtons.repaint(); // Repaint the panel
+
+      //
+      int delay = 5500; // 3 segundos
+      Timer timer = new Timer();
+      timer.schedule(new TimerTask() {
+        @Override
+        public void run() {
+          SwingUtilities.invokeLater(() -> {
+            textShadowLabel = new TextShadow("Você Conquistou essa Região", // Modifique esta linha
+                Color.WHITE, Color.BLACK, customFont);
+            meuPainelButtons.add(textShadowLabel, 0);
+            //
+            MenuPanel.addShadow(RevertMenuButton, "Inicio", revertmenuFont, 220, 50, true);
+            float finalTransparency = 1.0f;
+            ImageIcon buttonImage = makeTransparent("resources/Menu/buttonRock.png", finalTransparency);
+            RevertMenuButton.setIcon(buttonImage);
+            //
+            meuPainelButtons.revalidate();
+            meuPainelButtons.repaint();
+          });
+        }
+      }, delay);
+    }
+  }
+
+  public void resizeImagePanel() {
+    if (imagePanel != null) {
+      imagePanel.updateImageSize(vitoriaWidth, vitoriaHeight);
+    }
   }
 
   public void GameOver(Graphics g) {
@@ -921,12 +1280,12 @@ public class Game extends JPanel implements Runnable {
         }
       });
       meuPainel.add(newGameButton); // Add the button to the panel
-      MenuPanel.addShadow(newGameButton, "Reiniciar", newgameFont, 150, 50);
+      MenuPanel.addShadow(newGameButton, "Reiniciar", newgameFont, 150, 50, false);
       addCenteredComponent(meuPainel, newGameButton, 1);
 
       RevertMenuButton = new JButton("Inicio", buttonImage);
       revertmenuFont = new Font("Arial", Font.BOLD, 24);
-      MenuPanel.addShadow(RevertMenuButton, "Inicio", revertmenuFont, 150, 50);
+      MenuPanel.addShadow(RevertMenuButton, "Inicio", revertmenuFont, 150, 50, false);
       RevertMenuButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
@@ -985,7 +1344,8 @@ public class Game extends JPanel implements Runnable {
 
   // Método para atualizar a lógica do jogo
   public void tick() {
-    // Movendo o corpo da cobra
+    // Timer
+
     VerificDistance = keyListener.getVerif();
     for (int z = 0; z < nodeSnake.length; z++) {
       int currX = nodeSnake[z].x;
@@ -995,31 +1355,57 @@ public class Game extends JPanel implements Runnable {
       int nextX = z < nodeSnake.length - 1 ? nodeSnake[z + 1].x : currX;
       int nextY = z < nodeSnake.length - 1 ? nodeSnake[z + 1].y : currY;
       boolean isCorner = (prevX != nextX) && (prevY != nextY);
+
       if (VerificDistance && isCorner) {
         DISTANCE = 5;
       } else {
         DISTANCE = 1;
       }
+    }
+    if (nodeSnake.length >= 500) {
+      GameFim = true;
+    }
 
-      if (VelocityControl) {
-        ControlVelocityFinal = ControlVelocity - 300;
+    if (ControlVelocityFinal == 350) {
+      VelocityFinal = true;
+    }
+    if (VelocityControl) {
+      ControlVelocityFinal = (ControlVelocity - 300);
+    } else {
+      if (snakeFire) {
+        ControlVelocityFinal = ControlVelocity - 100;
       } else {
         ControlVelocityFinal = ControlVelocity;
       }
-
     }
+
+    if (SubindoNivel == 3) {
+      posicaoXVelocity = nodeSnake[0].x;
+      posicaoYVelocity = nodeSnake[0].y;
+      NovaPosicaoVelocity0 = Game.posicaoYVelocity - 40;
+      widhtVelocityW = 0;
+      widhtVelocityH = 0;
+      Game.TransparentVelocity = 0.1f;
+      NumberAnimation.restartAnimationVelocity(this);
+      colidianVelocity = true;
+      if (!VelocityFinal) {
+        ControlVelocity -= 25;
+      }
+
+      SubindoNivel = 0;
+    }
+
+    // Movendo o corpo da cobra
+
     if (cobraParada) {
       if (cobraParadaFinal) {
         move.SnakeMove(nodeSnake, keyListener.getDirection(), DISTANCE);
       }
     }
     headCollisionArea = new Rectangle(nodeSnake[0].x - largerCollisionArea / 2,
-        nodeSnake[0].y - largerCollisionArea / 2,
-        8 + largerCollisionArea, 8 + largerCollisionArea);
+        nodeSnake[0].y - largerCollisionArea / 2, 8 + largerCollisionArea, 8 + largerCollisionArea);
 
-    headCollisionAreaPO = new Rectangle(nodeSnake[0].x - 12 / 2,
-        nodeSnake[0].y - 60 / 2,
-        10, 15);
+    headCollisionAreaPO = new Rectangle(nodeSnake[0].x - 12 / 2, nodeSnake[0].y - 60 / 2, 10, 15);
 
     ArrayList<Point> foodPositions = LocaleUtils.LocateFood(FrameWidth, FrameHeight, WIDTH, HEIGHT, walls_x, walls_y,
         nodeSnake);
@@ -1031,7 +1417,10 @@ public class Game extends JPanel implements Runnable {
       ControlOneAnimationClassicAtivar = true;
       PosColidianClassicX = macaX;
       PosColidianClassicY = macaY;
+
       if (snakeClassica || snakeFire) {
+        colidindoPontuacao = true;
+        SubindoNivel++;
         posicaoXNumber = PosColidianClassicX;
         posicaoYNumber = PosColidianClassicY;
         NovaPosicao0 = Game.posicaoYNumber - 40;
@@ -1102,6 +1491,8 @@ public class Game extends JPanel implements Runnable {
       PosColidianPoisonX = macaPOX;
       PosColidianPoisonY = macaPOY;
       if (snakePoison) {
+        colidindoPontuacao = true;
+        SubindoNivel++;
         posicaoXNumber = PosColidianPoisonX;
         posicaoYNumber = PosColidianPoisonY + 30;
         NovaPosicao0 = Game.posicaoYNumber - 40;
@@ -1111,7 +1502,7 @@ public class Game extends JPanel implements Runnable {
         NumberAnimation.restartAnimation(this);
         colidianClassico = true;
       }
-      if (snakeClassica || snakeFire) {
+      if (snakeClassica || snakePoison) {
         posicaoXDeath = PosColidianPoisonX;
         posicaoYDeath = PosColidianPoisonY;
         NovaPosicaoDeath0 = Game.posicaoYDeath - 40;
@@ -1186,7 +1577,17 @@ public class Game extends JPanel implements Runnable {
 
     AnimationEnergyControl animationEnergyControl = new AnimationEnergyControl();
     animationEnergyControl.updateEnergyAnimation(this, buffer, explosionDeath);
-
+    Game gaming = this;
+    if (GameFim) {
+      int delay2 = 4000;
+      Timer timer2 = new Timer();
+      timer2.schedule(new TimerTask() {
+        @Override
+        public void run() {
+          AnimationGameFim.AnimationVitoria(gaming);
+        }
+      }, delay2);
+    }
   }
 
   public void StartSnake() {
@@ -1220,8 +1621,7 @@ public class Game extends JPanel implements Runnable {
             .ThisDecoration(snakeX, snakeY, DecoracaoX, DecoracaoY, DecoComplexoY, DecoComplexoX, WIDTH, HEIGHT));
 
     // Define as coordenadas da cabeça da cobra
-    // nodeSnake[0] = new Node(snakeX, snakeY);
-    nodeSnake[0] = new Node(200, 200);
+    nodeSnake[0] = new Node(snakeX, snakeY);
     // Inicializa o restante do corpo da cobra com as mesmas coordenadas da cabeça
     for (int i = 1; i < nodeSnake.length; i++) {
       nodeSnake[i] = new Node(snakeX, snakeY);
@@ -1235,7 +1635,6 @@ public class Game extends JPanel implements Runnable {
     cobraParada = false;
     cobraParadaFinal = false;
     score = 0;
-    direction = KeyEvent.VK_RIGHT;
     initializeKeyListener();
     nodeSnake = new Node[40];
     if (MapField) {
@@ -1246,6 +1645,7 @@ public class Game extends JPanel implements Runnable {
       walls_x = walls.get(0);
       walls_y = walls.get(1);
     }
+    // ComponentesTimerPont(this);
     StartSnake();
     PosicaoX = nodeSnake[0].x;
     PosicaoY = nodeSnake[0].y;
@@ -1286,8 +1686,8 @@ public class Game extends JPanel implements Runnable {
     Game.DecoComplexoY = new int[0];
     decoracao.posicoesDeco(FrameWidth, FrameHeight, ALL_DOTS_Width, ALL_DOTS_Height, walls_x, walls_y);
     checkedEsplo = false;
-    ControlVelocity = 700;
-    ControlVelocityFinal = 700;
+    ControlVelocityFinal = 0;
+    SubindoNivel = 0;
     animationFinished = true;
     poisonDeathAnimationPlaying = false;
     venomAnimationPlayed = false;
@@ -1344,6 +1744,24 @@ public class Game extends JPanel implements Runnable {
     TransparentEnergy = 0.1f;
     possibilitiEnergyFinal = false;
     colidianEnergy = false;
+    //
+    NumberAnimation.restartAnimation(this);
+    NumberAnimation.restartAnimationDeath(this);
+    NumberAnimation.restartAnimationEnergy(this);
+    NumberAnimation.restartAnimationVelocity(this);
+    //
+    NovaPosicaoVelocity0 = 0;
+    posicaoXVelocity = 0;
+    posicaoYVelocity = 0;
+    widhtVelocityW = 0;
+    widhtVelocityH = 0;
+    TransparentVelocity = 0.1f;
+    possibilitiVelocityFinal = false;
+    //
+    ControlVelocity = 800;
+    ControlVelocityFinal = 800;
+    VelocityFinal = false;
+
     currentFrame1 = 0;
     currentFrame4 = 0;
     currentFrame3 = 0;
@@ -1374,6 +1792,18 @@ public class Game extends JPanel implements Runnable {
     currentFrame28 = 0;
     currentFrame29 = 0;
     currentFrame30 = 0;
+    seconds = 0;
+    Minutos = 0;
+    Segundos = 0;
+    Pontuacao = 0;
+    textpont.setText("Pontuação: " + Pontuacao);
+    colidindoPontuacao = false;
+    componentesTimerPontAdicionado = false;
+    if (timerTempo != null) {
+      timerTempo.cancel();
+      timerTempo.purge();
+    }
+    timerTempo = new Timer();
     if (timer != null) {
       timer.cancel();
       timer.purge();

@@ -62,7 +62,7 @@ public class MenuPanel extends JPanel {
 
       // SOMBREAMENTO NORMAL
       startButton = new JButton("Iniciar Jogo", buttonImage);
-      addShadow(startButton, "Iniciar Jogo", new Font("Arial", Font.PLAIN, 24), 150, 50);
+      addShadow(startButton, "Iniciar Jogo", new Font("Arial", Font.PLAIN, 24), 150, 50, false);
       ////////////////////////////////////////////////
       startButton.addActionListener(new ActionListener() {
         @Override
@@ -105,7 +105,7 @@ public class MenuPanel extends JPanel {
           topFrame.repaint();
         }
       });
-      addShadow(MapButton, "Mapa", new Font("Arial", Font.PLAIN, 24), 150, 50);
+      addShadow(MapButton, "Mapa", new Font("Arial", Font.PLAIN, 24), 150, 50, false);
       Menu.gridy = 1;
       backgroundLabel.add(MapButton, Menu);
 
@@ -121,7 +121,7 @@ public class MenuPanel extends JPanel {
           topFrame.repaint();
         }
       });
-      addShadow(OutfitButton, "Skin", new Font("Arial", Font.PLAIN, 24), 150, 50);
+      addShadow(OutfitButton, "Skin", new Font("Arial", Font.PLAIN, 24), 150, 50, false);
       Menu.gridy = 2;
       backgroundLabel.add(OutfitButton, Menu);
 
@@ -132,7 +132,7 @@ public class MenuPanel extends JPanel {
           // Ação para o botão de configurações
         }
       });
-      addShadow(settingsButton, "Configurações", new Font("Arial", Font.PLAIN, 24), 180, 50);
+      addShadow(settingsButton, "Configurações", new Font("Arial", Font.PLAIN, 24), 180, 50, false);
       Menu.gridy = 3;
       backgroundLabel.add(settingsButton, Menu);
 
@@ -141,7 +141,7 @@ public class MenuPanel extends JPanel {
     }
   }
 
-  public static void addShadow(JButton button, String text, Font font, int width, int height) {
+  public static void addShadow(JButton button, String text, Font font, int width, int height, boolean Apos) {
     // Adicione os botões sobre a imagem de fundo
     button.setForeground(new Color(0, 0, 0));
     Font originalFont = font; // Armazena a fonte original do botão
@@ -157,7 +157,14 @@ public class MenuPanel extends JPanel {
     JPanel textPanel = new JPanel();
     textPanel.setOpaque(false);
     JLabel textLabel = new JLabel(text);
-    textLabel.setForeground(Color.WHITE);
+    if (width == 220 && Apos) {
+      textLabel.setForeground(Color.WHITE);
+    } else {
+      textLabel.setForeground(new Color(255, 255, 255, 0));
+    }
+    if (width != 220) {
+      textLabel.setForeground(Color.WHITE);
+    }
     textLabel.setFont(font);
     textPanel.add(textLabel);
     Border border = BorderFactory.createEmptyBorder(6, 11, 5, 10); // Ajuste conforme necessário
@@ -168,36 +175,37 @@ public class MenuPanel extends JPanel {
     button.setFocusPainted(false);
     Border defaultBorder = button.getBorder();
     Border hoverBorder = BorderFactory.createLineBorder(Color.YELLOW, 2);
-    if (text != "Reiniciar" && text != "Inicio") {
-      button.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseEntered(MouseEvent e) {
-          button.setBorder(hoverBorder);
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-          button.setBorder(defaultBorder);
-        }
-      });
-    } else {
-      if (text == "Reiniciar" || text == "Inicio") {
+    if (width != 220 || width == 220 && Apos) {
+      if (text != "Reiniciar" && text != "Inicio") {
         button.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseEntered(MouseEvent e) {
-            textLabel.setForeground(Color.BLACK);
+            button.setBorder(hoverBorder);
           }
 
           @Override
           public void mouseExited(MouseEvent e) {
-            textLabel.setForeground(Color.WHITE);
+            button.setBorder(defaultBorder);
           }
         });
+      } else {
+        if (text == "Reiniciar" || text == "Inicio") {
+          button.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+              textLabel.setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+              textLabel.setForeground(Color.WHITE);
+            }
+          });
+        }
       }
     }
-
-  }
-}
+}}
 
 class StretchIcon extends ImageIcon {
   public StretchIcon(String filename) {

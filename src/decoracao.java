@@ -299,7 +299,7 @@ public class decoracao {
 
     for (int i = 0; i < valueDecoSimples; i++) {
       if (Game.MapField) {
-        Game.quanti.add((int) (Math.random() * 4) + 1);
+        Game.quanti.add((int) (Math.random() * 3) + 2);
       } else if (Game.MapSwamp) {
         Game.quanti.add((int) (Math.random() * 3) + 1);
       } else if (Game.MapDungeon) {

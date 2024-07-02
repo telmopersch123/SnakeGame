@@ -24,6 +24,7 @@ public class AnimationSnakeDeath {
     }
 
     game.segmentsToRemove = game.nodeSnake.length / 2;
+    Game.ControlVelocity += game.nodeSnake.length / 2;
     // Inicialize o timer para remover os segmentos gradativamente
 
     removeSegmentTimer = new Timer();

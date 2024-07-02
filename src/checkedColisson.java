@@ -28,7 +28,8 @@ public class checkedColisson {
     if (colisaoPainel(nodeSnake, borderWidth, getWidth, getHeight)) {
       return new ResultadoColisao(true, false);
     }
-    if (nodeSnake.length >= 50) {
+    if (nodeSnake.length >= 510) {
+
       if (colisaoCobra(nodeSnake)) {
         return new ResultadoColisao(true, false);
       }

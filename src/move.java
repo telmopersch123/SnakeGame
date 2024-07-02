@@ -10,7 +10,6 @@ public class move {
     switch (newDirection) {
       case KeyEvent.VK_RIGHT:
         nodeSnake[0].x += DISTANCE;
-
         break;
       case KeyEvent.VK_LEFT:
         nodeSnake[0].x -= DISTANCE;

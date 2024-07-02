@@ -48,6 +48,7 @@ public class AnimationEnergyControl {
       if (game.Segunds) {
         game.macaENX = foodPosition2.x;
         game.macaENY = foodPosition2.y;
+
         if (!Game.colidionEneControlTimerAnimation) {
           AnimationEnergy.AnimationFoodErnInic(this);
         }
@@ -65,14 +66,6 @@ public class AnimationEnergyControl {
           Game.PosColidianEnergyX = game.macaENX;
           Game.PosColidianEnergyY = game.macaENY;
           Game.ControlEnergyColidianBoolean = true;
-          Game.posicaoXEnergy = Game.PosColidianEnergyX;
-          Game.posicaoYEnergy = Game.PosColidianEnergyY;
-          Game.NovaPosicaoEnergy0 = Game.posicaoYEnergy - 40;
-          Game.widhtEnergyW = 0;
-          Game.widhtEnergyH = 0;
-          Game.TransparentEnergy = 0.1f;
-          NumberAnimation.restartAnimationEnergy(game);
-          Game.colidianEnergy = true;
         }
 
       }
@@ -123,14 +116,12 @@ public class AnimationEnergyControl {
           Game.SpreetSheetInitial = true;
           Game.SpreetSheetFinale = false;
         }
-
         game.VelocityControl = true;
 
         if (Game.snakeFire) {
           if (ControlEnergySpreet >= 1000 && ControlEnergySpreet <= 1050) {
             Game.checkedEsplo = true;
             Game.ControlOneAnimationESPLO = false;
-
           }
           if (ControlEnergySpreet >= 1500) {
             Game.colisianEnergySumir = true;
@@ -148,6 +139,7 @@ public class AnimationEnergyControl {
           Game.SpreetSheetFinale = false;
         } else if (ControlEnergySpreet >= 11000) {
           game.ControlSpriteSheet = System.currentTimeMillis();
+
         }
       }
     }
@@ -161,12 +153,15 @@ public class AnimationEnergyControl {
     /////
     if (Game.ColisionEnergy) {
       if (ControlAPOS <= 10000) {
+
         Game.ControlAPOSColidionTimer = true;
       } else {
         Game.ControlAPOSColidionTimer = false;
         if (!Game.ControlAPOSColidionTimer) {
-          game.macaENX = foodPosition2.x;
-          game.macaENY = foodPosition2.y;
+          // game.macaENX = foodPosition2.x;
+          // game.macaENY = foodPosition2.y;
+          game.macaENX = 500;
+          game.macaENY = 500;
         }
         Game.ColisionEnergy = false;
         game.ControlSpriteSheet = System.currentTimeMillis();
@@ -183,12 +178,15 @@ public class AnimationEnergyControl {
       }
 
       if (TeleportEnergy >= 6000) {
+
         if (!Game.colidionEneControlTimerAnimation) {
           AnimationEnergy.AnimationFoodErnInic(this);
         }
         if (!Game.ControlAPOSColidionTimer) {
-          game.macaENX = foodPosition2.x;
-          game.macaENY = foodPosition2.y;
+          // game.macaENX = foodPosition2.x;
+          // game.macaENY = foodPosition2.y;
+          game.macaENX = 500;
+          game.macaENY = 500;
         }
 
         game.TeleportEnergyVerif = System.currentTimeMillis();

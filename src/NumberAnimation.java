@@ -6,12 +6,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class NumberAnimation {
-
+  static Timer NumberElevacao;
   private static int NumberInterval = 50;
   private static Timer DeathElevacao;
   private static int DeathInterval = 50;
   private static Timer EnergyElevacao;
   private static int EnergyInterval = 50;
+  private static Timer VelocityElevacao;
+  private static int VelocityInterval = 50;
 
   public static void NumberAnimationMais(BufferedImage buffer, Image NumberMais1, int posicaoX,
       int posicaoY, int widhtNumberW, int widhtNumberH, float TransparentNumber) {
@@ -25,9 +27,9 @@ public class NumberAnimation {
   }
 
   public static void restartAnimation(Game game) {
-    if (Game.NumberElevacao != null) {
-      Game.NumberElevacao.cancel();
-      Game.NumberElevacao.purge();
+    if (NumberElevacao != null) {
+      NumberElevacao.cancel();
+      NumberElevacao.purge();
     }
     Game.possibilitiNumberFinal = false;
     Game.colidianClassico = false;
@@ -35,12 +37,12 @@ public class NumberAnimation {
   }
 
   public static void AnimationNumberInitial(Game game) {
-    if (Game.NumberElevacao != null) {
-      Game.NumberElevacao.cancel();
-      Game.NumberElevacao.purge();
+    if (NumberElevacao != null) {
+      NumberElevacao.cancel();
+      NumberElevacao.purge();
     }
-    Game.NumberElevacao = new Timer();
-    Game.NumberElevacao.scheduleAtFixedRate(new TimerTask() {
+    NumberElevacao = new Timer();
+    NumberElevacao.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
         if (Game.posicaoYNumber >= Game.NovaPosicao0) {
@@ -64,12 +66,12 @@ public class NumberAnimation {
   }
 
   public static void AnimationNumberFinal(Game game) {
-    if (Game.NumberElevacao != null) {
-      Game.NumberElevacao.cancel();
-      Game.NumberElevacao.purge();
+    if (NumberElevacao != null) {
+      NumberElevacao.cancel();
+      NumberElevacao.purge();
     }
-    Game.NumberElevacao = new Timer();
-    Game.NumberElevacao.scheduleAtFixedRate(new TimerTask() {
+    NumberElevacao = new Timer();
+    NumberElevacao.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
         if (Game.posicaoYNumber >= Game.NovaPosicao0) {
@@ -235,5 +237,79 @@ public class NumberAnimation {
         game.repaint();
       }
     }, 0, EnergyInterval);
+  }
+
+  /////////
+  public static void NumberAnimationVelocity(BufferedImage buffer, Image VelocityIcon, int posicaoX,
+      int posicaoY, int widhtVelocityW, int widhtVelocityH, float TransparentVelocity) {
+    Graphics2D VelocityMais = buffer.createGraphics();
+    float transparency = TransparentVelocity;
+    AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+        transparency);
+    VelocityMais.setComposite(ac);
+    VelocityMais.drawImage(VelocityIcon, posicaoX, posicaoY + 30, widhtVelocityW, widhtVelocityH, null);
+    VelocityMais.dispose();
+  }
+
+  public static void restartAnimationVelocity(Game game) {
+    if (VelocityElevacao != null) {
+      VelocityElevacao.cancel();
+      VelocityElevacao.purge();
+    }
+    Game.possibilitiVelocityFinal = false;
+    Game.colidianVelocity = false;
+    AnimationVelocityInitial(game);
+  }
+
+  public static void AnimationVelocityInitial(Game game) {
+    if (VelocityElevacao != null) {
+      VelocityElevacao.cancel();
+      VelocityElevacao.purge();
+    }
+    VelocityElevacao = new Timer();
+    VelocityElevacao.scheduleAtFixedRate(new TimerTask() {
+      @Override
+      public void run() {
+        if (Game.posicaoYVelocity >= Game.NovaPosicaoVelocity0) {
+          Game.posicaoYVelocity--;
+          if (Game.widhtVelocityW <= 25) {
+            Game.widhtVelocityW++;
+            Game.widhtVelocityH++;
+          }
+          if (Game.TransparentVelocity <= 0.90f) {
+            Game.TransparentVelocity += 0.1f;
+          }
+        } else {
+          Game.NovaPosicaoVelocity0 = Game.posicaoYVelocity - 40;
+          Game.possibilitiVelocityFinal = true;
+        }
+
+        game.repaint();
+      }
+    }, 0, VelocityInterval);
+  }
+
+  public static void AnimationVelocityFinal(Game game) {
+    if (VelocityElevacao != null) {
+      VelocityElevacao.cancel();
+      VelocityElevacao.purge();
+    }
+    VelocityElevacao = new Timer();
+    VelocityElevacao.scheduleAtFixedRate(new TimerTask() {
+      @Override
+      public void run() {
+        if (Game.posicaoYVelocity >= Game.NovaPosicaoVelocity0) {
+          Game.posicaoYVelocity--;
+          if (Game.TransparentVelocity >= 0.1f) {
+            Game.TransparentVelocity -= 0.1f;
+          }
+        } else {
+          Game.possibilitiVelocityFinal = false;
+          Game.colidianVelocity = false;
+        }
+
+        game.repaint();
+      }
+    }, 0, VelocityInterval);
   }
 }
