@@ -30,7 +30,15 @@ public class MyKeyBoardListener implements KeyListener {
   public void keyPressed(KeyEvent e) {
 
     int key = e.getKeyCode();
-
+    if (key == KeyEvent.VK_LEFT) {
+      Game.direction = KeyEvent.VK_LEFT;
+    } else if (key == KeyEvent.VK_RIGHT) {
+      Game.direction = KeyEvent.VK_RIGHT;
+    } else if (key == KeyEvent.VK_UP) {
+      Game.direction = KeyEvent.VK_UP;
+    } else if (key == KeyEvent.VK_DOWN) {
+      Game.direction = KeyEvent.VK_DOWN;
+    }
     if ((key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_UP
         || key == KeyEvent.VK_DOWN) && Math.abs(key - initialDirection) != 2 && canPress) {
       // Verifica se a tecla pressionada é uma direção válida e não oposta à direção

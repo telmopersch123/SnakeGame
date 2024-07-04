@@ -41,6 +41,8 @@ public class SkinPanel extends JPanel {
 
     try {
       // -fundo
+      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
+      Font FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.otf", 34);
       Image backgroundImage = ImageIO.read(new File("resources/Menu/backgroundMenu.png"));
       ///
       ImageIcon buttonclassicoINCsnake = new StretchIcon("resources/Menu/botaoclassicoinativo.png");
@@ -80,12 +82,12 @@ public class SkinPanel extends JPanel {
         }
       });
       ReturnButton.setBounds(10, 10, 60, 40); // Posição do botão no canto superior esquerdo
-      MapPanel.ReturnButtonImage(ReturnButton, 60, 40, new Font("Arial", Font.BOLD, 18));
+      MapPanel.ReturnButtonImage(ReturnButton, 60, 40, Fonts);
 
       layeredPane.add(ReturnButton, JLayeredPane.PALETTE_LAYER);
       // Texto no mapa
       JLabel mapLabel = new JLabel("Skins Alternativas");
-      mapLabel.setFont(new Font("Arial", Font.BOLD, 36));
+      mapLabel.setFont(FontsTitulo);
       mapLabel.setForeground(Color.WHITE); // Certificar-se de que o texto é visível sobre o fundo
       GridBagConstraints gbc = new GridBagConstraints();
       gbc.gridx = 0;
@@ -99,7 +101,7 @@ public class SkinPanel extends JPanel {
       } else if (!Game.snakeClassica) {
         ClassicSkinButton = new JButton("", buttonclassicoINCsnake);
       }
-      Font fontClassic = new Font("Arial", Font.BOLD, 18);
+      Font fontClassic = Fonts;
       ClassicSkinButton.setFont(fontClassic);
       ClassicSkinButton.addActionListener(new ActionListener() {
         @Override
@@ -117,7 +119,7 @@ public class SkinPanel extends JPanel {
           ClassicSkinButton.repaint();
         }
       });
-      MapPanel.ReturnButtonImage(ClassicSkinButton, 150, 50, new Font("Arial", Font.BOLD, 18));
+      MapPanel.ReturnButtonImage(ClassicSkinButton, 150, 50, Fonts);
 
       gbc.gridx = 0;
       gbc.gridy = 1;
@@ -128,7 +130,7 @@ public class SkinPanel extends JPanel {
       } else if (!Game.snakePoison) {
         PoisonSkinButton = new JButton("", buttonpoisonINCsnake);
       }
-      Font fontPoison = new Font("Arial", Font.BOLD, 18);
+      Font fontPoison = Fonts;
       PoisonSkinButton.setFont(fontPoison);
       PoisonSkinButton.addActionListener(new ActionListener() {
         @Override
@@ -146,7 +148,7 @@ public class SkinPanel extends JPanel {
           PoisonSkinButton.repaint();
         }
       });
-      MapPanel.ReturnButtonImage(PoisonSkinButton, 150, 50, new Font("Arial", Font.BOLD, 18));
+      MapPanel.ReturnButtonImage(PoisonSkinButton, 150, 50, Fonts);
 
       gbc.gridx = 0;
       gbc.gridy = 2;
@@ -157,7 +159,7 @@ public class SkinPanel extends JPanel {
       } else if (!Game.snakeFire) {
         FireSkinButton = new JButton("", buttonfireINCsnake);
       }
-      Font fontFire = new Font("Arial", Font.BOLD, 18);
+      Font fontFire = Fonts;
       FireSkinButton.setFont(fontFire);
       FireSkinButton.addActionListener(new ActionListener() {
 
@@ -176,7 +178,7 @@ public class SkinPanel extends JPanel {
           FireSkinButton.repaint();
         }
       });
-      MapPanel.ReturnButtonImage(FireSkinButton, 150, 50, new Font("Arial", Font.BOLD, 18));
+      MapPanel.ReturnButtonImage(FireSkinButton, 150, 50, Fonts);
 
       gbc.gridx = 0;
       gbc.gridy = 3;

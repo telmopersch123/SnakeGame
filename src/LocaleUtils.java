@@ -65,15 +65,15 @@ public class LocaleUtils {
           Rectangle foodRect1 = new Rectangle(foodX[0], foodY[0], 15, 15);
           Rectangle foodRect2 = new Rectangle(foodX[1], foodY[1], 30, 50);
           Rectangle foodRect3 = new Rectangle(foodX[2], foodY[2], 30, 30);
-          if (foodRect1.intersects(Decoracao) || foodRect1.contains(Decoracao) ||
-              foodRect2.intersects(Decoracao) || foodRect2.contains(Decoracao) ||
-              foodRect3.intersects(Decoracao) || foodRect3.contains(Decoracao)) {
+          if (Decoracao.intersects(foodRect1) || Decoracao.contains(foodRect1) ||
+              Decoracao.intersects(foodRect2) || Decoracao.contains(foodRect2) ||
+              Decoracao.intersects(foodRect3) || Decoracao.contains(foodRect3)) {
             tooCloseToWall = true;
             break; // Interrompe o loop assim que uma decoração próxima é encontrada
           }
-          if (foodRect1.intersects(DecoracaoCom) || foodRect1.contains(DecoracaoCom) ||
-              foodRect2.intersects(DecoracaoCom) || foodRect2.contains(DecoracaoCom) ||
-              foodRect3.intersects(DecoracaoCom) || foodRect3.contains(DecoracaoCom)) {
+          if (DecoracaoCom.intersects(foodRect1) || DecoracaoCom.contains(foodRect1) ||
+              DecoracaoCom.intersects(foodRect2) || DecoracaoCom.contains(foodRect2) ||
+              DecoracaoCom.intersects(foodRect3) || DecoracaoCom.contains(foodRect3)) {
             tooCloseToWall = true;
             break; // Interrompe o loop assim que uma decoração próxima é encontrada
           }

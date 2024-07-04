@@ -3,8 +3,8 @@ import java.util.TimerTask;
 
 public class AnimationGameFim {
   private static int vitoriaInterval = 10;
-  private static Timer vitoriaTemp;
-  private static boolean increaseSizeVen = true;
+  public static Timer vitoriaTemp;
+  public static boolean increaseSizeVen = true;
 
   public static void AnimationVitoria(Game game) {
     if (vitoriaTemp != null) {

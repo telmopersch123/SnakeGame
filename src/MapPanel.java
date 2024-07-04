@@ -40,6 +40,8 @@ public class MapPanel extends JPanel {
 
     // Imagem de fundo
     try {
+      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
+      Font FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.otf", 34);
       ImageIcon buttonDungeonINCBack = new StretchIcon("resources/Menu/buttonInactive-Dungeon.png");
       ImageIcon buttonFieldINCBack = new StretchIcon("resources/Menu/buttonInactive-field.png");
       ImageIcon buttonSwampINCBack = new StretchIcon("resources/Menu/buttonInactive-swamp.png");
@@ -71,12 +73,12 @@ public class MapPanel extends JPanel {
         }
       });
       ReturnButton.setBounds(10, 10, 60, 40); // Posição do botão no canto superior esquerdo
-      ReturnButtonImage(ReturnButton, 60, 40, new Font("Arial", Font.BOLD, 18));
+      ReturnButtonImage(ReturnButton, 60, 40, Fonts);
       layeredPane.add(ReturnButton, JLayeredPane.PALETTE_LAYER);
 
       // Texto no mapa
       JLabel mapLabel = new JLabel("Cenários de Fuga");
-      mapLabel.setFont(new Font("Arial", Font.BOLD, 36));
+      mapLabel.setFont(FontsTitulo);
       mapLabel.setForeground(Color.WHITE); // Certificar-se de que o texto é visível sobre o fundo
       GridBagConstraints gbc = new GridBagConstraints();
       gbc.gridx = 0;
@@ -91,7 +93,7 @@ public class MapPanel extends JPanel {
       } else if (!Game.MapDungeon) {
         DungeonButton = new JButton("Masmorra", buttonDungeonINCBack);
       }
-      Font fontDungeon = new Font("Arial", Font.BOLD, 18);
+      Font fontDungeon = Fonts;
       DungeonButton.setFont(fontDungeon);
       DungeonButton.addActionListener(new ActionListener() {
         @Override
@@ -109,7 +111,7 @@ public class MapPanel extends JPanel {
           DungeonButton.repaint();
         }
       });
-      ReturnButtonImage(DungeonButton, 300, 50, new Font("Arial", Font.BOLD, 18));
+      ReturnButtonImage(DungeonButton, 300, 50, Fonts);
       gbc.gridx = 0;
       gbc.gridy = 1;
       backgroundLabel.add(DungeonButton, gbc);
@@ -119,7 +121,7 @@ public class MapPanel extends JPanel {
       } else if (!Game.MapSwamp) {
         SwampButton = new JButton("Pântano", buttonSwampINCBack);
       }
-      Font fontSwamp = new Font("Arial", Font.BOLD, 18);
+      Font fontSwamp = Fonts;
       SwampButton.setFont(fontSwamp);
       SwampButton.addActionListener(new ActionListener() {
         @Override
@@ -137,7 +139,7 @@ public class MapPanel extends JPanel {
           SwampButton.repaint();
         }
       });
-      ReturnButtonImage(SwampButton, 300, 50, new Font("Arial", Font.BOLD, 18));
+      ReturnButtonImage(SwampButton, 300, 50, Fonts);
       gbc.gridx = 0;
       gbc.gridy = 2;
       backgroundLabel.add(SwampButton, gbc);
@@ -147,7 +149,7 @@ public class MapPanel extends JPanel {
       } else if (!Game.MapField) {
         FieldButton = new JButton("Planície", buttonFieldINCBack);
       }
-      Font fontField = new Font("Arial", Font.BOLD, 18);
+      Font fontField = Fonts;
       FieldButton.setFont(fontField);
       FieldButton.addActionListener(new ActionListener() {
         @Override
@@ -165,7 +167,7 @@ public class MapPanel extends JPanel {
           FieldButton.repaint();
         }
       });
-      ReturnButtonImage(FieldButton, 300, 50, new Font("Arial", Font.BOLD, 18));
+      ReturnButtonImage(FieldButton, 300, 50, Fonts);
       gbc.gridx = 0;
       gbc.gridy = 3;
       backgroundLabel.add(FieldButton, gbc);

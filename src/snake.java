@@ -200,13 +200,13 @@ public class snake {
           rotationpoison = AffineTransform.getQuadrantRotateInstance(1, currX + 18 / 2, currY + 22 / 2);
           rotated0 = (Graphics2D) g2d.create();
           rotated0.transform(rotationpoison);
-          rotated0.drawImage(manchasAmarelas, currX, currY + 5, WIDTH, HEIGHT, null);
+          rotated0.drawImage(manchasAmarelas, currX, currY + 7, WIDTH, HEIGHT, null);
           rotated0.dispose();
         } else {
           rotationpoison = AffineTransform.getQuadrantRotateInstance(0, currX + 18 / 2, currY + 27 / 2);
           rotated0 = (Graphics2D) g2d.create();
           rotated0.transform(rotationpoison);
-          rotated0.drawImage(manchasAmarelas, currX + 2, currY, WIDTH, HEIGHT, null);
+          rotated0.drawImage(manchasAmarelas, currX + 2, currY + 2, WIDTH, HEIGHT, null);
           rotated0.dispose();
         }
       }

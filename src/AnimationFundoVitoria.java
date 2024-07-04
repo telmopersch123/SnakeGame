@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -6,7 +5,6 @@ import java.util.TimerTask;
 public class AnimationFundoVitoria {
   private static int vitoriaInterval = 100;
   private static Timer fundoTemp;
-
 
   public static void AnimationVitoria(Game game, Graphics g, int getWidth, int getHeight) {
     if (fundoTemp != null) {
@@ -24,7 +22,7 @@ public class AnimationFundoVitoria {
           fundoTemp.cancel();
           fundoTemp.purge();
         }
-      
+
         game.repaint();
       }
     }, 0, vitoriaInterval);

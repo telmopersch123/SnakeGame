@@ -276,9 +276,9 @@ public class decoracao {
       ArrayList<Integer> walls_x,
       ArrayList<Integer> walls_y) {
     int PorcentagemX = (10 * FrameWidth) / 100;
-    int PorcentagemY = (10 * FrameWidth) / 100;
-    int PorcentagemCOMX = (10 * FrameWidth) / 100;
-    int PorcentagemCOMY = (10 * FrameWidth) / 100;
+    int PorcentagemY = (10 * FrameHeight) / 100;
+    int PorcentagemCOMX = (7 * FrameWidth) / 100;
+    int PorcentagemCOMY = (10 * FrameHeight) / 100;
     ///
     int valueDecoSimples = 0;
     int valueDecoComplexo = 0;

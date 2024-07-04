@@ -39,6 +39,7 @@ public class MenuPanel extends JPanel {
 
     try {
       // Carregue a imagem dos botoes
+      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 20);
       ImageIcon buttonReturn = new StretchIcon("resources/Menu/return.png");
       ImageIcon buttonImage = new StretchIcon("resources/Menu/buttonRock.png");
       // Carregue a imagem do fundo
@@ -62,12 +63,11 @@ public class MenuPanel extends JPanel {
 
       // SOMBREAMENTO NORMAL
       startButton = new JButton("Iniciar Jogo", buttonImage);
-      addShadow(startButton, "Iniciar Jogo", new Font("Arial", Font.PLAIN, 24), 150, 50, false);
+      addShadow(startButton, "Iniciar Jogo", Fonts, 150, 50, false);
       ////////////////////////////////////////////////
       startButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
           topFrame.getContentPane().removeAll();
           Game game = new Game();
@@ -76,6 +76,7 @@ public class MenuPanel extends JPanel {
           topFrame.revalidate();
           topFrame.repaint();
           game.requestFocusInWindow();
+          Game.nodeSnake = Game.ComprimentoCobra;
           Game.ValueFinal = 0;
           Game.ValueDecoNormal = 0;
           Game.quanti.clear();
@@ -86,6 +87,7 @@ public class MenuPanel extends JPanel {
           Game.DecoComplexoY = new int[0];
           decoracao.posicoesDeco(Game.FrameWidth,
               Game.FrameHeight, Game.ALL_DOTS_Width, Game.ALL_DOTS_Height, Game.walls_x, Game.walls_y);
+
         }
       });
       Menu.gridx = 0;
@@ -105,7 +107,7 @@ public class MenuPanel extends JPanel {
           topFrame.repaint();
         }
       });
-      addShadow(MapButton, "Mapa", new Font("Arial", Font.PLAIN, 24), 150, 50, false);
+      addShadow(MapButton, "Mapa", Fonts, 150, 50, false);
       Menu.gridy = 1;
       backgroundLabel.add(MapButton, Menu);
 
@@ -121,7 +123,7 @@ public class MenuPanel extends JPanel {
           topFrame.repaint();
         }
       });
-      addShadow(OutfitButton, "Skin", new Font("Arial", Font.PLAIN, 24), 150, 50, false);
+      addShadow(OutfitButton, "Skin", Fonts, 150, 50, false);
       Menu.gridy = 2;
       backgroundLabel.add(OutfitButton, Menu);
 
@@ -132,7 +134,7 @@ public class MenuPanel extends JPanel {
           // Ação para o botão de configurações
         }
       });
-      addShadow(settingsButton, "Configurações", new Font("Arial", Font.PLAIN, 24), 180, 50, false);
+      addShadow(settingsButton, "Configurações", Fonts, 180, 50, false);
       Menu.gridy = 3;
       backgroundLabel.add(settingsButton, Menu);
 
@@ -205,7 +207,8 @@ public class MenuPanel extends JPanel {
         }
       }
     }
-}}
+  }
+}
 
 class StretchIcon extends ImageIcon {
   public StretchIcon(String filename) {
