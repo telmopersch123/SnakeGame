@@ -13,6 +13,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -26,162 +28,240 @@ import javax.swing.SwingUtilities;
 
 public class MapPanel extends JPanel {
   private JButton ReturnButton;
-  private JButton DungeonButton;
-  private JButton SwampButton;
-  private JButton FieldButton;
-  private JLabel backgroundLabel;
+  static JButton DungeonButton;
+  static JButton SwampButton;
+  static JButton FieldButton;
+  static JLabel backgroundLabel;
+  public static Image Bordas;
+  static Color Transper = new Color(0, 0, 0, 0);
+  static JLabel backgroundLabel2;
+  static Image backgroundImageMenu;
+  static List<JButton> buttons;
+  static JLabel TextSelection;
+  static int Position = 0;
+  static GridBagConstraints gbc;
+  static Font selectionFont;
+  static JLayeredPane layeredPane;
+  static JLabel mapLabel;
 
   public MapPanel(ImageIcon buttonReturn) {
     setLayout(new BorderLayout());
-
-    // Usar JLayeredPane para controlar a ordem dos componentes
-    JLayeredPane layeredPane = new JLayeredPane();
+    buttons = new ArrayList<>();
+    layeredPane = new JLayeredPane();
     layeredPane.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
-
-    // Imagem de fundo
     try {
       Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
       Font FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.otf", 34);
+      selectionFont = loadFont.loadFont("resources/fontes/fontGeral.otf", 64);
       ImageIcon buttonDungeonINCBack = new StretchIcon("resources/Menu/buttonInactive-Dungeon.png");
       ImageIcon buttonFieldINCBack = new StretchIcon("resources/Menu/buttonInactive-field.png");
       ImageIcon buttonSwampINCBack = new StretchIcon("resources/Menu/buttonInactive-swamp.png");
-      /////
       ImageIcon buttonSwampBack = new StretchIcon("resources/Menu/button-swamp.png");
       ImageIcon buttonFieldBack = new StretchIcon("resources/Menu/button-field.png");
       ImageIcon buttonDungeonBack = new StretchIcon("resources/Menu/button-dungeon.png");
-      //////
+      ImageIcon buttonBlockedSwamp = new StretchIcon("resources/Menu/BlockedSwamp.png");
+      ImageIcon buttonBlockedDungeon = new StretchIcon("resources/Menu/BlockedDungeon.png");
       Image backgroundImage = ImageIO.read(new File("resources/Menu/backgroundMenu.png"));
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
       backgroundImage = backgroundImage.getScaledInstance((int) screenSize.getWidth(), (int) screenSize.getHeight(),
-          Image.SCALE_SMOOTH); // Redimensionar a imagem
+          Image.SCALE_SMOOTH);
       backgroundLabel = new JLabel(new ImageIcon(backgroundImage));
       backgroundLabel.setSize(screenSize);
-      backgroundLabel.setLayout(new GridBagLayout()); // Definir layout para centralizar o texto
+      backgroundLabel.setLayout(new GridBagLayout());
+      backgroundLabel.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+          resetButtonSizes();
+        }
+      });
       layeredPane.add(backgroundLabel, JLayeredPane.DEFAULT_LAYER);
 
-      // Botão de retorno
       ReturnButton = new JButton("", buttonReturn);
       ReturnButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MapPanel.this);
-          MenuPanel menuPanel = new MenuPanel(); // Crie uma nova instância de MenuPanel
+          MenuPanel menuPanel = new MenuPanel();
           topFrame.getContentPane().removeAll();
           topFrame.getContentPane().add(menuPanel);
           topFrame.revalidate();
           topFrame.repaint();
         }
       });
-      ReturnButton.setBounds(10, 10, 60, 40); // Posição do botão no canto superior esquerdo
-      ReturnButtonImage(ReturnButton, 60, 40, Fonts);
+      ReturnButton.setBounds(10, 10, 100, 80);
+      ReturnButtonImage(ReturnButton, 100, 80, Fonts);
       layeredPane.add(ReturnButton, JLayeredPane.PALETTE_LAYER);
-
-      // Texto no mapa
-      JLabel mapLabel = new JLabel("Cenários de Fuga");
-      mapLabel.setFont(FontsTitulo);
-      mapLabel.setForeground(Color.WHITE); // Certificar-se de que o texto é visível sobre o fundo
-      GridBagConstraints gbc = new GridBagConstraints();
+      gbc = new GridBagConstraints();
       gbc.gridx = 0;
       gbc.gridy = 0;
-      gbc.insets = new Insets(10, 0, 10, 0);
       gbc.anchor = GridBagConstraints.CENTER;
+      // ------------------------
+      mapLabel = new JLabel("Cenários de Fuga");
+      mapLabel.setFont(FontsTitulo);
+      mapLabel.setForeground(Color.WHITE);
+      mapLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 150, 0));
       backgroundLabel.add(mapLabel, gbc);
-      // Adicionar o layeredPane ao painel principal
       add(layeredPane, BorderLayout.CENTER);
-      if (Game.MapDungeon) {
-        DungeonButton = new JButton("Masmorra", buttonDungeonBack);
-      } else if (!Game.MapDungeon) {
-        DungeonButton = new JButton("Masmorra", buttonDungeonINCBack);
+      // ------------------------
+      if (Game.DesblockedPontuation <= 1) {
+        if (Game.MapDungeon) {
+          DungeonButton = new JButton("Masmorra", buttonDungeonBack);
+        } else {
+          DungeonButton = new JButton("Masmorra", buttonDungeonINCBack);
+        }
+      } else {
+        DungeonButton = new JButton("Masmorra", buttonBlockedDungeon);
       }
-      Font fontDungeon = Fonts;
-      DungeonButton.setFont(fontDungeon);
+      DungeonButton.setFont(Fonts);
+      buttons.add(DungeonButton);
       DungeonButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          Game.MapDungeon = true;
-          Game.MapField = false;
-          Game.MapSwamp = false;
-          DungeonButton.setIcon(buttonDungeonBack);
-          SwampButton.setIcon(buttonSwampINCBack);
-          FieldButton.setIcon(buttonFieldINCBack);
-          SwampButton.setPreferredSize(new Dimension(200, 50));
-          FieldButton.setPreferredSize(new Dimension(200, 50));
-          DungeonButton.setPreferredSize(new Dimension(400, 70));
-          DungeonButton.revalidate();
-          DungeonButton.repaint();
+          if (Game.DesblockedPontuation <= 1) {
+            Game.MapDungeon = true;
+            Game.MapField = false;
+            Game.MapSwamp = false;
+            DungeonButton.setIcon(buttonDungeonBack);
+            SwampButton.setIcon(buttonSwampINCBack);
+            FieldButton.setIcon(buttonFieldINCBack);
+            resetButtonSizes();
+            DungeonButton.setPreferredSize(new Dimension(400, 130));
+            AnimationTextSelection.Text = "Selecionado";
+          } else {
+            AnimationTextSelection.Text = "Bloqueado";
+          }
+          if (MapPanel.Position < 0) {
+            AnimationTextSelection.animacaoSelecionadoTimer.cancel();
+            AnimationTextSelection.animacaoSelecionadoTimer.purge();
+          }
+          AnimationTextSelection.Transper = 0;
+          MapPanel.Position = 0;
+          AnimationTextSelection.AnimationText();
         }
       });
-      ReturnButtonImage(DungeonButton, 300, 50, Fonts);
+      ReturnButtonImage(DungeonButton, 300, 100, Fonts);
       gbc.gridx = 0;
       gbc.gridy = 1;
+      gbc.insets = new Insets(-150, 0, -150, 0);
       backgroundLabel.add(DungeonButton, gbc);
-      /////////////////////////
-      if (Game.MapSwamp) {
-        SwampButton = new JButton("Pântano", buttonSwampBack);
-      } else if (!Game.MapSwamp) {
-        SwampButton = new JButton("Pântano", buttonSwampINCBack);
+      if (Game.DesblockedPontuation <= 2) {
+        if (Game.MapSwamp) {
+          SwampButton = new JButton("Pântano", buttonSwampBack);
+        } else {
+          SwampButton = new JButton("Pântano", buttonSwampINCBack);
+        }
+      } else {
+        SwampButton = new JButton("Pântano", buttonBlockedSwamp);
       }
-      Font fontSwamp = Fonts;
-      SwampButton.setFont(fontSwamp);
+      SwampButton.setFont(Fonts);
+      buttons.add(SwampButton);
       SwampButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          Game.MapDungeon = false;
-          Game.MapField = false;
-          Game.MapSwamp = true;
-          DungeonButton.setIcon(buttonDungeonINCBack);
-          SwampButton.setIcon(buttonSwampBack);
-          FieldButton.setIcon(buttonFieldINCBack);
-          SwampButton.setPreferredSize(new Dimension(400, 70));
-          FieldButton.setPreferredSize(new Dimension(200, 50));
-          DungeonButton.setPreferredSize(new Dimension(200, 50));
-          SwampButton.revalidate();
-          SwampButton.repaint();
+          if (Game.DesblockedPontuation <= 2) {
+            Game.MapDungeon = false;
+            Game.MapField = false;
+            Game.MapSwamp = true;
+            if (Game.DesblockedPontuation <= 1) {
+              DungeonButton.setIcon(buttonDungeonINCBack);
+            } else {
+              DungeonButton.setIcon(buttonBlockedDungeon);
+            }
+            SwampButton.setIcon(buttonSwampBack);
+            FieldButton.setIcon(buttonFieldINCBack);
+            resetButtonSizes();
+            SwampButton.setPreferredSize(new Dimension(400, 130));
+            AnimationTextSelection.Text = "Selecionado";
+          } else {
+            AnimationTextSelection.Text = "Bloqueado";
+          }
+          if (MapPanel.Position < 0) {
+            AnimationTextSelection.animacaoSelecionadoTimer.cancel();
+            AnimationTextSelection.animacaoSelecionadoTimer.purge();
+          }
+          AnimationTextSelection.Transper = 0;
+          MapPanel.Position = 0;
+          AnimationTextSelection.AnimationText();
         }
       });
-      ReturnButtonImage(SwampButton, 300, 50, Fonts);
+      ReturnButtonImage(SwampButton, 300, 100, Fonts);
       gbc.gridx = 0;
       gbc.gridy = 2;
       backgroundLabel.add(SwampButton, gbc);
-      /////////////////////////
+
       if (Game.MapField) {
         FieldButton = new JButton("Planície", buttonFieldBack);
-      } else if (!Game.MapField) {
+      } else {
         FieldButton = new JButton("Planície", buttonFieldINCBack);
       }
-      Font fontField = Fonts;
-      FieldButton.setFont(fontField);
+      FieldButton.setFont(Fonts);
+      ReturnButtonImage(FieldButton, 300, 100, Fonts);
+      buttons.add(FieldButton);
       FieldButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+
           Game.MapDungeon = false;
           Game.MapField = true;
           Game.MapSwamp = false;
-          DungeonButton.setIcon(buttonDungeonINCBack);
-          SwampButton.setIcon(buttonSwampINCBack);
+          if (Game.DesblockedPontuation <= 1) {
+            DungeonButton.setIcon(buttonDungeonINCBack);
+          } else {
+            DungeonButton.setIcon(buttonBlockedDungeon);
+          }
+          if (Game.DesblockedPontuation <= 2) {
+            SwampButton.setIcon(buttonSwampINCBack);
+          } else {
+            SwampButton.setIcon(buttonBlockedSwamp);
+          }
           FieldButton.setIcon(buttonFieldBack);
-          SwampButton.setPreferredSize(new Dimension(200, 50));
-          FieldButton.setPreferredSize(new Dimension(400, 70));
-          DungeonButton.setPreferredSize(new Dimension(200, 50));
-          FieldButton.revalidate();
-          FieldButton.repaint();
+          resetButtonSizes();
+          FieldButton.setPreferredSize(new Dimension(400, 130));
+          AnimationTextSelection.Text = "Selecionado";
+          if (MapPanel.Position < 0) {
+            AnimationTextSelection.animacaoSelecionadoTimer.cancel();
+            AnimationTextSelection.animacaoSelecionadoTimer.purge();
+          }
+          AnimationTextSelection.Transper = 0;
+          MapPanel.Position = 0;
+          AnimationTextSelection.AnimationText();
         }
       });
-      ReturnButtonImage(FieldButton, 300, 50, Fonts);
-      gbc.gridx = 0;
+     
       gbc.gridy = 3;
       backgroundLabel.add(FieldButton, gbc);
+      gbc.gridy = 2;
+      ImagemFundo();
+      backgroundLabel.add(backgroundLabel2, gbc);
+      // ===============
+      TextSelection = new JLabel("");
+      gbc.gridy = 1;
+      backgroundLabel.add(TextSelection, gbc);
     } catch (IOException ex) {
       ex.printStackTrace();
     }
   }
 
+  public static void ImagemFundo() {
+    try {
+      backgroundImageMenu = ImageIO.read(new File("resources/Menu/fundoMenu.png"));
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+    Dimension imageSize = new Dimension(500, 600);
+    backgroundImageMenu = backgroundImageMenu.getScaledInstance((int) imageSize.getWidth(), (int) imageSize.getHeight(),
+        Image.SCALE_SMOOTH);
+    backgroundLabel2 = new JLabel(new ImageIcon(backgroundImageMenu));
+    backgroundLabel2.setSize(imageSize);
+    backgroundLabel2.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0));
+  }
+
   public static void ReturnButtonImage(JButton button, int width, int height, Font font) {
-    button.setForeground(new Color(0, 0, 0));
-    // DESENHAR BOTAO
+    button.setForeground(new Color(0, 0, 0, 50));
+    button.revalidate();
+    button.repaint();
     button.setPreferredSize(new Dimension(width, height));
     button.setBorder(BorderFactory.createEmptyBorder());
-    // Configuração do botão para ser transparente
     button.setOpaque(false);
     button.setContentAreaFilled(false);
     button.setBorderPainted(false);
@@ -189,15 +269,15 @@ public class MapPanel extends JPanel {
     button.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseEntered(MouseEvent e) {
-        button.setForeground(Color.WHITE);
-        button.setSize(new Dimension(width - 10, height - 5));
+        button.setForeground(Color.BLACK);
+        button.setSize(new Dimension(width - 15, height - 10));
         button.revalidate();
         button.repaint();
       }
 
       @Override
       public void mouseExited(MouseEvent e) {
-        button.setForeground(Color.BLACK);
+        button.setForeground(new Color(0, 0, 0, 50));
         button.setSize(new Dimension(width, height));
         button.revalidate();
         button.repaint();
@@ -205,4 +285,11 @@ public class MapPanel extends JPanel {
     });
   }
 
+  public static void resetButtonSizes() {
+    for (JButton button : buttons) {
+      button.setPreferredSize(new Dimension(300, 100));
+      button.revalidate();
+      button.repaint();
+    }
+  }
 }

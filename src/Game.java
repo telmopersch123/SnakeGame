@@ -149,7 +149,7 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public static int direction;
-  static Node[] ComprimentoCobra = new Node[40];
+  static Node[] ComprimentoCobra = new Node[490];
   public static Node[] nodeSnake = ComprimentoCobra;
   public int score = 0;
   public static int macaX = 0, macaY = 0;
@@ -252,11 +252,11 @@ public class Game extends JPanel implements Runnable {
   public static int positionY;
   public static Graphics2D g2d;
   public static boolean NewButtonGame;
-  public static boolean MapDungeon = true;
+  public static boolean MapDungeon = false;
   public static boolean MapSwamp = false;
-  public static boolean MapField = false;
-  public static boolean snakeClassica = false;
-  public static boolean snakePoison = true;
+  public static boolean MapField = true;
+  public static boolean snakeClassica = true;
+  public static boolean snakePoison = false;
   public static boolean snakeFire = false;
   private static int quantidadeDecoSmallTrunk;
   private static int quantidadeDecoChao1;
@@ -433,6 +433,14 @@ public class Game extends JPanel implements Runnable {
   static GridBagConstraints GridGameWins;
   static Color CorDificulty = Color.YELLOW;
   static Timer timerLabelsGameWins;
+  static int DesblockedPontuation = 3;
+
+  public static boolean ZerouMapaField;
+  public static boolean ZerouMapaDungeon;
+  public static boolean ZerouMapaSwamp;
+  static String MapLiberation;
+  static String SnakeLiberation;
+  static boolean NotificationGameDesblocked;
 
   private void initializeKeyListener() {
     if (!gameOver && !GameFim) {
@@ -708,6 +716,7 @@ public class Game extends JPanel implements Runnable {
     frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Define a janela para tela
     // cheia
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define o comportamento ao fechar a janela
+
     MenuPanel menuPanel = new MenuPanel();
     frame.add(menuPanel);
     frame.setVisible(true);
@@ -735,7 +744,6 @@ public class Game extends JPanel implements Runnable {
       }
 
       tick();
-
       ResultadoColisao resultadoColisao = checkedColisson.verificarColisao(gameOver, WIDTH, HEIGHT, FrameWidth,
           FrameHeight,
           walls_x, walls_y, nodeSnake, largerCollisionArea, headCollisionArea,
@@ -764,7 +772,6 @@ public class Game extends JPanel implements Runnable {
         e.printStackTrace();
       }
     }
-
   }
 
   public void Animation() {
@@ -923,7 +930,7 @@ public class Game extends JPanel implements Runnable {
         poisonFruitWidthVen, poisonFruitHeightVen);
     food.EnergyFood(this, g, buffer, macaENX, macaENY, appleEnergy,
         poisonFruitWidthErn, poisonFruitHeightErn);
-  
+
     if (MapField) {
       // Desenha as paredes
       walls.lawnWalls(buffer.getGraphics(), walls_x, walls_y, rockSprit);
@@ -1078,6 +1085,29 @@ public class Game extends JPanel implements Runnable {
     return new ImageIcon(transparentImage);
   }
 
+  public static void SystemLiberationMap() {
+    if (MapField && !ZerouMapaField) {
+      ZerouMapaField = true;
+      MapLiberation = "Pântano";
+      Game.NotificationGameDesblocked = true;
+      DesblockedPontuation--;
+    }
+    if (MapSwamp && !ZerouMapaSwamp) {
+      ZerouMapaSwamp = true;
+      MapLiberation = "Masmorra";
+      SnakeLiberation = "Venenosa";
+      Game.NotificationGameDesblocked = true;
+      DesblockedPontuation--;
+    }
+    if (MapDungeon && DesblockedPontuation == 1) {
+      ZerouMapaDungeon = true;
+      MapLiberation = "";
+      SnakeLiberation = "Boitata";
+      Game.NotificationGameDesblocked = true;
+      DesblockedPontuation--;
+    }
+  }
+
   public void GameWinsButtons(Graphics g) {
     // Defina o fundo verde com transparência
     meuPainelButtons = this;
@@ -1094,7 +1124,6 @@ public class Game extends JPanel implements Runnable {
     }
 
     if (!newGameButtonExists) {
-
       meuPainelButtons.setLayout(new GridBagLayout());
       try {
         Vitoria = ImageIO.read(new File("resources/fontes/vitoria.png"));
@@ -1109,13 +1138,11 @@ public class Game extends JPanel implements Runnable {
       GridGameWins.gridy = 0;
       GridGameWins.insets = new Insets(0, 0, 0, 0); // Espaçamento entre componentes
       GridGameWins.anchor = GridBagConstraints.CENTER;
-      //
       // Adicionando o texto
       customFont = loadFont.loadFont("resources/fontes/fontGeral.otf", 32);
-      JLabel label = new JLabel("Você Conquistou essa Região");
-      label.setFont(customFont);
-      textShadowLabel = new TextShadow("Você Conquistou essa Região", // Modifique esta linha
+      textShadowLabel = new TextShadow("Região Dominada!", // Modifique esta linha
           new Color(255, 255, 255, 0), new Color(0, 0, 0, 0), customFont);
+
       GridGameWins.gridy = 0;
       meuPainelButtons.add(textShadowLabel, GridGameWins);
       // adicionando Imagem Vitória
@@ -1230,9 +1257,14 @@ public class Game extends JPanel implements Runnable {
           }
           AnimationGameFim.vitoriaTemp = new Timer();
           restartGame();
+          SystemLiberationMap();
+          if (DesblockedPontuation >= 1) {
+            NotificationDesblocked.SumirFundo = false;
+          }
           GameSnake.add(new MenuPanel());
           GameSnake.revalidate();
           GameSnake.repaint();
+
         }
       });
       meuPainelButtons.add(RevertMenuButton, GridGameWins);
@@ -1248,13 +1280,12 @@ public class Game extends JPanel implements Runnable {
           SwingUtilities.invokeLater(() -> {
             QuantiTempoGameFim++;
             if (QuantiTempoGameFim == 6) {
-              textShadowLabel = new TextShadow("Você Conquistou essa Região", // Modifique esta linha
-                  Color.WHITE, Color.BLACK, customFont);
+              SelectionText();
               meuPainelButtons.add(textShadowLabel, 0);
               meuPainelButtons.revalidate();
               meuPainelButtons.repaint();
             }
-            ;
+
             if (QuantiTempoGameFim == 12) {
               MenuPanel.addShadow(RevertMenuButton, "Inicio", revertmenuFont, 220, 50, true);
               float finalTransparency = 1.0f;
@@ -1266,6 +1297,34 @@ public class Game extends JPanel implements Runnable {
           });
         }
       }, 0, delay);
+    }
+  }
+
+  public void SelectionText() {
+    if (MapField) {
+      if (ZerouMapaField) {
+        textShadowLabel = new TextShadow("Região Mantida!", // Modifique esta linha
+            Color.WHITE, Color.BLACK, customFont);
+      } else if (!ZerouMapaField) {
+        textShadowLabel = new TextShadow("Região Dominada!", // Modifique esta linha
+            Color.WHITE, Color.BLACK, customFont);
+      }
+    } else if (MapSwamp) {
+      if (ZerouMapaSwamp) {
+        textShadowLabel = new TextShadow("Região Mantida!", // Modifique esta linha
+            Color.WHITE, Color.BLACK, customFont);
+      } else if (!ZerouMapaSwamp) {
+        textShadowLabel = new TextShadow("Região Dominada!", // Modifique esta linha
+            Color.WHITE, Color.BLACK, customFont);
+      }
+    } else if (MapDungeon) {
+      if (ZerouMapaDungeon) {
+        textShadowLabel = new TextShadow("Região Mantida!", // Modifique esta linha
+            Color.WHITE, Color.BLACK, customFont);
+      } else if (!ZerouMapaDungeon) {
+        textShadowLabel = new TextShadow("Região Dominada!", // Modifique esta linha
+            Color.WHITE, Color.BLACK, customFont);
+      }
     }
   }
 
@@ -1392,7 +1451,6 @@ public class Game extends JPanel implements Runnable {
   // Método para atualizar a lógica do jogo
   public void tick() {
     // Timer
-
     VerificDistance = keyListener.getVerif();
     for (int z = 0; z < nodeSnake.length; z++) {
       int currX = nodeSnake[z].x;
@@ -1870,7 +1928,6 @@ public class Game extends JPanel implements Runnable {
     if (textpont != null) {
       textpont.setText("Pontuação: " + Pontuacao);
     }
-
     colidindoPontuacao = false;
     componentesTimerPontAdicionado = false;
     if (timerTempo != null) {
@@ -1878,6 +1935,11 @@ public class Game extends JPanel implements Runnable {
       timerTempo.purge();
     }
     timerTempo = new Timer();
+    if (AnimationFundoVitoria.fundoTemp != null) {
+      AnimationFundoVitoria.fundoTemp.cancel();
+      AnimationFundoVitoria.fundoTemp.purge();
+    }
+    AnimationFundoVitoria.fundoTemp = new Timer();
     if (timer != null) {
       timer.cancel();
       timer.purge();

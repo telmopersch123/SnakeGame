@@ -10,18 +10,6 @@ public class food {
   private static long lastFrameTime = System.currentTimeMillis();
   public static int lastRenderedFrame = -1;
 
-  public static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
-    BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
-    Graphics2D g2d = resizedImage.createGraphics();
-    AffineTransform transform = AffineTransform.getScaleInstance((double) targetWidth / originalImage.getWidth(),
-        (double) targetHeight / originalImage.getHeight());
-    AffineTransformOp scaleOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-    scaleOp.filter(originalImage, resizedImage);
-    g2d.drawImage(resizedImage, 0, 0, null);
-    g2d.dispose();
-    return resizedImage;
-  }
-
   public static void classicFood(Graphics g, BufferedImage buffer, int macaX, int macaY, Image appleSprit, int width,
       int height) {
     Graphics2D food = buffer.createGraphics();

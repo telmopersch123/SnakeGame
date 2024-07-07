@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -24,14 +25,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class SkinPanel extends JPanel {
-  private JLabel backgroundLabel;
+  static JLabel backgroundLabel;
   private JButton ReturnButton;
-  private JButton ClassicSkinButton;
-  private JButton PoisonSkinButton;
-  private JButton FireSkinButton;
-
+  static Font selectionFont;
+  static JButton ClassicSkinButton;
+  static JButton PoisonSkinButton;
+  static JButton FireSkinButton;
+  static JLabel TextSelection;
+  static GridBagConstraints gbc;
   public SkinPanel(ImageIcon buttonReturn) {
     // Usar JLayeredPane para controlar a ordem dos componentes
+    MapPanel.buttons = new ArrayList<>();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     setLayout(null);
     JLayeredPane layeredPane = new JLayeredPane();
@@ -44,6 +48,7 @@ public class SkinPanel extends JPanel {
       Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
       Font FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.otf", 34);
       Image backgroundImage = ImageIO.read(new File("resources/Menu/backgroundMenu.png"));
+      selectionFont = loadFont.loadFont("resources/fontes/fontGeral.otf", 64);
       ///
       ImageIcon buttonclassicoINCsnake = new StretchIcon("resources/Menu/botaoclassicoinativo.png");
       ImageIcon buttonpoisonINCsnake = new StretchIcon("resources/Menu/botaopoisoninativo.png");
@@ -60,12 +65,21 @@ public class SkinPanel extends JPanel {
       ImageIcon buttonclassicohoverinc = new StretchIcon("resources/Menu/hoverinc1.png");
       ImageIcon buttonpoisonhoverinc = new StretchIcon("resources/Menu/hoverinc2.png");
       ImageIcon buttonfirehoverinc = new StretchIcon("resources/Menu/hoverinc3.png");
+      ///
+      ImageIcon blockedFire = new StretchIcon("resources/Menu/BlockedFire.png");
+      ImageIcon blockedPoison = new StretchIcon("resources/Menu/BlockedPoison.png");
       backgroundImage = backgroundImage.getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH); // Redimensionar
                                                                                                                     // //
                                                                                                                     // imagem
       backgroundLabel = new JLabel(new ImageIcon(backgroundImage));
       backgroundLabel.setBounds(0, 0, screenSize.width, screenSize.height);
       backgroundLabel.setLayout(new GridBagLayout()); // Definir layout para centralizar o texto
+      backgroundLabel.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+          MapPanel.resetButtonSizes();
+        }
+      });
       layeredPane.add(backgroundLabel, JLayeredPane.DEFAULT_LAYER);
 
       // Botão de retorno
@@ -81,15 +95,16 @@ public class SkinPanel extends JPanel {
           topFrame.repaint();
         }
       });
-      ReturnButton.setBounds(10, 10, 60, 40); // Posição do botão no canto superior esquerdo
-      MapPanel.ReturnButtonImage(ReturnButton, 60, 40, Fonts);
+      ReturnButton.setBounds(10, 10, 100, 80); // Posição do botão no canto superior esquerdo
+      MapPanel.ReturnButtonImage(ReturnButton, 100, 80, Fonts);
 
       layeredPane.add(ReturnButton, JLayeredPane.PALETTE_LAYER);
       // Texto no mapa
       JLabel mapLabel = new JLabel("Skins Alternativas");
       mapLabel.setFont(FontsTitulo);
       mapLabel.setForeground(Color.WHITE); // Certificar-se de que o texto é visível sobre o fundo
-      GridBagConstraints gbc = new GridBagConstraints();
+      mapLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 150, 0));
+      gbc = new GridBagConstraints();
       gbc.gridx = 0;
       gbc.gridy = 0;
       gbc.insets = new Insets(10, 0, 10, 0);
@@ -97,12 +112,13 @@ public class SkinPanel extends JPanel {
       backgroundLabel.add(mapLabel, gbc);
       // BOTÕES
       if (Game.snakeClassica) {
-        ClassicSkinButton = new JButton("", buttonclassicosnake);
+        ClassicSkinButton = new JButton("Clássica", buttonclassicosnake);
       } else if (!Game.snakeClassica) {
-        ClassicSkinButton = new JButton("", buttonclassicoINCsnake);
+        ClassicSkinButton = new JButton("Clássica", buttonclassicoINCsnake);
       }
       Font fontClassic = Fonts;
       ClassicSkinButton.setFont(fontClassic);
+      MapPanel.buttons.add(ClassicSkinButton);
       ClassicSkinButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -110,81 +126,144 @@ public class SkinPanel extends JPanel {
           Game.snakePoison = false;
           Game.snakeFire = false;
           ClassicSkinButton.setIcon(buttonclassicosnake);
-          PoisonSkinButton.setIcon(buttonpoisonINCsnake);
-          FireSkinButton.setIcon(buttonfireINCsnake);
-          ClassicSkinButton.setPreferredSize(new Dimension(250, 80));
-          PoisonSkinButton.setPreferredSize(new Dimension(150, 50));
-          FireSkinButton.setPreferredSize(new Dimension(150, 50));
+          if (Game.DesblockedPontuation <= 1) {
+            PoisonSkinButton.setIcon(buttonpoisonINCsnake);
+          } else {
+            PoisonSkinButton.setIcon(blockedPoison);
+          }
+          if (Game.DesblockedPontuation < 1) {
+            FireSkinButton.setIcon(buttonfireINCsnake);
+          } else {
+            FireSkinButton.setIcon(blockedFire);
+          }
+          ClassicSkinButton.setPreferredSize(new Dimension(400, 130));
+          PoisonSkinButton.setPreferredSize(new Dimension(300, 100));
+          FireSkinButton.setPreferredSize(new Dimension(300, 100));
           ClassicSkinButton.revalidate();
           ClassicSkinButton.repaint();
+          /////
+          AnimationTextSelection.Text = "Selecionado";
+          if (MapPanel.Position < 0) {
+            AnimationTextSelection.animacaoSelecionadoTimer.cancel();
+            AnimationTextSelection.animacaoSelecionadoTimer.purge();
+          }
+          AnimationTextSelection.Transper = 0;
+          MapPanel.Position = 0;
+          AnimationTextSelection.AnimationTextSkin();
         }
       });
-      MapPanel.ReturnButtonImage(ClassicSkinButton, 150, 50, Fonts);
+      MapPanel.ReturnButtonImage(ClassicSkinButton, 300, 100, Fonts);
 
       gbc.gridx = 0;
       gbc.gridy = 1;
+      gbc.insets = new Insets(-150, 0, -150, 0);
       backgroundLabel.add(ClassicSkinButton, gbc);
       ////
-      if (Game.snakePoison) {
-        PoisonSkinButton = new JButton("", buttonpoisonsnake);
-      } else if (!Game.snakePoison) {
-        PoisonSkinButton = new JButton("", buttonpoisonINCsnake);
+      if (Game.DesblockedPontuation <= 1) {
+        if (Game.snakePoison) {
+          PoisonSkinButton = new JButton("Venenosa", buttonpoisonsnake);
+        } else if (!Game.snakePoison) {
+          PoisonSkinButton = new JButton("Venenosa", buttonpoisonINCsnake);
+        }
+      } else {
+        PoisonSkinButton = new JButton("Venenosa", blockedPoison);
       }
       Font fontPoison = Fonts;
       PoisonSkinButton.setFont(fontPoison);
+      MapPanel.buttons.add(PoisonSkinButton);
       PoisonSkinButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          Game.snakeClassica = false;
-          Game.snakePoison = true;
-          Game.snakeFire = false;
-          ClassicSkinButton.setIcon(buttonclassicoINCsnake);
-          PoisonSkinButton.setIcon(buttonpoisonsnake);
-          FireSkinButton.setIcon(buttonfireINCsnake);
-          ClassicSkinButton.setPreferredSize(new Dimension(150, 50));
-          PoisonSkinButton.setPreferredSize(new Dimension(250, 80));
-          FireSkinButton.setPreferredSize(new Dimension(150, 50));
-          PoisonSkinButton.revalidate();
-          PoisonSkinButton.repaint();
+          if (Game.DesblockedPontuation <= 1) {
+            Game.snakeClassica = false;
+            Game.snakePoison = true;
+            Game.snakeFire = false;
+            ClassicSkinButton.setIcon(buttonclassicoINCsnake);
+            PoisonSkinButton.setIcon(buttonpoisonsnake);
+            if (Game.DesblockedPontuation < 1) {
+              FireSkinButton.setIcon(buttonfireINCsnake);
+            } else {
+              FireSkinButton.setIcon(blockedFire);
+            }
+            ClassicSkinButton.setPreferredSize(new Dimension(300, 100));
+            PoisonSkinButton.setPreferredSize(new Dimension(400, 130));
+            FireSkinButton.setPreferredSize(new Dimension(300, 100));
+            PoisonSkinButton.revalidate();
+            PoisonSkinButton.repaint();
+            AnimationTextSelection.Text = "Selecionado";
+          } else {
+            AnimationTextSelection.Text = "Bloqueado";
+          }
+          if (MapPanel.Position < 0) {
+            AnimationTextSelection.animacaoSelecionadoTimer.cancel();
+            AnimationTextSelection.animacaoSelecionadoTimer.purge();
+          }
+          AnimationTextSelection.Transper = 0;
+          MapPanel.Position = 0;
+          AnimationTextSelection.AnimationTextSkin();
         }
       });
-      MapPanel.ReturnButtonImage(PoisonSkinButton, 150, 50, Fonts);
-
+      MapPanel.ReturnButtonImage(PoisonSkinButton, 300, 100, Fonts);
       gbc.gridx = 0;
       gbc.gridy = 2;
       backgroundLabel.add(PoisonSkinButton, gbc);
       ////
-      if (Game.snakeFire) {
-        FireSkinButton = new JButton("", buttonfiresnake);
-      } else if (!Game.snakeFire) {
-        FireSkinButton = new JButton("", buttonfireINCsnake);
+      if (Game.DesblockedPontuation < 1) {
+        if (Game.snakeFire) {
+          FireSkinButton = new JButton("Boitatá", buttonfiresnake);
+        } else if (!Game.snakeFire) {
+          FireSkinButton = new JButton("Boitatá", buttonfireINCsnake);
+        }
+      } else {
+        FireSkinButton = new JButton("Boitatá", blockedFire);
       }
       Font fontFire = Fonts;
       FireSkinButton.setFont(fontFire);
+      MapPanel.buttons.add(FireSkinButton);
       FireSkinButton.addActionListener(new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-          Game.snakeClassica = false;
-          Game.snakePoison = false;
-          Game.snakeFire = true;
-          ClassicSkinButton.setIcon(buttonclassicoINCsnake);
-          PoisonSkinButton.setIcon(buttonpoisonINCsnake);
-          FireSkinButton.setIcon(buttonfiresnake);
-          ClassicSkinButton.setPreferredSize(new Dimension(150, 50));
-          PoisonSkinButton.setPreferredSize(new Dimension(150, 50));
-          FireSkinButton.setPreferredSize(new Dimension(250, 80));
-          FireSkinButton.revalidate();
-          FireSkinButton.repaint();
+          if (Game.DesblockedPontuation < 1) {
+            Game.snakeClassica = false;
+            Game.snakePoison = false;
+            Game.snakeFire = true;
+            ClassicSkinButton.setIcon(buttonclassicoINCsnake);
+            PoisonSkinButton.setIcon(buttonpoisonINCsnake);
+            FireSkinButton.setIcon(buttonfiresnake);
+            ClassicSkinButton.setPreferredSize(new Dimension(300, 100));
+            PoisonSkinButton.setPreferredSize(new Dimension(300, 100));
+            FireSkinButton.setPreferredSize(new Dimension(400, 130));
+            FireSkinButton.revalidate();
+            FireSkinButton.repaint();
+            AnimationTextSelection.Text = "Selecionado";
+          } else {
+            AnimationTextSelection.Text = "Bloqueado";
+          }
+          if (MapPanel.Position < 0) {
+            AnimationTextSelection.animacaoSelecionadoTimer.cancel();
+            AnimationTextSelection.animacaoSelecionadoTimer.purge();
+          }
+          AnimationTextSelection.Transper = 0;
+          MapPanel.Position = 0;
+          AnimationTextSelection.AnimationTextSkin();
         }
       });
-      MapPanel.ReturnButtonImage(FireSkinButton, 150, 50, Fonts);
+      MapPanel.ReturnButtonImage(FireSkinButton, 300, 100, Fonts);
 
       gbc.gridx = 0;
       gbc.gridy = 3;
       backgroundLabel.add(FireSkinButton, gbc);
+      gbc.gridx = 0;
+      gbc.gridy = 2;
+      MapPanel.ImagemFundo();
+      backgroundLabel.add(MapPanel.backgroundLabel2, gbc);
       /////////////
-      hoveres(ClassicSkinButton, PoisonSkinButton, FireSkinButton, 150, 50, buttonclassicohover, buttonpoisonhover,
+      gbc.gridy = 1;
+      TextSelection = new JLabel("");
+      backgroundLabel.add(TextSelection, gbc);
+      /////////////
+      hoveres(ClassicSkinButton, PoisonSkinButton, FireSkinButton, 300,
+          100, buttonclassicohover, buttonpoisonhover,
           buttonfirehover,
           buttonclassicohoverinc, buttonpoisonhoverinc, buttonfirehoverinc, buttonclassicosnake, buttonpoisonsnake,
           buttonfiresnake, buttonclassicoINCsnake, buttonpoisonINCsnake, buttonfireINCsnake);
@@ -209,8 +288,10 @@ public class SkinPanel extends JPanel {
       @Override
       public void mouseEntered(MouseEvent e) {
         if (Game.snakeClassica) {
+          buttonClassico.setForeground(Color.BLACK);
           buttonClassico.setIcon(buttonclassicohover);
         } else if (!Game.snakeClassica) {
+          buttonClassico.setForeground(Color.BLACK);
           buttonClassico.setIcon(buttonclassicohoverinc);
         }
 
@@ -221,8 +302,10 @@ public class SkinPanel extends JPanel {
       @Override
       public void mouseExited(MouseEvent e) {
         if (Game.snakeClassica) {
+          buttonClassico.setForeground(new Color(0, 0, 0, 50));
           buttonClassico.setIcon(buttonclassicosnake);
         } else if (!Game.snakeClassica) {
+          buttonClassico.setForeground(new Color(0, 0, 0, 50));
           buttonClassico.setIcon(buttonclassicoINCsnake);
         }
 
@@ -230,55 +313,68 @@ public class SkinPanel extends JPanel {
         buttonClassico.repaint();
       }
     });
-    buttonPoison.setPreferredSize(new Dimension(width, height));
-    buttonPoison.setBorder(BorderFactory.createEmptyBorder());
-    buttonPoison.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseEntered(MouseEvent e) {
-        if (Game.snakePoison) {
-          buttonPoison.setIcon(buttonpoisonhover);
-        } else if (!Game.snakePoison) {
-          buttonPoison.setIcon(buttonpoisonhoverinc);
+    if (Game.DesblockedPontuation <= 1) {
+      buttonPoison.setPreferredSize(new Dimension(width, height));
+      buttonPoison.setBorder(BorderFactory.createEmptyBorder());
+      buttonPoison.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          if (Game.snakePoison) {
+            buttonPoison.setForeground(Color.BLACK);
+            buttonPoison.setIcon(buttonpoisonhover);
+          } else if (!Game.snakePoison) {
+            buttonPoison.setForeground(Color.BLACK);
+            buttonPoison.setIcon(buttonpoisonhoverinc);
+          }
+          buttonPoison.revalidate();
+          buttonPoison.repaint();
         }
-        buttonPoison.revalidate();
-        buttonPoison.repaint();
-      }
 
-      @Override
-      public void mouseExited(MouseEvent e) {
-        if (Game.snakePoison) {
-          buttonPoison.setIcon(buttonpoisonsnake);
-        } else if (!Game.snakePoison) {
-          buttonPoison.setIcon(buttonpoisonINCsnake);
+        @Override
+        public void mouseExited(MouseEvent e) {
+          if (Game.snakePoison) {
+            buttonPoison.setForeground(new Color(0, 0, 0, 50));
+            buttonPoison.setIcon(buttonpoisonsnake);
+          } else if (!Game.snakePoison) {
+            buttonPoison.setForeground(new Color(0, 0, 0, 50));
+            buttonPoison.setIcon(buttonpoisonINCsnake);
+          }
+          buttonPoison.revalidate();
+          buttonPoison.repaint();
         }
-        buttonPoison.revalidate();
-        buttonPoison.repaint();
-      }
-    });
-    buttonFire.setPreferredSize(new Dimension(width, height));
-    buttonFire.setBorder(BorderFactory.createEmptyBorder());
-    buttonFire.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseEntered(MouseEvent e) {
-        if (Game.snakeFire) {
-          buttonFire.setIcon(buttonfirehover);
-        } else if (!Game.snakeFire) {
-          buttonFire.setIcon(buttonfirehoverinc);
+      });
+    }
+    if (Game.DesblockedPontuation < 1) {
+      buttonFire.setPreferredSize(new Dimension(width, height));
+      buttonFire.setBorder(BorderFactory.createEmptyBorder());
+      buttonFire.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          if (Game.snakeFire) {
+            buttonFire.setForeground(Color.BLACK);
+            buttonFire.setIcon(buttonfirehover);
+          } else if (!Game.snakeFire) {
+            buttonFire.setForeground(Color.BLACK);
+            buttonFire.setIcon(buttonfirehoverinc);
+          
+          }
+          buttonFire.revalidate();
+          buttonFire.repaint();
         }
-        buttonFire.revalidate();
-        buttonFire.repaint();
-      }
 
-      @Override
-      public void mouseExited(MouseEvent e) {
-        if (Game.snakeFire) {
-          buttonFire.setIcon(buttonfiresnake);
-        } else if (!Game.snakeFire) {
-          buttonFire.setIcon(buttonfireINCsnake);
+        @Override
+        public void mouseExited(MouseEvent e) {
+          if (Game.snakeFire) {
+            buttonFire.setForeground(new Color(0, 0, 0, 50));
+            buttonFire.setIcon(buttonfiresnake);
+          } else if (!Game.snakeFire) {
+            buttonFire.setForeground(new Color(0, 0, 0, 50));
+            buttonFire.setIcon(buttonfireINCsnake);
+          }
+          buttonFire.revalidate();
+          buttonFire.repaint();
         }
-        buttonFire.revalidate();
-        buttonFire.repaint();
-      }
-    });
+      });
+    }
   }
 }

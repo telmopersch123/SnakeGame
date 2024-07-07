@@ -4,7 +4,7 @@ import java.util.TimerTask;
 
 public class AnimationFundoVitoria {
   private static int vitoriaInterval = 100;
-  private static Timer fundoTemp;
+ public static Timer fundoTemp;
 
   public static void AnimationVitoria(Game game, Graphics g, int getWidth, int getHeight) {
     if (fundoTemp != null) {

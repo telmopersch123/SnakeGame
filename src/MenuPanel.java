@@ -1,9 +1,11 @@
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -27,13 +29,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 public class MenuPanel extends JPanel {
-  private JButton startButton;
-  private JButton settingsButton;
-  private JButton MapButton;
-  private JButton OutfitButton;
-  private JLabel backgroundLabel;
+  private static JButton startButton;
+  private static JButton settingsButton;
+  private static JButton MapButton;
+  private static JButton OutfitButton;
+  private static JLabel backgroundLabel;
+  static JPanel overlayPanel;
+  private static boolean buttonsEnabled = true;
 
   public MenuPanel() {
+
     setLayout(new GridBagLayout());
     GridBagConstraints Menu = new GridBagConstraints();
 
@@ -59,15 +64,42 @@ public class MenuPanel extends JPanel {
       bgConstraints.fill = GridBagConstraints.BOTH;
       bgConstraints.weightx = 1.0;
       bgConstraints.weighty = 1.0;
+      if (Game.NotificationGameDesblocked) {
+        if (Game.DesblockedPontuation >= 1) {
+          NotificationDesblocked.SumirFundo = false;
+        }
+        overlayPanel = new JPanel() {
+          @Override
+          protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g.create();
+            if (!NotificationDesblocked.SumirFundo) {
+              g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // Transparência de 50%
+            } else {
+              g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f)); // Transparência de 0%
+            }
+            g2d.setColor(Color.BLACK); // Cor do fundo
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+            g2d.dispose();
+          }
+        };
+        overlayPanel.setOpaque(false); // Deixe o overlayPanel transparente
+        add(overlayPanel, bgConstraints);
+      }
       add(backgroundLabel, bgConstraints);
-
+      //
       // SOMBREAMENTO NORMAL
       startButton = new JButton("Iniciar Jogo", buttonImage);
       addShadow(startButton, "Iniciar Jogo", Fonts, 150, 50, false);
       ////////////////////////////////////////////////
       startButton.addActionListener(new ActionListener() {
+
         @Override
         public void actionPerformed(ActionEvent e) {
+          if (!buttonsEnabled) {
+            return;
+          }
+
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
           topFrame.getContentPane().removeAll();
           Game game = new Game();
@@ -94,13 +126,16 @@ public class MenuPanel extends JPanel {
       Menu.gridy = 0;
       Menu.insets = new Insets(10, 0, 10, 0);
       backgroundLabel.add(startButton, Menu);
-
       MapButton = new JButton("Mapa", buttonImage);
       MapButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          if (!buttonsEnabled) {
+            return;
+          }
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
           MenuPanel.this.setVisible(false);
+
           MapPanel mapPanel = new MapPanel(buttonReturn);
           topFrame.add(mapPanel);
           topFrame.revalidate();
@@ -113,8 +148,12 @@ public class MenuPanel extends JPanel {
 
       OutfitButton = new JButton("Skin", buttonImage);
       OutfitButton.addActionListener(new ActionListener() {
+
         @Override
         public void actionPerformed(ActionEvent e) {
+          if (!buttonsEnabled) {
+            return;
+          }
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
           MenuPanel.this.setVisible(false);
           SkinPanel skinPanel = new SkinPanel(buttonReturn);
@@ -131,16 +170,31 @@ public class MenuPanel extends JPanel {
       settingsButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          if (!buttonsEnabled) {
+            return;
+          }
           // Ação para o botão de configurações
         }
       });
       addShadow(settingsButton, "Configurações", Fonts, 180, 50, false);
       Menu.gridy = 3;
       backgroundLabel.add(settingsButton, Menu);
-
+      if (Game.NotificationGameDesblocked) {
+        SwingUtilities.invokeLater(new Runnable() {
+          @Override
+          public void run() {
+            NotificationDesblocked.showNotification((JFrame) SwingUtilities.getWindowAncestor(
+                MenuPanel.this), "Desbloqueado!");
+          }
+        });
+      }
     } catch (IOException ex) {
       ex.printStackTrace();
     }
+  }
+
+  public static void setButtonsEnabled(boolean enabled) {
+    buttonsEnabled = enabled;
   }
 
   public static void addShadow(JButton button, String text, Font font, int width, int height, boolean Apos) {
@@ -182,11 +236,21 @@ public class MenuPanel extends JPanel {
         button.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseEntered(MouseEvent e) {
+            if (text != "X") {
+              if (!buttonsEnabled) {
+                return;
+              }
+            }
             button.setBorder(hoverBorder);
           }
 
           @Override
           public void mouseExited(MouseEvent e) {
+            if (text != "X") {
+              if (!buttonsEnabled) {
+                return;
+              }
+            }
             button.setBorder(defaultBorder);
           }
         });
