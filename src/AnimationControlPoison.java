@@ -23,7 +23,9 @@ public class AnimationControlPoison {
     }
 
     if (currentTime - game.lastVenomAnimationTime1 > 3900 && !game.venomAnimationPlayed) {
-      AnimationPOisonffim.AnimationFoodVenFim();
+      if (Game.ManterAnimation) {
+        AnimationPOisonffim.AnimationFoodVenFim();
+      }
       game.venomAnimationPlayed = true;
       currentTime = System.currentTimeMillis();
     }
@@ -53,6 +55,7 @@ public class AnimationControlPoison {
           if (Game.snakeClassica || Game.snakeFire) {
             game.macaPOX = foodPosition1.x;
             game.macaPOY = foodPosition1.y;
+
           }
           if (Game.snakePoison) {
             game.macaX = foodPosition0.x;
@@ -62,7 +65,9 @@ public class AnimationControlPoison {
       }
 
       if (!Game.colidionPoiControlTimerAnimation) {
-        AnimationPOison.AnimationFoodVenInic(this);
+        if (Game.ManterAnimation) {
+          AnimationPOison.AnimationFoodVenInic(this);
+        }
       }
 
       game.lastVenomAnimationTime1 = System.currentTimeMillis();

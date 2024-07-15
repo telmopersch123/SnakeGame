@@ -43,11 +43,13 @@ public class food {
     BufferedImage scaledImage = op.filter(EnergyAnimationFoodPoison.getSubimage(sx, sy, sw, sh), null);
     food1.drawImage(scaledImage, macaPOX, macaPOY, null);
     // Atualize o quadro que foi renderizado
+    if (Game.ManterAnimation) {
     Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFrames1;
     totalFrames1 = numFramesX1 * numFramesY1;
-    if (currentTime1 - lastFrameTime1 > frameInterval1) {
-      Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFrames1;
-      lastFrameTime1 = currentTime1;
+      if (currentTime1 - lastFrameTime1 > frameInterval1) {
+        Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFrames1;
+        lastFrameTime1 = currentTime1;
+      }
     }
   }
 
@@ -72,6 +74,10 @@ public class food {
     food = buffer.createGraphics();
     // Create an AffineTransform to scale the image
     AffineTransform at = new AffineTransform();
+    if (Game.RemoverAnimation) {
+      width = 40;
+      height = 40;
+    }
     at.scale((double) (width + 2) / sw, (double) (height + 2) / sh);
     // Create an AffineTransformOp object with the AffineTransform
     AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
@@ -79,10 +85,12 @@ public class food {
     BufferedImage scaledImage = op.filter(EnergyAnimationFoodEnergy.getSubimage(sx, sy, sw, sh), null);
     // Draw the scaled image
     food.drawImage(scaledImage, macaX, macaY, null);
+    if (Game.ManterAnimation) {
     Game.currentFrame5 = (Game.currentFrame5 + 1) % totalFrames;
     totalFrames = numFramesX * numFramesY;
-    if (currentTime - lastFrameTime > frameInterval) {
-      lastFrameTime = currentTime;
+      if (currentTime - lastFrameTime > frameInterval) {
+        lastFrameTime = currentTime;
+      }
     }
   }
 

@@ -61,6 +61,9 @@ public class AnimationTextSelection {
     }, 0, 20);
   }
 
+
+ 
+
   public static void AnimationTextSkin() {
     animacaoSelecionadoTimer = new Timer();
     animacaoSelecionadoTimer.scheduleAtFixedRate(new TimerTask() {

@@ -10,7 +10,7 @@ import java.util.TimerTask;
 public class Animation {
   private static int poisonFruitAnimationInterval = 20; // Intervalo de tempo para atualizar a animação (em
                                                         // milissegundos)
-  // Timer para controlar a animação da fruta envenenada
+                                                        // Timer para controlar a animação da fruta envenenada
 
   private static boolean increaseSizeCla = true;
   private static long lastFrameTime = System.currentTimeMillis();
@@ -160,14 +160,20 @@ public class Animation {
     // Define a rotação
     imageCenterX = x; // Calcula o centro da imagem no eixo X
     imageCenterY = y; // Calcula o centro da imagem no eixo Y
-    g2d.rotate(Math.toRadians(rotationAngle), imageCenterX, imageCenterY); // Define o ponto de rotação como o centro da
-    // imagem
-    // Desenha a imagem rotacionada
-    drawX = x - BeatEffect.getWidth(null) / 50; // Centraliza a imagem horizontalmente
-    drawY = y - BeatEffect.getHeight(null) / 50; // Centraliza a imagem verticalmente
+    if (Game.ManterAnimation) {
+      g2d.rotate(Math.toRadians(rotationAngle), imageCenterX, imageCenterY); // Define o ponto de rotação como o centro
+                                                                             // da imagem
+    }
+    
+      drawX = x - BeatEffect.getWidth(null) / 50; // Centraliza a imagem horizontalmente
+      drawY = y - BeatEffect.getHeight(null) / 50; // Centraliza a imagem verticalmente
+    
     g2d.drawImage(BeatEffect, drawX, drawY, 30, 30, null);
     // Reinicia a transformação para evitar acumulação de transformações
-    g2d.rotate(-Math.toRadians(rotationAngle), imageCenterX, imageCenterY); // Reverte a rotação
+    
+    if (Game.ManterAnimation) {
+      g2d.rotate(-Math.toRadians(rotationAngle), imageCenterX, imageCenterY); // Reverte a rotação
+    }
     g2d.dispose();
   }
 

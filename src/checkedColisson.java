@@ -15,10 +15,14 @@ public class checkedColisson {
       int FrameHeight,
       ArrayList<Integer> walls_x, ArrayList<Integer> walls_y, Node[] nodeSnake,
       int largerCollisionArea, Rectangle headCollisionArea, boolean poisonDeathAnimationPlaying,
-      int borderWidth, int getWidth, int getHeight) {
+      int borderWidth, int getWidth, int getHeight, boolean DeathfromHunger) {
 
     if (nodeSnake.length < 30) {
       return new ResultadoColisao(true, true);
+    }
+
+    if (DeathfromHunger) {
+      return new ResultadoColisao(true, false);
     }
 
     if (Game.colisianEnergyMorrer) {
@@ -29,7 +33,6 @@ public class checkedColisson {
       return new ResultadoColisao(true, false);
     }
     if (nodeSnake.length >= 510) {
-
       if (colisaoCobra(nodeSnake)) {
         return new ResultadoColisao(true, false);
       }

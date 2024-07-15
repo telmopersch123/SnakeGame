@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RadialGradientPaint;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -168,13 +167,13 @@ public class snake {
     // DESENHE A CABEÇA
     head = buffer.createGraphics();
     // Ajusta a posição da cabeça com base na direção
-    if (keyListener.getDirection() == KeyEvent.VK_LEFT) {
+    if (keyListener.getDirection() == Game.keyPressedEsquerda) {
       angle = 180;
-    } else if (keyListener.getDirection() == KeyEvent.VK_RIGHT) {
+    } else if (keyListener.getDirection() == Game.keyPressedDireita) {
       angle = 0;
-    } else if (keyListener.getDirection() == KeyEvent.VK_UP) {
+    } else if (keyListener.getDirection() == Game.keyPressedSuperior) {
       angle = -90;
-    } else if (keyListener.getDirection() == KeyEvent.VK_DOWN) {
+    } else if (keyListener.getDirection() == Game.keyPressedInferior) {
       angle = 90;
     }
     imageWidth = (int) (12 * 1.7); // Reduz a largura da imagem
@@ -211,95 +210,97 @@ public class snake {
         }
       }
     }
-    /// FOGO fireSnake
-    if (Game.snakeFire) {
-      for (int f = 10; f < nodeSnake.length; f += 10) {
-        currX = nodeSnake[f].x;
-        currY = nodeSnake[f].y;
-        prevY = f > 0 ? nodeSnake[f - 1].y : currY;
-        isHorizontal1 = currY == prevY;
-        if (isHorizontal1) {
-          rotationfire = AffineTransform.getRotateInstance(Math.toRadians(180), currX + 18 / 2, currY + 27 / 2);
-          rotated2 = (Graphics2D) g2d.create();
-          rotated2.transform(rotationfire);
-          BufferedImage fogosnake = (BufferedImage) fogoComplementar;
-          int sx = (Game.currentFrame25 % numFramesXfire) * (fogosnake.getWidth() / numFramesXfire);
-          int sy = (Game.currentFrame25 / numFramesXfire) * (fogosnake.getHeight() / numFramesYfire);
-          int sw = fogosnake.getWidth() / numFramesXfire;
-          int sh = fogosnake.getHeight() / numFramesYfire;
-          AffineTransform at = new AffineTransform();
-          at.scale((double) (20) / sw, (double) (40) / sh);
-          AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-          BufferedImage scaledImage = op.filter(fogosnake.getSubimage(sx, sy, sw, sh), null);
-          rotated2.drawImage(scaledImage, currX, currY, null);
-          long currentTimefire = System.currentTimeMillis();
-          if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
-            lastFrameTimefire = currentTimefire;
-            Game.currentFrame25 = (Game.currentFrame25 + 1) % totalFramesfire;
+    if (Game.ManterAnimation) {
+      /// FOGO fireSnake
+      if (Game.snakeFire) {
+        for (int f = 10; f < nodeSnake.length; f += 10) {
+          currX = nodeSnake[f].x;
+          currY = nodeSnake[f].y;
+          prevY = f > 0 ? nodeSnake[f - 1].y : currY;
+          isHorizontal1 = currY == prevY;
+          if (isHorizontal1) {
+            rotationfire = AffineTransform.getRotateInstance(Math.toRadians(180), currX + 18 / 2, currY + 27 / 2);
+            rotated2 = (Graphics2D) g2d.create();
+            rotated2.transform(rotationfire);
+            BufferedImage fogosnake = (BufferedImage) fogoComplementar;
+            int sx = (Game.currentFrame25 % numFramesXfire) * (fogosnake.getWidth() / numFramesXfire);
+            int sy = (Game.currentFrame25 / numFramesXfire) * (fogosnake.getHeight() / numFramesYfire);
+            int sw = fogosnake.getWidth() / numFramesXfire;
+            int sh = fogosnake.getHeight() / numFramesYfire;
+            AffineTransform at = new AffineTransform();
+            at.scale((double) (20) / sw, (double) (40) / sh);
+            AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            BufferedImage scaledImage = op.filter(fogosnake.getSubimage(sx, sy, sw, sh), null);
+            rotated2.drawImage(scaledImage, currX, currY, null);
+            long currentTimefire = System.currentTimeMillis();
+            if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
+              lastFrameTimefire = currentTimefire;
+              Game.currentFrame25 = (Game.currentFrame25 + 1) % totalFramesfire;
+            }
+            rotated2.dispose();
+          } else {
+            rotationfire = AffineTransform.getRotateInstance(Math.toRadians(90), currX + 28 / 2, currY + 27 / 2);
+            rotated2 = (Graphics2D) g2d.create();
+            rotated2.transform(rotationfire);
+            BufferedImage fogosnake = (BufferedImage) fogoComplementar;
+            int sx = (Game.currentFrame25 % numFramesXfire) * (fogosnake.getWidth() / numFramesXfire);
+            int sy = (Game.currentFrame25 / numFramesXfire) * (fogosnake.getHeight() / numFramesYfire);
+            int sw = fogosnake.getWidth() / numFramesXfire;
+            int sh = fogosnake.getHeight() / numFramesYfire;
+            AffineTransform at = new AffineTransform();
+            at.scale((double) (20) / sw, (double) (40) / sh);
+            AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            BufferedImage scaledImage = op.filter(fogosnake.getSubimage(sx, sy, sw, sh), null);
+            rotated2.drawImage(scaledImage, currX, currY, null);
+            long currentTimefire = System.currentTimeMillis();
+            if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
+              lastFrameTimefire = currentTimefire;
+              Game.currentFrame25 = (Game.currentFrame25 + 1) % totalFramesfire;
+            }
+            rotated2.dispose();
           }
-          rotated2.dispose();
-        } else {
-          rotationfire = AffineTransform.getRotateInstance(Math.toRadians(90), currX + 28 / 2, currY + 27 / 2);
-          rotated2 = (Graphics2D) g2d.create();
-          rotated2.transform(rotationfire);
-          BufferedImage fogosnake = (BufferedImage) fogoComplementar;
-          int sx = (Game.currentFrame25 % numFramesXfire) * (fogosnake.getWidth() / numFramesXfire);
-          int sy = (Game.currentFrame25 / numFramesXfire) * (fogosnake.getHeight() / numFramesYfire);
-          int sw = fogosnake.getWidth() / numFramesXfire;
-          int sh = fogosnake.getHeight() / numFramesYfire;
-          AffineTransform at = new AffineTransform();
-          at.scale((double) (20) / sw, (double) (40) / sh);
-          AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-          BufferedImage scaledImage = op.filter(fogosnake.getSubimage(sx, sy, sw, sh), null);
-          rotated2.drawImage(scaledImage, currX, currY, null);
-          long currentTimefire = System.currentTimeMillis();
-          if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
-            lastFrameTimefire = currentTimefire;
-            Game.currentFrame25 = (Game.currentFrame25 + 1) % totalFramesfire;
-          }
-          rotated2.dispose();
         }
-      }
-      for (int z = 0; z < nodeSnake.length; z++) {
-        currX = nodeSnake[z].x;
-        currY = nodeSnake[z].y;
-        prevX = z > 0 ? nodeSnake[z - 1].x : currX;
-        prevY = z > 0 ? nodeSnake[z - 1].y : currY;
-        nextX = z < nodeSnake.length - 1 ? nodeSnake[z + 1].x : currX;
-        nextY = z < nodeSnake.length - 1 ? nodeSnake[z + 1].y : currY;
-        horizontal = prevX != nextX;
-        vertical = prevY != nextY;
-        rotated3 = (Graphics2D) g2d.create();
-        if (z == nodeSnake.length - 1) {
-          if (horizontal && prevX > currX) {
-            // direita
-            rotated3.rotate(Math.toRadians(0), nodeSnake[z].x + 18 / 2, nodeSnake[z].y + 27 / 2);
-          } else if (horizontal && prevX < currX) {
-            // esquerda
-            rotated3.rotate(Math.toRadians(180), nodeSnake[z].x + 17 / 2, nodeSnake[z].y + 13 / 2);
-          } else if (vertical && prevY < currY) {
-            // cima
-            rotated3.rotate(Math.toRadians(-90), nodeSnake[z].x + 15 / 2, nodeSnake[z].y + 13 / 2);
-          } else if (vertical && prevY > currY) {
-            // baixo
-            rotated3.rotate(Math.toRadians(90), nodeSnake[z].x + 10 / 2, nodeSnake[z].y + 15 / 2);
+        for (int z = 0; z < nodeSnake.length; z++) {
+          currX = nodeSnake[z].x;
+          currY = nodeSnake[z].y;
+          prevX = z > 0 ? nodeSnake[z - 1].x : currX;
+          prevY = z > 0 ? nodeSnake[z - 1].y : currY;
+          nextX = z < nodeSnake.length - 1 ? nodeSnake[z + 1].x : currX;
+          nextY = z < nodeSnake.length - 1 ? nodeSnake[z + 1].y : currY;
+          horizontal = prevX != nextX;
+          vertical = prevY != nextY;
+          rotated3 = (Graphics2D) g2d.create();
+          if (z == nodeSnake.length - 1) {
+            if (horizontal && prevX > currX) {
+              // direita
+              rotated3.rotate(Math.toRadians(0), nodeSnake[z].x + 18 / 2, nodeSnake[z].y + 27 / 2);
+            } else if (horizontal && prevX < currX) {
+              // esquerda
+              rotated3.rotate(Math.toRadians(180), nodeSnake[z].x + 17 / 2, nodeSnake[z].y + 13 / 2);
+            } else if (vertical && prevY < currY) {
+              // cima
+              rotated3.rotate(Math.toRadians(-90), nodeSnake[z].x + 15 / 2, nodeSnake[z].y + 13 / 2);
+            } else if (vertical && prevY > currY) {
+              // baixo
+              rotated3.rotate(Math.toRadians(90), nodeSnake[z].x + 10 / 2, nodeSnake[z].y + 15 / 2);
+            }
+            BufferedImage fogosnake = (BufferedImage) fogoFinal;
+            int sx = (Game.currentFrame26 % numFramesXfire1) * (fogosnake.getWidth() / numFramesXfire1);
+            int sy = (Game.currentFrame26 / numFramesXfire1) * (fogosnake.getHeight() / numFramesYfire1);
+            int sw = fogosnake.getWidth() / numFramesXfire1;
+            int sh = fogosnake.getHeight() / numFramesYfire1;
+            AffineTransform at = new AffineTransform();
+            at.scale((double) (30) / sw, (double) (30) / sh);
+            AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            BufferedImage scaledImage = op.filter(fogosnake.getSubimage(sx, sy, sw, sh), null);
+            rotated3.drawImage(scaledImage, currX - 18, currY - 9, null);
+            long currentTimefire1 = System.currentTimeMillis();
+            if (currentTimefire1 - lastFrameTimefire1 >= frameIntervalfire1) {
+              lastFrameTimefire1 = currentTimefire1;
+              Game.currentFrame26 = (Game.currentFrame26 + 1) % totalFramesfire1;
+            }
+            rotated3.dispose();
           }
-          BufferedImage fogosnake = (BufferedImage) fogoFinal;
-          int sx = (Game.currentFrame26 % numFramesXfire1) * (fogosnake.getWidth() / numFramesXfire1);
-          int sy = (Game.currentFrame26 / numFramesXfire1) * (fogosnake.getHeight() / numFramesYfire1);
-          int sw = fogosnake.getWidth() / numFramesXfire1;
-          int sh = fogosnake.getHeight() / numFramesYfire1;
-          AffineTransform at = new AffineTransform();
-          at.scale((double) (30) / sw, (double) (30) / sh);
-          AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-          BufferedImage scaledImage = op.filter(fogosnake.getSubimage(sx, sy, sw, sh), null);
-          rotated3.drawImage(scaledImage, currX - 18, currY - 9, null);
-          long currentTimefire1 = System.currentTimeMillis();
-          if (currentTimefire1 - lastFrameTimefire1 >= frameIntervalfire1) {
-            lastFrameTimefire1 = currentTimefire1;
-            Game.currentFrame26 = (Game.currentFrame26 + 1) % totalFramesfire1;
-          }
-          rotated3.dispose();
         }
       }
     }

@@ -28,9 +28,11 @@ public class Eggs {
         frameHeight);
     egg.drawImage(resizedImageColision, PosicaoX - 32, PosicaoY - 25, 70, 60, null);
     long currentTimeegg = System.currentTimeMillis();
-    if (currentTimeegg - lastFrameTimeegg > frameIntervalegg) {
-      Game.currentFrame29 = (Game.currentFrame29 + 1) % totalFramesegg;
-      lastFrameTimeegg = currentTimeegg;
+    if (Game.ManterAnimation) {
+      if (currentTimeegg - lastFrameTimeegg > frameIntervalegg) {
+        Game.currentFrame29 = (Game.currentFrame29 + 1) % totalFramesegg;
+        lastFrameTimeegg = currentTimeegg;
+      }
     }
   }
 
@@ -52,12 +54,14 @@ public class Eggs {
         frameHeight);
     eggBreak.drawImage(resizedImageColision, PosicaoX - 32, PosicaoY - 25, 70, 60, null);
     long currentTimeeggB = System.currentTimeMillis();
-    if (currentTimeeggB - lastFrameTimeeggB > frameIntervaleggB) {
-      Game.currentFrame30 = (Game.currentFrame30 + 1) % totalFrameseggB;
-      lastFrameTimeeggB = currentTimeeggB;
-      if (Game.currentFrame30 == totalFrameseggB - 1) {
-        Game.ControlOneAnimationEgg = true;
-        Game.cobraParadaFinal = true;
+    if (Game.ManterAnimation) {
+      if (currentTimeeggB - lastFrameTimeeggB > frameIntervaleggB) {
+        Game.currentFrame30 = (Game.currentFrame30 + 1) % totalFrameseggB;
+        lastFrameTimeeggB = currentTimeeggB;
+        if (Game.currentFrame30 == totalFrameseggB - 1) {
+          Game.ControlOneAnimationEgg = true;
+          Game.cobraParadaFinal = true;
+        }
       }
     }
   }

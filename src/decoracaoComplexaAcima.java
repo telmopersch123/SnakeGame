@@ -68,11 +68,12 @@ public class decoracaoComplexaAcima {
                   Game.DecoComplexoX[29],
                   Game.DecoComplexoY[29], null);
               long currentTimeArv3 = System.currentTimeMillis();
-
-              if (currentTimeArv3 - lastFrameTimeArv3 >= frameIntervalArv3) {
-                lastFrameTimeArv3 = currentTimeArv3 - (currentTimeArv3 %
-                    frameIntervalArv3);
-                Game.currentFrame14 = (Game.currentFrame14 + 1) % totalFramesArv1;
+              if (Game.ManterAnimation) {
+                if (currentTimeArv3 - lastFrameTimeArv3 >= frameIntervalArv3) {
+                  lastFrameTimeArv3 = currentTimeArv3 - (currentTimeArv3 %
+                      frameIntervalArv3);
+                  Game.currentFrame14 = (Game.currentFrame14 + 1) % totalFramesArv1;
+                }
               }
             }
             break;
@@ -99,12 +100,12 @@ public class decoracaoComplexaAcima {
                   Game.DecoComplexoX[30],
                   Game.DecoComplexoY[30], null);
               long currentTimeArv4 = System.currentTimeMillis();
-
-              if (currentTimeArv4 - lastFrameTimeArv4 >= frameIntervalArv4) {
-                lastFrameTimeArv4 = currentTimeArv4 - (currentTimeArv4 %
-                    frameIntervalArv4);
-                Game.currentFrame15 = (Game.currentFrame15 + 1) % totalFramesArv2;
-
+              if (Game.ManterAnimation) {
+                if (currentTimeArv4 - lastFrameTimeArv4 >= frameIntervalArv4) {
+                  lastFrameTimeArv4 = currentTimeArv4 - (currentTimeArv4 %
+                      frameIntervalArv4);
+                  Game.currentFrame15 = (Game.currentFrame15 + 1) % totalFramesArv2;
+                }
               }
             }
             break;
@@ -131,12 +132,12 @@ public class decoracaoComplexaAcima {
                   Game.DecoComplexoX[31],
                   Game.DecoComplexoY[31], null);
               long currentTimeArv5 = System.currentTimeMillis();
-
-              if (currentTimeArv5 - lastFrameTimeArv5 >= frameIntervalArv5) {
-                lastFrameTimeArv5 = currentTimeArv5 - (currentTimeArv5 %
-                    frameIntervalArv5);
-                Game.currentFrame16 = (Game.currentFrame16 + 1) % totalFramesArv3;
-
+              if (Game.ManterAnimation) {
+                if (currentTimeArv5 - lastFrameTimeArv5 >= frameIntervalArv5) {
+                  lastFrameTimeArv5 = currentTimeArv5 - (currentTimeArv5 %
+                      frameIntervalArv5);
+                  Game.currentFrame16 = (Game.currentFrame16 + 1) % totalFramesArv3;
+                }
               }
             }
             break;
@@ -181,13 +182,13 @@ public class decoracaoComplexaAcima {
                     Game.DecoComplexoX[index],
                     Game.DecoComplexoY[index], null);
                 long currentTimelava = System.currentTimeMillis();
-
-                if (currentTimelava - lastFrameTimelava >= frameIntervallava) {
-                  lastFrameTimelava = currentTimelava - (currentTimelava %
-                      frameIntervallava);
-                  Game.currentFrame23 = (Game.currentFrame23 + 1) % totalFrameslava;
+                if (Game.ManterAnimation) {
+                  if (currentTimelava - lastFrameTimelava >= frameIntervallava) {
+                    lastFrameTimelava = currentTimelava - (currentTimelava %
+                        frameIntervallava);
+                    Game.currentFrame23 = (Game.currentFrame23 + 1) % totalFrameslava;
+                  }
                 }
-
               }
               index++;
             }
@@ -218,11 +219,12 @@ public class decoracaoComplexaAcima {
                   Game.DecoComplexoX[21],
                   Game.DecoComplexoY[21], null);
               long currentTimelava2 = System.currentTimeMillis();
-
-              if (currentTimelava2 - lastFrameTimelava2 >= frameIntervallava2) {
-                lastFrameTimelava2 = currentTimelava2 - (currentTimelava2 %
-                    frameIntervallava2);
-                Game.currentFrame24 = (Game.currentFrame24 + 1) % totalFrameslava2;
+              if (Game.ManterAnimation) {
+                if (currentTimelava2 - lastFrameTimelava2 >= frameIntervallava2) {
+                  lastFrameTimelava2 = currentTimelava2 - (currentTimelava2 %
+                      frameIntervallava2);
+                  Game.currentFrame24 = (Game.currentFrame24 + 1) % totalFrameslava2;
+                }
               }
             }
             break;

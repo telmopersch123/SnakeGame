@@ -604,10 +604,12 @@ public class decoracao {
             ImagemMoinho.drawImage(scaledImage, Game.DecoComplexoX[10],
                 Game.DecoComplexoY[10], null);
             long currentTimeMoinho = System.currentTimeMillis();
+            if (Game.ManterAnimation) {
             Game.currentFrame10 = (Game.currentFrame10 + 1) % totalFramesMo;
-            if (currentTimeMoinho - lastFrameTimeMo >= frameIntervalMo) {
-              lastFrameTimeMo = currentTimeMoinho - (currentTimeMoinho % frameIntervalMo);
-              Game.currentFrame10 = (Game.currentFrame10 + 1) % totalFramesMo;
+              if (currentTimeMoinho - lastFrameTimeMo >= frameIntervalMo) {
+                lastFrameTimeMo = currentTimeMoinho - (currentTimeMoinho % frameIntervalMo);
+                Game.currentFrame10 = (Game.currentFrame10 + 1) % totalFramesMo;
+              }
             }
             break;
           case 10:
@@ -631,11 +633,13 @@ public class decoracao {
             ImagemBandeira.drawImage(scaledImage1, Game.DecoComplexoX[11],
                 Game.DecoComplexoY[11], null);
             long currentTimeBandeira = System.currentTimeMillis();
+            if (Game.ManterAnimation) {
             Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesBan;
-            if (currentTimeBandeira - lastFrameTimeBan >= frameIntervalBan) {
-              lastFrameTimeBan = currentTimeBandeira - (currentTimeBandeira %
-                  frameIntervalBan);
-              Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesBan;
+              if (currentTimeBandeira - lastFrameTimeBan >= frameIntervalBan) {
+                lastFrameTimeBan = currentTimeBandeira - (currentTimeBandeira %
+                    frameIntervalBan);
+                Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesBan;
+              }
             }
             break;
           case 11:
@@ -909,11 +913,12 @@ public class decoracao {
               ImagemArvore1.drawImage(scaledImage1, Game.DecoComplexoX[26],
                   Game.DecoComplexoY[26], null);
               long currentTimeArv = System.currentTimeMillis();
-
-              if (currentTimeArv - lastFrameTimeArv >= frameIntervalArv) {
-                lastFrameTimeArv = currentTimeArv - (currentTimeArv %
-                    frameIntervalArv);
-                Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesArv;
+              if (Game.ManterAnimation) {
+                if (currentTimeArv - lastFrameTimeArv >= frameIntervalArv) {
+                  lastFrameTimeArv = currentTimeArv - (currentTimeArv %
+                      frameIntervalArv);
+                  Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesArv;
+                }
               }
             }
             break;
@@ -940,11 +945,12 @@ public class decoracao {
                   Game.DecoComplexoX[27],
                   Game.DecoComplexoY[27], null);
               long currentTimeArv1 = System.currentTimeMillis();
-
-              if (currentTimeArv1 - lastFrameTimeArv1 >= frameIntervalArv1) {
-                lastFrameTimeArv1 = currentTimeArv1 - (currentTimeArv1 %
-                    frameIntervalArv1);
-                Game.currentFrame12 = (Game.currentFrame12 + 1) % totalFramesArv;
+              if (Game.ManterAnimation) {
+                if (currentTimeArv1 - lastFrameTimeArv1 >= frameIntervalArv1) {
+                  lastFrameTimeArv1 = currentTimeArv1 - (currentTimeArv1 %
+                      frameIntervalArv1);
+                  Game.currentFrame12 = (Game.currentFrame12 + 1) % totalFramesArv;
+                }
               }
             }
             break;
@@ -971,11 +977,12 @@ public class decoracao {
                   Game.DecoComplexoX[28],
                   Game.DecoComplexoY[28], null);
               long currentTimeArv2 = System.currentTimeMillis();
-
-              if (currentTimeArv2 - lastFrameTimeArv2 >= frameIntervalArv2) {
-                lastFrameTimeArv2 = currentTimeArv2 - (currentTimeArv2 %
-                    frameIntervalArv2);
-                Game.currentFrame13 = (Game.currentFrame13 + 1) % totalFramesArv;
+              if (Game.ManterAnimation) {
+                if (currentTimeArv2 - lastFrameTimeArv2 >= frameIntervalArv2) {
+                  lastFrameTimeArv2 = currentTimeArv2 - (currentTimeArv2 %
+                      frameIntervalArv2);
+                  Game.currentFrame13 = (Game.currentFrame13 + 1) % totalFramesArv;
+                }
               }
             }
             break;
@@ -1011,11 +1018,12 @@ public class decoracao {
                   Game.DecoComplexoX[32],
                   Game.DecoComplexoY[32], null);
               long currentTimecris = System.currentTimeMillis();
-
-              if (currentTimecris - lastFrameTimecris >= frameIntervalcris) {
-                lastFrameTimecris = currentTimecris - (currentTimecris %
-                    frameIntervalcris);
-                Game.currentFrame17 = (Game.currentFrame17 + 1) % totalFramescris;
+              if (Game.ManterAnimation) {
+                if (currentTimecris - lastFrameTimecris >= frameIntervalcris) {
+                  lastFrameTimecris = currentTimecris - (currentTimecris %
+                      frameIntervalcris);
+                  Game.currentFrame17 = (Game.currentFrame17 + 1) % totalFramescris;
+                }
               }
             }
           case 32:
@@ -1127,11 +1135,12 @@ public class decoracao {
       }
 
       long currentTimefire = System.currentTimeMillis();
-
-      if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
-        lastFrameTimefire = currentTimefire - (currentTimefire %
-            frameIntervalfire);
-        Game.currentFrame18 = (Game.currentFrame18 + 1) % totalFramesfire;
+      if (Game.ManterAnimation) {
+        if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
+          lastFrameTimefire = currentTimefire - (currentTimefire %
+              frameIntervalfire);
+          Game.currentFrame18 = (Game.currentFrame18 + 1) % totalFramesfire;
+        }
       }
       index++;
     }
@@ -1158,11 +1167,12 @@ public class decoracao {
           Game.DecoracaoY[index], null);
 
       long currentTimevulcan = System.currentTimeMillis();
-
-      if (currentTimevulcan - lastFrameTimevulcan >= frameIntervalvulcan) {
-        lastFrameTimevulcan = currentTimevulcan - (currentTimevulcan %
-            frameIntervalvulcan);
-        Game.currentFrame19 = (Game.currentFrame19 + 1) % totalFramesvulcan;
+      if (Game.ManterAnimation) {
+        if (currentTimevulcan - lastFrameTimevulcan >= frameIntervalvulcan) {
+          lastFrameTimevulcan = currentTimevulcan - (currentTimevulcan %
+              frameIntervalvulcan);
+          Game.currentFrame19 = (Game.currentFrame19 + 1) % totalFramesvulcan;
+        }
       }
       index++;
     }
@@ -1191,11 +1201,12 @@ public class decoracao {
         Game.valueFireY.add(Game.DecoracaoY[index]);
       }
       long currentTimefire1 = System.currentTimeMillis();
-
-      if (currentTimefire1 - lastFrameTimefire1 >= frameIntervalfire1) {
-        lastFrameTimefire1 = currentTimefire1 - (currentTimefire1 %
-            frameIntervalfire1);
-        Game.currentFrame28 = (Game.currentFrame28 + 1) % totalFramesfire1;
+      if (Game.ManterAnimation) {
+        if (currentTimefire1 - lastFrameTimefire1 >= frameIntervalfire1) {
+          lastFrameTimefire1 = currentTimefire1 - (currentTimefire1 %
+              frameIntervalfire1);
+          Game.currentFrame28 = (Game.currentFrame28 + 1) % totalFramesfire1;
+        }
       }
       index++;
     }
@@ -1316,13 +1327,13 @@ public class decoracao {
                   Game.DecoComplexoX[16],
                   Game.DecoComplexoY[16], null);
               long currentTimeTemple1 = System.currentTimeMillis();
-
-              if (currentTimeTemple1 - lastFrameTimetemple >= frameIntervaltemple) {
-                lastFrameTimetemple = currentTimeTemple1 - (currentTimeTemple1 %
-                    frameIntervaltemple);
-                Game.currentFrame20 = (Game.currentFrame20 + 1) % totalFramestemple;
+              if (Game.ManterAnimation) {
+                if (currentTimeTemple1 - lastFrameTimetemple >= frameIntervaltemple) {
+                  lastFrameTimetemple = currentTimeTemple1 - (currentTimeTemple1 %
+                      frameIntervaltemple);
+                  Game.currentFrame20 = (Game.currentFrame20 + 1) % totalFramestemple;
+                }
               }
-
             }
             break;
           case 10:
@@ -1350,13 +1361,13 @@ public class decoracao {
               temple2.drawImage(scaledImage1, Game.DecoComplexoX[17],
                   Game.DecoComplexoY[17], null);
               long currentTimeTemple2 = System.currentTimeMillis();
-
-              if (currentTimeTemple2 - lastFrameTimetemple1 >= frameIntervaltemple1) {
-                lastFrameTimetemple1 = currentTimeTemple2 - (currentTimeTemple2 %
-                    frameIntervaltemple1);
-                Game.currentFrame21 = (Game.currentFrame21 + 1) % totalFramestemple1;
+              if (Game.ManterAnimation) {
+                if (currentTimeTemple2 - lastFrameTimetemple1 >= frameIntervaltemple1) {
+                  lastFrameTimetemple1 = currentTimeTemple2 - (currentTimeTemple2 %
+                      frameIntervaltemple1);
+                  Game.currentFrame21 = (Game.currentFrame21 + 1) % totalFramestemple1;
+                }
               }
-
             }
             break;
           case 11:
@@ -1385,13 +1396,13 @@ public class decoracao {
                   Game.DecoComplexoX[18],
                   Game.DecoComplexoY[18], null);
               long currentTimeTemple3 = System.currentTimeMillis();
-
-              if (currentTimeTemple3 - lastFrameTimetemple2 >= frameIntervaltemple2) {
-                lastFrameTimetemple2 = currentTimeTemple3 - (currentTimeTemple3 %
-                    frameIntervaltemple2);
-                Game.currentFrame22 = (Game.currentFrame22 + 1) % totalFramestemple2;
+              if (Game.ManterAnimation) {
+                if (currentTimeTemple3 - lastFrameTimetemple2 >= frameIntervaltemple2) {
+                  lastFrameTimetemple2 = currentTimeTemple3 - (currentTimeTemple3 %
+                      frameIntervaltemple2);
+                  Game.currentFrame22 = (Game.currentFrame22 + 1) % totalFramestemple2;
+                }
               }
-
             }
             break;
           case 12:

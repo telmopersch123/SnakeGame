@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class AnimationEnergyControl {
+  static long ControlEnergySpreet;
 
   void updateEnergyAnimation(Game game, BufferedImage buffer, Image explosionDeath) {
 
@@ -26,7 +27,7 @@ public class AnimationEnergyControl {
     long TeleportEnergy = System.currentTimeMillis() - game.TeleportEnergyVerif;
     long ControlTimerVelocity = System.currentTimeMillis() - game.ControlTimerVelocity;
     long ControlAPOS = System.currentTimeMillis() - game.ControlAPOSSuporte;
-    long ControlEnergySpreet = System.currentTimeMillis() - game.ControlSpriteSheet;
+    ControlEnergySpreet = System.currentTimeMillis() - game.ControlSpriteSheet;
     long ControlEnergyColidion = System.currentTimeMillis() - game.ControlSpriteSheetColidion;
     if (game.VelocityControl) {
       if (ControlTimerVelocity >= 10000) {
@@ -37,7 +38,9 @@ public class AnimationEnergyControl {
       game.ControlTimerVelocity = System.currentTimeMillis();
     }
     if (TeleportEnergy >= 4800 && !game.ernegyAnimationPlayed) {
-      AnimationEnergyFim.AnimationFoodErnFim();
+      if (Game.ManterAnimation) {
+        AnimationEnergyFim.AnimationFoodErnFim();
+      }
       game.ernegyAnimationPlayed = true;
     }
     if (game.ColidionEnergyCla) {
@@ -50,7 +53,9 @@ public class AnimationEnergyControl {
         game.macaENY = foodPosition2.y;
 
         if (!Game.colidionEneControlTimerAnimation) {
-          AnimationEnergy.AnimationFoodErnInic(this);
+          if (Game.ManterAnimation) {
+            AnimationEnergy.AnimationFoodErnInic(this);
+          }
         }
         game.ColidionEnergyCla = false;
         game.ColidionEnergyConfirmed = true;
@@ -66,6 +71,8 @@ public class AnimationEnergyControl {
           Game.PosColidianEnergyX = game.macaENX;
           Game.PosColidianEnergyY = game.macaENY;
           Game.ControlEnergyColidianBoolean = true;
+          InicialRaio.SumirInicialRaio = false;
+          Game.ControlTamanho = true;
         }
 
       }
@@ -103,7 +110,9 @@ public class AnimationEnergyControl {
           game.macaENY = -100;
           game.TeleportEnergyVerif = System.currentTimeMillis();
           if (!Game.colidionEneControlTimerAnimation) {
-            AnimationEnergy.AnimationFoodErnInic(this);
+            if (Game.ManterAnimation) {
+              AnimationEnergy.AnimationFoodErnInic(this);
+            }
           }
         }
       }
@@ -134,7 +143,7 @@ public class AnimationEnergyControl {
         if (Game.snakeClassica || Game.snakePoison) {
           Game.SpreetSheetInitial = false;
           Game.SpreetSheetFinale = true;
-
+          Game.ControlTamanho = false;
         } else if (ControlEnergySpreet > 10700) {
           Game.SpreetSheetFinale = false;
         } else if (ControlEnergySpreet >= 11000) {
@@ -146,22 +155,22 @@ public class AnimationEnergyControl {
     if (Game.snakeFire) {
       if (Game.checkedEsplo) {
         if (!Game.ControlOneAnimationESPLO) {
-          AnimationEnergyControl.animationDeathExplosion(buffer, explosionDeath);
+          if (Game.ManterAnimation) {
+            AnimationEnergyControl.animationDeathExplosion(buffer, explosionDeath);
+          }
         }
       }
     }
     /////
     if (Game.ColisionEnergy) {
-      if (ControlAPOS <= 10000) {
+      if (ControlAPOS <= 11000) {
 
         Game.ControlAPOSColidionTimer = true;
       } else {
         Game.ControlAPOSColidionTimer = false;
         if (!Game.ControlAPOSColidionTimer) {
-          // game.macaENX = foodPosition2.x;
-          // game.macaENY = foodPosition2.y;
-          game.macaENX = 500;
-          game.macaENY = 500;
+          game.macaENX = foodPosition2.x;
+           game.macaENY = foodPosition2.y;
         }
         Game.ColisionEnergy = false;
         game.ControlSpriteSheet = System.currentTimeMillis();
@@ -180,13 +189,13 @@ public class AnimationEnergyControl {
       if (TeleportEnergy >= 6000) {
 
         if (!Game.colidionEneControlTimerAnimation) {
-          AnimationEnergy.AnimationFoodErnInic(this);
+          if (Game.ManterAnimation) {
+            AnimationEnergy.AnimationFoodErnInic(this);
+          }
         }
         if (!Game.ControlAPOSColidionTimer) {
-          // game.macaENX = foodPosition2.x;
-          // game.macaENY = foodPosition2.y;
-          game.macaENX = 500;
-          game.macaENY = 500;
+          game.macaENX = foodPosition2.x;
+          game.macaENY = foodPosition2.y;
         }
 
         game.TeleportEnergyVerif = System.currentTimeMillis();

@@ -28,27 +28,38 @@ public class MyKeyBoardListener implements KeyListener {
 
   @Override
   public void keyPressed(KeyEvent e) {
-
     int key = e.getKeyCode();
-    if (key == KeyEvent.VK_LEFT) {
-      Game.direction = KeyEvent.VK_LEFT;
-    } else if (key == KeyEvent.VK_RIGHT) {
-      Game.direction = KeyEvent.VK_RIGHT;
-    } else if (key == KeyEvent.VK_UP) {
-      Game.direction = KeyEvent.VK_UP;
-    } else if (key == KeyEvent.VK_DOWN) {
-      Game.direction = KeyEvent.VK_DOWN;
-    }
-    if ((key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_UP
-        || key == KeyEvent.VK_DOWN) && Math.abs(key - initialDirection) != 2 && canPress) {
+
+    if (Game.PodeIniciarPosLoading || !Game.ManterAnimation) {
+      if (key == Game.keyPressedEsquerda) {
+        Game.direction = Game.keyPressedEsquerda;
+      } else if (key == Game.keyPressedDireita) {
+        Game.direction = Game.keyPressedDireita;
+      } else if (key == Game.keyPressedSuperior) {
+        Game.direction = Game.keyPressedSuperior;
+      } else if (key == Game.keyPressedInferior) {
+        Game.direction = Game.keyPressedInferior;
+      }
+
       // Verifica se a tecla pressionada é uma direção válida e não oposta à direção
       // atual
-      Game.IniciouEgg = false;
-      Game.cobraParada = true;
-      initialDirection = key;
-      canPress = false;
-      timerBlock.restart();
+      if ((key == Game.keyPressedEsquerda || key == Game.keyPressedDireita ||
+          key == Game.keyPressedSuperior || key == Game.keyPressedInferior) &&
+          Math.abs(key - initialDirection) != 2 && canPress) {
 
+        // Impede movimento oposto instantâneo
+        if ((key == Game.keyPressedEsquerda && initialDirection != Game.keyPressedDireita) ||
+            (key == Game.keyPressedDireita && initialDirection != Game.keyPressedEsquerda) ||
+            (key == Game.keyPressedSuperior && initialDirection != Game.keyPressedInferior) ||
+            (key == Game.keyPressedInferior && initialDirection != Game.keyPressedSuperior)) {
+
+          Game.IniciouEgg = false;
+          Game.cobraParada = true;
+          initialDirection = key;
+          canPress = false;
+          timerBlock.restart();
+        }
+      }
     }
   }
 
@@ -59,11 +70,10 @@ public class MyKeyBoardListener implements KeyListener {
     if (key != currentDirection) {
       initialVerif = true;
     }
-    if ((key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_UP
-        || key == KeyEvent.VK_DOWN) && Math.abs(key - initialDirection) != 2) {
+    if ((key == Game.keyPressedEsquerda || key == Game.keyPressedDireita || key == Game.keyPressedSuperior
+        || key == Game.keyPressedInferior) && Math.abs(key - initialDirection) != 2) {
       currentDirection = e.getKeyCode();
     }
-    ;
 
     timer.restart();
   }

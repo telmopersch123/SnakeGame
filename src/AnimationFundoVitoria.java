@@ -4,7 +4,7 @@ import java.util.TimerTask;
 
 public class AnimationFundoVitoria {
   private static int vitoriaInterval = 100;
- public static Timer fundoTemp;
+  public static Timer fundoTemp;
 
   public static void AnimationVitoria(Game game, Graphics g, int getWidth, int getHeight) {
     if (fundoTemp != null) {
@@ -16,6 +16,7 @@ public class AnimationFundoVitoria {
     fundoTemp.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
+
         if (Game.Transper <= 50) {
           Game.Transper++;
         } else {

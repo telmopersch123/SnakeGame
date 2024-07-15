@@ -36,6 +36,18 @@ public class MenuPanel extends JPanel {
   private static JLabel backgroundLabel;
   static JPanel overlayPanel;
   private static boolean buttonsEnabled = true;
+  static JPanel loadingPanel;
+  static int CorPretaLoading = 255;
+  static JPanel loadingComponents;
+  static LoadingSpinner spinner;
+
+  public static void painelLoading() {
+    loadingPanel = new JPanel();
+    loadingPanel.setBackground(new Color(0, 0, 0, 255));
+    loadingPanel.setOpaque(true);
+    loadingPanel.setVisible(false);
+    loadingPanel.setLayout(new BorderLayout());
+  }
 
   public MenuPanel() {
 
@@ -43,6 +55,9 @@ public class MenuPanel extends JPanel {
     GridBagConstraints Menu = new GridBagConstraints();
 
     try {
+      // ========LOADING-----------
+      painelLoading();
+      // ==========================
       // Carregue a imagem dos botoes
       Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 20);
       ImageIcon buttonReturn = new StretchIcon("resources/Menu/return.png");
@@ -65,8 +80,11 @@ public class MenuPanel extends JPanel {
       bgConstraints.weightx = 1.0;
       bgConstraints.weighty = 1.0;
       if (Game.NotificationGameDesblocked) {
-        if (Game.DesblockedPontuation >= 1) {
+        if (Game.DesblockedPontuation >= 0) {
           NotificationDesblocked.SumirFundo = false;
+          if (Game.DesblockedPontuation == 0) {
+            Game.DesblockedPontuation = -1;
+          }
         }
         overlayPanel = new JPanel() {
           @Override
@@ -86,7 +104,10 @@ public class MenuPanel extends JPanel {
         overlayPanel.setOpaque(false); // Deixe o overlayPanel transparente
         add(overlayPanel, bgConstraints);
       }
+      //
       add(backgroundLabel, bgConstraints);
+      //
+      add(loadingPanel, bgConstraints);
       //
       // SOMBREAMENTO NORMAL
       startButton = new JButton("Iniciar Jogo", buttonImage);
@@ -99,27 +120,48 @@ public class MenuPanel extends JPanel {
           if (!buttonsEnabled) {
             return;
           }
-
-          JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
-          topFrame.getContentPane().removeAll();
-          Game game = new Game();
-          new Thread(game).start();
-          topFrame.add(game);
-          topFrame.revalidate();
-          topFrame.repaint();
-          game.requestFocusInWindow();
-          Game.nodeSnake = Game.ComprimentoCobra;
-          Game.ValueFinal = 0;
-          Game.ValueDecoNormal = 0;
-          Game.quanti.clear();
-          Game.quantiComplexo.clear();
-          Game.DecoracaoX = new int[0];
-          Game.DecoracaoY = new int[0];
-          Game.DecoComplexoX = new int[0];
-          Game.DecoComplexoY = new int[0];
-          decoracao.posicoesDeco(Game.FrameWidth,
-              Game.FrameHeight, Game.ALL_DOTS_Width, Game.ALL_DOTS_Height, Game.walls_x, Game.walls_y);
-
+          ///
+          if (Game.ManterAnimation) {
+            backgroundLabel.setVisible(false);
+            loadingPanel.setVisible(true);
+            startButton.setVisible(false);
+            MapButton.setVisible(false);
+            OutfitButton.setVisible(false);
+            settingsButton.setVisible(false);
+          }
+          if (Game.RemoverAnimation) {
+            Game.aparecerAposLoading = true;
+          }
+          SwingUtilities.invokeLater(() -> {
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+            topFrame.getContentPane().removeAll();
+            Game game = new Game();
+            new Thread(game).start();
+            topFrame.add(game);
+            topFrame.revalidate();
+            topFrame.repaint();
+            game.requestFocusInWindow();
+            Game.nodeSnake = Game.ComprimentoCobra;
+            Game.ValueFinal = 0;
+            Game.ValueDecoNormal = 0;
+            Game.quanti.clear();
+            Game.quantiComplexo.clear();
+            Game.DecoracaoX = new int[0];
+            Game.DecoracaoY = new int[0];
+            Game.DecoComplexoX = new int[0];
+            Game.DecoComplexoY = new int[0];
+            decoracao.posicoesDeco(Game.FrameWidth,
+                Game.FrameHeight, Game.ALL_DOTS_Width, Game.ALL_DOTS_Height, Game.walls_x,
+                Game.walls_y);
+            if (Game.ManterAnimation) {
+              backgroundLabel.setVisible(true);
+              loadingPanel.setVisible(false);
+              startButton.setVisible(true);
+              MapButton.setVisible(true);
+              OutfitButton.setVisible(true);
+              settingsButton.setVisible(true);
+            }
+          });
         }
       });
       Menu.gridx = 0;
@@ -135,13 +177,13 @@ public class MenuPanel extends JPanel {
           }
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
           MenuPanel.this.setVisible(false);
-
           MapPanel mapPanel = new MapPanel(buttonReturn);
           topFrame.add(mapPanel);
           topFrame.revalidate();
           topFrame.repaint();
         }
       });
+
       addShadow(MapButton, "Mapa", Fonts, 150, 50, false);
       Menu.gridy = 1;
       backgroundLabel.add(MapButton, Menu);
@@ -173,7 +215,12 @@ public class MenuPanel extends JPanel {
           if (!buttonsEnabled) {
             return;
           }
-          // Ação para o botão de configurações
+          JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+          MenuPanel.this.setVisible(false);
+          ConfPanel confPanel = new ConfPanel(buttonReturn);
+          topFrame.add(confPanel);
+          topFrame.revalidate();
+          topFrame.repaint();
         }
       });
       addShadow(settingsButton, "Configurações", Fonts, 180, 50, false);
@@ -296,4 +343,5 @@ class StretchIcon extends ImageIcon {
     int height = c.getHeight();
     g.drawImage(image, 0, 0, width, height, null);
   }
+
 }
