@@ -45,10 +45,10 @@ public class SkinPanel extends JPanel {
 
     try {
       // -fundo
-      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
-      Font FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.otf", 34);
+      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
+      Font FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.ttf", 34);
       Image backgroundImage = ImageIO.read(new File("resources/Menu/backgroundMenu.png"));
-      selectionFont = loadFont.loadFont("resources/fontes/fontGeral.otf", 64);
+      selectionFont = loadFont.loadFont("resources/fontes/fontGeral.ttf", 64);
       ///
       ImageIcon buttonclassicoINCsnake = new StretchIcon("resources/Menu/botaoclassicoinativo.png");
       ImageIcon buttonpoisonINCsnake = new StretchIcon("resources/Menu/botaopoisoninativo.png");

@@ -59,7 +59,7 @@ public class MenuPanel extends JPanel {
       painelLoading();
       // ==========================
       // Carregue a imagem dos botoes
-      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 20);
+      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", 20);
       ImageIcon buttonReturn = new StretchIcon("resources/Menu/return.png");
       ImageIcon buttonImage = new StretchIcon("resources/Menu/buttonRock.png");
       // Carregue a imagem do fundo

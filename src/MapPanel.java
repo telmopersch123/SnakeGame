@@ -50,9 +50,9 @@ public class MapPanel extends JPanel {
     layeredPane = new JLayeredPane();
     layeredPane.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
     try {
-      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
-      Font FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.otf", 34);
-      selectionFont = loadFont.loadFont("resources/fontes/fontGeral.otf", 64);
+      Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
+      Font FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.ttf", 34);
+      selectionFont = loadFont.loadFont("resources/fontes/fontGeral.ttf", 64);
       ImageIcon buttonDungeonINCBack = new StretchIcon("resources/Menu/buttonInactive-Dungeon.png");
       ImageIcon buttonFieldINCBack = new StretchIcon("resources/Menu/buttonInactive-field.png");
       ImageIcon buttonSwampINCBack = new StretchIcon("resources/Menu/buttonInactive-swamp.png");

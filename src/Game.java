@@ -1070,7 +1070,7 @@ public class Game extends JPanel implements Runnable {
       return;
     }
     if (!componentesTimerPontAdicionado && !GameFim) {
-      Font TimerFont = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
+      Font TimerFont = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
       GridTimer = game;
       GridTimer.setLayout(new GridBagLayout());
       gbc = new GridBagConstraints();
@@ -1249,7 +1249,7 @@ public class Game extends JPanel implements Runnable {
       GridGameWins.insets = new Insets(0, 0, 0, 0); // Espaçamento entre componentes
       GridGameWins.anchor = GridBagConstraints.CENTER;
       // Adicionando o texto
-      customFont = loadFont.loadFont("resources/fontes/fontGeral.otf", 32);
+      customFont = loadFont.loadFont("resources/fontes/fontGeral.ttf", 32);
       textShadowLabel = new TextShadow("Região Dominada!", // Modifique esta linha
           new Color(255, 255, 255, 0), new Color(0, 0, 0, 0), customFont);
       GridGameWins.gridy = 0;
@@ -1304,7 +1304,7 @@ public class Game extends JPanel implements Runnable {
         sizeDificult = 12;
         colorTransparente = 255;
       }
-      Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", sizeDificult);
+      Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", sizeDificult);
       fontesGameWins = Fonts.deriveFont((float) sizeDificult);
       fontesGameWinsButton = Fonts.deriveFont((float) 26);
       //
@@ -1521,7 +1521,7 @@ public class Game extends JPanel implements Runnable {
       }
     }
     if (!newGameButtonExists) {
-      Font customFontGameOver = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
+      Font customFontGameOver = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
       Font derivateFont = customFontGameOver.deriveFont((float) 22);
       // Texto de gameOver
       meuPainel.removeAll();

@@ -36,7 +36,7 @@ public class NotificationDesblocked {
         // Criar um JPanel personalizado com fundo transparente
 
         MenuPanel.setButtonsEnabled(false);
-        Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 18);
+        Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", 18);
         int desiredWidth = 500; // Largura desejada
         int desiredHeight = 400; // Altura desejada
         JWindow window = new JWindow(parentFrame);

@@ -1,7 +1,9 @@
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -13,6 +15,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +32,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class ConfPanel extends JPanel {
 
@@ -36,7 +41,7 @@ public class ConfPanel extends JPanel {
   private static Image backgroundImageMenu;
   private static JLabel backgroundLabel2;
   private static JPanel verticalPanel;
-static JPanel ferramentasConfiguracoes;
+  static JPanel ferramentasConfiguracoes;
   private static JLabel texto;
   private static JButton ButtonRemoverAnimacao;
   private static JLabel texto2;
@@ -53,6 +58,7 @@ static JPanel ferramentasConfiguracoes;
   private ImageIcon fundoControl;
   private ImageIcon fundoControlVolume;
   private static JLabel ControlVolume;
+  private static JLabel OuvirSomJLabel;
   private static JButton buttonSom;
   private static JLabel textManter;
   private static JLabel FundoBotaoManter;
@@ -70,14 +76,26 @@ static JPanel ferramentasConfiguracoes;
   private static Icon botaoeinferior;
   static CustomSlider slider;
   static JPanel sliderPanel;
+  private int value;
+  private CustomSlider sliderEfeito;
+  private ImageIcon transparentIcon;
+  private ImageIcon transparentFund;
+  private ImageIcon transparentArrast;
+  private static JLabel RemoteSom;
+  private static JLabel RemoteEfeito;
+  private static JLabel OuvirEfeitoJLabel;
+  private static JPanel sliderPanelEfeito;
+  private static JButton buttonEfeito;
+  private static JLabel textoEfeitos;
+  private static Float ControlSonsTranper = 1.0f;
 
   public ConfPanel(ImageIcon buttonReturn) {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     try {
       backgroundImage = ImageIO.read(new File("resources/Menu/backgroundMenu.png"));
       backgroundImage = backgroundImage.getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
-      Fonts = loadFont.loadFont("resources/fontes/fontGeral.otf", 16);
-      FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.otf", 34);
+      Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
+      FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.ttf", 34);
     } catch (IOException ex) {
       ex.printStackTrace();
     }
@@ -250,7 +268,6 @@ static JPanel ferramentasConfiguracoes;
     /// -----
     botaoeinferior = new StretchIcon("resources/Menu/down.png");
     Botaoinferior = new JButton(KeyEvent.getKeyText(Game.keyPressedInferior), botaoeinferior);
-
     Botaoinferior.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -276,6 +293,7 @@ static JPanel ferramentasConfiguracoes;
     gbc.insets = new Insets(20, 0, 0, 0);
     ferramentasConfiguracoes.add(Botaoinferior, gbc);
     configLabels.add(Botaoinferior);
+    /// -----
     /// ====================================
     /// ====================================
     /// ====================================
@@ -393,16 +411,32 @@ static JPanel ferramentasConfiguracoes;
     texto2.setVisible(false);
     configLabels.add(texto2);
     /// ====================================
+    ImageIcon remoting = new ImageIcon("resources/Menu/blockedSons.png");
+    Image image4 = remoting.getImage();
+    Image resizedImage4 = image4.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon4 = new ImageIcon(resizedImage4);
+    RemoteSom = new JLabel(resizedIcon4);
+    RemoteSom.setPreferredSize(new Dimension(40, 40));
+    RemoteSom.setHorizontalAlignment(JLabel.CENTER);
+    RemoteSom.setVerticalAlignment(JLabel.CENTER);
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    ferramentasConfiguracoes.add(RemoteSom, gbc);
+    RemoteSom.setVisible(false);
+    configLabels.add(RemoteSom);
+    /// ====================================
     fundoButtonSom = new ImageIcon("resources/Menu/SomButton.png");
     Image image2 = fundoButtonSom.getImage();
     Image resizedImage2 = image2.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
     ImageIcon resizedIcon = new ImageIcon(resizedImage2);
-    buttonSom = new JButton("", resizedIcon);
+    transparentIcon = createTransparentIcon(resizedIcon, ControlSonsTranper);
+    buttonSom = new JButton("", transparentIcon);
     ConfigButton(buttonSom, Fonts, 100, 100, "");
     buttonSom.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-
+        slider.setValue(0);
       }
     });
     gbc.gridx = 0;
@@ -411,18 +445,29 @@ static JPanel ferramentasConfiguracoes;
     ferramentasConfiguracoes.add(buttonSom, gbc);
     buttonSom.setVisible(false);
     configLabels.add(buttonSom);
-    // ----
+    ////
     Image thumbImage = new ImageIcon("resources/Menu/buttonArrastar.png").getImage().getScaledInstance(20, 20,
         Image.SCALE_SMOOTH);
     Image backgroundImage = new ImageIcon("resources/Menu/barraVolume.png").getImage();
-    slider = new CustomSlider(backgroundImage, thumbImage);
+    ///
+    ImageIcon ImageSliderFundo = new ImageIcon(backgroundImage);
+    transparentFund = createTransparentIcon(ImageSliderFundo, ControlSonsTranper);
+    Image backgroundTransperImage = transparentFund.getImage();
+    ImageIcon ImageSliderArrastar = new ImageIcon(thumbImage);
+    transparentArrast = createTransparentIcon(ImageSliderArrastar, ControlSonsTranper);
+    Image thumbTransperImage = transparentArrast.getImage();
+    //
+    slider = new CustomSlider(backgroundTransperImage, thumbTransperImage);
     slider.setBorder(BorderFactory.createEmptyBorder());
     slider.setFocusable(false);
+    slider.setValue(50);
+    slider.setMinimum(0);
+    slider.setMaximum(100);
     slider.setMajorTickSpacing(10);
     slider.setMinorTickSpacing(1);
-    slider.setPreferredSize(new Dimension(200, 40));
-    slider.setMaximumSize(new Dimension(200, 40));
-    slider.setMinimumSize(new Dimension(200, 40));
+    slider.setPreferredSize(new Dimension(350, 40));
+    slider.setMaximumSize(new Dimension(350, 40));
+    slider.setMinimumSize(new Dimension(350, 40));
     gbc.gridx = 1;
     gbc.gridy = 1;
     gbc.insets = new Insets(0, 0, 0, 0);
@@ -436,6 +481,172 @@ static JPanel ferramentasConfiguracoes;
     ferramentasConfiguracoes.add(sliderPanel, gbc);
     sliderPanel.setVisible(false);
     configLabels.add(sliderPanel);
+    // -------
+    slider.addChangeListener(new ChangeListener() {
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        value = slider.getValue();
+        OuvirSomJLabel.setText(" " + value + "%");
+
+        ControlSonsTranper = (value == 0) ? 0.5f : 1.0f;
+
+        ImageIcon ImageSliderFundo = new ImageIcon(backgroundImage);
+        transparentFund = createTransparentIcon(ImageSliderFundo, ControlSonsTranper);
+        Image backgroundTransperImage = transparentFund.getImage();
+
+        ImageIcon ImageSliderArrastar = new ImageIcon(thumbImage);
+        transparentArrast = createTransparentIcon(ImageSliderArrastar, ControlSonsTranper);
+        Image thumbTransperImage = transparentArrast.getImage();
+
+        slider.updateImages(backgroundTransperImage, thumbTransperImage);
+
+        transparentIcon = createTransparentIcon(resizedIcon, ControlSonsTranper);
+        buttonSom.setIcon(transparentIcon);
+        buttonSom.repaint();
+        if (value == 0) {
+          RemoteSom.setVisible(true);
+        } else {
+          RemoteSom.setVisible(false);
+        }
+      }
+    });
+    OuvirSomJLabel = new JLabel(" 50%");
+    OuvirSomJLabel.setFont(Fonts);
+    OuvirSomJLabel.setForeground(Color.WHITE);
+    OuvirSomJLabel.setPreferredSize(new Dimension(70, 20)); // Tamanho fixo
+    OuvirSomJLabel.setMinimumSize(new Dimension(70, 20)); // Tamanho fixo
+    OuvirSomJLabel.setMaximumSize(new Dimension(70, 20)); // Tamanho fixo
+    gbc.gridx = 2;
+    gbc.gridy = 1;
+    ferramentasConfiguracoes.add(OuvirSomJLabel, gbc);
+    OuvirSomJLabel.setVisible(false);
+    configLabels.add(OuvirSomJLabel);
+    /// ====================================
+    /// ====================================
+    textoEfeitos = new JLabel("Efeitos");
+    textoEfeitos.setFont(Fonts);
+    textoEfeitos.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    gbc.insets = new Insets(0, 20, 0, 0);
+    ferramentasConfiguracoes.add(textoEfeitos, gbc);
+    textoEfeitos.setVisible(false);
+    configLabels.add(textoEfeitos);
+    /// ====================================
+    ImageIcon remoting1 = new ImageIcon("resources/Menu/blockedSons.png");
+    Image image5 = remoting1.getImage();
+    Image resizedImage5 = image5.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon5 = new ImageIcon(resizedImage5);
+    RemoteEfeito = new JLabel(resizedIcon5);
+    RemoteEfeito.setPreferredSize(new Dimension(40, 40));
+    RemoteEfeito.setHorizontalAlignment(JLabel.CENTER);
+    RemoteEfeito.setVerticalAlignment(JLabel.CENTER);
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    ferramentasConfiguracoes.add(RemoteEfeito, gbc);
+    RemoteEfeito.setVisible(false);
+    configLabels.add(RemoteEfeito);
+    /// ====================================
+    fundoButtonSom = new ImageIcon("resources/Menu/EfeitosButton.png");
+    Image image3 = fundoButtonSom.getImage();
+    Image resizedImage3 = image3.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon1 = new ImageIcon(resizedImage3);
+    transparentIcon = createTransparentIcon(resizedIcon1, ControlSonsTranper);
+    buttonEfeito = new JButton("", transparentIcon);
+    ConfigButton(buttonEfeito, Fonts, 100, 100, "");
+    buttonEfeito.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        sliderEfeito.setValue(0);
+      }
+    });
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    ferramentasConfiguracoes.add(buttonEfeito, gbc);
+    buttonEfeito.setVisible(false);
+    configLabels.add(buttonEfeito);
+    // ----
+    Image thumbImage1 = new ImageIcon("resources/Menu/buttonArrastar.png").getImage().getScaledInstance(20, 20,
+        Image.SCALE_SMOOTH);
+    Image backgroundImage1 = new ImageIcon("resources/Menu/barraVolume.png").getImage();
+    ///
+    ImageIcon ImageSliderFundo1 = new ImageIcon(backgroundImage1);
+    transparentFund = createTransparentIcon(ImageSliderFundo1, ControlSonsTranper);
+    Image backgroundTransperImage1 = transparentFund.getImage();
+    ImageIcon ImageSliderArrastar1 = new ImageIcon(thumbImage1);
+    transparentArrast = createTransparentIcon(ImageSliderArrastar1, ControlSonsTranper);
+    Image thumbTransperImage1 = transparentArrast.getImage();
+    ///
+
+    sliderEfeito = new CustomSlider(backgroundTransperImage1, thumbTransperImage1);
+    sliderEfeito.setBorder(BorderFactory.createEmptyBorder());
+    sliderEfeito.setValue(50);
+    sliderEfeito.setFocusable(false);
+    sliderEfeito.setMinimum(0);
+    sliderEfeito.setMaximum(100);
+    sliderEfeito.setMajorTickSpacing(10);
+    sliderEfeito.setMinorTickSpacing(1);
+    sliderEfeito.setPreferredSize(new Dimension(350, 40));
+    sliderEfeito.setMaximumSize(new Dimension(350, 40));
+    sliderEfeito.setMinimumSize(new Dimension(350, 40));
+    gbc.gridx = 1;
+    gbc.gridy = 3;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    gbc.weightx = 1.0;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+
+    sliderPanelEfeito = new JPanel();
+    sliderPanelEfeito.setLayout(new BorderLayout());
+    sliderPanelEfeito.setOpaque(false);
+    sliderPanelEfeito.add(sliderEfeito, BorderLayout.CENTER);
+    ferramentasConfiguracoes.add(sliderPanelEfeito, gbc);
+    sliderPanelEfeito.setVisible(false);
+    configLabels.add(sliderPanelEfeito);
+    // ------
+    sliderEfeito.addChangeListener(new ChangeListener() {
+      private int valueEf;
+
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        valueEf = sliderEfeito.getValue();
+        OuvirEfeitoJLabel.setText(" " + valueEf + "%");
+
+        ControlSonsTranper = (valueEf == 0) ? 0.5f : 1.0f;
+
+        ImageIcon ImageSliderFundo1 = new ImageIcon(backgroundImage);
+        transparentFund = createTransparentIcon(ImageSliderFundo1, ControlSonsTranper);
+        Image backgroundTransperImage = transparentFund.getImage();
+
+        ImageIcon ImageSliderArrastar1 = new ImageIcon(thumbImage);
+        transparentArrast = createTransparentIcon(ImageSliderArrastar1, ControlSonsTranper);
+        Image thumbTransperImage = transparentArrast.getImage();
+
+        sliderEfeito.updateImages(backgroundTransperImage, thumbTransperImage);
+
+        transparentIcon = createTransparentIcon(resizedIcon1, ControlSonsTranper);
+        buttonEfeito.setIcon(transparentIcon);
+        buttonEfeito.repaint();
+        if (valueEf == 0) {
+          RemoteEfeito.setVisible(true);
+        } else {
+          RemoteEfeito.setVisible(false);
+        }
+      
+      }
+    });
+    OuvirEfeitoJLabel = new JLabel(" 50%");
+    OuvirEfeitoJLabel.setFont(Fonts);
+    OuvirEfeitoJLabel.setForeground(Color.WHITE);
+    OuvirEfeitoJLabel.setPreferredSize(new Dimension(70, 20)); // Tamanho fixo
+    OuvirEfeitoJLabel.setMinimumSize(new Dimension(70, 20)); // Tamanho fixo
+    OuvirEfeitoJLabel.setMaximumSize(new Dimension(70, 20)); // Tamanho fixo
+    gbc.gridx = 2;
+    gbc.gridy = 3;
+    ferramentasConfiguracoes.add(OuvirEfeitoJLabel, gbc);
+    OuvirEfeitoJLabel.setVisible(false);
+    configLabels.add(OuvirEfeitoJLabel);
     /// ====================================
     /// ====================================
     /// ====================================
@@ -456,6 +667,17 @@ static JPanel ferramentasConfiguracoes;
     for (JComponent component : configLabels) {
       component.setVisible(false);
     }
+  }
+
+  private ImageIcon createTransparentIcon(ImageIcon original, float transparency) {
+    Image image = original.getImage();
+    BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null),
+        BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2d = bufferedImage.createGraphics();
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency));
+    g2d.drawImage(image, 0, 0, null);
+    g2d.dispose();
+    return new ImageIcon(bufferedImage);
   }
 
   public static void addHoverEffect(JButton button, int normalWidth, int normalHeight) {
@@ -529,8 +751,11 @@ static JPanel ferramentasConfiguracoes;
         texto2.setVisible(true);
         buttonSom.setVisible(true);
         sliderPanel.setVisible(true);
-        // buttonControlSom.setVisible(true);
-        // ControlVolume.setVisible(true);
+        OuvirSomJLabel.setVisible(true);
+        textoEfeitos.setVisible(true);
+        buttonEfeito.setVisible(true);
+        sliderPanelEfeito.setVisible(true);
+        OuvirEfeitoJLabel.setVisible(true);
       }
     });
     ConfigButton(áudio, Fonts, 150, 40, "Áudio");
