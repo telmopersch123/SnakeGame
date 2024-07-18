@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.prefs.Preferences;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -76,7 +77,8 @@ public class ConfPanel extends JPanel {
   private static Icon botaoeinferior;
   static CustomSlider slider;
   static JPanel sliderPanel;
-  private int value;
+  private static int value;
+  private static int valueEf;
   private CustomSlider sliderEfeito;
   private ImageIcon transparentIcon;
   private ImageIcon transparentFund;
@@ -413,6 +415,8 @@ public class ConfPanel extends JPanel {
     /// ====================================
     /// ====================================
     /// ====================================
+    Preferences prefs = Preferences.userNodeForPackage(CustomSlider.class);
+
     texto2 = new JLabel("Musicas");
     texto2.setFont(Fonts);
     texto2.setForeground(Color.WHITE);
@@ -423,56 +427,28 @@ public class ConfPanel extends JPanel {
     texto2.setVisible(false);
     configLabels.add(texto2);
     /// ====================================
-    ImageIcon remoting = new ImageIcon("resources/Menu/blockedSons.png");
-    Image image4 = remoting.getImage();
-    Image resizedImage4 = image4.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-    ImageIcon resizedIcon4 = new ImageIcon(resizedImage4);
-    RemoteSom = new JLabel(resizedIcon4);
-    RemoteSom.setPreferredSize(new Dimension(40, 40));
-    RemoteSom.setHorizontalAlignment(JLabel.CENTER);
-    RemoteSom.setVerticalAlignment(JLabel.CENTER);
-    gbc.gridx = 0;
-    gbc.gridy = 1;
-    gbc.insets = new Insets(0, 0, 0, 0);
-    ferramentasConfiguracoes.add(RemoteSom, gbc);
-    RemoteSom.setVisible(false);
-    configLabels.add(RemoteSom);
-    /// ====================================
-    fundoButtonSom = new ImageIcon("resources/Menu/SomButton.png");
-    Image image2 = fundoButtonSom.getImage();
-    Image resizedImage2 = image2.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-    ImageIcon resizedIcon = new ImageIcon(resizedImage2);
-    transparentIcon = createTransparentIcon(resizedIcon, ControlSonsTranper);
-    buttonSom = new JButton("", transparentIcon);
-    ConfigButton(buttonSom, Fonts, 100, 100, "");
-    buttonSom.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        slider.setValue(0);
-      }
-    });
-    gbc.gridx = 0;
-    gbc.gridy = 1;
-    gbc.insets = new Insets(0, 0, 0, 0);
-    ferramentasConfiguracoes.add(buttonSom, gbc);
-    buttonSom.setVisible(false);
-    configLabels.add(buttonSom);
-    ////
     Image thumbImage = new ImageIcon("resources/Menu/buttonArrastar.png").getImage().getScaledInstance(20, 20,
         Image.SCALE_SMOOTH);
     Image backgroundImage = new ImageIcon("resources/Menu/barraVolume.png").getImage();
-    ///
     ImageIcon ImageSliderFundo = new ImageIcon(backgroundImage);
+    slider = new CustomSlider(
+        backgroundImage,
+        thumbImage, prefs, "slider_position_som");
+    value = slider.getValue();
+    if (value == 0) {
+      ControlSonsTranper = 0.5f;
+    } else {
+      ControlSonsTranper = 1.0f;
+    }
     transparentFund = createTransparentIcon(ImageSliderFundo, ControlSonsTranper);
     Image backgroundTransperImage = transparentFund.getImage();
     ImageIcon ImageSliderArrastar = new ImageIcon(thumbImage);
     transparentArrast = createTransparentIcon(ImageSliderArrastar, ControlSonsTranper);
     Image thumbTransperImage = transparentArrast.getImage();
-    //
-    slider = new CustomSlider(backgroundTransperImage, thumbTransperImage);
+    slider = new CustomSlider(backgroundTransperImage, thumbTransperImage, prefs, "slider_position_som");
     slider.setBorder(BorderFactory.createEmptyBorder());
     slider.setFocusable(false);
-    slider.setValue(50);
+
     slider.setMinimum(0);
     slider.setMaximum(100);
     slider.setMajorTickSpacing(10);
@@ -493,6 +469,46 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(sliderPanel, gbc);
     sliderPanel.setVisible(false);
     configLabels.add(sliderPanel);
+    /// ====================================
+    ImageIcon remoting = new ImageIcon("resources/Menu/blockedSons.png");
+    Image image4 = remoting.getImage();
+    Image resizedImage4 = image4.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon4 = new ImageIcon(resizedImage4);
+    RemoteSom = new JLabel(resizedIcon4);
+    RemoteSom.setPreferredSize(new Dimension(40, 40));
+    RemoteSom.setHorizontalAlignment(JLabel.CENTER);
+    RemoteSom.setVerticalAlignment(JLabel.CENTER);
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    ferramentasConfiguracoes.add(RemoteSom, gbc);
+    RemoteSom.setVisible(false);
+    configLabels.add(RemoteSom);
+    /// ====================================
+    fundoButtonSom = new ImageIcon("resources/Menu/SomButton.png");
+    Image image2 = fundoButtonSom.getImage();
+    Image resizedImage2 = image2.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon = new ImageIcon(resizedImage2);
+    if (value == 0) {
+      ControlSonsTranper = 0.5f;
+    } else {
+      ControlSonsTranper = 1.0f;
+    }
+    transparentIcon = createTransparentIcon(resizedIcon, ControlSonsTranper);
+    buttonSom = new JButton("", transparentIcon);
+    ConfigButton(buttonSom, Fonts, 100, 100, "");
+    buttonSom.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        slider.setValue(0);
+      }
+    });
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    ferramentasConfiguracoes.add(buttonSom, gbc);
+    buttonSom.setVisible(false);
+    configLabels.add(buttonSom);
     // -------
     slider.addChangeListener(new ChangeListener() {
       @Override
@@ -522,7 +538,8 @@ public class ConfPanel extends JPanel {
         }
       }
     });
-    OuvirSomJLabel = new JLabel(" 50%");
+    value = slider.getValue();
+    OuvirSomJLabel = new JLabel(" " + value + "%");
     OuvirSomJLabel.setFont(Fonts);
     OuvirSomJLabel.setForeground(Color.WHITE);
     OuvirSomJLabel.setPreferredSize(new Dimension(70, 20)); // Tamanho fixo
@@ -545,6 +562,51 @@ public class ConfPanel extends JPanel {
     textoEfeitos.setVisible(false);
     configLabels.add(textoEfeitos);
     /// ====================================
+    Image thumbImage1 = new ImageIcon("resources/Menu/buttonArrastar.png").getImage().getScaledInstance(20,
+        20,
+        Image.SCALE_SMOOTH);
+    Image backgroundImage1 = new ImageIcon("resources/Menu/barraVolume.png").getImage();
+    ImageIcon ImageSliderFundo1 = new ImageIcon(backgroundImage1);
+    sliderEfeito = new CustomSlider(
+        backgroundImage1,
+        thumbImage1, prefs, "slider_position_efeito");
+    valueEf = sliderEfeito.getValue();
+    if (valueEf == 0) {
+      ControlSonsTranper = 0.5f;
+    } else {
+      ControlSonsTranper = 1.0f;
+    }
+    transparentFund = createTransparentIcon(ImageSliderFundo1,
+        ControlSonsTranper);
+    Image backgroundTransperImage1 = transparentFund.getImage();
+    ImageIcon ImageSliderArrastar1 = new ImageIcon(thumbImage1);
+    transparentArrast = createTransparentIcon(ImageSliderArrastar1,
+        ControlSonsTranper);
+    Image thumbTransperImage1 = transparentArrast.getImage();
+    sliderEfeito = new CustomSlider(backgroundTransperImage1,
+        thumbTransperImage1, prefs, "slider_position_efeito");
+    sliderEfeito.setBorder(BorderFactory.createEmptyBorder());
+    sliderEfeito.setFocusable(false);
+    sliderEfeito.setMinimum(0);
+    sliderEfeito.setMaximum(100);
+    sliderEfeito.setMajorTickSpacing(10);
+    sliderEfeito.setMinorTickSpacing(1);
+    sliderEfeito.setPreferredSize(new Dimension(350, 40));
+    sliderEfeito.setMaximumSize(new Dimension(350, 40));
+    sliderEfeito.setMinimumSize(new Dimension(350, 40));
+    gbc.gridx = 1;
+    gbc.gridy = 3;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    gbc.weightx = 1.0;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    sliderPanelEfeito = new JPanel();
+    sliderPanelEfeito.setLayout(new BorderLayout());
+    sliderPanelEfeito.setOpaque(false);
+    sliderPanelEfeito.add(sliderEfeito, BorderLayout.CENTER);
+    ferramentasConfiguracoes.add(sliderPanelEfeito, gbc);
+    sliderPanelEfeito.setVisible(false);
+    configLabels.add(sliderPanelEfeito);
+    /// =====================================
     ImageIcon remoting1 = new ImageIcon("resources/Menu/blockedSons.png");
     Image image5 = remoting1.getImage();
     Image resizedImage5 = image5.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -564,6 +626,11 @@ public class ConfPanel extends JPanel {
     Image image3 = fundoButtonSom.getImage();
     Image resizedImage3 = image3.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
     ImageIcon resizedIcon1 = new ImageIcon(resizedImage3);
+    if (valueEf == 0) {
+      ControlSonsTranper = 0.5f;
+    } else {
+      ControlSonsTranper = 1.0f;
+    }
     transparentIcon = createTransparentIcon(resizedIcon1, ControlSonsTranper);
     buttonEfeito = new JButton("", transparentIcon);
     ConfigButton(buttonEfeito, Fonts, 100, 100, "");
@@ -580,45 +647,7 @@ public class ConfPanel extends JPanel {
     buttonEfeito.setVisible(false);
     configLabels.add(buttonEfeito);
     // ----
-    Image thumbImage1 = new ImageIcon("resources/Menu/buttonArrastar.png").getImage().getScaledInstance(20, 20,
-        Image.SCALE_SMOOTH);
-    Image backgroundImage1 = new ImageIcon("resources/Menu/barraVolume.png").getImage();
-    ///
-    ImageIcon ImageSliderFundo1 = new ImageIcon(backgroundImage1);
-    transparentFund = createTransparentIcon(ImageSliderFundo1, ControlSonsTranper);
-    Image backgroundTransperImage1 = transparentFund.getImage();
-    ImageIcon ImageSliderArrastar1 = new ImageIcon(thumbImage1);
-    transparentArrast = createTransparentIcon(ImageSliderArrastar1, ControlSonsTranper);
-    Image thumbTransperImage1 = transparentArrast.getImage();
-    ///
-
-    sliderEfeito = new CustomSlider(backgroundTransperImage1, thumbTransperImage1);
-    sliderEfeito.setBorder(BorderFactory.createEmptyBorder());
-    sliderEfeito.setValue(50);
-    sliderEfeito.setFocusable(false);
-    sliderEfeito.setMinimum(0);
-    sliderEfeito.setMaximum(100);
-    sliderEfeito.setMajorTickSpacing(10);
-    sliderEfeito.setMinorTickSpacing(1);
-    sliderEfeito.setPreferredSize(new Dimension(350, 40));
-    sliderEfeito.setMaximumSize(new Dimension(350, 40));
-    sliderEfeito.setMinimumSize(new Dimension(350, 40));
-    gbc.gridx = 1;
-    gbc.gridy = 3;
-    gbc.insets = new Insets(0, 0, 0, 0);
-    gbc.weightx = 1.0;
-    gbc.fill = GridBagConstraints.HORIZONTAL;
-
-    sliderPanelEfeito = new JPanel();
-    sliderPanelEfeito.setLayout(new BorderLayout());
-    sliderPanelEfeito.setOpaque(false);
-    sliderPanelEfeito.add(sliderEfeito, BorderLayout.CENTER);
-    ferramentasConfiguracoes.add(sliderPanelEfeito, gbc);
-    sliderPanelEfeito.setVisible(false);
-    configLabels.add(sliderPanelEfeito);
-    // ------
     sliderEfeito.addChangeListener(new ChangeListener() {
-      private int valueEf;
 
       @Override
       public void stateChanged(ChangeEvent e) {
@@ -628,11 +657,13 @@ public class ConfPanel extends JPanel {
         ControlSonsTranper = (valueEf == 0) ? 0.5f : 1.0f;
 
         ImageIcon ImageSliderFundo1 = new ImageIcon(backgroundImage);
-        transparentFund = createTransparentIcon(ImageSliderFundo1, ControlSonsTranper);
+        transparentFund = createTransparentIcon(ImageSliderFundo1,
+            ControlSonsTranper);
         Image backgroundTransperImage = transparentFund.getImage();
 
         ImageIcon ImageSliderArrastar1 = new ImageIcon(thumbImage);
-        transparentArrast = createTransparentIcon(ImageSliderArrastar1, ControlSonsTranper);
+        transparentArrast = createTransparentIcon(ImageSliderArrastar1,
+            ControlSonsTranper);
         Image thumbTransperImage = transparentArrast.getImage();
 
         sliderEfeito.updateImages(backgroundTransperImage, thumbTransperImage);
@@ -645,10 +676,10 @@ public class ConfPanel extends JPanel {
         } else {
           RemoteEfeito.setVisible(false);
         }
-
       }
     });
-    OuvirEfeitoJLabel = new JLabel(" 50%");
+    valueEf = sliderEfeito.getValue();
+    OuvirEfeitoJLabel = new JLabel(" " + valueEf + "%");
     OuvirEfeitoJLabel.setFont(Fonts);
     OuvirEfeitoJLabel.setForeground(Color.WHITE);
     OuvirEfeitoJLabel.setPreferredSize(new Dimension(70, 20)); // Tamanho fixo
@@ -780,9 +811,9 @@ public class ConfPanel extends JPanel {
     });
     addHoverButtonsDifi(ButtonDificiultFacil, "Fácil");
     if (clickedButtonDifiFacil) {
-            ButtonDificiultFacil.setForeground(Color.GREEN);
-        ButtonDificiultNormal.setForeground(Color.WHITE);
-        ButtonDificiult.setForeground(Color.WHITE);
+      ButtonDificiultFacil.setForeground(Color.GREEN);
+      ButtonDificiultNormal.setForeground(Color.WHITE);
+      ButtonDificiult.setForeground(Color.WHITE);
     }
     ButtonDificiultFacil.setBorder(borderButton);
     gbc.gridx = 0;
@@ -945,6 +976,16 @@ public class ConfPanel extends JPanel {
         buttonEfeito.setVisible(true);
         sliderPanelEfeito.setVisible(true);
         OuvirEfeitoJLabel.setVisible(true);
+        if (value == 0) {
+          RemoteSom.setVisible(true);
+        } else {
+          RemoteSom.setVisible(false);
+        }
+        if (valueEf == 0) {
+          RemoteEfeito.setVisible(true);
+        } else {
+          RemoteEfeito.setVisible(false);
+        }
       }
     });
     ConfigButton(áudio, Fonts, 150, 40, "Áudio");
@@ -965,6 +1006,7 @@ public class ConfPanel extends JPanel {
         textNormal.setVisible(true);
         ButtonDificiultFacil.setVisible(true);
         textFacil.setVisible(true);
+
       }
     });
     ConfigButton(Dificuldade, Fonts, 150, 40, "Dificuldade");

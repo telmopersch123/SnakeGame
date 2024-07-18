@@ -14,28 +14,20 @@ import javax.swing.plaf.basic.BasicSliderUI;
 public class CustomSlider extends JSlider {
     private Image backgroundImage;
     private Image thumbImage;
-    private static Preferences prefs = Preferences.userNodeForPackage(CustomSlider.class);
-    private static final String SLIDER_POSITION_KEY = "slider_position";
+    private Preferences prefs;
+    private String sliderPositionKey;
 
-    public CustomSlider(Image backgroundImage, Image thumbImage) {
+    public CustomSlider(Image backgroundImage, Image thumbImage, Preferences prefs, String sliderPositionKey) {
         super();
         this.backgroundImage = backgroundImage;
         this.thumbImage = thumbImage;
-
-        int sliderPosition = prefs.getInt(SLIDER_POSITION_KEY, (getMaximum() - getMinimum()) / 2);
+        this.prefs = prefs;
+        this.sliderPositionKey = sliderPositionKey;
+        int sliderPosition = prefs.getInt(sliderPositionKey, (getMaximum() - getMinimum()) / 2);
         setValue(sliderPosition);
         setUI(new CustomSliderUI(this));
         setOpaque(false);
         setPreferredSize(new Dimension(200, 40));
-
-        addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int newValue = getValue();
-                prefs.putInt(SLIDER_POSITION_KEY, newValue);
-                repaint();
-            }
-        });
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -44,18 +36,21 @@ public class CustomSlider extends JSlider {
                 int thumbWidth = thumbImage.getWidth(null);
                 int minPos = thumbWidth / 2;
                 int maxPos = getWidth() - thumbWidth / 2;
-
-                // Calcular o novo valor baseado na posição do mouse
                 int newValue = (int) Math.round((double) (mouseX - minPos) / (maxPos - minPos) * getMaximum());
-
-                // Ignorar cliques entre 1 e 20
-                // Se o novo valor estiver entre 1 e 10, ir para a posição 1
                 if (newValue >= -10 && newValue <= 10) {
                     setValue(5);
                 } else {
                     setValue(newValue);
                 }
 
+            }
+        });
+        addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int newValue = getValue();
+                prefs.putInt(sliderPositionKey, newValue);
+                repaint();
             }
         });
 
