@@ -752,8 +752,8 @@ public class Game extends JPanel implements Runnable {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define o comportamento ao fechar a janela
     ImageIcon buttonReturn = new StretchIcon("resources/Menu/return.png");
     ConfPanel confPanel = new ConfPanel(buttonReturn);
-    //MenuPanel menuPanel = new MenuPanel();
-    //frame.add(menuPanel);
+    // MenuPanel menuPanel = new MenuPanel();
+    // frame.add(menuPanel);
     frame.add(confPanel);
     frame.setVisible(true);
   }

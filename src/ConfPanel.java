@@ -81,6 +81,18 @@ public class ConfPanel extends JPanel {
   private ImageIcon transparentIcon;
   private ImageIcon transparentFund;
   private ImageIcon transparentArrast;
+  private ImageIcon fundoButtonsDificults;
+  private Font FBDificults;
+  protected static boolean clickedButtonDifiNormal;
+  protected static boolean clickedButtonDifiDificil;
+  protected static boolean clickedButtonDifiFacil;
+  private static boolean clickedButtonDifi = false;
+  private static JButton ButtonDificiultFacil;
+  private static JLabel textFacil;
+  private static JButton ButtonDificiultNormal;
+  private static JLabel textNormal;
+  private static JLabel textDificuldade;
+  private static JButton ButtonDificiult;
   private static JLabel RemoteSom;
   private static JLabel RemoteEfeito;
   private static JLabel OuvirEfeitoJLabel;
@@ -633,7 +645,7 @@ public class ConfPanel extends JPanel {
         } else {
           RemoteEfeito.setVisible(false);
         }
-      
+
       }
     });
     OuvirEfeitoJLabel = new JLabel(" 50%");
@@ -653,7 +665,7 @@ public class ConfPanel extends JPanel {
     /// ====================================
     /// ====================================
     /// ====================================
-    texto3 = new JLabel("Dificuldade");
+    texto3 = new JLabel("<html><div style='width: 200px; text-align: center;'>Dificuldade de jogo</div></html>");
     texto3.setFont(Fonts);
     texto3.setForeground(Color.WHITE);
     gbc.gridx = 0;
@@ -661,6 +673,136 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(texto3, gbc);
     texto3.setVisible(false);
     configLabels.add(texto3);
+    // -----
+    FBDificults = Fonts.deriveFont((float) 20);
+    fundoButtonsDificults = new StretchIcon("resources/Menu/buttonDificults.png");
+    ButtonDificiult = new JButton("Difícil", fundoButtonsDificults);
+    ConfigButton(ButtonDificiult, FBDificults, 150, 60, " ");
+
+    ButtonDificiult.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        ButtonDificiultFacil.setForeground(Color.WHITE);
+        ButtonDificiultNormal.setForeground(Color.WHITE);
+        ButtonDificiult.setForeground(Color.RED);
+        clickedButtonDifi = true;
+        clickedButtonDifiFacil = false;
+        clickedButtonDifiNormal = false;
+        clickedButtonDifiDificil = true;
+      }
+    });
+    addHoverButtonsDifi(ButtonDificiult, "Difícil");
+    if (clickedButtonDifiDificil) {
+      ButtonDificiultFacil.setForeground(Color.WHITE);
+      ButtonDificiultNormal.setForeground(Color.WHITE);
+      ButtonDificiult.setForeground(Color.RED);
+    }
+    Border borderButton = BorderFactory.createEmptyBorder(10, 0, 0,
+        0);
+    ButtonDificiult.setBorder(borderButton);
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gbc.insets = new Insets(50, 0, 0, 0);
+    ferramentasConfiguracoes.add(ButtonDificiult, gbc);
+    ButtonDificiult.setVisible(false);
+    configLabels.add(ButtonDificiult);
+    // ----
+    textDificuldade = new JLabel(
+        "<html><div style='width: 200px; text-align: center;'>Irá conter mais obstáculos do que o normal, e a cobra terá vida útil.</div></html>");
+    textDificuldade.setFont(Fonts);
+    textDificuldade.setPreferredSize(new Dimension(150, 150));
+    textDificuldade.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    ferramentasConfiguracoes.add(textDificuldade, gbc);
+    textDificuldade.setVisible(false);
+    configLabels.add(textDificuldade);
+    /// ===================
+    /// =====================
+    ButtonDificiultNormal = new JButton("Normal", fundoButtonsDificults);
+
+    ConfigButton(ButtonDificiultNormal, FBDificults, 150, 60, " ");
+
+    ButtonDificiultNormal.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        ButtonDificiultFacil.setForeground(Color.WHITE);
+        ButtonDificiultNormal.setForeground(Color.YELLOW);
+        ButtonDificiult.setForeground(Color.WHITE);
+        clickedButtonDifi = true;
+        clickedButtonDifiFacil = false;
+        clickedButtonDifiNormal = true;
+        clickedButtonDifiDificil = false;
+      }
+    });
+    addHoverButtonsDifi(ButtonDificiultNormal, "Normal");
+    if (clickedButtonDifiNormal) {
+      ButtonDificiultFacil.setForeground(Color.WHITE);
+      ButtonDificiultNormal.setForeground(Color.YELLOW);
+      ButtonDificiult.setForeground(Color.WHITE);
+    }
+    ButtonDificiultNormal.setBorder(borderButton);
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    gbc.insets = new Insets(50, 0, 0, 0);
+    ferramentasConfiguracoes.add(ButtonDificiultNormal, gbc);
+    ButtonDificiultNormal.setVisible(false);
+    configLabels.add(ButtonDificiultNormal);
+    // ----
+    textNormal = new JLabel(
+        "<html><div style='width: 200px; text-align: center;'>Irá conter mais obstáculos  do que o fácil e tera colisões com as extremidades.</div></html>");
+    textNormal.setFont(Fonts);
+    textNormal.setPreferredSize(new Dimension(150, 150));
+    textNormal.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    gbc.gridy = 4;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    ferramentasConfiguracoes.add(textNormal, gbc);
+    textNormal.setVisible(false);
+    configLabels.add(textNormal);
+    /// ====================
+    /// =====================
+    ButtonDificiultFacil = new JButton("Fácil", fundoButtonsDificults);
+    ConfigButton(ButtonDificiultFacil, FBDificults, 150, 60, "");
+
+    ButtonDificiultFacil.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        ButtonDificiultFacil.setForeground(Color.GREEN);
+        ButtonDificiultNormal.setForeground(Color.WHITE);
+        ButtonDificiult.setForeground(Color.WHITE);
+        clickedButtonDifi = true;
+        clickedButtonDifiFacil = true;
+        clickedButtonDifiNormal = false;
+        clickedButtonDifiDificil = false;
+      }
+    });
+    addHoverButtonsDifi(ButtonDificiultFacil, "Fácil");
+    if (clickedButtonDifiFacil) {
+            ButtonDificiultFacil.setForeground(Color.GREEN);
+        ButtonDificiultNormal.setForeground(Color.WHITE);
+        ButtonDificiult.setForeground(Color.WHITE);
+    }
+    ButtonDificiultFacil.setBorder(borderButton);
+    gbc.gridx = 0;
+    gbc.gridy = 5;
+    gbc.insets = new Insets(50, 0, 0, 0);
+    ferramentasConfiguracoes.add(ButtonDificiultFacil, gbc);
+    ButtonDificiultFacil.setVisible(false);
+    configLabels.add(ButtonDificiultFacil);
+    // ----
+    textFacil = new JLabel(
+        "<html><div style='width: 200px; text-align: center;'>Menos obstáculos e poucas colisões, e sem extremidades.</div></html>");
+    textFacil.setFont(Fonts);
+    textFacil.setPreferredSize(new Dimension(150, 150));
+    textFacil.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    gbc.gridy = 6;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    ferramentasConfiguracoes.add(textFacil, gbc);
+    textFacil.setVisible(false);
+    configLabels.add(textFacil);
   }
 
   public static void setAllLabelsInvisible() {
@@ -678,6 +820,53 @@ public class ConfPanel extends JPanel {
     g2d.drawImage(image, 0, 0, null);
     g2d.dispose();
     return new ImageIcon(bufferedImage);
+  }
+
+  public static void addHoverButtonsDifi(JButton button, String text) {
+    button.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseEntered(MouseEvent e) {
+
+        switch (text) {
+          case "Difícil":
+            button.setForeground(Color.RED);
+            break;
+          case "Normal":
+            button.setForeground(Color.YELLOW);
+            break;
+          case "Fácil":
+            button.setForeground(Color.GREEN);
+            break;
+          default:
+            break;
+        }
+      }
+
+      @Override
+      public void mouseExited(MouseEvent e) {
+        if (text == "Difícil") {
+          if (clickedButtonDifiDificil) {
+            button.setForeground(Color.RED);
+          } else {
+            button.setForeground(Color.WHITE);
+          }
+        }
+        if (text == "Fácil") {
+          if (clickedButtonDifiFacil) {
+            button.setForeground(Color.GREEN);
+          } else {
+            button.setForeground(Color.WHITE);
+          }
+        }
+        if (text == "Normal") {
+          if (clickedButtonDifiNormal) {
+            button.setForeground(Color.YELLOW);
+          } else {
+            button.setForeground(Color.WHITE);
+          }
+        }
+      }
+    });
   }
 
   public static void addHoverEffect(JButton button, int normalWidth, int normalHeight) {
@@ -770,6 +959,12 @@ public class ConfPanel extends JPanel {
       public void actionPerformed(ActionEvent e) {
         setAllLabelsInvisible();
         texto3.setVisible(true);
+        ButtonDificiult.setVisible(true);
+        textDificuldade.setVisible(true);
+        ButtonDificiultNormal.setVisible(true);
+        textNormal.setVisible(true);
+        ButtonDificiultFacil.setVisible(true);
+        textFacil.setVisible(true);
       }
     });
     ConfigButton(Dificuldade, Fonts, 150, 40, "Dificuldade");
