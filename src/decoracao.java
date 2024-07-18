@@ -283,18 +283,58 @@ public class decoracao {
     int valueDecoSimples = 0;
     int valueDecoComplexo = 0;
     if (Game.MapField) {
-      valueDecoSimples = 9;
+      if (Game.clickedButtonDifiDificil) {
+        valueDecoSimples = 9;
+      } else if (Game.clickedButtonDifiNormal) {
+        valueDecoSimples = 6;
+      } else if (Game.clickedButtonDifiFacil) {
+        valueDecoSimples = 3;
+      }
     } else if (Game.MapSwamp) {
-      valueDecoSimples = 5;
+      if (Game.clickedButtonDifiDificil) {
+        valueDecoSimples = 5;
+      } else if (Game.clickedButtonDifiNormal) {
+        valueDecoSimples = 3;
+      } else if (Game.clickedButtonDifiFacil) {
+        valueDecoSimples = 1;
+      }
+
     } else if (Game.MapDungeon) {
-      valueDecoSimples = 17;
+      if (Game.clickedButtonDifiDificil) {
+        valueDecoSimples = 17;
+      } else if (Game.clickedButtonDifiNormal) {
+        valueDecoSimples = 11;
+      } else if (Game.clickedButtonDifiFacil) {
+        valueDecoSimples = 5;
+      }
+
     }
     if (Game.MapField) {
-      valueDecoComplexo = 12;
+      if (Game.clickedButtonDifiDificil) {
+        valueDecoComplexo = 12;
+      } else if (Game.clickedButtonDifiNormal) {
+        valueDecoComplexo = 8;
+      } else if (Game.clickedButtonDifiFacil) {
+        valueDecoComplexo = 4;
+      }
     } else if (Game.MapSwamp) {
-      valueDecoComplexo = 34;
+      if (Game.clickedButtonDifiDificil) {
+        valueDecoComplexo = 34;
+      } else if (Game.clickedButtonDifiNormal) {
+        valueDecoComplexo = 22;
+      } else if (Game.clickedButtonDifiFacil) {
+        valueDecoComplexo = 10;
+      }
+
     } else if (Game.MapDungeon) {
-      valueDecoComplexo = 14;
+      if (Game.clickedButtonDifiDificil) {
+        valueDecoComplexo = 14;
+      } else if (Game.clickedButtonDifiNormal) {
+        valueDecoComplexo = 8;
+      } else if (Game.clickedButtonDifiFacil) {
+        valueDecoComplexo = 4;
+      }
+
     }
 
     for (int i = 0; i < valueDecoSimples; i++) {
@@ -506,46 +546,49 @@ public class decoracao {
     int index = 0;
 
     //// Decorações simples
-    for (int i = 0; i < Game.quanti.get(0); i++) {
-      imagens.add(new Imagem(Bush_blue_flowers, Game.DecoracaoX[index], Game.DecoracaoY[index], 28, 28));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(1); i++) {
-      imagens.add(new Imagem(Bush_orange_flowers1, Game.DecoracaoX[index], Game.DecoracaoY[index], 35, 37));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(2); i++) {
-      imagens.add(new Imagem(Bush_simple1_1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(3); i++) {
-      imagens.add(new Imagem(Bush_simple2_1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(4); i++) {
-      imagens.add(new Imagem(Fruit_tree3,
-          Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(5); i++) {
-      imagens.add(new Imagem(Glade_Objects_Top_Down_Pixel_Art2,
-          Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(6); i++) {
-      imagens.add(new Imagem(Glade_Objects_Top_Down_Pixel_Art3,
-          Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(7); i++) {
-      imagens.add(new Imagem(Rock1_grass_shadow1,
-          Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(8); i++) {
-      imagens.add(new Imagem(Rock1_grass_shadow3,
-          Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
+    try {
+      for (int i = 0; i < Game.quanti.get(0); i++) {
+        imagens.add(new Imagem(Bush_blue_flowers, Game.DecoracaoX[index], Game.DecoracaoY[index], 28, 28));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(1); i++) {
+        imagens.add(new Imagem(Bush_orange_flowers1, Game.DecoracaoX[index], Game.DecoracaoY[index], 35, 37));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(2); i++) {
+        imagens.add(new Imagem(Bush_simple1_1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(3); i++) {
+        imagens.add(new Imagem(Bush_simple2_1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(4); i++) {
+        imagens.add(new Imagem(Fruit_tree3,
+            Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(5); i++) {
+        imagens.add(new Imagem(Glade_Objects_Top_Down_Pixel_Art2,
+            Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(6); i++) {
+        imagens.add(new Imagem(Glade_Objects_Top_Down_Pixel_Art3,
+            Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(7); i++) {
+        imagens.add(new Imagem(Rock1_grass_shadow1,
+            Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(8); i++) {
+        imagens.add(new Imagem(Rock1_grass_shadow3,
+            Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+    } catch (IndexOutOfBoundsException e) {
     }
 
     // Decorações Complexas
@@ -605,7 +648,7 @@ public class decoracao {
                 Game.DecoComplexoY[10], null);
             long currentTimeMoinho = System.currentTimeMillis();
             if (Game.ManterAnimation) {
-            Game.currentFrame10 = (Game.currentFrame10 + 1) % totalFramesMo;
+              Game.currentFrame10 = (Game.currentFrame10 + 1) % totalFramesMo;
               if (currentTimeMoinho - lastFrameTimeMo >= frameIntervalMo) {
                 lastFrameTimeMo = currentTimeMoinho - (currentTimeMoinho % frameIntervalMo);
                 Game.currentFrame10 = (Game.currentFrame10 + 1) % totalFramesMo;
@@ -634,7 +677,7 @@ public class decoracao {
                 Game.DecoComplexoY[11], null);
             long currentTimeBandeira = System.currentTimeMillis();
             if (Game.ManterAnimation) {
-            Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesBan;
+              Game.currentFrame11 = (Game.currentFrame11 + 1) % totalFramesBan;
               if (currentTimeBandeira - lastFrameTimeBan >= frameIntervalBan) {
                 lastFrameTimeBan = currentTimeBandeira - (currentTimeBandeira %
                     frameIntervalBan);

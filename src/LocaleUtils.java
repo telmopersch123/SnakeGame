@@ -112,8 +112,20 @@ public class LocaleUtils {
 
     for (int k = 0; k < numWalls; k++) {
       // Define as dimensões do quadrado ou retângulo perfeito
-      int wallWidth = (int) (Math.random() * 4) + 1; // Largura aleatória entre 5 e 14
-      int wallHeight = (int) (Math.random() * 2) + 1; // Altura aleatória entre 3 e 7
+      int valueWidth = 0;
+      int valueHeight = 0;
+      if (Game.clickedButtonDifiDificil) {
+        valueWidth = 4;
+        valueHeight = 2;
+      } else if (Game.clickedButtonDifiNormal) {
+        valueWidth = 3;
+        valueHeight = 1;
+      } else if (Game.clickedButtonDifiFacil) {
+        valueWidth = 2;
+        valueHeight = 1;
+      }
+      int wallWidth = (int) (Math.random() * valueWidth) + 1; // 
+      int wallHeight = (int) (Math.random() * valueHeight) + 1; // A
 
       // Define a posição inicial do quadrado ou retângulo
       int startX = (int) (Math.random() * (FrameWidth - wallWidth * WIDTH));
@@ -129,8 +141,8 @@ public class LocaleUtils {
 
       // Adiciona falhas aleatórias sobre o quadrado ou retângulo
       for (int i = 0; i < 20 * (wallWidth + wallHeight); i++) {
-        int randomX = startX - 2 * WIDTH + (int) (Math.random() * (wallWidth * WIDTH + 4 * WIDTH));
-        int randomY = startY - 2 * HEIGHT + (int) (Math.random() * (wallHeight * HEIGHT + 4 * HEIGHT));
+        int randomX = startX - valueWidth * WIDTH + (int) (Math.random() * (wallWidth * WIDTH + valueWidth * WIDTH));
+        int randomY = startY - valueHeight * HEIGHT + (int) (Math.random() * (wallHeight * HEIGHT + valueHeight * HEIGHT));
         walls_x.add(randomX);
         walls_y.add(randomY);
       }

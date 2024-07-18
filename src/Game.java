@@ -151,7 +151,7 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public static int direction;
-  static Node[] ComprimentoCobra = new Node[490];
+  static Node[] ComprimentoCobra = new Node[40];
   public static Node[] nodeSnake = ComprimentoCobra;
   public int score = 0;
   public static int macaX = 0, macaY = 0;
@@ -472,6 +472,9 @@ public class Game extends JPanel implements Runnable {
   static int keyPressedDireita = KeyEvent.VK_RIGHT;
   static boolean RemoverAnimation = false;
   static boolean ManterAnimation = true;
+  static boolean clickedButtonDifiNormal = false;
+  static boolean clickedButtonDifiDificil = false;
+  static boolean clickedButtonDifiFacil = true;
 
   private void initializeKeyListener() {
     if (!gameOver && !GameFim) {
@@ -750,11 +753,8 @@ public class Game extends JPanel implements Runnable {
     frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Define a janela para tela
     // cheia
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define o comportamento ao fechar a janela
-    ImageIcon buttonReturn = new StretchIcon("resources/Menu/return.png");
-    ConfPanel confPanel = new ConfPanel(buttonReturn);
-    // MenuPanel menuPanel = new MenuPanel();
-    // frame.add(menuPanel);
-    frame.add(confPanel);
+    MenuPanel menuPanel = new MenuPanel();
+    frame.add(menuPanel);
     frame.setVisible(true);
   }
 
@@ -780,6 +780,9 @@ public class Game extends JPanel implements Runnable {
       }
 
       tick();
+      if (clickedButtonDifiFacil) {
+        Ultrapassagem.UltrapassagemPainel(nodeSnake, FrameWidth, FrameHeight);
+      }
       ResultadoColisao resultadoColisao = checkedColisson.verificarColisao(gameOver, WIDTH, HEIGHT, FrameWidth,
           FrameHeight,
           walls_x, walls_y, nodeSnake, largerCollisionArea, headCollisionArea,
@@ -1004,12 +1007,18 @@ public class Game extends JPanel implements Runnable {
           VelocityIcon, posicaoXVelocity, posicaoYVelocity, widhtVelocityW,
           widhtVelocityH, TransparentVelocity);
     }
-    Colidian(rock_swamp, rock_dungeon);
+    if (clickedButtonDifiDificil || clickedButtonDifiNormal) {
+      Colidian(rock_swamp, rock_dungeon);
+    }
+
     // Desenha as animação do jogo
     if (Game.ManterAnimation) {
       Animation();
     }
-    // LifesTimers.LifeSnake(this, buffer, gameOver);
+    if (clickedButtonDifiDificil) {
+      LifesTimers.LifeSnake(this, buffer, gameOver);
+    }
+
     // Renderiza o buffer na tela
 
     g.drawImage(buffer, 0, 0, null);
@@ -1626,6 +1635,7 @@ public class Game extends JPanel implements Runnable {
 
   // Método para atualizar a lógica do jogo
   public void tick() {
+
     VerificDistance = keyListener.getVerif();
     for (int z = 0; z < nodeSnake.length; z++) {
       int currX = nodeSnake[z].x;

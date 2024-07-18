@@ -85,10 +85,6 @@ public class ConfPanel extends JPanel {
   private ImageIcon transparentArrast;
   private ImageIcon fundoButtonsDificults;
   private Font FBDificults;
-  protected static boolean clickedButtonDifiNormal;
-  protected static boolean clickedButtonDifiDificil;
-  protected static boolean clickedButtonDifiFacil;
-  private static boolean clickedButtonDifi = false;
   private static JButton ButtonDificiultFacil;
   private static JLabel textFacil;
   private static JButton ButtonDificiultNormal;
@@ -716,14 +712,13 @@ public class ConfPanel extends JPanel {
         ButtonDificiultFacil.setForeground(Color.WHITE);
         ButtonDificiultNormal.setForeground(Color.WHITE);
         ButtonDificiult.setForeground(Color.RED);
-        clickedButtonDifi = true;
-        clickedButtonDifiFacil = false;
-        clickedButtonDifiNormal = false;
-        clickedButtonDifiDificil = true;
+        Game.clickedButtonDifiFacil = false;
+        Game.clickedButtonDifiNormal = false;
+        Game.clickedButtonDifiDificil = true;
       }
     });
     addHoverButtonsDifi(ButtonDificiult, "Difícil");
-    if (clickedButtonDifiDificil) {
+    if (Game.clickedButtonDifiDificil) {
       ButtonDificiultFacil.setForeground(Color.WHITE);
       ButtonDificiultNormal.setForeground(Color.WHITE);
       ButtonDificiult.setForeground(Color.RED);
@@ -761,15 +756,16 @@ public class ConfPanel extends JPanel {
         ButtonDificiultFacil.setForeground(Color.WHITE);
         ButtonDificiultNormal.setForeground(Color.YELLOW);
         ButtonDificiult.setForeground(Color.WHITE);
-        clickedButtonDifi = true;
-        clickedButtonDifiFacil = false;
-        clickedButtonDifiNormal = true;
-        clickedButtonDifiDificil = false;
+        Game.clickedButtonDifiFacil = false;
+        Game.clickedButtonDifiNormal = true;
+        Game.clickedButtonDifiDificil = false;
       }
     });
     addHoverButtonsDifi(ButtonDificiultNormal, "Normal");
-    if (clickedButtonDifiNormal) {
-      ButtonDificiultFacil.setForeground(Color.WHITE);
+    if (Game.clickedButtonDifiNormal) {
+      if (ButtonDificiultFacil != null) {
+        ButtonDificiultFacil.setForeground(Color.WHITE);
+      }
       ButtonDificiultNormal.setForeground(Color.YELLOW);
       ButtonDificiult.setForeground(Color.WHITE);
     }
@@ -803,14 +799,13 @@ public class ConfPanel extends JPanel {
         ButtonDificiultFacil.setForeground(Color.GREEN);
         ButtonDificiultNormal.setForeground(Color.WHITE);
         ButtonDificiult.setForeground(Color.WHITE);
-        clickedButtonDifi = true;
-        clickedButtonDifiFacil = true;
-        clickedButtonDifiNormal = false;
-        clickedButtonDifiDificil = false;
+        Game.clickedButtonDifiFacil = true;
+        Game.clickedButtonDifiNormal = false;
+        Game.clickedButtonDifiDificil = false;
       }
     });
     addHoverButtonsDifi(ButtonDificiultFacil, "Fácil");
-    if (clickedButtonDifiFacil) {
+    if (Game.clickedButtonDifiFacil) {
       ButtonDificiultFacil.setForeground(Color.GREEN);
       ButtonDificiultNormal.setForeground(Color.WHITE);
       ButtonDificiult.setForeground(Color.WHITE);
@@ -876,21 +871,21 @@ public class ConfPanel extends JPanel {
       @Override
       public void mouseExited(MouseEvent e) {
         if (text == "Difícil") {
-          if (clickedButtonDifiDificil) {
+          if (Game.clickedButtonDifiDificil) {
             button.setForeground(Color.RED);
           } else {
             button.setForeground(Color.WHITE);
           }
         }
         if (text == "Fácil") {
-          if (clickedButtonDifiFacil) {
+          if (Game.clickedButtonDifiFacil) {
             button.setForeground(Color.GREEN);
           } else {
             button.setForeground(Color.WHITE);
           }
         }
         if (text == "Normal") {
-          if (clickedButtonDifiNormal) {
+          if (Game.clickedButtonDifiNormal) {
             button.setForeground(Color.YELLOW);
           } else {
             button.setForeground(Color.WHITE);

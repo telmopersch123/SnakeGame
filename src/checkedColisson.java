@@ -1,9 +1,7 @@
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-// 1 PROBLEMA - POSIÇÕES DE COLISÃO AONDE TEM NADA
-// 2 PROBLEMA - NASCENDO AINDA FIGURA UMA NA POSIÇÃO DA OUTRA, TALVEZ TÁ, E NAS PAREDES TAMBÉM, ANALISAR OQUE PDOE SER
-// 3 PROBLEMA - ORDEM DE DESENHAMENTO ESTRANHO, PEDRA EM CIMA DO MOINHO?
+
 public class checkedColisson {
 
   public static Rectangle headCollisionAreaDeco;
@@ -29,10 +27,12 @@ public class checkedColisson {
       return new ResultadoColisao(true, false);
     }
 
-    if (colisaoPainel(nodeSnake, borderWidth, getWidth, getHeight)) {
-      return new ResultadoColisao(true, false);
+    if (Game.clickedButtonDifiNormal || Game.clickedButtonDifiDificil) {
+      if (colisaoPainel(nodeSnake, borderWidth, getWidth, getHeight)) {
+        return new ResultadoColisao(true, false);
+      }
     }
-    if (nodeSnake.length >= 510) {
+    if (nodeSnake.length >= 60) {
       if (colisaoCobra(nodeSnake)) {
         return new ResultadoColisao(true, false);
       }

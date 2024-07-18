@@ -38,14 +38,17 @@ public class food {
     int sh = EnergyAnimationFoodPoison.getHeight() / numFramesY1;
     food1 = buffer.createGraphics();
     AffineTransform atPoison = new AffineTransform();
+    if (height == 0) {
+      height = 20;
+    }
     atPoison.scale((double) (width + 2) / sw, (double) (height + 2) / sh);
     AffineTransformOp op = new AffineTransformOp(atPoison, AffineTransformOp.TYPE_BILINEAR);
     BufferedImage scaledImage = op.filter(EnergyAnimationFoodPoison.getSubimage(sx, sy, sw, sh), null);
     food1.drawImage(scaledImage, macaPOX, macaPOY, null);
     // Atualize o quadro que foi renderizado
     if (Game.ManterAnimation) {
-    Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFrames1;
-    totalFrames1 = numFramesX1 * numFramesY1;
+      Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFrames1;
+      totalFrames1 = numFramesX1 * numFramesY1;
       if (currentTime1 - lastFrameTime1 > frameInterval1) {
         Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFrames1;
         lastFrameTime1 = currentTime1;
@@ -86,8 +89,8 @@ public class food {
     // Draw the scaled image
     food.drawImage(scaledImage, macaX, macaY, null);
     if (Game.ManterAnimation) {
-    Game.currentFrame5 = (Game.currentFrame5 + 1) % totalFrames;
-    totalFrames = numFramesX * numFramesY;
+      Game.currentFrame5 = (Game.currentFrame5 + 1) % totalFrames;
+      totalFrames = numFramesX * numFramesY;
       if (currentTime - lastFrameTime > frameInterval) {
         lastFrameTime = currentTime;
       }
