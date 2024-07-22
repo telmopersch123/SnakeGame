@@ -1,7 +1,6 @@
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-
 public class checkedColisson {
 
   public static Rectangle headCollisionAreaDeco;
@@ -87,87 +86,111 @@ public class checkedColisson {
         if (Game.quantiComplexo.get(i) > 0) {
           switch (i) {
             case 0:
-              complexasField = new Rectangle(Game.DecoComplexoX[1] + 10,
-                  Game.DecoComplexoY[1] + 45, 40, 10);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 1 && Game.DecoComplexoY.length > 1) {
+                complexasField = new Rectangle(Game.DecoComplexoX[1] + 10,
+                    Game.DecoComplexoY[1] + 45, 40, 10);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 1:
-              complexasField = new Rectangle(Game.DecoComplexoX[2] + 10,
-                  Game.DecoComplexoY[2] + 45, 40, 10);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 2 && Game.DecoComplexoY.length > 2) {
+                complexasField = new Rectangle(Game.DecoComplexoX[2] + 10,
+                    Game.DecoComplexoY[2] + 45, 40, 10);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 2:
-              complexasField = new Rectangle(Game.DecoComplexoX[3] + 10,
-                  Game.DecoComplexoY[3] + 50, 40, 10);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 3 && Game.DecoComplexoY.length > 3) {
+                complexasField = new Rectangle(Game.DecoComplexoX[3] + 10,
+                    Game.DecoComplexoY[3] + 50, 40, 10);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 3:
-              complexasField = new Rectangle(Game.DecoComplexoX[4] + 35,
-                  Game.DecoComplexoY[4] + 75, 40, 10);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 4 && Game.DecoComplexoY.length > 4) {
+                complexasField = new Rectangle(Game.DecoComplexoX[4] + 35,
+                    Game.DecoComplexoY[4] + 75, 40, 10);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 4:
-              complexasField = new Rectangle(Game.DecoComplexoX[5] + 22,
-                  Game.DecoComplexoY[5] + 50, 10, 10);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 5 && Game.DecoComplexoY.length > 5) {
+                complexasField = new Rectangle(Game.DecoComplexoX[5] + 22,
+                    Game.DecoComplexoY[5] + 50, 10, 10);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 5:
-              complexasField = new Rectangle(Game.DecoComplexoX[6] + 10,
-                  Game.DecoComplexoY[6] + 40, 50, 50);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 6 && Game.DecoComplexoY.length > 6) {
+                complexasField = new Rectangle(Game.DecoComplexoX[6] + 10,
+                    Game.DecoComplexoY[6] + 40, 50, 50);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 6:
-              complexasField = new Rectangle(Game.DecoComplexoX[7] + 25,
-                  Game.DecoComplexoY[7] + 15, 75, 85);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 7 && Game.DecoComplexoY.length > 7) {
+                complexasField = new Rectangle(Game.DecoComplexoX[7] + 25,
+                    Game.DecoComplexoY[7] + 15, 75, 85);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 7:
-              complexasField = new Rectangle(Game.DecoComplexoX[8],
-                  Game.DecoComplexoY[8] + 25, 64, 40);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 8 && Game.DecoComplexoY.length > 8) {
+                complexasField = new Rectangle(Game.DecoComplexoX[8],
+                    Game.DecoComplexoY[8] + 25, 64, 40);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 8:
-              complexasField = new Rectangle(Game.DecoComplexoX[9] + 10,
-                  Game.DecoComplexoY[9] + 15, 100, 90);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 9 && Game.DecoComplexoY.length > 9) {
+                complexasField = new Rectangle(Game.DecoComplexoX[9] + 10,
+                    Game.DecoComplexoY[9] + 15, 100, 90);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 9:
-              complexasField = new Rectangle(Game.DecoComplexoX[10] + 35,
-                  Game.DecoComplexoY[10] + 100, 40, 40);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 10 && Game.DecoComplexoY.length > 10) {
+                complexasField = new Rectangle(Game.DecoComplexoX[10] + 35,
+                    Game.DecoComplexoY[10] + 100, 40, 40);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 10:
-              complexasField = new Rectangle(Game.DecoComplexoX[11] + 15,
-                  Game.DecoComplexoY[11] + 50, 10, 10);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 11 && Game.DecoComplexoY.length > 11) {
+                complexasField = new Rectangle(Game.DecoComplexoX[11] + 15,
+                    Game.DecoComplexoY[11] + 50, 10, 10);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             case 11:
-              complexasField = new Rectangle(Game.DecoComplexoX[12],
-                  Game.DecoComplexoY[12] + 10, 100, 67);
-              if (headCollisionAreaDeco.intersects(complexasField)) {
-                return true;
+              if (Game.DecoComplexoX.length > 12 && Game.DecoComplexoY.length > 12) {
+                complexasField = new Rectangle(Game.DecoComplexoX[12],
+                    Game.DecoComplexoY[12] + 10, 100, 67);
+                if (headCollisionAreaDeco.intersects(complexasField)) {
+                  return true;
+                }
               }
               break;
             default:
@@ -176,7 +199,6 @@ public class checkedColisson {
         }
       }
     }
-
     return false;
   }
 
@@ -546,7 +568,6 @@ public class checkedColisson {
         Rectangle Decoracao = new Rectangle(Game.DecoracaoX[i], Game.DecoracaoY[i],
             30, 30);
         if (Game.snakeFire) {
-
           for (int f = 0; f < Game.valueFireX.size(); f++) {
             Rectangle DecoracaoFire = new Rectangle(Game.valueFireX.get(f), Game.valueFireY.get(f), 30, 30);
             if (headCollisionAreaDeco.intersects(DecoracaoFire)) {
@@ -623,17 +644,17 @@ public class checkedColisson {
             }
             break;
           case 5:
-            int pos1 = 9;
-            if (Game.DecoComplexoX.length > pos1 && Game.DecoComplexoY.length > pos1) {
-              for (int y = 0; y < 4; y++) {
-                complexasDungeon = new Rectangle(Game.DecoComplexoX[pos1] + 4,
-                    Game.DecoComplexoY[pos1] + 25, 65, 60);
-                if (headCollisionAreaDeco.intersects(complexasDungeon)) {
-                  return true;
-                }
-                pos1++;
+            int pos1 = 9;      
+                for (int y = 0; y < 4; y++) {
+                  if (Game.DecoComplexoX.length > pos1 && Game.DecoComplexoY.length > pos1) {
+                    complexasDungeon = new Rectangle(Game.DecoComplexoX[pos1] + 4,
+                        Game.DecoComplexoY[pos1] + 25, 65, 60);
+                    if (headCollisionAreaDeco.intersects(complexasDungeon)) {
+                      return true;
+                    }
+                  }
+                  pos1++;
               }
-            }
             break;
           case 6:
             if (Game.DecoComplexoX.length > 13 && Game.DecoComplexoY.length > 13) {

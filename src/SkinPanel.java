@@ -87,6 +87,7 @@ public class SkinPanel extends JPanel {
       ReturnButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(SkinPanel.this);
           MenuPanel menuPanel = new MenuPanel(); // Crie uma nova instância de MenuPanel
           topFrame.getContentPane().removeAll();
@@ -122,6 +123,7 @@ public class SkinPanel extends JPanel {
       ClassicSkinButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           Game.snakeClassica = true;
           Game.snakePoison = false;
           Game.snakeFire = false;
@@ -174,6 +176,7 @@ public class SkinPanel extends JPanel {
       PoisonSkinButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           if (Game.DesblockedPontuation <= 1) {
             Game.snakeClassica = false;
             Game.snakePoison = true;
@@ -223,6 +226,7 @@ public class SkinPanel extends JPanel {
       FireSkinButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           if (Game.DesblockedPontuation < 1) {
             Game.snakeClassica = false;
             Game.snakePoison = false;

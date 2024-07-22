@@ -128,6 +128,7 @@ public class ConfPanel extends JPanel {
     ReturnButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        MusicPlayer.AudioClick();
         JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(ConfPanel.this);
         MenuPanel menuPanel = new MenuPanel(); // Crie uma nova instância de MenuPanel
         topFrame.getContentPane().removeAll();
@@ -315,10 +316,13 @@ public class ConfPanel extends JPanel {
     ButtonRemoverAnimacao.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        ButtonManter.setForeground(Color.WHITE);
-        ButtonRemoverAnimacao.setForeground(Color.BLACK);
-        Game.RemoverAnimation = true;
-        Game.ManterAnimation = false;
+        if (!Game.RemoverAnimation) {
+          MusicPlayer.AudioClick();
+          ButtonManter.setForeground(Color.WHITE);
+          ButtonRemoverAnimacao.setForeground(Color.BLACK);
+          Game.RemoverAnimation = true;
+          Game.ManterAnimation = false;
+        }
       }
     });
     ConfigButton(ButtonRemoverAnimacao, Fonts, 200, 80, "");
@@ -366,10 +370,13 @@ public class ConfPanel extends JPanel {
     ButtonManter.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        ButtonRemoverAnimacao.setForeground(Color.WHITE);
-        ButtonManter.setForeground(Color.BLACK);
-        Game.RemoverAnimation = false;
-        Game.ManterAnimation = true;
+        if (Game.RemoverAnimation) {
+          MusicPlayer.AudioClick();
+          ButtonRemoverAnimacao.setForeground(Color.WHITE);
+          ButtonManter.setForeground(Color.BLACK);
+          Game.RemoverAnimation = false;
+          Game.ManterAnimation = true;
+        }
       }
     });
     ConfigButton(ButtonManter, Fonts, 200, 80, "");
@@ -709,12 +716,18 @@ public class ConfPanel extends JPanel {
     ButtonDificiult.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        ButtonDificiultFacil.setForeground(Color.WHITE);
-        ButtonDificiultNormal.setForeground(Color.WHITE);
-        ButtonDificiult.setForeground(Color.RED);
-        Game.clickedButtonDifiFacil = false;
-        Game.clickedButtonDifiNormal = false;
-        Game.clickedButtonDifiDificil = true;
+        if (!Game.clickedButtonDifiDificil) {
+          MusicPlayer.AudioClick();
+          ButtonDificiultFacil.setForeground(Color.WHITE);
+          ButtonDificiultNormal.setForeground(Color.WHITE);
+          ButtonDificiult.setForeground(Color.RED);
+          Game.clickedButtonDifiFacil = false;
+          Game.clickedButtonDifiNormal = false;
+          Game.clickedButtonDifiDificil = true;
+          Game.ControlVelocity = 500;
+          Game.ControlVelocityFinal = 500;
+          Game.dificulty = "Difícil";
+        }
       }
     });
     addHoverButtonsDifi(ButtonDificiult, "Difícil");
@@ -722,6 +735,7 @@ public class ConfPanel extends JPanel {
       ButtonDificiultFacil.setForeground(Color.WHITE);
       ButtonDificiultNormal.setForeground(Color.WHITE);
       ButtonDificiult.setForeground(Color.RED);
+
     }
     Border borderButton = BorderFactory.createEmptyBorder(10, 0, 0,
         0);
@@ -753,12 +767,18 @@ public class ConfPanel extends JPanel {
     ButtonDificiultNormal.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        ButtonDificiultFacil.setForeground(Color.WHITE);
-        ButtonDificiultNormal.setForeground(Color.YELLOW);
-        ButtonDificiult.setForeground(Color.WHITE);
-        Game.clickedButtonDifiFacil = false;
-        Game.clickedButtonDifiNormal = true;
-        Game.clickedButtonDifiDificil = false;
+        if (!Game.clickedButtonDifiNormal) {
+          MusicPlayer.AudioClick();
+          ButtonDificiultFacil.setForeground(Color.WHITE);
+          ButtonDificiultNormal.setForeground(Color.YELLOW);
+          ButtonDificiult.setForeground(Color.WHITE);
+          Game.clickedButtonDifiFacil = false;
+          Game.clickedButtonDifiNormal = true;
+          Game.clickedButtonDifiDificil = false;
+          Game.ControlVelocity = 1200;
+          Game.ControlVelocityFinal = 1200;
+          Game.dificulty = "Normal";
+        }
       }
     });
     addHoverButtonsDifi(ButtonDificiultNormal, "Normal");
@@ -796,16 +816,24 @@ public class ConfPanel extends JPanel {
     ButtonDificiultFacil.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        ButtonDificiultFacil.setForeground(Color.GREEN);
-        ButtonDificiultNormal.setForeground(Color.WHITE);
-        ButtonDificiult.setForeground(Color.WHITE);
-        Game.clickedButtonDifiFacil = true;
-        Game.clickedButtonDifiNormal = false;
-        Game.clickedButtonDifiDificil = false;
+        if (!Game.clickedButtonDifiFacil) {
+
+          MusicPlayer.AudioClick();
+          ButtonDificiultFacil.setForeground(Color.GREEN);
+          ButtonDificiultNormal.setForeground(Color.WHITE);
+          ButtonDificiult.setForeground(Color.WHITE);
+          Game.clickedButtonDifiFacil = true;
+          Game.clickedButtonDifiNormal = false;
+          Game.clickedButtonDifiDificil = false;
+          Game.ControlVelocity = 1200;
+          Game.ControlVelocityFinal = 1200;
+          Game.dificulty = "Fácil";
+        }
       }
     });
     addHoverButtonsDifi(ButtonDificiultFacil, "Fácil");
     if (Game.clickedButtonDifiFacil) {
+      ;
       ButtonDificiultFacil.setForeground(Color.GREEN);
       ButtonDificiultNormal.setForeground(Color.WHITE);
       ButtonDificiult.setForeground(Color.WHITE);
@@ -855,12 +883,21 @@ public class ConfPanel extends JPanel {
 
         switch (text) {
           case "Difícil":
+            if (!button.getForeground().equals(Color.RED)) {
+              MusicPlayer.AudioHover();
+            }
             button.setForeground(Color.RED);
             break;
           case "Normal":
+            if (!button.getForeground().equals(Color.YELLOW)) {
+              MusicPlayer.AudioHover();
+            }
             button.setForeground(Color.YELLOW);
             break;
           case "Fácil":
+            if (!button.getForeground().equals(Color.GREEN)) {
+              MusicPlayer.AudioHover();
+            }
             button.setForeground(Color.GREEN);
             break;
           default:
@@ -899,6 +936,7 @@ public class ConfPanel extends JPanel {
     button.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseEntered(MouseEvent e) {
+        MusicPlayer.AudioHover();
         button.setSize(normalWidth + 10, normalHeight + 10);
 
       }
@@ -923,12 +961,15 @@ public class ConfPanel extends JPanel {
     Controles.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        setAllLabelsInvisible();
-        texto.setVisible(true);
-        Botaosuperior.setVisible(true);
-        Botaoesquerdo.setVisible(true);
-        Botaodireito.setVisible(true);
-        Botaoinferior.setVisible(true);
+        if (!Botaosuperior.isVisible()) {
+          MusicPlayer.AudioClick();
+          setAllLabelsInvisible();
+          texto.setVisible(true);
+          Botaosuperior.setVisible(true);
+          Botaoesquerdo.setVisible(true);
+          Botaodireito.setVisible(true);
+          Botaoinferior.setVisible(true);
+        }
       }
     });
     ConfigButton(Controles, Fonts, 150, 40, "Teclado");
@@ -942,13 +983,16 @@ public class ConfPanel extends JPanel {
     Animação.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        setAllLabelsInvisible();
-        ButtonRemoverAnimacao.setVisible(true);
-        FundoBotaoRemover.setVisible(true);
-        textRemocao.setVisible(true);
-        ButtonManter.setVisible(true);
-        FundoBotaoManter.setVisible(true);
-        textManter.setVisible(true);
+        if (!ButtonRemoverAnimacao.isVisible()) {
+          MusicPlayer.AudioClick();
+          setAllLabelsInvisible();
+          ButtonRemoverAnimacao.setVisible(true);
+          FundoBotaoRemover.setVisible(true);
+          textRemocao.setVisible(true);
+          ButtonManter.setVisible(true);
+          FundoBotaoManter.setVisible(true);
+          textManter.setVisible(true);
+        }
       }
     });
     ConfigButton(Animação, Fonts, 150, 40, "Animação");
@@ -962,24 +1006,27 @@ public class ConfPanel extends JPanel {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        setAllLabelsInvisible();
-        texto2.setVisible(true);
-        buttonSom.setVisible(true);
-        sliderPanel.setVisible(true);
-        OuvirSomJLabel.setVisible(true);
-        textoEfeitos.setVisible(true);
-        buttonEfeito.setVisible(true);
-        sliderPanelEfeito.setVisible(true);
-        OuvirEfeitoJLabel.setVisible(true);
-        if (value == 0) {
-          RemoteSom.setVisible(true);
-        } else {
-          RemoteSom.setVisible(false);
-        }
-        if (valueEf == 0) {
-          RemoteEfeito.setVisible(true);
-        } else {
-          RemoteEfeito.setVisible(false);
+        if (!texto2.isVisible()) {
+          MusicPlayer.AudioClick();
+          setAllLabelsInvisible();
+          texto2.setVisible(true);
+          buttonSom.setVisible(true);
+          sliderPanel.setVisible(true);
+          OuvirSomJLabel.setVisible(true);
+          textoEfeitos.setVisible(true);
+          buttonEfeito.setVisible(true);
+          sliderPanelEfeito.setVisible(true);
+          OuvirEfeitoJLabel.setVisible(true);
+          if (value == 0) {
+            RemoteSom.setVisible(true);
+          } else {
+            RemoteSom.setVisible(false);
+          }
+          if (valueEf == 0) {
+            RemoteEfeito.setVisible(true);
+          } else {
+            RemoteEfeito.setVisible(false);
+          }
         }
       }
     });
@@ -993,15 +1040,18 @@ public class ConfPanel extends JPanel {
     Dificuldade.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        setAllLabelsInvisible();
-        texto3.setVisible(true);
-        ButtonDificiult.setVisible(true);
-        textDificuldade.setVisible(true);
-        ButtonDificiultNormal.setVisible(true);
-        textNormal.setVisible(true);
-        ButtonDificiultFacil.setVisible(true);
-        textFacil.setVisible(true);
+        if (!texto3.isVisible()) {
+          MusicPlayer.AudioClick();
+          setAllLabelsInvisible();
+          texto3.setVisible(true);
+          ButtonDificiult.setVisible(true);
+          textDificuldade.setVisible(true);
+          ButtonDificiultNormal.setVisible(true);
+          textNormal.setVisible(true);
+          ButtonDificiultFacil.setVisible(true);
+          textFacil.setVisible(true);
 
+        }
       }
     });
     ConfigButton(Dificuldade, Fonts, 150, 40, "Dificuldade");
@@ -1015,6 +1065,7 @@ public class ConfPanel extends JPanel {
     button.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseEntered(MouseEvent e) {
+        MusicPlayer.AudioHover();
         button.setForeground(hoverColor);
       }
 

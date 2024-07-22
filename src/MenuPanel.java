@@ -40,6 +40,7 @@ public class MenuPanel extends JPanel {
   static int CorPretaLoading = 255;
   static JPanel loadingComponents;
   static LoadingSpinner spinner;
+  private MusicPlayer musicPlayer;
 
   public static void painelLoading() {
     loadingPanel = new JPanel();
@@ -117,6 +118,7 @@ public class MenuPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           if (!buttonsEnabled) {
             return;
           }
@@ -172,6 +174,7 @@ public class MenuPanel extends JPanel {
       MapButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           if (!buttonsEnabled) {
             return;
           }
@@ -193,6 +196,7 @@ public class MenuPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           if (!buttonsEnabled) {
             return;
           }
@@ -212,6 +216,7 @@ public class MenuPanel extends JPanel {
       settingsButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           if (!buttonsEnabled) {
             return;
           }
@@ -283,6 +288,7 @@ public class MenuPanel extends JPanel {
         button.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseEntered(MouseEvent e) {
+            MusicPlayer.AudioHover();
             if (text != "X") {
               if (!buttonsEnabled) {
                 return;
@@ -308,6 +314,7 @@ public class MenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
               textLabel.setForeground(Color.BLACK);
+              MusicPlayer.AudioHover();
             }
 
             @Override

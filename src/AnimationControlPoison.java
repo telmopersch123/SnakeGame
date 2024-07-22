@@ -36,7 +36,7 @@ public class AnimationControlPoison {
       Game.poisonFruitHeightVen = 50;
     }
 
-    if (elapsedTime1 >= 4000) {
+    if (elapsedTime1 >= 5000) {
       ArrayList<Point> foodPositions = LocaleUtils.LocateFood(
           game.FrameWidth, game.FrameHeight, game.WIDTH, game.HEIGHT, game.walls_x, game.walls_y, game.nodeSnake);
       if (foodPositions.size() >= 2) {
@@ -55,7 +55,6 @@ public class AnimationControlPoison {
           if (Game.snakeClassica || Game.snakeFire) {
             game.macaPOX = foodPosition1.x;
             game.macaPOY = foodPosition1.y;
-
           }
           if (Game.snakePoison) {
             game.macaX = foodPosition0.x;

@@ -21,7 +21,7 @@ public class AnimationPOison {
           if (increaseSizeVen) {
             if (Game.poisonFruitWidthVen < 35 || Game.poisonFruitHeightVen < 60) {
               Game.poisonFruitWidthVen++;
-              Game.poisonFruitHeightVen++;
+              Game.poisonFruitHeightVen+=2;
               Game.colidionPoiControlTimerAnimation = true;
             } else {
               increaseSizeVen = false;
@@ -29,7 +29,7 @@ public class AnimationPOison {
           } else {
             if (Game.poisonFruitWidthVen > 25 || Game.poisonFruitHeightVen > 50) {
               Game.poisonFruitWidthVen--;
-              Game.poisonFruitHeightVen--;
+              Game.poisonFruitHeightVen-=2;
               Game.colidionPoiControlTimerAnimation = true;
             } else {
               Game.colidionPoiControlTimerAnimation = false;

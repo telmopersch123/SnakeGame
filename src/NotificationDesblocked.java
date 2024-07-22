@@ -70,12 +70,12 @@ public class NotificationDesblocked {
         gbcButton.weighty = 1.0;
         gbcButton.anchor = GridBagConstraints.NORTH;
         if (Game.MapLiberation == "Pântano") {
-            gbcButton.insets = new Insets(35, 0, 0, 40); // Adicionar margem superior
+            gbcButton.insets = new Insets(35, 0, 0, 45); // Adicionar margem superior
             gbc.insets = new Insets(-170, 5, 0, 0); // Adicionar margem superior
         } else if (Game.MapLiberation == "Masmorra") {
-            gbcButton.insets = new Insets(35, 0, 0, 45); // Adicionar margem superior
+            gbcButton.insets = new Insets(35, 0, 0, 53); // Adicionar margem superior
         } else if (Game.SnakeLiberation == "Boitata") {
-            gbcButton.insets = new Insets(35, 0, 0, 38); // Adicionar margem superior
+            gbcButton.insets = new Insets(35, 0, 0, 42); // Adicionar margem superior
             gbc.insets = new Insets(-170, 10, 0, 0); // Adicionar margem superior
         }
         // gbc.insets = new java.awt.Insets(0, 0, 0, 0); // Adicionar margem superior
@@ -83,6 +83,7 @@ public class NotificationDesblocked {
         buttonPanel.setOpaque(false);
         closeButton = new JButton("", backgroundClosedUNHover);
         closeButton.addActionListener(e -> {
+            MusicPlayer.AudioClick();
             SumirFundo = true;
             MenuPanel.overlayPanel.revalidate();
             MenuPanel.overlayPanel.repaint();
@@ -96,6 +97,7 @@ public class NotificationDesblocked {
             @Override
             public void mouseEntered(MouseEvent e) {
                 closeButton.setIcon(backgroundClosedHover);
+                MusicPlayer.AudioHover();
             }
 
             @Override
@@ -146,11 +148,11 @@ public class NotificationDesblocked {
         DESBLOCKEDtext = new TextShadow(message, Color.WHITE, Color.BLACK, Fonts);
         TextPanel.add(DESBLOCKEDtext, BorderLayout.CENTER);
         if (Game.SnakeLiberation == "Boitata") {
-            TextPanel.setBorder(BorderFactory.createEmptyBorder(120, 0, 0, 3));
+            TextPanel.setBorder(BorderFactory.createEmptyBorder(120, 0, 0, 8));
         } else if (Game.MapLiberation == "Pântano") {
-            TextPanel.setBorder(BorderFactory.createEmptyBorder(120, 0, 0, 0));
+            TextPanel.setBorder(BorderFactory.createEmptyBorder(120, 0, 0, 5));
         } else if (Game.MapLiberation == "Masmorra") {
-            gbc.insets = new Insets(-30, 0, 65, 0); // Adicionar margem superior
+            gbc.insets = new Insets(-30, 0, 65, 5); // Adicionar margem superior
         }
 
         gbc.gridy = 3;

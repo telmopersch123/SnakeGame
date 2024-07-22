@@ -282,59 +282,40 @@ public class decoracao {
     ///
     int valueDecoSimples = 0;
     int valueDecoComplexo = 0;
+    
     if (Game.MapField) {
       if (Game.clickedButtonDifiDificil) {
         valueDecoSimples = 9;
+        valueDecoComplexo = 12;
       } else if (Game.clickedButtonDifiNormal) {
         valueDecoSimples = 6;
+        valueDecoComplexo = 8;
       } else if (Game.clickedButtonDifiFacil) {
         valueDecoSimples = 3;
+        valueDecoComplexo = 4;
       }
     } else if (Game.MapSwamp) {
       if (Game.clickedButtonDifiDificil) {
         valueDecoSimples = 5;
+        valueDecoComplexo = 34;
       } else if (Game.clickedButtonDifiNormal) {
         valueDecoSimples = 3;
+        valueDecoComplexo = 22;
       } else if (Game.clickedButtonDifiFacil) {
         valueDecoSimples = 1;
+        valueDecoComplexo = 10;
       }
-
     } else if (Game.MapDungeon) {
       if (Game.clickedButtonDifiDificil) {
         valueDecoSimples = 17;
-      } else if (Game.clickedButtonDifiNormal) {
-        valueDecoSimples = 11;
-      } else if (Game.clickedButtonDifiFacil) {
-        valueDecoSimples = 5;
-      }
-
-    }
-    if (Game.MapField) {
-      if (Game.clickedButtonDifiDificil) {
-        valueDecoComplexo = 12;
-      } else if (Game.clickedButtonDifiNormal) {
-        valueDecoComplexo = 8;
-      } else if (Game.clickedButtonDifiFacil) {
-        valueDecoComplexo = 4;
-      }
-    } else if (Game.MapSwamp) {
-      if (Game.clickedButtonDifiDificil) {
-        valueDecoComplexo = 34;
-      } else if (Game.clickedButtonDifiNormal) {
-        valueDecoComplexo = 22;
-      } else if (Game.clickedButtonDifiFacil) {
-        valueDecoComplexo = 10;
-      }
-
-    } else if (Game.MapDungeon) {
-      if (Game.clickedButtonDifiDificil) {
         valueDecoComplexo = 14;
       } else if (Game.clickedButtonDifiNormal) {
+        valueDecoSimples = 11;
         valueDecoComplexo = 8;
       } else if (Game.clickedButtonDifiFacil) {
+        valueDecoSimples = 5;
         valueDecoComplexo = 4;
       }
-
     }
 
     for (int i = 0; i < valueDecoSimples; i++) {
@@ -589,6 +570,7 @@ public class decoracao {
         index++;
       }
     } catch (IndexOutOfBoundsException e) {
+
     }
 
     // Decorações Complexas
@@ -708,6 +690,7 @@ public class decoracao {
 
     int index = 0;
     /// -Simples
+    try{
     for (int i = 0; i < Game.quanti.get(0); i++) {
       imagens.add(new Imagem(Broken_tree_shadow2_3, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
       index++;
@@ -728,6 +711,8 @@ public class decoracao {
       imagens.add(new Imagem(Rock4_grass_shadow34, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
       index++;
     }
+  } catch (IndexOutOfBoundsException e) {
+  }
     /// -Complexas
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       if (Game.quantiComplexo.get(i) > 0) {
@@ -1095,164 +1080,167 @@ public class decoracao {
 
     int index = 0;
     /// -Simples
-    for (int i = 0; i < Game.quanti.get(0); i++) {
-      imagens.add(new Imagem(Black_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(1); i++) {
-      imagens.add(new Imagem(Blue_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(2); i++) {
-      imagens.add(new Imagem(Green_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(3); i++) {
-      imagens.add(new Imagem(Pink_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(4); i++) {
-      imagens.add(new Imagem(Red_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(5); i++) {
-      imagens.add(new Imagem(Violet_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(6); i++) {
-      imagens.add(new Imagem(White_crystal2, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(7); i++) {
-      imagens.add(new Imagem(Yellow_green_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(8); i++) {
-      imagens.add(new Imagem(skeleton, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(9); i++) {
-      imagens.add(new Imagem(skullcabra, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(10); i++) {
-      imagens.add(new Imagem(skullsbirdy, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(11); i++) {
-      imagens.add(new Imagem(skullsheads, Game.DecoracaoX[index], Game.DecoracaoY[index], 35, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(12); i++) {
-      imagens.add(new Imagem(caixao1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(13); i++) {
-      imagens.add(new Imagem(caixao2, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(14); i++) {
-      BufferedImage fire = (BufferedImage) firedungeon;
-      int sx1 = (Game.currentFrame18 % numFramesXfire) * (fire.getWidth() /
-          numFramesXfire);
-      int sy1 = (Game.currentFrame18 / numFramesXfire) * (fire.getHeight() /
-          numFramesYfire);
-      int sw1 = fire.getWidth() / numFramesXfire;
-      int sh1 = fire.getHeight() / numFramesYfire;
-      fireFogo = buffer.createGraphics();
-      AffineTransform at1 = new AffineTransform();
-      at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
-      // Create an AffineTransformOp object with the AffineTransform
-      AffineTransformOp op1 = new AffineTransformOp(at1,
-          AffineTransformOp.TYPE_BILINEAR);
-      // Apply the transform to the image
-      BufferedImage scaledImage1 = op1.filter(fire.getSubimage(sx1, sy1, sw1,
-          sh1),
-          null);
-      fireFogo.drawImage(scaledImage1, Game.DecoracaoX[index],
-          Game.DecoracaoY[index], null);
-
-      if (Game.snakeFire) {
-        Game.valueFireX.add(Game.DecoracaoX[index]);
-        Game.valueFireY.add(Game.DecoracaoY[index]);
+    try {
+      for (int i = 0; i < Game.quanti.get(0); i++) {
+        imagens.add(new Imagem(Black_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
       }
+      for (int i = 0; i < Game.quanti.get(1); i++) {
+        imagens.add(new Imagem(Blue_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(2); i++) {
+        imagens.add(new Imagem(Green_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(3); i++) {
+        imagens.add(new Imagem(Pink_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(4); i++) {
+        imagens.add(new Imagem(Red_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(5); i++) {
+        imagens.add(new Imagem(Violet_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(6); i++) {
+        imagens.add(new Imagem(White_crystal2, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(7); i++) {
+        imagens.add(new Imagem(Yellow_green_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(8); i++) {
+        imagens.add(new Imagem(skeleton, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(9); i++) {
+        imagens.add(new Imagem(skullcabra, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(10); i++) {
+        imagens.add(new Imagem(skullsbirdy, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(11); i++) {
+        imagens.add(new Imagem(skullsheads, Game.DecoracaoX[index], Game.DecoracaoY[index], 35, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(12); i++) {
+        imagens.add(new Imagem(caixao1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(13); i++) {
+        imagens.add(new Imagem(caixao2, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
+        index++;
+      }
+      for (int i = 0; i < Game.quanti.get(14); i++) {
+        BufferedImage fire = (BufferedImage) firedungeon;
+        int sx1 = (Game.currentFrame18 % numFramesXfire) * (fire.getWidth() /
+            numFramesXfire);
+        int sy1 = (Game.currentFrame18 / numFramesXfire) * (fire.getHeight() /
+            numFramesYfire);
+        int sw1 = fire.getWidth() / numFramesXfire;
+        int sh1 = fire.getHeight() / numFramesYfire;
+        fireFogo = buffer.createGraphics();
+        AffineTransform at1 = new AffineTransform();
+        at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
+        // Create an AffineTransformOp object with the AffineTransform
+        AffineTransformOp op1 = new AffineTransformOp(at1,
+            AffineTransformOp.TYPE_BILINEAR);
+        // Apply the transform to the image
+        BufferedImage scaledImage1 = op1.filter(fire.getSubimage(sx1, sy1, sw1,
+            sh1),
+            null);
+        fireFogo.drawImage(scaledImage1, Game.DecoracaoX[index],
+            Game.DecoracaoY[index], null);
 
-      long currentTimefire = System.currentTimeMillis();
-      if (Game.ManterAnimation) {
-        if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
-          lastFrameTimefire = currentTimefire - (currentTimefire %
-              frameIntervalfire);
-          Game.currentFrame18 = (Game.currentFrame18 + 1) % totalFramesfire;
+        if (Game.snakeFire) {
+          Game.valueFireX.add(Game.DecoracaoX[index]);
+          Game.valueFireY.add(Game.DecoracaoY[index]);
         }
-      }
-      index++;
-    }
 
-    for (int i = 0; i < Game.quanti.get(15); i++) {
-      BufferedImage vulcan = (BufferedImage) spritedungeonnormal;
-      int sx1 = (Game.currentFrame19 % numFramesXvulcan) * (vulcan.getWidth() /
-          numFramesXvulcan);
-      int sy1 = (Game.currentFrame19 / numFramesXvulcan) * (vulcan.getHeight() /
-          numFramesYvulcan);
-      int sw1 = vulcan.getWidth() / numFramesXvulcan;
-      int sh1 = vulcan.getHeight() / numFramesYvulcan;
-      vulcanfire = buffer.createGraphics();
-      AffineTransform at1 = new AffineTransform();
-      at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
-      // Create an AffineTransformOp object with the AffineTransform
-      AffineTransformOp op1 = new AffineTransformOp(at1,
-          AffineTransformOp.TYPE_BILINEAR);
-      // Apply the transform to the image
-      BufferedImage scaledImage1 = op1.filter(vulcan.getSubimage(sx1, sy1, sw1,
-          sh1),
-          null);
-      vulcanfire.drawImage(scaledImage1, Game.DecoracaoX[index],
-          Game.DecoracaoY[index], null);
+        long currentTimefire = System.currentTimeMillis();
+        if (Game.ManterAnimation) {
+          if (currentTimefire - lastFrameTimefire >= frameIntervalfire) {
+            lastFrameTimefire = currentTimefire - (currentTimefire %
+                frameIntervalfire);
+            Game.currentFrame18 = (Game.currentFrame18 + 1) % totalFramesfire;
+          }
+        }
+        index++;
+      }
 
-      long currentTimevulcan = System.currentTimeMillis();
-      if (Game.ManterAnimation) {
-        if (currentTimevulcan - lastFrameTimevulcan >= frameIntervalvulcan) {
-          lastFrameTimevulcan = currentTimevulcan - (currentTimevulcan %
-              frameIntervalvulcan);
-          Game.currentFrame19 = (Game.currentFrame19 + 1) % totalFramesvulcan;
+      for (int i = 0; i < Game.quanti.get(15); i++) {
+        BufferedImage vulcan = (BufferedImage) spritedungeonnormal;
+        int sx1 = (Game.currentFrame19 % numFramesXvulcan) * (vulcan.getWidth() /
+            numFramesXvulcan);
+        int sy1 = (Game.currentFrame19 / numFramesXvulcan) * (vulcan.getHeight() /
+            numFramesYvulcan);
+        int sw1 = vulcan.getWidth() / numFramesXvulcan;
+        int sh1 = vulcan.getHeight() / numFramesYvulcan;
+        vulcanfire = buffer.createGraphics();
+        AffineTransform at1 = new AffineTransform();
+        at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
+        // Create an AffineTransformOp object with the AffineTransform
+        AffineTransformOp op1 = new AffineTransformOp(at1,
+            AffineTransformOp.TYPE_BILINEAR);
+        // Apply the transform to the image
+        BufferedImage scaledImage1 = op1.filter(vulcan.getSubimage(sx1, sy1, sw1,
+            sh1),
+            null);
+        vulcanfire.drawImage(scaledImage1, Game.DecoracaoX[index],
+            Game.DecoracaoY[index], null);
+
+        long currentTimevulcan = System.currentTimeMillis();
+        if (Game.ManterAnimation) {
+          if (currentTimevulcan - lastFrameTimevulcan >= frameIntervalvulcan) {
+            lastFrameTimevulcan = currentTimevulcan - (currentTimevulcan %
+                frameIntervalvulcan);
+            Game.currentFrame19 = (Game.currentFrame19 + 1) % totalFramesvulcan;
+          }
         }
+        index++;
       }
-      index++;
-    }
-    for (int i = 0; i < Game.quanti.get(16); i++) {
-      BufferedImage fire = (BufferedImage) firedungeon;
-      int sx1 = (Game.currentFrame28 % numFramesXfire) * (fire.getWidth() /
-          numFramesXfire);
-      int sy1 = (Game.currentFrame28 / numFramesXfire) * (fire.getHeight() /
-          numFramesYfire);
-      int sw1 = fire.getWidth() / numFramesXfire;
-      int sh1 = fire.getHeight() / numFramesYfire;
-      fireFogo2 = buffer.createGraphics();
-      AffineTransform at1 = new AffineTransform();
-      at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
-      // Create an AffineTransformOp object with the AffineTransform
-      AffineTransformOp op1 = new AffineTransformOp(at1,
-          AffineTransformOp.TYPE_BILINEAR);
-      // Apply the transform to the image
-      BufferedImage scaledImage1 = op1.filter(fire.getSubimage(sx1, sy1, sw1,
-          sh1),
-          null);
-      fireFogo2.drawImage(scaledImage1, Game.DecoracaoX[index],
-          Game.DecoracaoY[index], null);
-      if (Game.snakeFire) {
-        Game.valueFireX.add(Game.DecoracaoX[index]);
-        Game.valueFireY.add(Game.DecoracaoY[index]);
-      }
-      long currentTimefire1 = System.currentTimeMillis();
-      if (Game.ManterAnimation) {
-        if (currentTimefire1 - lastFrameTimefire1 >= frameIntervalfire1) {
-          lastFrameTimefire1 = currentTimefire1 - (currentTimefire1 %
-              frameIntervalfire1);
-          Game.currentFrame28 = (Game.currentFrame28 + 1) % totalFramesfire1;
+      for (int i = 0; i < Game.quanti.get(16); i++) {
+        BufferedImage fire = (BufferedImage) firedungeon;
+        int sx1 = (Game.currentFrame28 % numFramesXfire) * (fire.getWidth() /
+            numFramesXfire);
+        int sy1 = (Game.currentFrame28 / numFramesXfire) * (fire.getHeight() /
+            numFramesYfire);
+        int sw1 = fire.getWidth() / numFramesXfire;
+        int sh1 = fire.getHeight() / numFramesYfire;
+        fireFogo2 = buffer.createGraphics();
+        AffineTransform at1 = new AffineTransform();
+        at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
+        // Create an AffineTransformOp object with the AffineTransform
+        AffineTransformOp op1 = new AffineTransformOp(at1,
+            AffineTransformOp.TYPE_BILINEAR);
+        // Apply the transform to the image
+        BufferedImage scaledImage1 = op1.filter(fire.getSubimage(sx1, sy1, sw1,
+            sh1),
+            null);
+        fireFogo2.drawImage(scaledImage1, Game.DecoracaoX[index],
+            Game.DecoracaoY[index], null);
+        if (Game.snakeFire) {
+          Game.valueFireX.add(Game.DecoracaoX[index]);
+          Game.valueFireY.add(Game.DecoracaoY[index]);
         }
+        long currentTimefire1 = System.currentTimeMillis();
+        if (Game.ManterAnimation) {
+          if (currentTimefire1 - lastFrameTimefire1 >= frameIntervalfire1) {
+            lastFrameTimefire1 = currentTimefire1 - (currentTimefire1 %
+                frameIntervalfire1);
+            Game.currentFrame28 = (Game.currentFrame28 + 1) % totalFramesfire1;
+          }
+        }
+        index++;
       }
-      index++;
-    }
+    } catch (IndexOutOfBoundsException e) {
+  }
 
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       if (Game.quantiComplexo.get(i) > 0) {

@@ -7,7 +7,7 @@ import java.util.TimerTask;
 public class AnimationSnakeDeath {
   private static Timer removeSegmentTimer;
 
-  private final static int REMOVE_SEGMENT_INTERVAL = 20;
+  private static int REMOVE_SEGMENT_INTERVAL = 20;
 
   public static void AnimationSnake(Game game, ArrayList<Point> foodPositions) {
 
@@ -25,7 +25,18 @@ public class AnimationSnakeDeath {
 
     game.segmentsToRemove = game.nodeSnake.length / 2;
     Game.ControlVelocity += game.nodeSnake.length / 2;
-    // Inicialize o timer para remover os segmentos gradativamente
+
+    if (game.nodeSnake.length >= 2000) {
+      REMOVE_SEGMENT_INTERVAL = 2;
+    } else if (game.nodeSnake.length >= 1500) {
+      REMOVE_SEGMENT_INTERVAL = 5;
+    } else if (game.nodeSnake.length >= 1000) {
+      REMOVE_SEGMENT_INTERVAL = 10;
+    } else if (game.nodeSnake.length >= 500) {
+      REMOVE_SEGMENT_INTERVAL = 15;
+    } else {
+      REMOVE_SEGMENT_INTERVAL = 20;
+    }
 
     removeSegmentTimer = new Timer();
     removeSegmentTimer.scheduleAtFixedRate(new TimerTask() {
@@ -40,16 +51,11 @@ public class AnimationSnakeDeath {
           // Remova um segmento da cobra
           game.nodeSnake = Arrays.copyOf(game.nodeSnake, game.nodeSnake.length - 1);
           game.segmentsToRemove--;
+          Game.ControlVelocity = Math.max(1, Game.ControlVelocity - 1);
 
-          // Redesenha a tela
-          // repaint();
         } else {
-          // Cancela o timer quando todos os segmentos forem removidos
           removeSegmentTimer.cancel();
           removeSegmentTimer.purge();
-
-          // Não há mais segmentos para remover, então atualize a posição da fruta
-          // venenosa apenas uma vez
 
         }
       }

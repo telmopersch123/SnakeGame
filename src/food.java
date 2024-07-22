@@ -33,7 +33,7 @@ public class food {
     BufferedImage EnergyAnimationFoodPoison = (BufferedImage) applePoison;
     //
     int sx = (Game.currentFrame6 % numFramesX1) * (EnergyAnimationFoodPoison.getWidth() / numFramesX1);
-    int sy = (Game.currentFrame6 / numFramesX1) * (EnergyAnimationFoodPoison.getHeight() / numFramesX1);
+    int sy = (Game.currentFrame6 / numFramesX1) * (EnergyAnimationFoodPoison.getHeight() / numFramesY1);
     int sw = EnergyAnimationFoodPoison.getWidth() / numFramesX1;
     int sh = EnergyAnimationFoodPoison.getHeight() / numFramesY1;
     food1 = buffer.createGraphics();

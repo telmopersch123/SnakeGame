@@ -80,6 +80,7 @@ public class MapPanel extends JPanel {
       ReturnButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MapPanel.this);
           MenuPanel menuPanel = new MenuPanel();
           topFrame.getContentPane().removeAll();
@@ -117,6 +118,7 @@ public class MapPanel extends JPanel {
       DungeonButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           if (Game.DesblockedPontuation <= 1) {
             Game.MapDungeon = true;
             Game.MapField = false;
@@ -158,6 +160,7 @@ public class MapPanel extends JPanel {
       SwampButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           if (Game.DesblockedPontuation <= 2) {
             Game.MapDungeon = false;
             Game.MapField = false;
@@ -200,7 +203,7 @@ public class MapPanel extends JPanel {
       FieldButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+          MusicPlayer.AudioClick();
           Game.MapDungeon = false;
           Game.MapField = true;
           Game.MapSwamp = false;
@@ -227,7 +230,7 @@ public class MapPanel extends JPanel {
           AnimationTextSelection.AnimationText();
         }
       });
-     
+
       gbc.gridy = 3;
       backgroundLabel.add(FieldButton, gbc);
       gbc.gridy = 2;
