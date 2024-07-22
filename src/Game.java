@@ -162,7 +162,6 @@ public class Game extends JPanel implements Runnable {
   ///
   private static boolean animationFinished = false;
   private boolean poisonDeathAnimationPlaying = false;
-
   public long lastVenomAnimationTime1 = System.currentTimeMillis();
   public long lastVenomAnimationTimeEnergy = System.currentTimeMillis();
   public long TeleportEnergyVerif = System.currentTimeMillis();
@@ -335,6 +334,7 @@ public class Game extends JPanel implements Runnable {
   private Image PoisonDeathIcon;
   private Image VelocityIcon;
   public static boolean GameFim = false;
+  private int TamanhoFinal = 2500;
   private boolean VelocityFinal;
 
   public static boolean checkedEsplo;
@@ -390,8 +390,8 @@ public class Game extends JPanel implements Runnable {
   static boolean colidianVelocity = false;
   static boolean possibilitiVelocityFinal = false;
   static int SubindoNivel = 0;
-  public static int ControlVelocity = 800;
-  public static int ControlVelocityFinal = 800;
+  public static int ControlVelocity = 1200;
+  public static int ControlVelocityFinal = 1200;
   static int vitoriaWidth = 1;
   static int vitoriaHeight = 1;
   static ImagePanel imagePanel;
@@ -622,7 +622,6 @@ public class Game extends JPanel implements Runnable {
         }
       }
     }
-
   }
 
   public static void Location_deco() {
@@ -1025,6 +1024,7 @@ public class Game extends JPanel implements Runnable {
 
     // Se o jogo terminou, desenha a animação de colisão se a tela de game over
     if (gameOver) {
+      MusicPlayer.AudioGameOver();
       if (!poisonDeathAnimationPlaying && !checkedEsplo && !DeathfromHunger) {
         drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
       }
@@ -1040,6 +1040,7 @@ public class Game extends JPanel implements Runnable {
 
       //
       if (GameFim) {
+        MusicPlayer.AudioGameWins();
         if (ManterAnimation) {
           AnimationFundoVitoria.AnimationVitoria(this, g, getWidth(), getHeight());
         } else {
@@ -1229,6 +1230,7 @@ public class Game extends JPanel implements Runnable {
 
   public void GameWinsButtons(Graphics g) {
     // Defina o fundo verde com transparência
+
     meuPainelButtons = this;
     g.setColor(new Color(128, 255, 125, Transper));
     g.fillRect(0, 0, getWidth(), getHeight());
@@ -1400,6 +1402,7 @@ public class Game extends JPanel implements Runnable {
       RevertMenuButton.addActionListener(new ActionListener() {
 
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
           GameSnake.getContentPane().removeAll();
           //
@@ -1544,6 +1547,7 @@ public class Game extends JPanel implements Runnable {
 
       newGameButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           meuPainel.remove(RevertMenuButton);
           meuPainel.remove(newGameButton);
           meuPainel.remove(youLose);
@@ -1562,6 +1566,7 @@ public class Game extends JPanel implements Runnable {
       MenuPanel.addShadow(RevertMenuButton, "Inicio", revertmenuFont, 150, 50, false);
       RevertMenuButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
           Game.aparecerAposLoading = false;
           Game.PodeIniciarPosLoading = false;
           MenuPanel.CorPretaLoading = 255;
@@ -1652,15 +1657,19 @@ public class Game extends JPanel implements Runnable {
         DISTANCE = 1;
       }
     }
-    if (nodeSnake.length >= 500) {
+
+    if (nodeSnake.length >= TamanhoFinal) {
       GameFim = true;
     }
-
     if (ControlVelocityFinal == 350) {
       VelocityFinal = true;
     }
     if (VelocityControl) {
-      ControlVelocityFinal = (ControlVelocity - 300);
+      if (snakeFire) {
+        ControlVelocityFinal = (ControlVelocity - 100);
+      } else {
+        ControlVelocityFinal = (ControlVelocity - 300);
+      }
     } else {
       if (snakeFire) {
         ControlVelocityFinal = ControlVelocity - 100;
@@ -1668,7 +1677,6 @@ public class Game extends JPanel implements Runnable {
         ControlVelocityFinal = ControlVelocity;
       }
     }
-
     if (SubindoNivel == 3) {
       posicaoXVelocity = nodeSnake[0].x;
       posicaoYVelocity = nodeSnake[0].y;
@@ -1942,6 +1950,7 @@ public class Game extends JPanel implements Runnable {
 
     // Define as coordenadas da cabeça da cobra
     nodeSnake[0] = new Node(snakeX, snakeY);
+
     // Inicializa o restante do corpo da cobra com as mesmas coordenadas da cabeça
     for (int i = 1; i < nodeSnake.length; i++) {
       nodeSnake[i] = new Node(snakeX, snakeY);
@@ -2087,8 +2096,12 @@ public class Game extends JPanel implements Runnable {
     TransparentVelocity = 0.1f;
     possibilitiVelocityFinal = false;
     //
-    ControlVelocity = 800;
-    ControlVelocityFinal = 800;
+    ControlVelocity = 1200;
+    ControlVelocityFinal = 1200;
+    if (clickedButtonDifiDificil) {
+      ControlVelocity = 500;
+      ControlVelocityFinal = 500;
+    }
     VelocityFinal = false;
 
     currentFrame1 = 0;
