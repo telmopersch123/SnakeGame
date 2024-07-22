@@ -151,7 +151,7 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public static int direction;
-  static Node[] ComprimentoCobra = new Node[40];
+  static Node[] ComprimentoCobra = new Node[2490];
   public static Node[] nodeSnake = ComprimentoCobra;
   public int score = 0;
   public static int macaX = 0, macaY = 0;
@@ -1024,7 +1024,7 @@ public class Game extends JPanel implements Runnable {
 
     // Se o jogo terminou, desenha a animação de colisão se a tela de game over
     if (gameOver) {
-      MusicPlayer.AudioGameOver();
+
       if (!poisonDeathAnimationPlaying && !checkedEsplo && !DeathfromHunger) {
         drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
       }
@@ -1040,7 +1040,6 @@ public class Game extends JPanel implements Runnable {
 
       //
       if (GameFim) {
-        MusicPlayer.AudioGameWins();
         if (ManterAnimation) {
           AnimationFundoVitoria.AnimationVitoria(this, g, getWidth(), getHeight());
         } else {
@@ -1245,6 +1244,7 @@ public class Game extends JPanel implements Runnable {
     }
 
     if (!newGameButtonExists) {
+      MusicPlayer.AudioGameWins();
       meuPainelButtons.setLayout(new GridBagLayout());
       try {
         Vitoria = ImageIO.read(new File("resources/fontes/vitoria.png"));
@@ -1273,7 +1273,7 @@ public class Game extends JPanel implements Runnable {
           @Override
           public void run() {
             SwingUtilities.invokeLater(() -> {
-              if (Vitoria != null) {
+              if (Vitoria != null) {  
                 GridGameWins.gridy = 1;
                 imagePanel = new ImagePanel(Vitoria, vitoriaHeight, vitoriaWidth);
                 meuPainelButtons.add(imagePanel, GridGameWins);
@@ -1298,6 +1298,7 @@ public class Game extends JPanel implements Runnable {
           public void run() {
             SwingUtilities.invokeLater(() -> {
               if (animatiomVictory != null) {
+                MusicPlayer.explosao();
                 GridGameWins.gridy = 1;
                 animationPanel = new ImagePanel2(animatiomVictory, animatiomVictory.getWidth() / 3,
                     animatiomVictory.getHeight() / 5, 100);
@@ -1533,6 +1534,7 @@ public class Game extends JPanel implements Runnable {
       }
     }
     if (!newGameButtonExists) {
+      MusicPlayer.AudioGameOver();
       Font customFontGameOver = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
       Font derivateFont = customFontGameOver.deriveFont((float) 22);
       // Texto de gameOver
@@ -1640,7 +1642,6 @@ public class Game extends JPanel implements Runnable {
 
   // Método para atualizar a lógica do jogo
   public void tick() {
-
     VerificDistance = keyListener.getVerif();
     for (int z = 0; z < nodeSnake.length; z++) {
       int currX = nodeSnake[z].x;
@@ -1899,12 +1900,15 @@ public class Game extends JPanel implements Runnable {
             Contador++;
             if (Contador == 8) {
               AnimationFontGameFim.AnimationFontDificulty(gaming);
+              MusicPlayer.DetailsGameWins();
             }
             if (Contador == 9) {
               AnimationFontGameFim.AnimationFontTempo(gaming);
+              MusicPlayer.DetailsGameWins();
             }
             if (Contador == 10) {
               AnimationFontGameFim.AnimationFontPontuacao(gaming);
+              MusicPlayer.DetailsGameWins();
             }
             if (Contador == 11) {
               timerLabelsGameWins.cancel();
