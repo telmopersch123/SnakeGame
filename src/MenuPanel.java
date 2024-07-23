@@ -237,6 +237,7 @@ public class MenuPanel extends JPanel {
           public void run() {
             NotificationDesblocked.showNotification((JFrame) SwingUtilities.getWindowAncestor(
                 MenuPanel.this), "Desbloqueado!");
+                MusicPlayer.notification();
           }
         });
       }

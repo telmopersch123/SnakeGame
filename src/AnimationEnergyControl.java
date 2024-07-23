@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class AnimationEnergyControl {
   static long ControlEnergySpreet;
+  static boolean CaiuRaio = false;
 
   void updateEnergyAnimation(Game game, BufferedImage buffer, Image explosionDeath) {
 
@@ -73,6 +74,8 @@ public class AnimationEnergyControl {
           Game.ControlEnergyColidianBoolean = true;
           InicialRaio.SumirInicialRaio = false;
           Game.ControlTamanho = true;
+          CaiuRaio = true;
+          MusicPlayer.colisianenergyfood();
         }
 
       }
@@ -119,9 +122,14 @@ public class AnimationEnergyControl {
     }
 
     if (Game.ControlAPOSColidionTimer) {
-
+      if (CaiuRaio) {
+        MusicPlayer.RaioCaindo();
+      } else {
+        MusicPlayer.stopEnergytimeRaioCaindo();
+      }
       if (ControlEnergySpreet > 1000 && ControlEnergySpreet < 10000) {
         if (Game.snakeClassica || Game.snakePoison) {
+          MusicPlayer.energytime();
           Game.SpreetSheetInitial = true;
           Game.SpreetSheetFinale = false;
         }
@@ -131,6 +139,7 @@ public class AnimationEnergyControl {
           if (ControlEnergySpreet >= 1000 && ControlEnergySpreet <= 1050) {
             Game.checkedEsplo = true;
             Game.ControlOneAnimationESPLO = false;
+            MusicPlayer.explosao();
           }
           if (ControlEnergySpreet >= 1500) {
             Game.colisianEnergySumir = true;
@@ -140,16 +149,21 @@ public class AnimationEnergyControl {
           }
         }
       } else if (ControlEnergySpreet >= 10000 && ControlEnergySpreet <= 10700) {
+        MusicPlayer.stopEnergytime();
         if (Game.snakeClassica || Game.snakePoison) {
           Game.SpreetSheetInitial = false;
           Game.SpreetSheetFinale = true;
           Game.ControlTamanho = false;
+          MusicPlayer.colisianenergyfood();
         } else if (ControlEnergySpreet > 10700) {
           Game.SpreetSheetFinale = false;
-        } else if (ControlEnergySpreet >= 11000) {
-          game.ControlSpriteSheet = System.currentTimeMillis();
 
+        } else if (ControlEnergySpreet >= 11000) {
+
+          game.ControlSpriteSheet = System.currentTimeMillis();
         }
+      } else {
+        MusicPlayer.stopEnergytimeColisian();
       }
     }
     if (Game.snakeFire) {
@@ -170,7 +184,7 @@ public class AnimationEnergyControl {
         Game.ControlAPOSColidionTimer = false;
         if (!Game.ControlAPOSColidionTimer) {
           game.macaENX = foodPosition2.x;
-           game.macaENY = foodPosition2.y;
+          game.macaENY = foodPosition2.y;
         }
         Game.ColisionEnergy = false;
         game.ControlSpriteSheet = System.currentTimeMillis();
