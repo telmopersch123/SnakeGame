@@ -41,7 +41,7 @@ public class AnimationPOison {
           }
         } else {
           if (increaseSizeVen) {
-            if (Game.poisonFruitWidthCla < 25 || Game.poisonFruitHeightCla < 25) {
+            if (Game.poisonFruitWidthCla < 30 || Game.poisonFruitHeightCla < 30) {
               Game.poisonFruitWidthCla++;
               Game.poisonFruitHeightCla++;
               Game.colidionPoiControlTimerAnimation = true;

@@ -278,7 +278,7 @@ public class decoracao {
     int PorcentagemX = (10 * FrameWidth) / 100;
     int PorcentagemY = (10 * FrameHeight) / 100;
     int PorcentagemCOMX = (7 * FrameWidth) / 100;
-    int PorcentagemCOMY = (10 * FrameHeight) / 100;
+    int PorcentagemCOMY = (15 * FrameHeight) / 100;
     ///
     int valueDecoSimples = 0;
     int valueDecoComplexo = 0;

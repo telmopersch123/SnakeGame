@@ -55,9 +55,13 @@ public class Eggs {
     eggBreak.drawImage(resizedImageColision, PosicaoX - 32, PosicaoY - 25, 70, 60, null);
     long currentTimeeggB = System.currentTimeMillis();
     if (Game.ManterAnimation) {
+      if (Game.currentFrame30 == 0) { // Verificação do primeiro índice da spritesheet
+        MusicPlayer.ovoBreak(); // Chamar o método para tocar o som
+      }
       if (currentTimeeggB - lastFrameTimeeggB > frameIntervaleggB) {
         Game.currentFrame30 = (Game.currentFrame30 + 1) % totalFrameseggB;
         lastFrameTimeeggB = currentTimeeggB;
+     
         if (Game.currentFrame30 == totalFrameseggB - 1) {
           Game.ControlOneAnimationEgg = true;
           Game.cobraParadaFinal = true;

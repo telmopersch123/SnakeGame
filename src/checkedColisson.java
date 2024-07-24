@@ -19,6 +19,7 @@ public class checkedColisson {
     }
 
     if (DeathfromHunger) {
+      MusicPlayer.deathFome();
       return new ResultadoColisao(true, false);
     }
 
@@ -28,28 +29,34 @@ public class checkedColisson {
 
     if (Game.clickedButtonDifiNormal || Game.clickedButtonDifiDificil) {
       if (colisaoPainel(nodeSnake, borderWidth, getWidth, getHeight)) {
+        MusicPlayer.Colisao();
         return new ResultadoColisao(true, false);
       }
     }
-    if (nodeSnake.length >= 2510) {
+    if (nodeSnake.length >= 60) {
       if (colisaoCobra(nodeSnake)) {
+        MusicPlayer.Colisao();
         return new ResultadoColisao(true, false);
       }
     }
 
     if (Game.MapField) {
       if (colisaoDecoField(nodeSnake, largerCollisionArea)) {
+        MusicPlayer.Colisao();
         return new ResultadoColisao(true, false);
       }
       if (colisaoParede(nodeSnake, walls_x, walls_y, largerCollisionArea)) {
+        MusicPlayer.Colisao();
         return new ResultadoColisao(true, false);
       }
     } else if (Game.MapSwamp) {
       if (colisaoDecoSwamp(nodeSnake, largerCollisionArea)) {
+        MusicPlayer.Colisao();
         return new ResultadoColisao(true, false);
       }
     } else if (Game.MapDungeon) {
       if (colisaoDecoDungeon(nodeSnake, largerCollisionArea)) {
+        MusicPlayer.Colisao();
         return new ResultadoColisao(true, false);
       }
     }

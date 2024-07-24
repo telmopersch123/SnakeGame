@@ -40,7 +40,6 @@ public class MenuPanel extends JPanel {
   static int CorPretaLoading = 255;
   static JPanel loadingComponents;
   static LoadingSpinner spinner;
-  private MusicPlayer musicPlayer;
 
   public static void painelLoading() {
     loadingPanel = new JPanel();
@@ -51,11 +50,11 @@ public class MenuPanel extends JPanel {
   }
 
   public MenuPanel() {
-
     setLayout(new GridBagLayout());
     GridBagConstraints Menu = new GridBagConstraints();
 
     try {
+    
       // ========LOADING-----------
       painelLoading();
       // ==========================
@@ -119,9 +118,11 @@ public class MenuPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
+          MusicPlayer.stopMusicMenu();
           if (!buttonsEnabled) {
             return;
           }
+  
           ///
           if (Game.ManterAnimation) {
             backgroundLabel.setVisible(false);
@@ -135,6 +136,7 @@ public class MenuPanel extends JPanel {
             Game.aparecerAposLoading = true;
           }
           SwingUtilities.invokeLater(() -> {
+
             JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
             topFrame.getContentPane().removeAll();
             Game game = new Game();
@@ -163,6 +165,7 @@ public class MenuPanel extends JPanel {
               OutfitButton.setVisible(true);
               settingsButton.setVisible(true);
             }
+            MusicPlayer.stopMusicMenu();
           });
         }
       });
@@ -237,7 +240,7 @@ public class MenuPanel extends JPanel {
           public void run() {
             NotificationDesblocked.showNotification((JFrame) SwingUtilities.getWindowAncestor(
                 MenuPanel.this), "Desbloqueado!");
-                MusicPlayer.notification();
+            MusicPlayer.notification();
           }
         });
       }

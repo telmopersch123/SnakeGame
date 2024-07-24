@@ -151,7 +151,7 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public static int direction;
-  static Node[] ComprimentoCobra = new Node[2480];
+  static Node[] ComprimentoCobra = new Node[40];
   public static Node[] nodeSnake = ComprimentoCobra;
   public int score = 0;
   public static int macaX = 0, macaY = 0;
@@ -756,6 +756,7 @@ public class Game extends JPanel implements Runnable {
     MenuPanel menuPanel = new MenuPanel();
     frame.add(menuPanel);
     frame.setVisible(true);
+    MusicPlayer.musicMenu();
   }
 
   public void drawCollisionAnimation(Graphics g, double rotationAngle) {
@@ -948,6 +949,7 @@ public class Game extends JPanel implements Runnable {
       }
       if (!ControlOneAnimationEgg) {
         Eggs.EggBreak(buffer, PosicaoX, PosicaoY, eggAnimationBreak);
+      
       }
     }
     if (Game.ManterAnimation) {
@@ -1405,6 +1407,7 @@ public class Game extends JPanel implements Runnable {
 
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
+          MusicPlayer.musicMenu();
           JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
           GameSnake.getContentPane().removeAll();
           //
@@ -1571,6 +1574,7 @@ public class Game extends JPanel implements Runnable {
       RevertMenuButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
+          MusicPlayer.musicMenu();
           Game.aparecerAposLoading = false;
           Game.PodeIniciarPosLoading = false;
           MenuPanel.CorPretaLoading = 255;
@@ -1644,6 +1648,7 @@ public class Game extends JPanel implements Runnable {
 
   // Método para atualizar a lógica do jogo
   public void tick() {
+ 
     VerificDistance = keyListener.getVerif();
     for (int z = 0; z < nodeSnake.length; z++) {
       int currX = nodeSnake[z].x;
@@ -1692,8 +1697,9 @@ public class Game extends JPanel implements Runnable {
       if (!VelocityFinal) {
         ControlVelocity -= 25;
       }
-
       SubindoNivel = 0;
+
+      MusicPlayer.aumentovelocity3x();
     }
 
     // Movendo o corpo da cobra
@@ -1960,8 +1966,7 @@ public class Game extends JPanel implements Runnable {
             .ThisDecoration(snakeX, snakeY, DecoracaoX, DecoracaoY, DecoComplexoY, DecoComplexoX, WIDTH, HEIGHT));
 
     // Define as coordenadas da cabeça da cobra
-    // nodeSnake[0] = new Node(snakeX, snakeY);
-    nodeSnake[0] = new Node(300, 300);
+    nodeSnake[0] = new Node(snakeX, snakeY);
     // Inicializa o restante do corpo da cobra com as mesmas coordenadas da cabeça
     for (int i = 1; i < nodeSnake.length; i++) {
       nodeSnake[i] = new Node(snakeX, snakeY);

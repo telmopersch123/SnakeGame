@@ -22,13 +22,7 @@ public class AnimationControlPoison {
       currentTime = System.currentTimeMillis();
     }
 
-    if (currentTime - game.lastVenomAnimationTime1 > 3900 && !game.venomAnimationPlayed) {
-      if (Game.ManterAnimation) {
-        AnimationPOisonffim.AnimationFoodVenFim();
-      }
-      game.venomAnimationPlayed = true;
-      currentTime = System.currentTimeMillis();
-    }
+
     if (currentTime - game.lastVenomAnimationTime1 >= 0 && currentTime -
         game.lastVenomAnimationTime1 <= 20) {
       game.venomAnimationPlayed = false;

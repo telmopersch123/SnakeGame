@@ -1,12 +1,14 @@
 
 import java.io.File;
+import java.util.TimerTask;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
-
+import java.util.Timer;
+import java.util.TimerTask;
 public class MusicPlayer {
 
   public static void AudioClick() {
@@ -117,6 +119,101 @@ public class MusicPlayer {
     }
   }
 
+  public static void Colisao() {
+    try {
+      File soundFile = new File("resources/audios/Jogo/deathcolisian.wav");
+      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+      Clip clip = AudioSystem.getClip();
+      clip.open(audioInputStream);
+      clip.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void deathFome() {
+    try {
+      File soundFile = new File("resources/audios/Jogo/deathfome.wav");
+      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+      Clip clip = AudioSystem.getClip();
+      clip.open(audioInputStream);
+      clip.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void aumentovelocity3x() {
+    try {
+      File soundFile = new File("resources/audios/Jogo/aumentovelocity3x.wav");
+      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+      Clip clip = AudioSystem.getClip();
+      clip.open(audioInputStream);
+      clip.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void ovoBreak() {
+    try {
+      File soundFile = new File("resources/audios/Jogo/ovoBreak.wav");
+      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+      Clip clip = AudioSystem.getClip();
+      clip.open(audioInputStream);
+      clip.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+
+  static Clip clipMusicMenu;
+  private static boolean isPlaying = false;
+  
+  public static void musicMenu() {
+    try {
+      File soundFile = new File("resources/audios/Jogo/musicamenu-unica.wav");
+      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+      clipMusicMenu = AudioSystem.getClip();
+      clipMusicMenu.open(audioInputStream);
+
+      // Adiciona um listener para reiniciar a música após 5 segundos
+      clipMusicMenu.addLineListener(new LineListener() {
+        @Override
+        public void update(LineEvent event) {
+          if (event.getType() == LineEvent.Type.STOP) {
+         
+            new Thread(() -> {
+              try {
+                Thread.sleep(10000);
+                clipMusicMenu.setFramePosition(0);
+                clipMusicMenu.start();
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+            }).start();
+          }
+        }
+      });
+
+      if (!isPlaying) {
+        clipMusicMenu.start(); // Começa a tocar a música uma vez
+        isPlaying = true;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  // Método para parar a música
+  public static void stopMusicMenu() {
+    if (clipMusicMenu != null && clipMusicMenu.isRunning()) {
+      clipMusicMenu.stop();
+      clipMusicMenu.close();
+      isPlaying = false;
+    }
+  }
   private static Clip colisianenergyClip;
   private static boolean isEnergyPlayingColisian = false;
 
