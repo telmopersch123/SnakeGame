@@ -151,7 +151,7 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public static int direction;
-  static Node[] ComprimentoCobra = new Node[40];
+  static Node[] ComprimentoCobra = new Node[2490];
   public static Node[] nodeSnake = ComprimentoCobra;
   public int score = 0;
   public static int macaX = 0, macaY = 0;
@@ -463,6 +463,7 @@ public class Game extends JPanel implements Runnable {
   private int delay0;
   private int colorTransparente;
   private Font fontesGameWinsButton;
+  private boolean tocando = true;
   static boolean aparecerAposLoading;
   static boolean ControlTamanho = false;
   static boolean PodeIniciarPosLoading = false;
@@ -470,8 +471,8 @@ public class Game extends JPanel implements Runnable {
   static int keyPressedInferior = KeyEvent.VK_DOWN;
   static int keyPressedEsquerda = KeyEvent.VK_LEFT;
   static int keyPressedDireita = KeyEvent.VK_RIGHT;
-  static boolean RemoverAnimation = false;
-  static boolean ManterAnimation = true;
+  static boolean RemoverAnimation = true;
+  static boolean ManterAnimation = false;
   static boolean clickedButtonDifiNormal = true;
   static boolean clickedButtonDifiDificil = false;
   static boolean clickedButtonDifiFacil = false;
@@ -890,6 +891,10 @@ public class Game extends JPanel implements Runnable {
 
     // Desenha os elementos do jogo no buffer
     if (MapField) {
+      if (tocando) {
+        MusicPlayer.MusicsField(gameOver);
+        tocando = false;
+      }
       map.mapField(buffer, ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY,
           quantidadeDeco, randomX2,
           randomY2, quantidadeDeco2);
@@ -949,7 +954,7 @@ public class Game extends JPanel implements Runnable {
       }
       if (!ControlOneAnimationEgg) {
         Eggs.EggBreak(buffer, PosicaoX, PosicaoY, eggAnimationBreak);
-      
+
       }
     }
     if (Game.ManterAnimation) {
@@ -1031,6 +1036,7 @@ public class Game extends JPanel implements Runnable {
         drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
       }
       g.drawImage(buffer, 0, 0, null);
+
       GameOver(g);
     }
 
@@ -1247,6 +1253,8 @@ public class Game extends JPanel implements Runnable {
 
     if (!newGameButtonExists) {
       MusicPlayer.AudioGameWins();
+      MusicPlayer.stopMusicField();
+      MusicPlayer.shutdownExecutorService();
       MusicPlayer.stopEnergytime();
       meuPainelButtons.setLayout(new GridBagLayout());
       try {
@@ -1407,6 +1415,7 @@ public class Game extends JPanel implements Runnable {
 
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
+
           MusicPlayer.musicMenu();
           JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
           GameSnake.getContentPane().removeAll();
@@ -1520,6 +1529,7 @@ public class Game extends JPanel implements Runnable {
   }
 
   public void GameOver(Graphics g) {
+
     meuPainel.setLayout(new GridBagLayout());
     /////
     Game game = this;
@@ -1539,6 +1549,7 @@ public class Game extends JPanel implements Runnable {
     }
     if (!newGameButtonExists) {
       MusicPlayer.AudioGameOver();
+      MusicPlayer.stopMusicField();
       MusicPlayer.stopEnergytime();
       Font customFontGameOver = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
       Font derivateFont = customFontGameOver.deriveFont((float) 22);
@@ -1555,6 +1566,8 @@ public class Game extends JPanel implements Runnable {
       newGameButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
+          MusicPlayer.MusicsField(gameOver);
+          MusicPlayer.restartExecutorService();
           meuPainel.remove(RevertMenuButton);
           meuPainel.remove(newGameButton);
           meuPainel.remove(youLose);
@@ -1575,6 +1588,7 @@ public class Game extends JPanel implements Runnable {
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
           MusicPlayer.musicMenu();
+
           Game.aparecerAposLoading = false;
           Game.PodeIniciarPosLoading = false;
           MenuPanel.CorPretaLoading = 255;
@@ -1648,7 +1662,6 @@ public class Game extends JPanel implements Runnable {
 
   // Método para atualizar a lógica do jogo
   public void tick() {
- 
     VerificDistance = keyListener.getVerif();
     for (int z = 0; z < nodeSnake.length; z++) {
       int currX = nodeSnake[z].x;
@@ -2024,7 +2037,7 @@ public class Game extends JPanel implements Runnable {
       macaENX = -100;
       macaENY = -100;
     }
-
+    tocando = true;
     Location_deco();
     ControlTamanho = false;
     ValueFinal = 0;

@@ -1,14 +1,14 @@
 
 import java.io.File;
-import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
-import java.util.Timer;
-import java.util.TimerTask;
+
 public class MusicPlayer {
 
   public static void AudioClick() {
@@ -167,10 +167,94 @@ public class MusicPlayer {
     }
   }
 
+  private static Clip clipMusiField;
+  private static ExecutorService executorService = Executors.newSingleThreadExecutor();
+  private static final String[] TRACKS = {
+      "resources/audios/Planicie/track1.wav",
+      "resources/audios/Planicie/track2.wav",
+      "resources/audios/Planicie/track3.wav"
+  };
+  private static int currentTrackIndex = 0;
+  private static boolean isField = false;
+
+  public static void MusicsField(boolean gameOver) {
+    if (gameOver || Game.GameFim) {
+      stopMusicField();
+      return;
+    }
+
+    if (!isField) {
+      isField = true;
+      currentTrackIndex = 0;
+      playNextTrack();
+    }
+  }
+
+  private static void playNextTrack() {
+    if (!isField)
+      return;
+
+    try {
+      if (clipMusiField != null && clipMusiField.isRunning()) {
+        clipMusiField.stop();
+        clipMusiField.close();
+      }
+
+      File soundFile = new File(TRACKS[currentTrackIndex]);
+      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+      clipMusiField = AudioSystem.getClip();
+      clipMusiField.open(audioInputStream);
+
+      clipMusiField.addLineListener(event -> {
+        if (event.getType() == LineEvent.Type.STOP) {
+          clipMusiField.close();
+          currentTrackIndex = (currentTrackIndex + 1) % TRACKS.length;
+
+        
+          executorService.execute(() -> {
+            try {
+              Thread.sleep(2000); 
+              playNextTrack();
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+          });
+        }
+      });
+
+      clipMusiField.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void shutdownExecutorService() {
+    if (executorService != null && !executorService.isShutdown()) {
+      executorService.shutdown();
+    }
+  }
+
+  public static void restartExecutorService() {
+    if (executorService.isShutdown()) {
+      executorService = Executors.newSingleThreadExecutor(); 
+    }
+  }
+
+  public static void stopMusicField() {
+    if (clipMusiField != null) {
+      if (clipMusiField.isRunning()) {
+        clipMusiField.stop();
+      }
+      clipMusiField.close();
+      clipMusiField = null;
+    }
+    isField = false;
+    shutdownExecutorService(); 
+  }
 
   static Clip clipMusicMenu;
   private static boolean isPlaying = false;
-  
+
   public static void musicMenu() {
     try {
       File soundFile = new File("resources/audios/Jogo/musicamenu-unica.wav");
@@ -183,7 +267,7 @@ public class MusicPlayer {
         @Override
         public void update(LineEvent event) {
           if (event.getType() == LineEvent.Type.STOP) {
-         
+
             new Thread(() -> {
               try {
                 Thread.sleep(10000);
@@ -214,6 +298,7 @@ public class MusicPlayer {
       isPlaying = false;
     }
   }
+
   private static Clip colisianenergyClip;
   private static boolean isEnergyPlayingColisian = false;
 

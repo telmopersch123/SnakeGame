@@ -33,7 +33,7 @@ public class checkedColisson {
         return new ResultadoColisao(true, false);
       }
     }
-    if (nodeSnake.length >= 60) {
+    if (nodeSnake.length >= 2510) {
       if (colisaoCobra(nodeSnake)) {
         MusicPlayer.Colisao();
         return new ResultadoColisao(true, false);

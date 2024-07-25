@@ -54,7 +54,7 @@ public class MenuPanel extends JPanel {
     GridBagConstraints Menu = new GridBagConstraints();
 
     try {
-    
+
       // ========LOADING-----------
       painelLoading();
       // ==========================
@@ -118,11 +118,12 @@ public class MenuPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
+          MusicPlayer.restartExecutorService();
           MusicPlayer.stopMusicMenu();
           if (!buttonsEnabled) {
             return;
           }
-  
+
           ///
           if (Game.ManterAnimation) {
             backgroundLabel.setVisible(false);
@@ -165,7 +166,7 @@ public class MenuPanel extends JPanel {
               OutfitButton.setVisible(true);
               settingsButton.setVisible(true);
             }
-            MusicPlayer.stopMusicMenu();
+
           });
         }
       });
