@@ -1,7 +1,8 @@
 
 import java.io.File;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -167,89 +168,51 @@ public class MusicPlayer {
     }
   }
 
-  private static Clip clipMusiField;
-  private static ExecutorService executorService = Executors.newSingleThreadExecutor();
-  private static final String[] TRACKS = {
-      "resources/audios/Planicie/track1.wav",
-      "resources/audios/Planicie/track2.wav",
-      "resources/audios/Planicie/track3.wav"
-  };
-  private static int currentTrackIndex = 0;
-  private static boolean isField = false;
-
-  public static void MusicsField(boolean gameOver) {
-    if (gameOver || Game.GameFim) {
-      stopMusicField();
-      return;
-    }
-
-    if (!isField) {
-      isField = true;
-      currentTrackIndex = 0;
-      playNextTrack();
-    }
+  public static void MusicasFields() {
+    Game.musicQueue.add(new File("resources/audios/Planicie/track1.wav"));
+    Game.musicQueue.add(new File("resources/audios/Planicie/track2.wav"));
+    Game.musicQueue.add(new File("resources/audios/Planicie/track3.wav"));
+    musicCount = Game.musicQueue.size();
   }
 
-  private static void playNextTrack() {
-    if (!isField)
-      return;
-
-    try {
-      if (clipMusiField != null && clipMusiField.isRunning()) {
-        clipMusiField.stop();
-        clipMusiField.close();
-      }
-
-      File soundFile = new File(TRACKS[currentTrackIndex]);
-      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
-      clipMusiField = AudioSystem.getClip();
-      clipMusiField.open(audioInputStream);
-
-      clipMusiField.addLineListener(event -> {
-        if (event.getType() == LineEvent.Type.STOP) {
-          clipMusiField.close();
-          currentTrackIndex = (currentTrackIndex + 1) % TRACKS.length;
-
-        
-          executorService.execute(() -> {
-            try {
-              Thread.sleep(2000); 
-              playNextTrack();
-            } catch (InterruptedException e) {
-              e.printStackTrace();
+  static Clip clipField;
+  static int musicCount;
+  private static boolean isMusicPlaying = false;
+private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+  public static void MusicsField() {
+    if (!isMusicPlaying) {
+      File soundFile = Game.musicQueue.poll();
+      if (soundFile != null) {
+        try {
+          AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+          clipField = AudioSystem.getClip();
+          clipField.open(audioInputStream);
+          clipField.start();
+          isMusicPlaying = true;
+          clipField.addLineListener(event -> {
+            if (event.getType() == LineEvent.Type.STOP) {
+              clipField.close();
+              musicCount--;
+              isMusicPlaying = false;
+              if (musicCount == 0) {
+                MusicasFields();
+              }
+              scheduler.schedule(() -> MusicsField(), 2, TimeUnit.SECONDS);
             }
           });
+        } catch (Exception e) {
+          e.printStackTrace();
         }
-      });
-
-      clipMusiField.start();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public static void shutdownExecutorService() {
-    if (executorService != null && !executorService.isShutdown()) {
-      executorService.shutdown();
-    }
-  }
-
-  public static void restartExecutorService() {
-    if (executorService.isShutdown()) {
-      executorService = Executors.newSingleThreadExecutor(); 
+      }
     }
   }
 
   public static void stopMusicField() {
-    if (clipMusiField != null) {
-      if (clipMusiField.isRunning()) {
-        clipMusiField.stop();
-      }
-      clipMusiField.close();
-      clipMusiField = null;
-    }
-    isField = false;
-    shutdownExecutorService(); 
+    clipField.stop();
+    clipField.close();
+    isMusicPlaying = false;
+    Game.musicQueue.clear();
+    Game.musicQueue.addAll(Game.originalQueue);
   }
 
   static Clip clipMusicMenu;

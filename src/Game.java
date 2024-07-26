@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -471,11 +473,14 @@ public class Game extends JPanel implements Runnable {
   static int keyPressedInferior = KeyEvent.VK_DOWN;
   static int keyPressedEsquerda = KeyEvent.VK_LEFT;
   static int keyPressedDireita = KeyEvent.VK_RIGHT;
-  static boolean RemoverAnimation = true;
-  static boolean ManterAnimation = false;
+  static boolean RemoverAnimation = false;
+  static boolean ManterAnimation = true;
   static boolean clickedButtonDifiNormal = true;
   static boolean clickedButtonDifiDificil = false;
   static boolean clickedButtonDifiFacil = false;
+  public static Queue<File> musicQueue = new LinkedList<>();
+  public static Queue<File> originalQueue = new LinkedList<>();
+  public static Queue<File> limperQueue = new LinkedList<>();
 
   private void initializeKeyListener() {
     if (!gameOver && !GameFim) {
@@ -757,6 +762,7 @@ public class Game extends JPanel implements Runnable {
     MenuPanel menuPanel = new MenuPanel();
     frame.add(menuPanel);
     frame.setVisible(true);
+
     MusicPlayer.musicMenu();
   }
 
@@ -890,10 +896,17 @@ public class Game extends JPanel implements Runnable {
     }
 
     // Desenha os elementos do jogo no buffer
+
     if (MapField) {
       if (tocando) {
-        MusicPlayer.MusicsField(gameOver);
-        tocando = false;
+        if (!gameOver && !GameFim) {
+          MusicPlayer.MusicasFields();
+          MusicPlayer.MusicsField();
+          tocando = false;
+        }
+      }
+      if (gameOver || GameFim) {
+        MusicPlayer.stopMusicField();
       }
       map.mapField(buffer, ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY,
           quantidadeDeco, randomX2,
@@ -1253,8 +1266,7 @@ public class Game extends JPanel implements Runnable {
 
     if (!newGameButtonExists) {
       MusicPlayer.AudioGameWins();
-      MusicPlayer.stopMusicField();
-      MusicPlayer.shutdownExecutorService();
+
       MusicPlayer.stopEnergytime();
       meuPainelButtons.setLayout(new GridBagLayout());
       try {
@@ -1415,7 +1427,6 @@ public class Game extends JPanel implements Runnable {
 
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
-
           MusicPlayer.musicMenu();
           JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
           GameSnake.getContentPane().removeAll();
@@ -1549,7 +1560,6 @@ public class Game extends JPanel implements Runnable {
     }
     if (!newGameButtonExists) {
       MusicPlayer.AudioGameOver();
-      MusicPlayer.stopMusicField();
       MusicPlayer.stopEnergytime();
       Font customFontGameOver = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
       Font derivateFont = customFontGameOver.deriveFont((float) 22);
@@ -1566,8 +1576,6 @@ public class Game extends JPanel implements Runnable {
       newGameButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
-          MusicPlayer.MusicsField(gameOver);
-          MusicPlayer.restartExecutorService();
           meuPainel.remove(RevertMenuButton);
           meuPainel.remove(newGameButton);
           meuPainel.remove(youLose);
@@ -1588,7 +1596,6 @@ public class Game extends JPanel implements Runnable {
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
           MusicPlayer.musicMenu();
-
           Game.aparecerAposLoading = false;
           Game.PodeIniciarPosLoading = false;
           MenuPanel.CorPretaLoading = 255;

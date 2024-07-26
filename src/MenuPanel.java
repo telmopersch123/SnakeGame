@@ -118,7 +118,6 @@ public class MenuPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
-          MusicPlayer.restartExecutorService();
           MusicPlayer.stopMusicMenu();
           if (!buttonsEnabled) {
             return;
