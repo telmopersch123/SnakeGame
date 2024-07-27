@@ -77,8 +77,8 @@ public class ConfPanel extends JPanel {
   private static Icon botaoeinferior;
   static CustomSlider slider;
   static JPanel sliderPanel;
-  private static int value;
-  private static int valueEf;
+  static int value;
+  static int valueEf;
   private CustomSlider sliderEfeito;
   private ImageIcon transparentIcon;
   private ImageIcon transparentFund;
@@ -454,7 +454,7 @@ public class ConfPanel extends JPanel {
 
     slider.setMinimum(0);
     slider.setMaximum(100);
-    slider.setMajorTickSpacing(10);
+    slider.setMajorTickSpacing(25);
     slider.setMinorTickSpacing(1);
     slider.setPreferredSize(new Dimension(350, 40));
     slider.setMaximumSize(new Dimension(350, 40));
@@ -504,6 +504,8 @@ public class ConfPanel extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         slider.setValue(0);
+        value = 0;
+        AbaixarOuAumentarMusica.setVolumeForAllClips(0);
       }
     });
     gbc.gridx = 0;
@@ -513,14 +515,15 @@ public class ConfPanel extends JPanel {
     buttonSom.setVisible(false);
     configLabels.add(buttonSom);
     // -------
+
     slider.addChangeListener(new ChangeListener() {
       @Override
       public void stateChanged(ChangeEvent e) {
         value = slider.getValue();
+        AbaixarOuAumentarMusica.setVolumeForAllClips(value);
         OuvirSomJLabel.setText(" " + value + "%");
-
+        
         ControlSonsTranper = (value == 0) ? 0.5f : 1.0f;
-
         ImageIcon ImageSliderFundo = new ImageIcon(backgroundImage);
         transparentFund = createTransparentIcon(ImageSliderFundo, ControlSonsTranper);
         Image backgroundTransperImage = transparentFund.getImage();
@@ -541,7 +544,8 @@ public class ConfPanel extends JPanel {
         }
       }
     });
-    value = slider.getValue();
+
+    AbaixarOuAumentarMusica.setVolumeForAllClips(value);
     OuvirSomJLabel = new JLabel(" " + value + "%");
     OuvirSomJLabel.setFont(Fonts);
     OuvirSomJLabel.setForeground(Color.WHITE);
@@ -681,7 +685,7 @@ public class ConfPanel extends JPanel {
         }
       }
     });
-    valueEf = sliderEfeito.getValue();
+
     OuvirEfeitoJLabel = new JLabel(" " + valueEf + "%");
     OuvirEfeitoJLabel.setFont(Fonts);
     OuvirEfeitoJLabel.setForeground(Color.WHITE);

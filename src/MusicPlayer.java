@@ -1,5 +1,6 @@
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -7,10 +8,25 @@ import java.util.concurrent.TimeUnit;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 
 public class MusicPlayer {
+  static int musicCount;
+  static List<Clip> audioClips;
+
+  static Clip clipField;
+  static Clip energyClip;
+  static Clip clipMusicMenu;
+  static Clip colisianenergyClip;
+  static Clip RaioCaindoClip;
+  private static boolean isEnergyPlaying = false;
+  private static boolean isEnergyPlayingColisian = false;
+  private static boolean isPlaying = false;
+  private static boolean isMusicPlaying = false;
+  private static boolean isEnergyPlayingRaioCaindo = false;
+  private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
   public static void AudioClick() {
     try {
@@ -175,10 +191,6 @@ public class MusicPlayer {
     musicCount = Game.musicQueue.size();
   }
 
-  static Clip clipField;
-  static int musicCount;
-  private static boolean isMusicPlaying = false;
-private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
   public static void MusicsField() {
     if (!isMusicPlaying) {
       File soundFile = Game.musicQueue.poll();
@@ -187,7 +199,14 @@ private static final ScheduledExecutorService scheduler = Executors.newScheduled
           AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
           clipField = AudioSystem.getClip();
           clipField.open(audioInputStream);
+
+      
+          FloatControl gainControl = (FloatControl) clipField.getControl(FloatControl.Type.MASTER_GAIN);
+          float range = gainControl.getMaximum() - gainControl.getMinimum();
+          float gain = (range * 0.8f) + gainControl.getMinimum();
+          gainControl.setValue(gain);
           clipField.start();
+        
           isMusicPlaying = true;
           clipField.addLineListener(event -> {
             if (event.getType() == LineEvent.Type.STOP) {
@@ -198,8 +217,10 @@ private static final ScheduledExecutorService scheduler = Executors.newScheduled
                 MusicasFields();
               }
               scheduler.schedule(() -> MusicsField(), 2, TimeUnit.SECONDS);
+              audioClips.add(clipField);
             }
           });
+
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -214,9 +235,6 @@ private static final ScheduledExecutorService scheduler = Executors.newScheduled
     Game.musicQueue.clear();
     Game.musicQueue.addAll(Game.originalQueue);
   }
-
-  static Clip clipMusicMenu;
-  private static boolean isPlaying = false;
 
   public static void musicMenu() {
     try {
@@ -242,18 +260,20 @@ private static final ScheduledExecutorService scheduler = Executors.newScheduled
             }).start();
           }
         }
+
       });
 
       if (!isPlaying) {
-        clipMusicMenu.start(); // Começa a tocar a música uma vez
+        clipMusicMenu.start(); 
         isPlaying = true;
+        audioClips.add(clipMusicMenu);
       }
+
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  // Método para parar a música
   public static void stopMusicMenu() {
     if (clipMusicMenu != null && clipMusicMenu.isRunning()) {
       clipMusicMenu.stop();
@@ -261,9 +281,6 @@ private static final ScheduledExecutorService scheduler = Executors.newScheduled
       isPlaying = false;
     }
   }
-
-  private static Clip colisianenergyClip;
-  private static boolean isEnergyPlayingColisian = false;
 
   public static void colisianenergyfood() {
     try {
@@ -288,9 +305,6 @@ private static final ScheduledExecutorService scheduler = Executors.newScheduled
       isEnergyPlayingColisian = false;
     }
   }
-
-  private static Clip RaioCaindoClip;
-  private static boolean isEnergyPlayingRaioCaindo = false;
 
   public static void RaioCaindo() {
     try {
@@ -328,9 +342,6 @@ private static final ScheduledExecutorService scheduler = Executors.newScheduled
       isEnergyPlayingRaioCaindo = false;
     }
   }
-
-  private static Clip energyClip;
-  private static boolean isEnergyPlaying = false;
 
   public static void energytime() {
     try {

@@ -481,6 +481,7 @@ public class Game extends JPanel implements Runnable {
   public static Queue<File> musicQueue = new LinkedList<>();
   public static Queue<File> originalQueue = new LinkedList<>();
   public static Queue<File> limperQueue = new LinkedList<>();
+  static boolean userInteracted = true;
 
   private void initializeKeyListener() {
     if (!gameOver && !GameFim) {
@@ -762,8 +763,10 @@ public class Game extends JPanel implements Runnable {
     MenuPanel menuPanel = new MenuPanel();
     frame.add(menuPanel);
     frame.setVisible(true);
-
+    MusicPlayer.audioClips = new ArrayList<>();
     MusicPlayer.musicMenu();
+
+    AbaixarOuAumentarMusica.setVolumeForAllClips(80);
   }
 
   public void drawCollisionAnimation(Graphics g, double rotationAngle) {
@@ -902,6 +905,10 @@ public class Game extends JPanel implements Runnable {
         if (!gameOver && !GameFim) {
           MusicPlayer.MusicasFields();
           MusicPlayer.MusicsField();
+          MusicPlayer.audioClips.add(MusicPlayer.clipField);
+          if (ConfPanel.slider != null) {
+            AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.slider.getValue());
+          }
           tocando = false;
         }
       }
@@ -1428,6 +1435,7 @@ public class Game extends JPanel implements Runnable {
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
           MusicPlayer.musicMenu();
+          AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.slider.getValue());
           JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
           GameSnake.getContentPane().removeAll();
           //
@@ -1596,6 +1604,10 @@ public class Game extends JPanel implements Runnable {
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
           MusicPlayer.musicMenu();
+          if (ConfPanel.slider != null) {
+            AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.slider.getValue());
+          }
+
           Game.aparecerAposLoading = false;
           Game.PodeIniciarPosLoading = false;
           MenuPanel.CorPretaLoading = 255;

@@ -16,6 +16,7 @@ public class CustomSlider extends JSlider {
     private Image thumbImage;
     private Preferences prefs;
     private String sliderPositionKey;
+    static int sliderPosition;
 
     public CustomSlider(Image backgroundImage, Image thumbImage, Preferences prefs, String sliderPositionKey) {
         super();
@@ -23,8 +24,19 @@ public class CustomSlider extends JSlider {
         this.thumbImage = thumbImage;
         this.prefs = prefs;
         this.sliderPositionKey = sliderPositionKey;
-        int sliderPosition = prefs.getInt(sliderPositionKey, (getMaximum() - getMinimum()) / 2);
-        setValue(sliderPosition);
+
+        if (Game.userInteracted) {
+
+            resetPreferences();
+            sliderPosition = 80;
+            setValue(sliderPosition);
+        } else {
+            sliderPosition = prefs.getInt(sliderPositionKey, (getMaximum() - getMinimum()) / 2);
+            setValue(sliderPosition);
+        }
+
+
+
         setUI(new CustomSliderUI(this));
         setOpaque(false);
         setPreferredSize(new Dimension(200, 40));
@@ -32,17 +44,17 @@ public class CustomSlider extends JSlider {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                Game.userInteracted = false;
                 int mouseX = e.getX();
                 int thumbWidth = thumbImage.getWidth(null);
                 int minPos = thumbWidth / 2;
                 int maxPos = getWidth() - thumbWidth / 2;
                 int newValue = (int) Math.round((double) (mouseX - minPos) / (maxPos - minPos) * getMaximum());
-                if (newValue >= -10 && newValue <= 10) {
-                    setValue(5);
+                if (newValue >= -10 && newValue <= 0) {
+                    setValue(0);
                 } else {
                     setValue(newValue);
                 }
-
             }
         });
         addChangeListener(new ChangeListener() {
@@ -54,6 +66,11 @@ public class CustomSlider extends JSlider {
             }
         });
 
+    }
+
+    private void resetPreferences() {
+        // Limpa a preferência específica para o slider quando o jogo inicia
+        prefs.remove(sliderPositionKey);
     }
 
     public void updateImages(Image background, Image thumb) {

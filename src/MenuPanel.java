@@ -54,7 +54,6 @@ public class MenuPanel extends JPanel {
     GridBagConstraints Menu = new GridBagConstraints();
 
     try {
-
       // ========LOADING-----------
       painelLoading();
       // ==========================
