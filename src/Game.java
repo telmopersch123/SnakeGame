@@ -764,9 +764,12 @@ public class Game extends JPanel implements Runnable {
     frame.add(menuPanel);
     frame.setVisible(true);
     MusicPlayer.audioClips = new ArrayList<>();
+    MusicPlayer.effectsClips = new ArrayList<>();
     MusicPlayer.musicMenu();
+    ConfPanel.valueEf = 80;
+    ConfPanel.value = 80;
+    AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.value);
 
-    AbaixarOuAumentarMusica.setVolumeForAllClips(80);
   }
 
   public void drawCollisionAnimation(Graphics g, double rotationAngle) {
@@ -901,20 +904,6 @@ public class Game extends JPanel implements Runnable {
     // Desenha os elementos do jogo no buffer
 
     if (MapField) {
-      if (tocando) {
-        if (!gameOver && !GameFim) {
-          MusicPlayer.MusicasFields();
-          MusicPlayer.MusicsField();
-          MusicPlayer.audioClips.add(MusicPlayer.clipField);
-          if (ConfPanel.slider != null) {
-            AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.slider.getValue());
-          }
-          tocando = false;
-        }
-      }
-      if (gameOver || GameFim) {
-        MusicPlayer.stopMusicField();
-      }
       map.mapField(buffer, ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY,
           quantidadeDeco, randomX2,
           randomY2, quantidadeDeco2);
@@ -939,6 +928,20 @@ public class Game extends JPanel implements Runnable {
       decoracaoComplexaAcima.AcimaDungeon(buffer, lavaNormal, lavaSkull);
     }
 
+    if (tocando) {
+      if (!gameOver && !GameFim) {
+        MusicPlayer.MusicasFields();
+        MusicPlayer.MusicsField();
+        MusicPlayer.audioClips.add(MusicPlayer.clipField);
+        if (ConfPanel.slider != null) {
+          AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.slider.getValue());
+        }
+        tocando = false;
+      }
+    }
+    if (gameOver || GameFim) {
+      MusicPlayer.stopMusicField();
+    }
     // Desenha a COBRA
     if (snakeClassica && keyListener != null) {
       if (DeathfromHunger) {
@@ -1341,6 +1344,7 @@ public class Game extends JPanel implements Runnable {
       GridGameWins.gridy = 2;
       //
       if (ManterAnimation) {
+        sizeDificult = 32;
         colorTransparente = 0;
       } else {
         sizeDificult = 12;
@@ -1435,7 +1439,10 @@ public class Game extends JPanel implements Runnable {
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
           MusicPlayer.musicMenu();
-          AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.slider.getValue());
+          if (ConfPanel.slider != null) {
+            AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.slider.getValue());
+          }
+
           JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
           GameSnake.getContentPane().removeAll();
           //
@@ -1935,6 +1942,7 @@ public class Game extends JPanel implements Runnable {
           }
         }, delay2);
         //
+
         int delay3 = 1000;
         timerLabelsGameWins = new Timer();
         timerLabelsGameWins.scheduleAtFixedRate(new TimerTask() {

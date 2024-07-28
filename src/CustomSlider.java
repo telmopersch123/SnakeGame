@@ -26,16 +26,14 @@ public class CustomSlider extends JSlider {
         this.sliderPositionKey = sliderPositionKey;
 
         if (Game.userInteracted) {
-
             resetPreferences();
             sliderPosition = 80;
             setValue(sliderPosition);
         } else {
-            sliderPosition = prefs.getInt(sliderPositionKey, (getMaximum() - getMinimum()) / 2);
+            sliderPosition = prefs.getInt(sliderPositionKey, 80);
             setValue(sliderPosition);
+            
         }
-
-
 
         setUI(new CustomSliderUI(this));
         setOpaque(false);
@@ -65,7 +63,7 @@ public class CustomSlider extends JSlider {
                 repaint();
             }
         });
-
+       
     }
 
     private void resetPreferences() {

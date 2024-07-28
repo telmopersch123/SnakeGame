@@ -522,7 +522,7 @@ public class ConfPanel extends JPanel {
         value = slider.getValue();
         AbaixarOuAumentarMusica.setVolumeForAllClips(value);
         OuvirSomJLabel.setText(" " + value + "%");
-        
+
         ControlSonsTranper = (value == 0) ? 0.5f : 1.0f;
         ImageIcon ImageSliderFundo = new ImageIcon(backgroundImage);
         transparentFund = createTransparentIcon(ImageSliderFundo, ControlSonsTranper);
@@ -545,7 +545,7 @@ public class ConfPanel extends JPanel {
       }
     });
 
-    AbaixarOuAumentarMusica.setVolumeForAllClips(value);
+    // AbaixarOuAumentarMusica.setVolumeForAllClips(value);
     OuvirSomJLabel = new JLabel(" " + value + "%");
     OuvirSomJLabel.setFont(Fonts);
     OuvirSomJLabel.setForeground(Color.WHITE);
@@ -645,6 +645,8 @@ public class ConfPanel extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         sliderEfeito.setValue(0);
+        valueEf = 0;
+        AbaixarOuAumentarMusica.setVolumeEffectsForAllClips(0);
       }
     });
     gbc.gridx = 0;
@@ -660,7 +662,6 @@ public class ConfPanel extends JPanel {
       public void stateChanged(ChangeEvent e) {
         valueEf = sliderEfeito.getValue();
         OuvirEfeitoJLabel.setText(" " + valueEf + "%");
-
         ControlSonsTranper = (valueEf == 0) ? 0.5f : 1.0f;
 
         ImageIcon ImageSliderFundo1 = new ImageIcon(backgroundImage);

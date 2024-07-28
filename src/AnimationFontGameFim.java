@@ -10,12 +10,13 @@ public class AnimationFontGameFim {
   static Timer animacaoFonteTimer;
   static Timer animacaoFonteDificulty;
   static Timer animacaoFontePontuacao;
- 
+
   public static void AnimationFontDificulty(Game game) {
     animacaoFonteDificulty = new Timer();
     animacaoFonteDificulty.scheduleAtFixedRate(new TimerTask() {
       int ValueColorDificulty;
       int FontSize = Game.sizeDificult;
+
       @Override
       public void run() {
         SwingUtilities.invokeLater(() -> {
@@ -53,7 +54,7 @@ public class AnimationFontGameFim {
             animacaoFonteDificulty.cancel();
             animacaoFonteDificulty.purge();
           }
-        
+
         });
       }
     }, 0, 70);
@@ -104,13 +105,14 @@ public class AnimationFontGameFim {
       }
     }, 0, 70);
   }
-  
+
   public static void AnimationFontPontuacao(Game game) {
 
     animacaoFontePontuacao = new Timer();
     animacaoFontePontuacao.scheduleAtFixedRate(new TimerTask() {
       int ValueColorPontuacao;
       int FontSize = Game.sizeDificult;
+
       @Override
       public void run() {
         SwingUtilities.invokeLater(() -> {
@@ -132,7 +134,7 @@ public class AnimationFontGameFim {
             Game.GridGameWins.insets = new Insets(0, 0, 0, 0);
             Game.meuPainelButtons.add(Game.PonttextShadowLabel, Game.GridGameWins);
             //
-            Game.PonttextShadowLabel2 = new TextShadow(""+ Game.Pontuacao, new Color(192, 192,
+            Game.PonttextShadowLabel2 = new TextShadow("" + Game.Pontuacao, new Color(192, 192,
                 192, ValueColorPontuacao),
                 new Color(0, 0, 0, ValueColorPontuacao), TamanhoNovo);
             Game.GridGameWins.gridy = 7;

@@ -651,17 +651,17 @@ public class checkedColisson {
             }
             break;
           case 5:
-            int pos1 = 9;      
-                for (int y = 0; y < 4; y++) {
-                  if (Game.DecoComplexoX.length > pos1 && Game.DecoComplexoY.length > pos1) {
-                    complexasDungeon = new Rectangle(Game.DecoComplexoX[pos1] + 4,
-                        Game.DecoComplexoY[pos1] + 25, 65, 60);
-                    if (headCollisionAreaDeco.intersects(complexasDungeon)) {
-                      return true;
-                    }
-                  }
-                  pos1++;
+            int pos1 = 9;
+            for (int y = 0; y < 4; y++) {
+              if (Game.DecoComplexoX.length > pos1 && Game.DecoComplexoY.length > pos1) {
+                complexasDungeon = new Rectangle(Game.DecoComplexoX[pos1] + 4,
+                    Game.DecoComplexoY[pos1] + 25, 65, 60);
+                if (headCollisionAreaDeco.intersects(complexasDungeon)) {
+                  return true;
+                }
               }
+              pos1++;
+            }
             break;
           case 6:
             if (Game.DecoComplexoX.length > 13 && Game.DecoComplexoY.length > 13) {
