@@ -153,7 +153,7 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public static int direction;
-  static Node[] ComprimentoCobra = new Node[2490];
+  static Node[] ComprimentoCobra = new Node[40];
   public static Node[] nodeSnake = ComprimentoCobra;
   public int score = 0;
   public static int macaX = 0, macaY = 0;
@@ -482,6 +482,7 @@ public class Game extends JPanel implements Runnable {
   public static Queue<File> originalQueue = new LinkedList<>();
   public static Queue<File> limperQueue = new LinkedList<>();
   static boolean userInteracted = true;
+  static JFrame frame;
 
   private void initializeKeyListener() {
     if (!gameOver && !GameFim) {
@@ -753,7 +754,7 @@ public class Game extends JPanel implements Runnable {
   // Método principal para iniciar o jogo
   public static void main(String args[]) {
     Game game = new Game();
-    JFrame frame = new JFrame("Snake Game");
+    frame = new JFrame("Snake Game");
     frame.add(game);
     frame.setResizable(false);
     frame.setUndecorated(true); // Remove as bordas da janela
@@ -768,7 +769,6 @@ public class Game extends JPanel implements Runnable {
     MusicPlayer.musicMenu();
     ConfPanel.valueEf = 80;
     ConfPanel.value = 80;
-    AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.value);
 
   }
 

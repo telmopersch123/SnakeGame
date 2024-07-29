@@ -32,6 +32,20 @@ public class NotificationDesblocked {
     static Image resizedImage;
     static Image resizedImage2;
 
+    public static void hoverbuttonExit(JButton closeButton, ImageIcon backgroundClosedUNHover, ImageIcon backgroundClosedHover) {
+        closeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                closeButton.setIcon(backgroundClosedHover);
+                MusicPlayer.AudioHover();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                closeButton.setIcon(backgroundClosedUNHover);
+            }
+        });
+    }
     public static void showNotification(JFrame parentFrame, String message) {
         // Criar um JPanel personalizado com fundo transparente
 
@@ -91,20 +105,8 @@ public class NotificationDesblocked {
             Game.NotificationGameDesblocked = false;
             window.dispose(); // Fechar o diálogo ao clicar no botão "X"
         });
-
         MenuPanel.addShadow(closeButton, "", Fonts, 50, 50, false);
-        closeButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                closeButton.setIcon(backgroundClosedHover);
-                MusicPlayer.AudioHover();
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                closeButton.setIcon(backgroundClosedUNHover);
-            }
-        });
+        hoverbuttonExit(closeButton, backgroundClosedUNHover, backgroundClosedHover);
         buttonPanel.add(closeButton, BorderLayout.EAST);
         panel.add(buttonPanel, gbcButton);
 

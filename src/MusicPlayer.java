@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 
@@ -361,7 +360,7 @@ public class MusicPlayer {
           AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
           clipField = AudioSystem.getClip();
           clipField.open(audioInputStream);
-
+          audioClips.add(clipField);
           AbaixarOuAumentarMusica.setVolumeForAllClips(ConfPanel.value);
           clipField.start();
 
@@ -375,7 +374,6 @@ public class MusicPlayer {
                 MusicasFields();
               }
               scheduler.schedule(() -> MusicsField(), 2, TimeUnit.SECONDS);
-              audioClips.add(clipField);
             }
           });
 

@@ -10,11 +10,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -26,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 
 public class MenuPanel extends JPanel {
@@ -49,6 +52,13 @@ public class MenuPanel extends JPanel {
     loadingPanel.setLayout(new BorderLayout());
   }
 
+  private JLabel SnakeImagem;
+  private Timer animationTimer;
+  private JButton BotaoExit;
+  private StretchIcon backgroundClosedHover;
+  private StretchIcon backgroundClosedUNHover;
+  private JButton comoButton;
+
   public MenuPanel() {
     setLayout(new GridBagLayout());
     GridBagConstraints Menu = new GridBagConstraints();
@@ -61,6 +71,8 @@ public class MenuPanel extends JPanel {
       Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", 20);
       ImageIcon buttonReturn = new StretchIcon("resources/Menu/return.png");
       ImageIcon buttonImage = new StretchIcon("resources/Menu/buttonRock.png");
+      ImageIcon configImage = new StretchIcon("resources/Menu/configuracoesbutton.png");
+
       // Carregue a imagem do fundo
       Image backgroundImage = ImageIO.read(new File("resources/Menu/thumbMenu.png"));
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -103,15 +115,28 @@ public class MenuPanel extends JPanel {
         overlayPanel.setOpaque(false); // Deixe o overlayPanel transparente
         add(overlayPanel, bgConstraints);
       }
-      //
+      ////////////////////////////////////////////////
       add(backgroundLabel, bgConstraints);
-      //
+      ////////////////////////////////////////////////
       add(loadingPanel, bgConstraints);
-      //
-      // SOMBREAMENTO NORMAL
+      ////////////////////////////////////////////////
+      backgroundClosedUNHover = new StretchIcon("resources/Notification/removerNotiunHover.png");
+      backgroundClosedHover = new StretchIcon("resources/Notification/removerNotiHover.png");
+      BotaoExit = new JButton("", backgroundClosedUNHover);
+      BotaoExit.addActionListener(e -> {
+        System.exit(0);
+      });
+      MenuPanel.addShadow(BotaoExit, "", Fonts, 50, 50, false);
+      NotificationDesblocked.hoverbuttonExit(BotaoExit, backgroundClosedUNHover, backgroundClosedHover);
+      Menu.gridx = 0;
+      Menu.gridy = 0;
+      Menu.anchor = GridBagConstraints.NORTHWEST; // Ancora no lado esquerdo
+      Menu.weightx = 1.0; // Adiciona peso para expandir horizontalmente
+      Menu.insets = new Insets(-390, 10, 0, 0);
+      backgroundLabel.add(BotaoExit, Menu);
+      ////////////////////////////////////////////////
       startButton = new JButton("Iniciar Jogo", buttonImage);
       addShadow(startButton, "Iniciar Jogo", Fonts, 150, 50, false);
-      ////////////////////////////////////////////////
       startButton.addActionListener(new ActionListener() {
 
         @Override
@@ -168,8 +193,8 @@ public class MenuPanel extends JPanel {
           });
         }
       });
-      Menu.gridx = 0;
-      Menu.gridy = 0;
+      Menu.gridy = 1;
+      Menu.anchor = GridBagConstraints.CENTER;
       Menu.insets = new Insets(10, 0, 10, 0);
       backgroundLabel.add(startButton, Menu);
       MapButton = new JButton("Mapa", buttonImage);
@@ -190,7 +215,7 @@ public class MenuPanel extends JPanel {
       });
 
       addShadow(MapButton, "Mapa", Fonts, 150, 50, false);
-      Menu.gridy = 1;
+      Menu.gridy = 2;
       backgroundLabel.add(MapButton, Menu);
 
       OutfitButton = new JButton("Skin", buttonImage);
@@ -211,10 +236,31 @@ public class MenuPanel extends JPanel {
         }
       });
       addShadow(OutfitButton, "Skin", Fonts, 150, 50, false);
-      Menu.gridy = 2;
+      Menu.gridy = 3;
       backgroundLabel.add(OutfitButton, Menu);
+      ///
+      comoButton = new JButton("Como Jogar!", buttonImage);
+      comoButton.addActionListener(new ActionListener() {
 
-      settingsButton = new JButton("Configurações", buttonImage);
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          MusicPlayer.AudioClick();
+          if (!buttonsEnabled) {
+            return;
+          }
+          JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(MenuPanel.this);
+          MenuPanel.this.setVisible(false);
+          ComoPanel comoPanel = new ComoPanel(buttonReturn);
+          topFrame.add(comoPanel);
+          topFrame.revalidate();
+          topFrame.repaint();
+        }
+      });
+      addShadow(comoButton, "Como Jogar!", Fonts, 150, 50, false);
+      Menu.gridy = 4;
+      backgroundLabel.add(comoButton, Menu);
+      //////////////////////////////
+      settingsButton = new JButton("", configImage);
       settingsButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -230,8 +276,10 @@ public class MenuPanel extends JPanel {
           topFrame.repaint();
         }
       });
-      addShadow(settingsButton, "Configurações", Fonts, 180, 50, false);
-      Menu.gridy = 3;
+      addShadow(settingsButton, "", Fonts, 70, 70, false);
+      Menu.gridy = 5;
+      Menu.insets = new Insets(0, 15, -390, 0);
+      Menu.anchor = GridBagConstraints.SOUTHWEST; // Ancora no lado esquerdo
       backgroundLabel.add(settingsButton, Menu);
       if (Game.NotificationGameDesblocked) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -243,10 +291,48 @@ public class MenuPanel extends JPanel {
           }
         });
       }
+      BufferedImage snakeBackground = ImageIO.read(new File("resources/Menu/snakeMenu.png"));
+      int numY = 6;
+      int numX = 8;
+      int frameWidth = snakeBackground.getWidth() / numX; // Largura de cada frame
+      int frameHeight = snakeBackground.getHeight() / numY; // Altura de cada frame
+      int newFrameWidth = frameWidth + 50; // Nova largura com 100 pixels a mais
+      int newFrameHeight = frameHeight + 50; // Nova altura com 100 pixels a mais
+      BufferedImage[] frames = new BufferedImage[numY * numX];
+      int index = 0;
+
+      for (int row = 0; row < numY; row++) {
+        for (int col = 0; col < numX; col++) {
+          int x = col * frameWidth;
+          int y = row * frameHeight;
+          BufferedImage originalFrame = snakeBackground.getSubimage(x, y, frameWidth, frameHeight);
+          BufferedImage resizedFrame = new BufferedImage(newFrameWidth, newFrameHeight, originalFrame.getType());
+          Graphics2D g2d = resizedFrame.createGraphics();
+          g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+          g2d.drawImage(originalFrame, 0, 0, newFrameWidth, newFrameHeight, null);
+          g2d.dispose();
+          frames[index++] = resizedFrame;
+        }
+      }
+      SnakeImagem = new JLabel(new ImageIcon(frames[0]));
+
+      Timer timer = new Timer(50, e -> {
+        currentFrame = (currentFrame + 1) % frames.length;
+        SnakeImagem.setIcon(new ImageIcon(frames[currentFrame]));
+      });
+      timer.start();
+      Menu.gridx = 0;
+      Menu.gridy = 6;
+      Menu.anchor = GridBagConstraints.CENTER;
+      Menu.insets = new Insets(0, 0, -800, 0);
+      backgroundLabel.add(SnakeImagem, Menu);
+
     } catch (IOException ex) {
       ex.printStackTrace();
     }
   }
+
+  int currentFrame = 0;
 
   public static void setButtonsEnabled(boolean enabled) {
     buttonsEnabled = enabled;

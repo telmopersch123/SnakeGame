@@ -28,11 +28,13 @@ public class CustomSlider extends JSlider {
         if (Game.userInteracted) {
             resetPreferences();
             sliderPosition = 80;
+
             setValue(sliderPosition);
         } else {
             sliderPosition = prefs.getInt(sliderPositionKey, 80);
+
             setValue(sliderPosition);
-            
+
         }
 
         setUI(new CustomSliderUI(this));
@@ -63,7 +65,7 @@ public class CustomSlider extends JSlider {
                 repaint();
             }
         });
-       
+
     }
 
     private void resetPreferences() {
