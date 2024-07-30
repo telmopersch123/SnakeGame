@@ -33,7 +33,7 @@ public class checkedColisson {
         return new ResultadoColisao(true, false);
       }
     }
-    if (nodeSnake.length >= 60) {
+    if (nodeSnake.length >= 3000) {
       if (colisaoCobra(nodeSnake)) {
         MusicPlayer.Colisao();
         return new ResultadoColisao(true, false);
@@ -582,7 +582,7 @@ public class checkedColisson {
             }
           }
 
-          // Verifica se o índice i é válido para Game.valueFire antes de acessar
+        
           if (i < Game.valueFireX.size()
               && (Game.DecoracaoX[i] != Game.valueFireX.get(i) && Game.DecoracaoY[i] != Game.valueFireY.get(i))) {
             if (headCollisionAreaDeco.intersects(Decoracao)) {

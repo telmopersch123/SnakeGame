@@ -63,46 +63,46 @@ public class Game extends JPanel implements Runnable {
   static int[] randomY = new int[3];
   int[] randomXS0 = new int[4];
   int[] randomYS0 = new int[4];
-  // SNAKES
+ 
   private Image snakeHead;
   private Image bodyStraight;
   private Image bodyCorner;
   private Image tailImage;
-  //
+
   private Image snakeHeadPoison;
   private Image bodyStraightPoison;
   private Image bodyCornerPoison;
   private Image tailImagePoison;
   private Image manchasAmarelas;
-  //
+
   private Image fogoComplementar;
   private Image fogoFinal;
   private Image snakeHeadFire;
   private Image bodyStraightFire;
   private Image bodyCornerFire;
   private Image tailImageFire;
-  // MAP - LAWN
+  
   private Image gramSprit;
   private Image rockSprit;
   private Image DecoLawn01;
   private Image DecoLawn02;
   private Image painelRock;
-  // FOODS
+ 
   private Image appleSprit;
   private Image applePoison;
   private Image appleEnergy;
-  // EGG
+
   private Image eggAnimation;
   private Image eggAnimationBreak;
-  public static int poisonFruitWidthVen = 25; // Largura original da fruta envenenada
-  public static int poisonFruitHeightVen = 50; // Altura original da fruta envenenada
+  public static int poisonFruitWidthVen = 25; 
+  public static int poisonFruitHeightVen = 50; 
 
   public static int poisonFruitWidthErn = 20;
   public static int poisonFruitHeightErn = 20;
   public static int poisonFruitWidthCla = 18;
   public static int poisonFruitHeightCla = 18;
 
-  /// Animations
+
   private Image explosionDeath;
   private Image DeathPoison;
   private Image DeathPoison2;
@@ -114,7 +114,7 @@ public class Game extends JPanel implements Runnable {
   Image ColidianEnergyFood;
   Image ColidianPoisonFood;
   Image colidianClassic;
-  //////
+
   Image chao_swamp;
   Image rock_swamp;
   Image spriteshetlago1;
@@ -131,7 +131,7 @@ public class Game extends JPanel implements Runnable {
   Image swamp3;
   Image swamp4;
 
-  /////
+
   Image chao_dungeon;
   Image rock_dungeon;
 
@@ -141,19 +141,19 @@ public class Game extends JPanel implements Runnable {
   Image gold1;
   Image gold2;
   Image gold3;
-  //////
+
   Image NumberMais1;
-  ////
+
 
   static BufferedImage Vitoria;
   private boolean VerificDistance = false;
   boolean gameOver = false;
-  BufferedImage buffer; // Buffer for double buffering
+  BufferedImage buffer; 
   public static ArrayList<Integer> walls_x = new ArrayList<>();
   public static ArrayList<Integer> walls_y = new ArrayList<>();
   private MyKeyBoardListener keyListener;
   public static int direction;
-  static Node[] ComprimentoCobra = new Node[40];
+  static Node[] ComprimentoCobra = new Node[2490];
   public static Node[] nodeSnake = ComprimentoCobra;
   public int score = 0;
   public static int macaX = 0, macaY = 0;
@@ -161,7 +161,7 @@ public class Game extends JPanel implements Runnable {
   public int macaPOX = 0, macaPOY = 0;
   public int count = 0;
 
-  ///
+
   private static boolean animationFinished = false;
   private boolean poisonDeathAnimationPlaying = false;
   public long lastVenomAnimationTime1 = System.currentTimeMillis();
@@ -183,7 +183,7 @@ public class Game extends JPanel implements Runnable {
   public Timer timerEnergy = new Timer();
   public boolean timerCancelled = false;
   public boolean lit = false;
-  // animation snake
+ 
   int segmentsToRemove = 0;
   int segmentsToRemoveTemporary = 0;
 
@@ -282,7 +282,7 @@ public class Game extends JPanel implements Runnable {
   static int[] randomSY2 = new int[3];
   static int[] randomSX3 = new int[1];
   static int[] randomSY3 = new int[1];
-  ///
+
   static int[] randomDX = new int[1];
   static int[] randomDY = new int[1];
   static int[] randomDX1 = new int[15];
@@ -348,7 +348,7 @@ public class Game extends JPanel implements Runnable {
   public static ArrayList<Integer> valueFireY = new ArrayList<>();
   public static boolean cobraParada = false;
   public static boolean cobraParadaFinal = false;
-  /////
+
   public static int PosicaoX;
   public static int PosicaoY;
   public static boolean IniciouEgg = true;
@@ -382,7 +382,7 @@ public class Game extends JPanel implements Runnable {
   static boolean possibilitiEnergyFinal = false;
   static Timer EnergyElevacao;
 
-  ///
+
   static int posicaoXVelocity = 0;
   static int posicaoYVelocity = 0;
   static int NovaPosicaoVelocity0 = 0;
@@ -425,7 +425,7 @@ public class Game extends JPanel implements Runnable {
   static JLabel pontLabel;
   static TextShadow textpont;
   int seconds = 0;
-  public static boolean componentesTimerPontAdicionado = false; // Variável de controle
+  public static boolean componentesTimerPontAdicionado = false; 
   private Timer timerTempo;
   static KeyEvent escolha;
   int QuantiTempoGameFim = 0;
@@ -493,7 +493,7 @@ public class Game extends JPanel implements Runnable {
   }
 
   public Game() {
-    // Iniciar Imagens do JOGO
+
     Image[] imagens = loadImages.Images(WIDTH, HEIGHT);
     snakeHead = imagens[0];
     tailImage = imagens[1];
@@ -506,8 +506,8 @@ public class Game extends JPanel implements Runnable {
     DecoLawn02 = imagens[8];
     applePoison = imagens[9];
     appleEnergy = imagens[10];
-    DeathPoison = imagens[11];// Animation fruta venenada
-    BeatEffect = imagens[12];// Animation Batida
+    DeathPoison = imagens[11];
+    BeatEffect = imagens[12];
     EnergyAnimationBody = imagens[13];
     EnergyAnimationTail = imagens[14];
     EnergyAnimationFinal = imagens[15];
@@ -566,21 +566,21 @@ public class Game extends JPanel implements Runnable {
     originalSnakeHeadClassica = snakeHead;
     originalSnakeHeadPoison = snakeHeadPoison;
     originalSnakeHeadFire = snakeHeadFire;
-    ///////////////////////////////////
+
     initializeKeyListener();
     this.setPreferredSize(new Dimension(ALL_DOTS_Width, ALL_DOTS_Height));
     this.setFocusable(true);
-    buffer = new BufferedImage(ALL_DOTS_Width, ALL_DOTS_Height, BufferedImage.TYPE_INT_ARGB); // Initialize buffer
-    // iniciar a parede
+    buffer = new BufferedImage(ALL_DOTS_Width, ALL_DOTS_Height, BufferedImage.TYPE_INT_ARGB); 
+    
     if (MapField) {
       ArrayList<ArrayList<Integer>> walls = LocaleUtils.LocateWall(FrameWidth,
           FrameHeight, WIDTH, HEIGHT, 20);
       walls_x = walls.get(0);
       walls_y = walls.get(1);
     }
-    // iniciar a decoração
+ 
     Location_deco();
-    // iniciar a cobra
+ 
     StartSnake();
     PosicaoX = nodeSnake[0].x;
     PosicaoY = nodeSnake[0].y;
@@ -589,7 +589,7 @@ public class Game extends JPanel implements Runnable {
         nodeSnake[0].y - largerCollisionArea / 2,
         WIDTH + largerCollisionArea, HEIGHT + largerCollisionArea);
 
-    // iniciar a comida
+  
 
     ArrayList<Point> foodPositions = LocaleUtils.LocateFood(FrameWidth, FrameHeight, WIDTH, HEIGHT, walls_x, walls_y,
         nodeSnake);
@@ -635,7 +635,7 @@ public class Game extends JPanel implements Runnable {
 
   public static void Location_deco() {
     Random random = new Random();
-    //////////////////
+  
     if (MapField) {
 
       quantidadeDeco = (int) (Math.random() * 3 + 1);
@@ -644,7 +644,7 @@ public class Game extends JPanel implements Runnable {
         randomX[i] = random.nextInt(ALL_DOTS_Width);
         randomY[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+      
       for (int i = 0; i < quantidadeDeco2; i++) {
         randomX2[i] = random.nextInt(ALL_DOTS_Width);
         randomY2[i] = random.nextInt(ALL_DOTS_Height);
@@ -652,7 +652,6 @@ public class Game extends JPanel implements Runnable {
     }
     if (MapSwamp) {
 
-      ////// Swamp
       quantidadeDecoSmallTrunk = (int) (Math.random() * 6 + 2);
       quantidadeDecoChao1 = (int) (Math.random() * 2 + 1);
       quantidadeDecoChao2 = (int) (Math.random() * 3 + 1);
@@ -668,56 +667,56 @@ public class Game extends JPanel implements Runnable {
         randomSX[i] = random.nextInt(ALL_DOTS_Width);
         randomSY[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+    
       for (int i = 0; i < quantidadeDecoChao1; i++) {
         randomSX1[i] = random.nextInt(ALL_DOTS_Width);
         randomSY1[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+     
       for (int i = 0; i < quantidadeDecoChao2; i++) {
         randomSX2[i] = random.nextInt(ALL_DOTS_Width);
         randomSY2[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+     
       for (int i = 0; i < quantidadeDecoChao3; i++) {
         randomSX3[i] = random.nextInt(ALL_DOTS_Width);
         randomSY3[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+      
       for (int i = 0; i < quantidadeDecoChao4; i++) {
         randomSX8[i] = random.nextInt(ALL_DOTS_Width);
         randomSY8[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+      
       for (int i = 0; i < quantidadeDecoChao5; i++) {
         randomSX9[i] = random.nextInt(ALL_DOTS_Width);
         randomSY9[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+      
       for (int i = 0; i < quantidadeDecoSwamp1; i++) {
         randomSX4[i] = random.nextInt(ALL_DOTS_Width);
         randomSY4[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+      
       for (int i = 0; i < quantidadeDecoSwamp2; i++) {
         randomSX5[i] = random.nextInt(ALL_DOTS_Width);
         randomSY5[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+      
       for (int i = 0; i < quantidadeDecoSwamp3; i++) {
         randomSX6[i] = random.nextInt(ALL_DOTS_Width);
         randomSY6[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+     
       for (int i = 0; i < quantidadeDecoSwamp4; i++) {
         randomSX7[i] = random.nextInt(ALL_DOTS_Width);
         randomSY7[i] = random.nextInt(ALL_DOTS_Height);
       }
-      ///
+     
     }
     if (MapDungeon) {
 
-      ////// Dungeon
+     
       quantidadeDecoDragonBone = (int) (Math.random() * 1 + 1);
       quantidadeDecoSkullBone = (int) (Math.random() * 10 + 5);
       quantidadeDecoTibiaBone = (int) (Math.random() * 10 + 5);
@@ -751,16 +750,16 @@ public class Game extends JPanel implements Runnable {
     }
   }
 
-  // Método principal para iniciar o jogo
+
   public static void main(String args[]) {
     Game game = new Game();
     frame = new JFrame("Snake Game");
     frame.add(game);
     frame.setResizable(false);
-    frame.setUndecorated(true); // Remove as bordas da janela
-    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Define a janela para tela
+    frame.setUndecorated(true);
+    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
     // cheia
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define o comportamento ao fechar a janela
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
     MenuPanel menuPanel = new MenuPanel();
     frame.add(menuPanel);
     frame.setVisible(true);
@@ -773,18 +772,17 @@ public class Game extends JPanel implements Runnable {
   }
 
   public void drawCollisionAnimation(Graphics g, double rotationAngle) {
-    if (nodeSnake.length > 0) { // Verifica se há algum nó no array
-
-      positionX = nodeSnake[0].x; // Coordenada X do primeiro nó
-      positionY = nodeSnake[0].y; // Coordenada Y do primeiro nó
-      // Calcula as coordenadas de desenho para centralizar a animação em torno do nó
-      drawX = positionX - BeatEffect.getWidth(null) / 40 + 26; // Centraliza a imagem horizontalmente
-      drawY = positionY - BeatEffect.getHeight(null) / 40 / 40 + 5; // Centraliza a imagem verticalmente
+    if (nodeSnake.length > 0) { 
+      positionX = nodeSnake[0].x; 
+      positionY = nodeSnake[0].y; 
+     
+      drawX = positionX - BeatEffect.getWidth(null) / 40 + 26; 
+      drawY = positionY - BeatEffect.getHeight(null) / 40 / 40 + 5; 
       Animation.AnimationColidion(buffer, BeatEffect, drawX, drawY, rotationAngle);
     }
   }
 
-  // Loop principal do jogo, onde a lógica e renderização são atualizadas
+  
 
   @Override
   public void run() {
@@ -811,7 +809,7 @@ public class Game extends JPanel implements Runnable {
         e.printStackTrace();
       }
     }
-    // Renderizar a animação de colisão
+  
     while (gameOver && !poisonDeathAnimationPlaying && !checkedEsplo && !DeathfromHunger) {
       rotationAngle += 1;
       rotationAngle %= 360;
@@ -820,7 +818,7 @@ public class Game extends JPanel implements Runnable {
       }
       drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
       try {
-        Thread.sleep(10); // Ajuste conforme necessário para a taxa de atualização da animação
+        Thread.sleep(10); 
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -893,7 +891,7 @@ public class Game extends JPanel implements Runnable {
 
   }
 
-  // Método para desenhar os elementos do jogo na tela
+ 
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -901,7 +899,7 @@ public class Game extends JPanel implements Runnable {
       return;
     }
 
-    // Desenha os elementos do jogo no buffer
+   
 
     if (MapField) {
       map.mapField(buffer, ALL_DOTS_Width, ALL_DOTS_Height, gramSprit, DecoLawn01, DecoLawn02, randomX, randomY,
@@ -942,7 +940,7 @@ public class Game extends JPanel implements Runnable {
     if (gameOver || GameFim) {
       MusicPlayer.stopMusicField();
     }
-    // Desenha a COBRA
+   
     if (snakeClassica && keyListener != null) {
       if (DeathfromHunger) {
         snakeHead = headDeathClassica;
@@ -967,7 +965,7 @@ public class Game extends JPanel implements Runnable {
             keyListener, null, fogoComplementar, fogoFinal);
       }
     }
-    // egg
+   
     if (IniciouEgg) {
       Eggs.EggStart(buffer, PosicaoX, PosicaoY, eggAnimation);
     } else {
@@ -1007,7 +1005,7 @@ public class Game extends JPanel implements Runnable {
         }
       }
     }
-    // Desenha a comidas
+   
     food.classicFood(g, buffer, macaX, macaY, appleSprit, poisonFruitWidthCla,
         poisonFruitHeightCla);
     food.PoisonFood(g, buffer, macaPOX, macaPOY, applePoison,
@@ -1016,7 +1014,7 @@ public class Game extends JPanel implements Runnable {
         poisonFruitWidthErn, poisonFruitHeightErn);
 
     if (MapField) {
-      // Desenha as paredes
+     
       walls.lawnWalls(buffer.getGraphics(), walls_x, walls_y, rockSprit);
       decoracao.decoracaoField(buffer);
     }
@@ -1041,7 +1039,7 @@ public class Game extends JPanel implements Runnable {
       Colidian(rock_swamp, rock_dungeon);
     }
 
-    // Desenha as animação do jogo
+   
     if (Game.ManterAnimation) {
       Animation();
     }
@@ -1049,11 +1047,11 @@ public class Game extends JPanel implements Runnable {
       LifesTimers.LifeSnake(this, buffer, gameOver);
     }
 
-    // Renderiza o buffer na tela
+   
 
     g.drawImage(buffer, 0, 0, null);
 
-    // Se o jogo terminou, desenha a animação de colisão se a tela de game over
+   
     if (gameOver) {
       if (!poisonDeathAnimationPlaying && !checkedEsplo && !DeathfromHunger) {
         drawCollisionAnimation(buffer.getGraphics(), rotationAngle);
@@ -1069,7 +1067,7 @@ public class Game extends JPanel implements Runnable {
         atualizarPontuacao();
       }
 
-      //
+     
       if (GameFim) {
         if (ManterAnimation) {
           AnimationFundoVitoria.AnimationVitoria(this, g, getWidth(), getHeight());
@@ -1092,7 +1090,7 @@ public class Game extends JPanel implements Runnable {
 
   public void ComponentesTimerPont(Game game, Graphics g) {
     if (GameFim) {
-      // Se o jogo terminou, retorna sem fazer nada
+    
       if (GridTimer != null) {
         GridTimer.remove(textpont);
         GridTimer.remove(textTimer);
@@ -1114,35 +1112,35 @@ public class Game extends JPanel implements Runnable {
       GridTimer = game;
       GridTimer.setLayout(new GridBagLayout());
       gbc = new GridBagConstraints();
-      // Criação do JLabel para exibir a Pontuação
+     
       pontLabel = new JLabel("Pontuação: " + Pontuacao);
       pontLabel.setFont(TimerFont);
       textpont = new TextShadow("Pontuação: " + Pontuacao, Color.WHITE, Color.DARK_GRAY, TimerFont);
       gbc.gridx = 0;
-      gbc.gridy = 0; // Coloca o pontLabel na primeira linha (gridy = 0)
-      gbc.anchor = GridBagConstraints.NORTHWEST; // Ancora no lado esquerdo
-      gbc.insets = new Insets(5, 5, 0, 0); // Margem superior e esquerda
-      gbc.weightx = 1.0; // Adiciona peso para expandir horizontalmente
-      gbc.weighty = 1.0; // Reduzir peso para não empurrar para o topo
+      gbc.gridy = 0; 
+      gbc.anchor = GridBagConstraints.NORTHWEST; 
+      gbc.insets = new Insets(5, 5, 0, 0);
+      gbc.weightx = 1.0;
+      gbc.weighty = 1.0; 
       GridTimer.add(textpont, gbc);
-      // Criação do JLabel para exibir o Tempo
+     
       tempoLabel = new JLabel("00:00");
       tempoLabel.setFont(TimerFont);
       textTimer = new TextShadow("00:00", Color.WHITE, Color.DARK_GRAY, TimerFont);
       gbc.anchor = GridBagConstraints.NORTH;
       gbc.insets = new Insets(5, 0, 0, 0);
       gbc.weightx = 0.0;
-      gbc.weighty = 1.0; // Empurrar o componente para o topo
+      gbc.weighty = 1.0; 
       GridTimer.add(textTimer, gbc);
       TimerRelogio();
-      /// ================
+    
       try {
         LifeEnergyPanel.ImageLifeEnergy = ImageIO.read(new File("resources/snakes/timerEnergySnake.png"));
         RaioInicial = ImageIO.read(new File("resources/snakes/InicialRaio.png"));
       } catch (IOException ex) {
         ex.printStackTrace();
       }
-      // InitialRaio
+  
       if (Game.ManterAnimation) {
         BufferedImage InitialRaio = RaioInicial;
         int numFramesXInicial = 1;
@@ -1152,11 +1150,11 @@ public class Game extends JPanel implements Runnable {
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.SOUTH;
         gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 1.0; // Expandir horizontalmente
-        gbc.weighty = 0.0; // Sem expansão vertical
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.0;
         GridTimer.add(InicialRaioPanel, gbc);
       }
-      // BARRA DE ENERGIA
+    
       BufferedImage lifeEnergyImage = LifeEnergyPanel.ImageLifeEnergy;
       int numFramesX = 2;
       int numFramesY = 11;
@@ -1165,16 +1163,16 @@ public class Game extends JPanel implements Runnable {
       gbc.gridy = 3;
       gbc.anchor = GridBagConstraints.SOUTH;
       gbc.fill = GridBagConstraints.NONE;
-      gbc.insets = new Insets(10, 0, 0, 0); // Margem superior
-      gbc.weightx = 1.0; // Expandir horizontalmente
-      gbc.weighty = 0.0; // Sem expansão vertical
+      gbc.insets = new Insets(10, 0, 0, 0);
+      gbc.weightx = 1.0; 
+      gbc.weighty = 0.0; 
       GridTimer.add(lifeEnergyPanel, gbc);
 
       if (!GameFim) {
         GridTimer.revalidate();
         GridTimer.repaint();
       }
-      componentesTimerPontAdicionado = true; // Marcar como adicionado
+      componentesTimerPontAdicionado = true; 
     }
   }
 
@@ -1199,7 +1197,7 @@ public class Game extends JPanel implements Runnable {
         SwingUtilities.invokeLater(() -> tempoLabel.setText(timeText));
         SwingUtilities.invokeLater(() -> textTimer.setText(timeText));
       }
-    }, 0, 1000); // Inicia imediatamente e repete a cada 1000ms (1 segundo)
+    }, 0, 1000); 
   }
 
   public void atualizarPontuacao() {
@@ -1224,11 +1222,11 @@ public class Game extends JPanel implements Runnable {
     ImageIcon icon = new ImageIcon(imagePath);
     Image image = icon.getImage();
 
-    // Cria uma nova BufferedImage com transparência
+ 
     BufferedImage transparentImage = new BufferedImage(300, 100,
         BufferedImage.TYPE_INT_ARGB);
     Graphics2D g2d = transparentImage.createGraphics();
-    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Transper)); // Define transparência como 100%
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Transper));
     g2d.drawImage(image, 0 + 50, 0 + 25, 220, 50, null);
     g2d.dispose();
 
@@ -1259,12 +1257,12 @@ public class Game extends JPanel implements Runnable {
   }
 
   public void GameWinsButtons(Graphics g) {
-    // Defina o fundo verde com transparência
+    
 
     meuPainelButtons = this;
     g.setColor(new Color(128, 255, 125, Transper));
     g.fillRect(0, 0, getWidth(), getHeight());
-    // Botão de Reiniciar
+  
     boolean newGameButtonExists = false;
     for (int i = 0; i < meuPainelButtons.getComponentCount(); i++) {
       Component comp = meuPainelButtons.getComponent(i);
@@ -1286,19 +1284,19 @@ public class Game extends JPanel implements Runnable {
         e.printStackTrace();
       }
 
-      // Texto de gameOver
+    
       GridGameWins = new GridBagConstraints();
       GridGameWins.gridx = 0;
       GridGameWins.gridy = 0;
-      GridGameWins.insets = new Insets(0, 0, 0, 0); // Espaçamento entre componentes
+      GridGameWins.insets = new Insets(0, 0, 0, 0); 
       GridGameWins.anchor = GridBagConstraints.CENTER;
-      // Adicionando o texto
+     
       customFont = loadFont.loadFont("resources/fontes/fontGeral.ttf", 32);
-      textShadowLabel = new TextShadow("Região Dominada!", // Modifique esta linha
+      textShadowLabel = new TextShadow("Região Dominada!", 
           new Color(255, 255, 255, 0), new Color(0, 0, 0, 0), customFont);
       GridGameWins.gridy = 0;
       meuPainelButtons.add(textShadowLabel, GridGameWins);
-      // adicionando Imagem Vitória
+     
       if (ManterAnimation) {
         delay2 = 3000;
         Timer timer2 = new Timer();
@@ -1322,7 +1320,7 @@ public class Game extends JPanel implements Runnable {
         resizeImagePanel();
         meuPainelButtons.add(imagePanel, GridGameWins);
       }
-      // Adicionando Animação
+     
       if (ManterAnimation) {
         delay1 = 5000;
         Timer timer1 = new Timer();
@@ -1342,7 +1340,7 @@ public class Game extends JPanel implements Runnable {
         }, delay1);
       }
       GridGameWins.gridy = 2;
-      //
+    
       if (ManterAnimation) {
         sizeDificult = 32;
         colorTransparente = 0;
@@ -1353,7 +1351,7 @@ public class Game extends JPanel implements Runnable {
       Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", sizeDificult);
       fontesGameWins = Fonts.deriveFont((float) sizeDificult);
       fontesGameWinsButton = Fonts.deriveFont((float) 26);
-      //
+     
       DificuldadeLabel = new JLabel("Dificuldade");
       DificuldadeLabel.setFont(Fonts);
       DificultytextShadowLabel = new TextShadow("Dificuldade", new Color(255, 255,
@@ -1363,7 +1361,7 @@ public class Game extends JPanel implements Runnable {
               colorTransparente),
           fontesGameWins);
       meuPainelButtons.add(DificultytextShadowLabel, GridGameWins);
-      //
+     
       GridGameWins.gridy = 3;
       JLabel dificulting = new JLabel(dificulty);
       dificulting.setFont(Fonts);
@@ -1389,7 +1387,7 @@ public class Game extends JPanel implements Runnable {
 
       GridGameWins.insets = new Insets(0, 0, 5, 0);
       meuPainelButtons.add(DificultytextShadowLabel2, GridGameWins);
-      //
+      
       GridGameWins.gridy = 4;
       JLabel TempoLabel = new JLabel("Tempo de Partida");
       TempoLabel.setFont(fontesGameWins);
@@ -1400,7 +1398,7 @@ public class Game extends JPanel implements Runnable {
           fontesGameWins);
       GridGameWins.insets = new Insets(0, 0, 0, 0);
       meuPainelButtons.add(TempotextShadowLabel, GridGameWins);
-      //
+     
       GridGameWins.gridy = 5;
       JLabel TempoLabel2 = new JLabel(timeText);
       TempoLabel2.setFont(fontesGameWins);
@@ -1408,7 +1406,7 @@ public class Game extends JPanel implements Runnable {
           colorTransparente), new Color(0, 0, 0, colorTransparente), fontesGameWins);
       GridGameWins.insets = new Insets(0, 0, 5, 0);
       meuPainelButtons.add(TempotextShadowLabel2, GridGameWins);
-      //
+    
       GridGameWins.gridy = 6;
       JLabel PontLabel = new JLabel("Pontuação");
       PontLabel.setFont(fontesGameWins);
@@ -1416,7 +1414,7 @@ public class Game extends JPanel implements Runnable {
           colorTransparente), new Color(0, 0, 0, colorTransparente), fontesGameWins);
       GridGameWins.insets = new Insets(0, 0, 0, 0);
       meuPainelButtons.add(PonttextShadowLabel, GridGameWins);
-      //
+     
       GridGameWins.gridy = 7;
       JLabel PontLabel2 = new JLabel("" + Game.Pontuacao);
       PontLabel2.setFont(fontesGameWins);
@@ -1427,9 +1425,9 @@ public class Game extends JPanel implements Runnable {
           fontesGameWins);
       GridGameWins.insets = new Insets(0, 0, 10, 0);
       meuPainelButtons.add(PonttextShadowLabel2, GridGameWins);
-      // Adicionando o botão
+    
       GridGameWins.gridy = 8;
-      float initialTransparency = 0.0f; // Totalmente transparente inicialmente
+      float initialTransparency = 0.0f;
       ImageIcon buttonImage = makeTransparent("resources/Menu/buttonRock.png", initialTransparency);
       JButton RevertMenuButton = new JButton("Inicio", buttonImage);
       Font revertmenuFont = fontesGameWinsButton;
@@ -1445,7 +1443,7 @@ public class Game extends JPanel implements Runnable {
 
           JFrame GameSnake = (JFrame) SwingUtilities.getWindowAncestor(Game.this);
           GameSnake.getContentPane().removeAll();
-          //
+         
           Game.PodeIniciarPosLoading = false;
           Game.aparecerAposLoading = false;
           MenuPanel.CorPretaLoading = 255;
@@ -1475,10 +1473,10 @@ public class Game extends JPanel implements Runnable {
         }
       });
       meuPainelButtons.add(RevertMenuButton, GridGameWins);
-      meuPainelButtons.revalidate(); // Revalidate the panel
-      meuPainelButtons.repaint(); // Repaint the panel
+      meuPainelButtons.revalidate(); 
+      meuPainelButtons.repaint(); 
 
-      //
+     
       if (ManterAnimation) {
         delay0 = 1000;
         Timer timer = new Timer();
@@ -1523,26 +1521,26 @@ public class Game extends JPanel implements Runnable {
   public void SelectionText() {
     if (MapField) {
       if (ZerouMapaField) {
-        textShadowLabel = new TextShadow("Região Mantida!", // Modifique esta linha
+        textShadowLabel = new TextShadow("Região Mantida!", 
             Color.WHITE, Color.BLACK, customFont);
       } else if (!ZerouMapaField) {
-        textShadowLabel = new TextShadow("Região Dominada!", // Modifique esta linha
+        textShadowLabel = new TextShadow("Região Dominada!", 
             Color.WHITE, Color.BLACK, customFont);
       }
     } else if (MapSwamp) {
       if (ZerouMapaSwamp) {
-        textShadowLabel = new TextShadow("Região Mantida!", // Modifique esta linha
+        textShadowLabel = new TextShadow("Região Mantida!", 
             Color.WHITE, Color.BLACK, customFont);
       } else if (!ZerouMapaSwamp) {
-        textShadowLabel = new TextShadow("Região Dominada!", // Modifique esta linha
+        textShadowLabel = new TextShadow("Região Dominada!", 
             Color.WHITE, Color.BLACK, customFont);
       }
     } else if (MapDungeon) {
       if (ZerouMapaDungeon) {
-        textShadowLabel = new TextShadow("Região Mantida!", // Modifique esta linha
+        textShadowLabel = new TextShadow("Região Mantida!",
             Color.WHITE, Color.BLACK, customFont);
       } else if (!ZerouMapaDungeon) {
-        textShadowLabel = new TextShadow("Região Dominada!", // Modifique esta linha
+        textShadowLabel = new TextShadow("Região Dominada!", 
             Color.WHITE, Color.BLACK, customFont);
       }
     }
@@ -1557,12 +1555,12 @@ public class Game extends JPanel implements Runnable {
   public void GameOver(Graphics g) {
 
     meuPainel.setLayout(new GridBagLayout());
-    /////
+ 
     Game game = this;
-    // Fundo Transparente-Preto 50%
+  
     g.setColor(new Color(0, 0, 0, 127));
     g.fillRect(0, 0, getWidth(), getHeight());
-    // Botão de Reiniciar
+    
     boolean newGameButtonExists = false;
     for (int i = 0; i < this.getComponentCount(); i++) {
       if (this.getComponent(i) instanceof JButton) {
@@ -1578,9 +1576,9 @@ public class Game extends JPanel implements Runnable {
       MusicPlayer.stopEnergytime();
       Font customFontGameOver = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
       Font derivateFont = customFontGameOver.deriveFont((float) 22);
-      // Texto de gameOver
+     
       meuPainel.removeAll();
-      youLose = new TextShadow("Você Morreu!", // Modifique esta linha
+      youLose = new TextShadow("Você Morreu!", 
           Color.WHITE, Color.BLACK, derivateFont);
       meuPainel.add(youLose);
 
@@ -1600,7 +1598,7 @@ public class Game extends JPanel implements Runnable {
           new Thread(game).start();
         }
       });
-      meuPainel.add(newGameButton); // Add the button to the panel
+      meuPainel.add(newGameButton); 
       MenuPanel.addShadow(newGameButton, "Reiniciar", newgameFont, 150, 50, false);
       addCenteredComponent(meuPainel, newGameButton, 1);
 
@@ -1632,20 +1630,20 @@ public class Game extends JPanel implements Runnable {
           GameSnake.repaint();
         }
       });
-      meuPainel.add(RevertMenuButton); // Add the button to the panel
+      meuPainel.add(RevertMenuButton); 
       addCenteredComponent(meuPainel, RevertMenuButton, 2);
       //
-      textPontGameOver = new TextShadow("Pontuação: " + Pontuacao, // Modifique esta linha
+      textPontGameOver = new TextShadow("Pontuação: " + Pontuacao, 
           Color.WHITE, Color.BLACK, customFontGameOver);
       meuPainel.add(textPontGameOver);
       addCenteredComponent(meuPainel, textPontGameOver, 3);
       //
-      textPontGameOver1 = new TextShadow("Tempo de Partida: " + timeText, // Modifique esta linha
+      textPontGameOver1 = new TextShadow("Tempo de Partida: " + timeText,
           Color.WHITE, Color.BLACK, customFontGameOver);
       meuPainel.add(textPontGameOver1);
       addCenteredComponent(meuPainel, textPontGameOver1, 4);
-      meuPainel.revalidate(); // Revalidate the panel
-      meuPainel.repaint(); // Repaint the panel
+      meuPainel.revalidate(); 
+      meuPainel.repaint(); 
     }
   }
 
@@ -1653,40 +1651,37 @@ public class Game extends JPanel implements Runnable {
     g2d = buffer.createGraphics();
     if (MapField) {
       for (int x = 0; x < FrameWidth; x += borderWidth) {
-        g2d.drawImage(painelRock, x, 0, borderWidth, borderWidth, null); // Borda superior
-        g2d.drawImage(painelRock, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
-        // inferior
+        g2d.drawImage(painelRock, x, 0, borderWidth, borderWidth, null); 
+        g2d.drawImage(painelRock, x, FrameHeight - borderWidth, borderWidth, borderWidth, null);
       }
       for (int y = 0; y < FrameHeight; y += borderWidth) {
-        g2d.drawImage(painelRock, 0, y, borderWidth, borderWidth, null); // Borda esquerda
-        g2d.drawImage(painelRock, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
+        g2d.drawImage(painelRock, 0, y, borderWidth, borderWidth, null);
+        g2d.drawImage(painelRock, FrameWidth - borderWidth, y, borderWidth, borderWidth, null);
       }
     }
     if (MapSwamp) {
       for (int x = 0; x < FrameWidth; x += borderWidth) {
-        g2d.drawImage(rock_swamp, x, 0, borderWidth, borderWidth, null); // Borda superior
-        g2d.drawImage(rock_swamp, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
-        // inferior
+        g2d.drawImage(rock_swamp, x, 0, borderWidth, borderWidth, null); 
+        g2d.drawImage(rock_swamp, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); 
       }
       for (int y = 0; y < FrameHeight; y += borderWidth) {
-        g2d.drawImage(rock_swamp, 0, y, borderWidth, borderWidth, null); // Borda esquerda
-        g2d.drawImage(rock_swamp, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
+        g2d.drawImage(rock_swamp, 0, y, borderWidth, borderWidth, null);
+        g2d.drawImage(rock_swamp, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); 
       }
     }
     if (MapDungeon) {
       for (int x = 0; x < FrameWidth; x += borderWidth) {
-        g2d.drawImage(rock_dungeon, x, 0, borderWidth, borderWidth, null); // Borda superior
-        g2d.drawImage(rock_dungeon, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); // Borda
-        // inferior
+        g2d.drawImage(rock_dungeon, x, 0, borderWidth, borderWidth, null); 
+        g2d.drawImage(rock_dungeon, x, FrameHeight - borderWidth, borderWidth, borderWidth, null); 
       }
       for (int y = 0; y < FrameHeight; y += borderWidth) {
-        g2d.drawImage(rock_dungeon, 0, y, borderWidth, borderWidth, null); // Borda esquerda
-        g2d.drawImage(rock_dungeon, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); // Borda direita
+        g2d.drawImage(rock_dungeon, 0, y, borderWidth, borderWidth, null); 
+        g2d.drawImage(rock_dungeon, FrameWidth - borderWidth, y, borderWidth, borderWidth, null); 
       }
     }
   }
 
-  // Método para atualizar a lógica do jogo
+ 
   public void tick() {
     VerificDistance = keyListener.getVerif();
     for (int z = 0; z < nodeSnake.length; z++) {
@@ -1741,7 +1736,7 @@ public class Game extends JPanel implements Runnable {
       MusicPlayer.aumentovelocity3x();
     }
 
-    // Movendo o corpo da cobra
+   
     if (cobraParada) {
       if (cobraParadaFinal) {
         move.SnakeMove(nodeSnake, keyListener.getDirection(), DISTANCE);
@@ -1818,25 +1813,25 @@ public class Game extends JPanel implements Runnable {
 
       if (Game.snakeClassica || Game.snakeFire) {
         for (int i = 0; i < 10; i++) {
-          // Adiciona um novo nó ao final da cobra
+         
           int lastIndex = nodeSnake.length - 1;
           Node newTailNode = new Node(nodeSnake[lastIndex].x, nodeSnake[lastIndex].y);
 
-          // Calcula a direção do último segmento em relação ao penúltimo segmento
+       
           int dx = nodeSnake[lastIndex].x - nodeSnake[lastIndex - 1].x;
           int dy = nodeSnake[lastIndex].y - nodeSnake[lastIndex - 1].y;
 
-          // Adiciona o novo segmento na direção oposta ao último segmento
+         
           newTailNode.x += dx;
           newTailNode.y += dy;
 
-          // Adiciona o novo segmento ao final da cobra
+        
           nodeSnake = Arrays.copyOf(nodeSnake, nodeSnake.length + 1);
           nodeSnake[lastIndex + 1] = newTailNode;
         }
       }
     }
-    ///////////////////////////////////////////////
+   
     if (headCollisionAreaPO.intersects(fruitPOArea)) {
       PosColidianPoisonX = macaPOX;
       PosColidianPoisonY = macaPOY;
@@ -1877,19 +1872,19 @@ public class Game extends JPanel implements Runnable {
         }
         if (snakePoison) {
           for (int i = 0; i < 10; i++) {
-            // Adiciona um novo nó ao final da cobra
+         
             int lastIndex = nodeSnake.length - 1;
             Node newTailNode = new Node(nodeSnake[lastIndex].x, nodeSnake[lastIndex].y);
 
-            // Calcula a direção do último segmento em relação ao penúltimo segmento
+          
             int dx = nodeSnake[lastIndex].x - nodeSnake[lastIndex - 1].x;
             int dy = nodeSnake[lastIndex].y - nodeSnake[lastIndex - 1].y;
 
-            // Adiciona o novo segmento na direção oposta ao último segmento
+           
             newTailNode.x += dx;
             newTailNode.y += dy;
 
-            // Adiciona o novo segmento ao final da cobra
+         
             nodeSnake = Arrays.copyOf(nodeSnake, nodeSnake.length + 1);
             nodeSnake[lastIndex + 1] = newTailNode;
           }
@@ -1977,26 +1972,25 @@ public class Game extends JPanel implements Runnable {
 
   public void StartSnake() {
 
-    // Inicializa os nós da cobra em posições diferentes
-    int snakeX, snakeY; // Variáveis para armazenar as coordenadas da cabeça da cobra
-    boolean tooCloseToWallSnake; // Variável para verificar se a cobra está muito próxima da parede
+  
+    int snakeX, snakeY; 
+    boolean tooCloseToWallSnake; 
 
     do {
-      // Gera coordenadas aleatórias para a cabeça da cobra dentro dos limites do
-      // quadro do jogo
+   
       snakeX = new Random().nextInt(FrameWidth - WIDTH);
       snakeY = new Random().nextInt(FrameWidth - WIDTH);
 
-      tooCloseToWallSnake = false; // Inicializa a variável como falsa
+      tooCloseToWallSnake = false; 
 
-      // Verifica se a cabeça da cobra está próxima de uma parede
+    
       for (int i = 0; i < walls_x.size(); i++) {
         Rectangle wallRect = new Rectangle(walls_x.get(i), walls_y.get(i), WIDTH, HEIGHT);
         Rectangle snakeRect = new Rectangle(snakeX, snakeY, WIDTH, HEIGHT);
 
         if (wallRect.contains(snakeRect)) {
-          tooCloseToWallSnake = true; // Define como verdadeiro se a cabeça da cobra está perto de uma parede
-          break; // Sai do loop, já que encontrou uma parede próxima
+          tooCloseToWallSnake = true; 
+          break; 
         }
       }
 
@@ -2005,9 +1999,9 @@ public class Game extends JPanel implements Runnable {
         || CollisionUtils.ThisNearWalls(snakeX, snakeY, walls_x, walls_y, WIDTH, HEIGHT) || CollisionUtils
             .ThisDecoration(snakeX, snakeY, DecoracaoX, DecoracaoY, DecoComplexoY, DecoComplexoX, WIDTH, HEIGHT));
 
-    // Define as coordenadas da cabeça da cobra
+  
     nodeSnake[0] = new Node(snakeX, snakeY);
-    // Inicializa o restante do corpo da cobra com as mesmas coordenadas da cabeça
+ 
     for (int i = 1; i < nodeSnake.length; i++) {
       nodeSnake[i] = new Node(snakeX, snakeY);
     }
@@ -2086,7 +2080,7 @@ public class Game extends JPanel implements Runnable {
     poisonDeathAnimationPlaying = false;
     venomAnimationPlayed = false;
     ernegyAnimationPlayed = false;
-    lastVenomAnimationTime1 = System.currentTimeMillis(); // Reinicia o tempo aqui
+    lastVenomAnimationTime1 = System.currentTimeMillis(); 
     TeleportEnergyVerif = System.currentTimeMillis();
     lastVenomAnimationTimeEnergy = System.currentTimeMillis();
     ControlTimerVelocity = System.currentTimeMillis();
@@ -2111,7 +2105,7 @@ public class Game extends JPanel implements Runnable {
     colisianEnergyMorrer = false;
     colisianEnergySumir = false;
     ControlOneAnimationESPLO = true;
-    //
+   
     NovaPosicao0 = 0;
     posicaoXNumber = 0;
     posicaoYNumber = 0;
@@ -2120,7 +2114,7 @@ public class Game extends JPanel implements Runnable {
     TransparentNumber = 0.1f;
     possibilitiNumberFinal = false;
     colidianClassico = false;
-    //
+   
     NovaPosicaoDeath0 = 0;
     posicaoXDeath = 0;
     posicaoYDeath = 0;
@@ -2129,7 +2123,7 @@ public class Game extends JPanel implements Runnable {
     TransparentDeath = 0.1f;
     possibilitiDeathFinal = false;
     colidianDeath = false;
-    //
+    
     NovaPosicaoEnergy0 = 0;
     posicaoXEnergy = 0;
     posicaoYEnergy = 0;
@@ -2138,12 +2132,12 @@ public class Game extends JPanel implements Runnable {
     TransparentEnergy = 0.1f;
     possibilitiEnergyFinal = false;
     colidianEnergy = false;
-    //
+   
     NumberAnimation.restartAnimation(this);
     NumberAnimation.restartAnimationDeath(this);
     NumberAnimation.restartAnimationEnergy(this);
     NumberAnimation.restartAnimationVelocity(this);
-    //
+   
     NovaPosicaoVelocity0 = 0;
     posicaoXVelocity = 0;
     posicaoYVelocity = 0;
@@ -2151,7 +2145,7 @@ public class Game extends JPanel implements Runnable {
     widhtVelocityH = 0;
     TransparentVelocity = 0.1f;
     possibilitiVelocityFinal = false;
-    //
+   
     ControlVelocity = 1200;
     ControlVelocityFinal = 1200;
     if (clickedButtonDifiDificil) {

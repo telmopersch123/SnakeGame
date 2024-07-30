@@ -28,17 +28,17 @@ public class snake {
   public static int centerX;
   public static int centerY;
   public static RadialGradientPaint gradientPaint;
-  ////////////////////////////
+ 
   public static boolean isHorizontal1;
   public static AffineTransform rotation;
   public static AffineTransform rotationfire;
-  ////////////////////////////
+ 
   public static boolean horizontal;
   public static boolean vertical;
   public static boolean rightTurn;
   public static boolean leftTurn;
   public static int width = 14;
-  ///////////////////////////
+
   public static int imageWidth;
   public static int imageHeight;
   public static int centerX2;
@@ -69,15 +69,15 @@ public class snake {
     Graphics2D g2d = buffer.createGraphics();
     angle = 0;
 
-    // Desenhar O CORPO
+  
     for (int z = 1; z < nodeSnake.length; z++) {
-      // transparente)
+
       currX = nodeSnake[z].x;
       currY = nodeSnake[z].y;
       prevY = z > 0 ? nodeSnake[z - 1].y : currY;
       isHorizontal1 = currY == prevY;
       if (isHorizontal1) {
-        // Rotaciona a imagem em 90 graus;
+    
         rotation = AffineTransform.getQuadrantRotateInstance(1, currX + 14 / 2, currY + 14 / 2);
         rotated = (Graphics2D) snakeBody.create();
         rotated.transform(rotation);
@@ -85,7 +85,7 @@ public class snake {
 
         rotated.dispose();
       } else {
-        // Aplica uma transformação semelhante para movimentos verticais
+  
 
         rotation = AffineTransform.getQuadrantRotateInstance(0, currX + 14 / 2, currY + 14 / 2);
         rotated = (Graphics2D) snakeBody.create();
@@ -96,7 +96,7 @@ public class snake {
       }
     }
 
-    // Desenhar a CURVATURA
+   
     for (int z = 0; z < nodeSnake.length; z++) {
       Corner = buffer.createGraphics();
       currX = nodeSnake[z].x;
@@ -134,7 +134,7 @@ public class snake {
         Corner.dispose();
       }
     }
-    // DESENHAR O RABO
+   
     for (int z = 0; z < nodeSnake.length; z++) {
       currX = nodeSnake[z].x;
       currY = nodeSnake[z].y;
@@ -164,9 +164,9 @@ public class snake {
         tail.dispose();
       }
     }
-    // DESENHE A CABEÇA
+  
     head = buffer.createGraphics();
-    // Ajusta a posição da cabeça com base na direção
+  
     if (keyListener.getDirection() == Game.keyPressedEsquerda) {
       angle = 180;
     } else if (keyListener.getDirection() == Game.keyPressedDireita) {
@@ -176,19 +176,19 @@ public class snake {
     } else if (keyListener.getDirection() == Game.keyPressedInferior) {
       angle = 90;
     }
-    imageWidth = (int) (12 * 1.7); // Reduz a largura da imagem
-    imageHeight = (int) (12 * 1.5); // Reduz a altura da imagem
+    imageWidth = (int) (12 * 1.7); 
+    imageHeight = (int) (12 * 1.5); 
     centerX = nodeSnake[0].x + 15 / 2;
     centerY = nodeSnake[0].y + 15 / 2;
 
-    // Ajusta a posição da cabeça para o centro do corpo da cobra
+   
     xPos = centerX - imageWidth / 2;
     yPos = centerY - imageHeight / 2;
-    // Rotação da cabeça
-    head.rotate(Math.toRadians(angle), xPos + imageWidth / 2, yPos + imageHeight / 2); // Rotação em torno do centro da
-    head.drawImage(snakeHead, xPos + 3, yPos, imageWidth, imageHeight, null); // Desenha a cabeça da cobra
+  
+    head.rotate(Math.toRadians(angle), xPos + imageWidth / 2, yPos + imageHeight / 2); 
+    head.drawImage(snakeHead, xPos + 3, yPos, imageWidth, imageHeight, null); 
 
-    /// manchas amarelas PoisonSnake
+  
     if (Game.snakePoison) {
       for (int f = 10; f < nodeSnake.length; f += 10) {
         currX = nodeSnake[f].x;
@@ -211,7 +211,7 @@ public class snake {
       }
     }
     if (Game.ManterAnimation) {
-      /// FOGO fireSnake
+    
       if (Game.snakeFire) {
         for (int f = 10; f < nodeSnake.length; f += 10) {
           currX = nodeSnake[f].x;

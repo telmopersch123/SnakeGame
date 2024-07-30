@@ -18,10 +18,10 @@ public class LoadingSpinner extends JPanel {
   public LoadingSpinner() {
     setPreferredSize(new Dimension(50, 50));
     setOpaque(false);
-     timerLoading = new Timer(10, new ActionListener() { // Atualiza a cada 50ms
+     timerLoading = new Timer(10, new ActionListener() { 
       @Override
       public void actionPerformed(ActionEvent e) {
-        angle += 10; // Incrementa o ângulo para girar a bolinha
+        angle += 10; 
         updateTrailPoints();
         repaint();
       }
@@ -48,7 +48,7 @@ public class LoadingSpinner extends JPanel {
     for (int i = 0; i < trailLength; i++) {
       if (trailPoints[i] != null) {
         g2d.setColor(new Color(0, 0, 0, (int) (255 * (1 - (float) i / trailLength))));
-        g2d.fillOval(trailPoints[i].x, trailPoints[i].y, 10, 10); // Tamanho do círculo
+        g2d.fillOval(trailPoints[i].x, trailPoints[i].y, 10, 10); 
       }
     }
     g2d.dispose();

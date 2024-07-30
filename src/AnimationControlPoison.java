@@ -18,7 +18,7 @@ public class AnimationControlPoison {
     long currentTime = System.currentTimeMillis();
     if (Game.VerifiEnergyAnimation) {
       game.TimerVerif = false;
-      game.lastVenomAnimationTime1 = System.currentTimeMillis(); // Reinicia o tempo aqui
+      game.lastVenomAnimationTime1 = System.currentTimeMillis(); 
       currentTime = System.currentTimeMillis();
     }
 

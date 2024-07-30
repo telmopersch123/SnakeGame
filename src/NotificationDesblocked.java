@@ -47,15 +47,15 @@ public class NotificationDesblocked {
         });
     }
     public static void showNotification(JFrame parentFrame, String message) {
-        // Criar um JPanel personalizado com fundo transparente
+       
 
         MenuPanel.setButtonsEnabled(false);
         Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", 18);
-        int desiredWidth = 500; // Largura desejada
-        int desiredHeight = 400; // Altura desejada
+        int desiredWidth = 500; 
+        int desiredHeight = 400; 
         JWindow window = new JWindow(parentFrame);
 
-        window.setBackground(new Color(0, 0, 0, 0)); // Fundo completamente transparente
+        window.setBackground(new Color(0, 0, 0, 0)); 
         window.setOpacity(0f);
         window.setLayout(new BorderLayout());
         JPanel panel = new JPanel() {
@@ -84,15 +84,15 @@ public class NotificationDesblocked {
         gbcButton.weighty = 1.0;
         gbcButton.anchor = GridBagConstraints.NORTH;
         if (Game.MapLiberation == "Pântano") {
-            gbcButton.insets = new Insets(35, 0, 0, 45); // Adicionar margem superior
-            gbc.insets = new Insets(-170, 5, 0, 0); // Adicionar margem superior
+            gbcButton.insets = new Insets(35, 0, 0, 45); 
+            gbc.insets = new Insets(-170, 5, 0, 0); 
         } else if (Game.MapLiberation == "Masmorra") {
-            gbcButton.insets = new Insets(35, 0, 0, 53); // Adicionar margem superior
+            gbcButton.insets = new Insets(35, 0, 0, 53); 
         } else if (Game.SnakeLiberation == "Boitata") {
-            gbcButton.insets = new Insets(35, 0, 0, 42); // Adicionar margem superior
-            gbc.insets = new Insets(-170, 10, 0, 0); // Adicionar margem superior
+            gbcButton.insets = new Insets(35, 0, 0, 42); 
+            gbc.insets = new Insets(-170, 10, 0, 0); 
         }
-        // gbc.insets = new java.awt.Insets(0, 0, 0, 0); // Adicionar margem superior
+      
         JPanel buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.setOpaque(false);
         closeButton = new JButton("", backgroundClosedUNHover);
@@ -103,47 +103,46 @@ public class NotificationDesblocked {
             MenuPanel.overlayPanel.repaint();
             MenuPanel.setButtonsEnabled(true);
             Game.NotificationGameDesblocked = false;
-            window.dispose(); // Fechar o diálogo ao clicar no botão "X"
+            window.dispose(); 
         });
         MenuPanel.addShadow(closeButton, "", Fonts, 50, 50, false);
         hoverbuttonExit(closeButton, backgroundClosedUNHover, backgroundClosedHover);
         buttonPanel.add(closeButton, BorderLayout.EAST);
         panel.add(buttonPanel, gbcButton);
 
-        /////////////
+     
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.CENTER;
-        ////////////////////////////
+      
 
         if (Game.DesblockedPontuation >= 1 && Game.MapLiberation != null) {
             gbc.gridx = 0;
             JLabel MAPA = new JLabel("Novo Mapa :" + Game.MapLiberation);
             MAPA = new TextShadow("Novo Mapa :" + Game.MapLiberation, Color.WHITE, Color.BLACK, Fonts);
-            MAPA.setHorizontalAlignment(JLabel.CENTER); // Centralizar o texto
+            MAPA.setHorizontalAlignment(JLabel.CENTER);
             gbc.gridy = 1;
             panel.add(MAPA, gbc);
             ChamarImagemMapa();
             panel.add(imageLabel, gbc);
         }
-        //////////////////////////////////////////
+      
         if (Game.DesblockedPontuation <= 1) {
             JLabel SKIN = new JLabel("Nova Skin :" + Game.SnakeLiberation);
             SKIN = new TextShadow("Nova Skin :" + Game.SnakeLiberation, Color.WHITE, Color.BLACK, Fonts);
-            SKIN.setHorizontalAlignment(JLabel.CENTER); // Centralizar o texto
+            SKIN.setHorizontalAlignment(JLabel.CENTER);
             gbc.gridy = 2;
             if (Game.MapLiberation == "Masmorra") {
-                gbc.insets = new Insets(-30, 0, 75, 0); // Adicionar margem superior
+                gbc.insets = new Insets(-30, 0, 75, 0);
             }
             panel.add(SKIN, gbc);
             ChamarImagemSkin();
             panel.add(imageLabel, gbc);
         }
         panel.setBorder(BorderFactory.createEmptyBorder(0, 125, 0, 0));
-        /////////////////////////////////////////
-
+      
         TextPanel = new JPanel(new BorderLayout());
         TextPanel.setOpaque(false);
         JLabel DESBLOCKEDtext = new JLabel(message);
@@ -154,13 +153,13 @@ public class NotificationDesblocked {
         } else if (Game.MapLiberation == "Pântano") {
             TextPanel.setBorder(BorderFactory.createEmptyBorder(120, 0, 0, 5));
         } else if (Game.MapLiberation == "Masmorra") {
-            gbc.insets = new Insets(-30, 0, 65, 5); // Adicionar margem superior
+            gbc.insets = new Insets(-30, 0, 65, 5); 
         }
 
         gbc.gridy = 3;
-        gbc.anchor = GridBagConstraints.CENTER; // Centraliza verticalmente
+        gbc.anchor = GridBagConstraints.CENTER; 
         panel.add(TextPanel, gbc);
-        //////////////////////////////////////
+       
         window.add(panel);
         window.pack();
         window.setSize(desiredWidth, desiredHeight);
@@ -190,7 +189,7 @@ public class NotificationDesblocked {
     }
 
     public static void ChamarImagemSkin() {
-        //////////////////////////////
+     
         try {
             if (Game.SnakeLiberation == "Venenosa") {
                 originalImage2 = ImageIO.read(new File("resources/Notification/iconPoisonsnake.png"));

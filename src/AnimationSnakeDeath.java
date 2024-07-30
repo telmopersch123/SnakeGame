@@ -48,7 +48,7 @@ public class AnimationSnakeDeath {
           return;
         }
         if (game.segmentsToRemove > 0) {
-          // Remova um segmento da cobra
+      
           game.nodeSnake = Arrays.copyOf(game.nodeSnake, game.nodeSnake.length - 1);
           game.segmentsToRemove--;
           Game.ControlVelocity = Math.max(1, Game.ControlVelocity - 1);

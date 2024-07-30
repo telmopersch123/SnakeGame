@@ -5,8 +5,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 public class decoracaoComplexaAcima {
-  public static int numFramesXArv = 6; // Ajuste conforme necessário
-  public static int numFramesYArv = 1; // Supondo que todas as animações estão na mesma linha
+  public static int numFramesXArv = 6; 
+  public static int numFramesYArv = 1; 
   public static int numFramesXlava = 4;
   public static int numFramesYlava = 3;
   private static long lastFrameTimeArv3 = 0;
@@ -57,10 +57,10 @@ public class decoracaoComplexaAcima {
               lagoPantano = buffer.createGraphics();
               AffineTransform at = new AffineTransform();
               at.scale((double) (150 + 2) / sw, (double) (150 + 2) / sh);
-              // Create an AffineTransformOp object with the AffineTransform
+            
               AffineTransformOp op = new AffineTransformOp(at,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+            
               BufferedImage scaledImage = op.filter(lago.getSubimage(sx, sy, sw,
                   sh),
                   null);
@@ -89,10 +89,10 @@ public class decoracaoComplexaAcima {
               lagoPantano1 = buffer.createGraphics();
               AffineTransform at1 = new AffineTransform();
               at1.scale((double) (150 + 2) / sw1, (double) (150 + 2) / sh1);
-              // Create an AffineTransformOp object with the AffineTransform
+            
               AffineTransformOp op1 = new AffineTransformOp(at1,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+         
               BufferedImage scaledImage = op1.filter(lago1.getSubimage(sx1, sy1, sw1,
                   sh1),
                   null);
@@ -121,10 +121,10 @@ public class decoracaoComplexaAcima {
               lagoPantano2 = buffer.createGraphics();
               AffineTransform at2 = new AffineTransform();
               at2.scale((double) (150 + 2) / sw2, (double) (150 + 2) / sh2);
-              // Create an AffineTransformOp object with the AffineTransform
+             
               AffineTransformOp op1 = new AffineTransformOp(at2,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+            
               BufferedImage scaledImage = op1.filter(lago2.getSubimage(sx2, sy2, sw2,
                   sh2),
                   null);
@@ -170,10 +170,10 @@ public class decoracaoComplexaAcima {
                 lavaLava = buffer.createGraphics();
                 AffineTransform at1 = new AffineTransform();
                 at1.scale((double) (150 + 2) / sw1, (double) (100 + 2) / sh1);
-                // Create an AffineTransformOp object with the AffineTransform
+             
                 AffineTransformOp op1 = new AffineTransformOp(at1,
                     AffineTransformOp.TYPE_BILINEAR);
-                // Apply the transform to the image
+              
                 BufferedImage scaledImage1 = op1.filter(lava.getSubimage(sx1, sy1,
                     sw1,
                     sh1),
@@ -207,10 +207,10 @@ public class decoracaoComplexaAcima {
               lavaskull = buffer.createGraphics();
               AffineTransform at1 = new AffineTransform();
               at1.scale((double) (150 + 2) / sw1, (double) (100 + 2) / sh1);
-              // Create an AffineTransformOp object with the AffineTransform
+            
               AffineTransformOp op1 = new AffineTransformOp(at1,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+            
               BufferedImage scaledImage1 = op1.filter(lava1.getSubimage(sx1, sy1,
                   sw1,
                   sh1),

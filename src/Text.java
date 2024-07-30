@@ -20,17 +20,16 @@ class TextShadow extends JLabel {
 
   @Override
   protected void paintComponent(Graphics g) {
-    // Desenha o texto com sombreamento
+   
     Graphics2D g2 = (Graphics2D) g.create();
     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    // Define o deslocamento da sombra (neste exemplo, 2 pixels para baixo e para a
-    // direita)
+ 
     int shadowOffset = 0;
     g2.setColor(shadowColor);
     g2.drawString(getText(), shadowOffset, getHeight() - shadowOffset);
 
-    // Desenha o texto principal
+  
     g2.setColor(getForeground());
     g2.drawString(getText(), 0, getHeight() - 2);
 

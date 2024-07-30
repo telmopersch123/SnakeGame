@@ -34,7 +34,7 @@ public class SkinPanel extends JPanel {
   static JLabel TextSelection;
   static GridBagConstraints gbc;
   public SkinPanel(ImageIcon buttonReturn) {
-    // Usar JLayeredPane para controlar a ordem dos componentes
+  
     MapPanel.buttons = new ArrayList<>();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     setLayout(null);
@@ -44,33 +44,31 @@ public class SkinPanel extends JPanel {
     layeredPane.setBounds(0, 0, screenSize.width, screenSize.height);
 
     try {
-      // -fundo
+    
       Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", 16);
       Font FontsTitulo = loadFont.loadFont("resources/fontes/fontGeral.ttf", 34);
       Image backgroundImage = ImageIO.read(new File("resources/Menu/backgroundMenu.png"));
       selectionFont = loadFont.loadFont("resources/fontes/fontGeral.ttf", 64);
-      ///
+     
       ImageIcon buttonclassicoINCsnake = new StretchIcon("resources/Menu/botaoclassicoinativo.png");
       ImageIcon buttonpoisonINCsnake = new StretchIcon("resources/Menu/botaopoisoninativo.png");
       ImageIcon buttonfireINCsnake = new StretchIcon("resources/Menu/botaofireinativo.png");
-      /////
+     
       ImageIcon buttonclassicosnake = new StretchIcon("resources/Menu/botaoclassico.png");
       ImageIcon buttonpoisonsnake = new StretchIcon("resources/Menu/botaoposion.png");
       ImageIcon buttonfiresnake = new StretchIcon("resources/Menu/botaosnake.png");
-      /////
+     
       ImageIcon buttonclassicohover = new StretchIcon("resources/Menu/hover1.png");
       ImageIcon buttonpoisonhover = new StretchIcon("resources/Menu/hover2.png");
       ImageIcon buttonfirehover = new StretchIcon("resources/Menu/hover3.png");
-      /////
+     
       ImageIcon buttonclassicohoverinc = new StretchIcon("resources/Menu/hoverinc1.png");
       ImageIcon buttonpoisonhoverinc = new StretchIcon("resources/Menu/hoverinc2.png");
       ImageIcon buttonfirehoverinc = new StretchIcon("resources/Menu/hoverinc3.png");
-      ///
+     
       ImageIcon blockedFire = new StretchIcon("resources/Menu/BlockedFire.png");
       ImageIcon blockedPoison = new StretchIcon("resources/Menu/BlockedPoison.png");
-      backgroundImage = backgroundImage.getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH); // Redimensionar
-                                                                                                                    // //
-                                                                                                                    // imagem
+      backgroundImage = backgroundImage.getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH); 
       backgroundLabel = new JLabel(new ImageIcon(backgroundImage));
       backgroundLabel.setBounds(0, 0, screenSize.width, screenSize.height);
       backgroundLabel.setLayout(new GridBagLayout()); // Definir layout para centralizar o texto
@@ -82,28 +80,28 @@ public class SkinPanel extends JPanel {
       });
       layeredPane.add(backgroundLabel, JLayeredPane.DEFAULT_LAYER);
 
-      // Botão de retorno
+    
       ReturnButton = new JButton("", buttonReturn);
       ReturnButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
           MusicPlayer.AudioClick();
           JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(SkinPanel.this);
-          MenuPanel menuPanel = new MenuPanel(); // Crie uma nova instância de MenuPanel
+          MenuPanel menuPanel = new MenuPanel(); 
           topFrame.getContentPane().removeAll();
           topFrame.getContentPane().add(menuPanel);
           topFrame.revalidate();
           topFrame.repaint();
         }
       });
-      ReturnButton.setBounds(10, 10, 100, 80); // Posição do botão no canto superior esquerdo
+      ReturnButton.setBounds(10, 10, 100, 80); 
       MapPanel.ReturnButtonImage(ReturnButton, 100, 80, Fonts);
 
       layeredPane.add(ReturnButton, JLayeredPane.PALETTE_LAYER);
-      // Texto no mapa
+
       JLabel mapLabel = new JLabel("Skins Alternativas");
       mapLabel.setFont(FontsTitulo);
-      mapLabel.setForeground(Color.WHITE); // Certificar-se de que o texto é visível sobre o fundo
+      mapLabel.setForeground(Color.WHITE);
       mapLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 150, 0));
       gbc = new GridBagConstraints();
       gbc.gridx = 0;
@@ -111,7 +109,7 @@ public class SkinPanel extends JPanel {
       gbc.insets = new Insets(10, 0, 10, 0);
       gbc.anchor = GridBagConstraints.CENTER;
       backgroundLabel.add(mapLabel, gbc);
-      // BOTÕES
+     
       if (Game.snakeClassica) {
         ClassicSkinButton = new JButton("Clássica", buttonclassicosnake);
       } else if (!Game.snakeClassica) {
@@ -143,7 +141,7 @@ public class SkinPanel extends JPanel {
           FireSkinButton.setPreferredSize(new Dimension(300, 100));
           ClassicSkinButton.revalidate();
           ClassicSkinButton.repaint();
-          /////
+       
           AnimationTextSelection.Text = "Selecionado";
           if (MapPanel.Position < 0) {
             AnimationTextSelection.animacaoSelecionadoTimer.cancel();
@@ -160,7 +158,7 @@ public class SkinPanel extends JPanel {
       gbc.gridy = 1;
       gbc.insets = new Insets(-150, 0, -150, 0);
       backgroundLabel.add(ClassicSkinButton, gbc);
-      ////
+     
       if (Game.DesblockedPontuation <= 1) {
         if (Game.snakePoison) {
           PoisonSkinButton = new JButton("Venenosa", buttonpoisonsnake);
@@ -210,7 +208,7 @@ public class SkinPanel extends JPanel {
       gbc.gridx = 0;
       gbc.gridy = 2;
       backgroundLabel.add(PoisonSkinButton, gbc);
-      ////
+    
       if (Game.DesblockedPontuation < 1) {
         if (Game.snakeFire) {
           FireSkinButton = new JButton("Boitatá", buttonfiresnake);
@@ -261,11 +259,11 @@ public class SkinPanel extends JPanel {
       gbc.gridy = 2;
       MapPanel.ImagemFundo();
       backgroundLabel.add(MapPanel.backgroundLabel2, gbc);
-      /////////////
+     
       gbc.gridy = 1;
       TextSelection = new JLabel("");
       backgroundLabel.add(TextSelection, gbc);
-      /////////////
+  
       hoveres(ClassicSkinButton, PoisonSkinButton, FireSkinButton, 300,
           100, buttonclassicohover, buttonpoisonhover,
           buttonfirehover,

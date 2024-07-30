@@ -41,13 +41,12 @@ public class MyKeyBoardListener implements KeyListener {
         Game.direction = Game.keyPressedInferior;
       }
 
-      // Verifica se a tecla pressionada é uma direção válida e não oposta à direção
-      // atual
+      
       if ((key == Game.keyPressedEsquerda || key == Game.keyPressedDireita ||
           key == Game.keyPressedSuperior || key == Game.keyPressedInferior) &&
           Math.abs(key - initialDirection) != 2 && canPress) {
 
-        // Impede movimento oposto instantâneo
+       
         if ((key == Game.keyPressedEsquerda && initialDirection != Game.keyPressedDireita) ||
             (key == Game.keyPressedDireita && initialDirection != Game.keyPressedEsquerda) ||
             (key == Game.keyPressedSuperior && initialDirection != Game.keyPressedInferior) ||
@@ -65,7 +64,7 @@ public class MyKeyBoardListener implements KeyListener {
 
   @Override
   public void keyReleased(KeyEvent e) {
-    // Parar o movimento quando a tecla é solta
+  
     int key = e.getKeyCode();
     if (key != currentDirection) {
       initialVerif = true;

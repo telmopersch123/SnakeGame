@@ -104,7 +104,7 @@ public class decoracao {
   private static BufferedImage arvoreLago;
   static {
     try {
-      // mapa field
+   
       Bush_blue_flowers = ImageIO.read(new File("resources/map_field/obstaculos_normal/Bush_blue_flowers2.png"));
       Bush_orange_flowers1 = ImageIO
           .read(new File("resources/map_field/obstaculos_normal/Bush_orange_flowers1.png"));
@@ -117,7 +117,7 @@ public class decoracao {
           .read(new File("resources/map_field/obstaculos_normal/Glade_Objects_Top_Down_Pixe_Art3.png"));
       Rock1_grass_shadow1 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Rock1_grass_shadow1.png"));
       Rock1_grass_shadow3 = ImageIO.read(new File("resources/map_field/obstaculos_normal/Rock1_grass_shadow3.png"));
-      ///// decorações complexas
+    
       Christmas_tree2 = ImageIO.read(new File("resources/map_field/obstaculos_complexos/Christmas_tree2.png"));
       Glade_Objects_Top_Down_Pixel_Art66 = ImageIO
           .read(new File("resources/map_field/obstaculos_complexos/Glade_Objects_Top_Down_Pixel_Art66.png"));
@@ -137,7 +137,7 @@ public class decoracao {
           .read(new File("resources/map_field/obstaculos_complexos/sprite_sheet_placa.png"));
       casadamonga = ImageIO.read(new File("resources/map_field/obstaculos_complexos/casadamonga.png"));
 
-      // mapa swamp
+     
       Broken_tree_shadow2_3 = ImageIO
           .read(new File("resources/map_swamp/obstaculos_normal/Broken_tree_shadow2_3.png"));
       Broken_tree_shadow2_4 = ImageIO
@@ -147,7 +147,7 @@ public class decoracao {
       Oval_leaf_tree33 = ImageIO.read(new File("resources/map_swamp/obstaculos_normal/Oval_leaf_tree33.png"));
       Rock4_grass_shadow34 = ImageIO
           .read(new File("resources/map_swamp/obstaculos_normal/Rock4_grass_shadow34.png"));
-      ///// decorações complexas
+   
       aglomerado_cogubranco = ImageIO
           .read(new File("resources/map_swamp/obstaculos_complexos/aglomerado_cogubranco.png"));
       aglomerado_coguroxo = ImageIO
@@ -208,7 +208,7 @@ public class decoracao {
           .read(new File("resources/map_swamp/obstaculos_complexos/spritsheethomemcristal.png"));
       arvoreLago = ImageIO
           .read(new File("resources/map_Swamp/obstaculos_complexos/arvoreLago.png"));
-      //
+     
       Black_crystal1 = ImageIO
           .read(new File("resources/map_dungeon/obstaculos_normal/Black_crystal1.png"));
       Blue_crystal1 = ImageIO
@@ -241,7 +241,7 @@ public class decoracao {
           .read(new File("resources/map_dungeon/obstaculos_normal/spritedungeonnormal.png"));
       firedungeon = ImageIO
           .read(new File("resources/map_dungeon/obstaculos_normal/firedungeon.png"));
-      // MAPA DUNGEON - DECORAÇÃO COMPLEXA
+     
       arvoreskull = ImageIO
           .read(new File("resources/map_dungeon/obstaculos_complexos/arvoreskull.png"));
       craniodino = ImageIO
@@ -333,7 +333,7 @@ public class decoracao {
       Game.ValueDecoNormal += Game.quanti.get(i);
     }
 
-    ///
+   
     for (int i = 0; i < valueDecoComplexo; i++) {
       Game.quantiComplexo.add(1);
     }
@@ -376,7 +376,7 @@ public class decoracao {
 
   private static boolean isWallPosition(int x, int y, ArrayList<Integer> walls_x, ArrayList<Integer> walls_y, int x1,
       int y1) {
-    Rectangle imageRect = new Rectangle(x, y, 50, 50); // tamanho da imagem decorativa
+    Rectangle imageRect = new Rectangle(x, y, 50, 50); 
     Rectangle imageRectComplexa = new Rectangle(x1, y1, 150, 150);
     for (int i = 0; i < walls_x.size(); i++) {
       Rectangle wallRect = new Rectangle(walls_x.get(i), walls_y.get(i), 10, 10);
@@ -392,7 +392,7 @@ public class decoracao {
 
   private static boolean isSnake(int x, int y, int x1,
       int y1) {
-    Rectangle imageRect = new Rectangle(x, y, 50, 50); // tamanho da imagem decorativa
+    Rectangle imageRect = new Rectangle(x, y, 50, 50);
     Rectangle imageRectComplexa = new Rectangle(x1, y1, 150, 150);
     Rectangle Snake = new Rectangle(Game.nodeSnake[0].x, Game.nodeSnake[0].y, 15, 15);
     if (imageRect.intersects(Snake) || imageRectComplexa.intersects(Snake)) {
@@ -404,7 +404,7 @@ public class decoracao {
   }
 
   private static boolean isFood(int x, int y, int x1, int y1) {
-    Rectangle imageRect = new Rectangle(x, y, 50, 50); // tamanho da imagem decorativa
+    Rectangle imageRect = new Rectangle(x, y, 50, 50);
     Rectangle imageRectComplexa = new Rectangle(x1, y1, 150, 150);
     Rectangle Food = new Rectangle(Game.macaX, Game.macaY, 15, 15);
     if (imageRect.intersects(Food) || imageRectComplexa.intersects(Food)) {
@@ -416,7 +416,7 @@ public class decoracao {
 
   private static boolean containsPosition(int x, int y, int[] DecoracaoX, int[] DecoracaoY, int x1,
       int y1, int[] DecoComplexoX, int[] DecoComplexoY) {
-    Rectangle imageRect = new Rectangle(x, y, 30, 30); // tamanho da imagem decorativa
+    Rectangle imageRect = new Rectangle(x, y, 30, 30); 
     Rectangle imageRectComplexa = new Rectangle(x1, y1, 120, 120);
     for (int i = 0; i < Game.ValueFinal; i++) {
       if (i < DecoComplexoY.length && i < DecoComplexoY.length) {
@@ -439,22 +439,22 @@ public class decoracao {
     return false;
   }
 
-  public static int numFramesXMo = 6; // Ajuste conforme necessário
-  public static int numFramesYMo = 1; // Supondo que todas as animações estão na mesma linha
+  public static int numFramesXMo = 6; 
+  public static int numFramesYMo = 1; 
   private static int frameIntervalMo = 1000;
   public static int totalFramesMo = numFramesXMo * numFramesYMo;
   public static long currentTimeMoinho = System.currentTimeMillis();
   private static long lastFrameTimeMo = 0;
   public static Graphics2D ImagemMoinho;
-  ///
-  public static int numFramesXBan = 6; // Ajuste conforme necessário
-  public static int numFramesYBan = 1; // Supondo que todas as animações estão na mesma linha
+  
+  public static int numFramesXBan = 6; 
+  public static int numFramesYBan = 1; 
   private static int frameIntervalBan = 1000;
   public static int totalFramesBan = numFramesXBan * numFramesYBan;
   public static long currentTimeBandeira = System.currentTimeMillis();
   private static long lastFrameTimeBan = 0;
   public static Graphics2D ImagemBandeira;
-  //
+ 
   public static Graphics2D ImagemArvore1;
   public static Graphics2D ImagemArvore2;
   public static Graphics2D ImagemArvore3;
@@ -466,8 +466,8 @@ public class decoracao {
   public static Graphics2D temple2;
   public static Graphics2D temple3;
 
-  public static int numFramesXArv = 6; // Ajuste conforme necessário
-  public static int numFramesYArv = 1; // Supondo que todas as animações estão na mesma linha
+  public static int numFramesXArv = 6;
+  public static int numFramesYArv = 1; 
   public static int numFramesXCris = 3;
   public static int numFramesYCris = 9;
   public static int numFramesXfire = 7;
@@ -523,10 +523,10 @@ public class decoracao {
 
   public static void decoracaoField(BufferedImage buffer) {
     g2d = buffer.createGraphics();
-    imagens.clear(); // Limpa a lista de imagens
+    imagens.clear(); 
     int index = 0;
 
-    //// Decorações simples
+   
     try {
       for (int i = 0; i < Game.quanti.get(0); i++) {
         imagens.add(new Imagem(Bush_blue_flowers, Game.DecoracaoX[index], Game.DecoracaoY[index], 28, 28));
@@ -573,7 +573,7 @@ public class decoracao {
 
     }
 
-    // Decorações Complexas
+  
 
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       if (Game.quantiComplexo.get(i) > 0) {
@@ -620,10 +620,10 @@ public class decoracao {
             ImagemMoinho = buffer.createGraphics();
             AffineTransform at = new AffineTransform();
             at.scale((double) (100 + 2) / sw, (double) (134 + 2) / sh);
-            // Create an AffineTransformOp object with the AffineTransform
+          
             AffineTransformOp op = new AffineTransformOp(at,
                 AffineTransformOp.TYPE_BILINEAR);
-            // Apply the transform to the image
+          
             BufferedImage scaledImage = op.filter(Moinho.getSubimage(sx, sy, sw, sh),
                 null);
             ImagemMoinho.drawImage(scaledImage, Game.DecoComplexoX[10],
@@ -648,10 +648,10 @@ public class decoracao {
             ImagemBandeira = buffer.createGraphics();
             AffineTransform at1 = new AffineTransform();
             at1.scale((double) (30 + 2) / sw1, (double) (54 + 2) / sh1);
-            // Create an AffineTransformOp object with the AffineTransform
+          
             AffineTransformOp op1 = new AffineTransformOp(at1,
                 AffineTransformOp.TYPE_BILINEAR);
-            // Apply the transform to the image
+          
             BufferedImage scaledImage1 = op1.filter(bandeira.getSubimage(sx1, sy1, sw1,
                 sh1),
                 null);
@@ -689,7 +689,7 @@ public class decoracao {
     imagens.clear();
 
     int index = 0;
-    /// -Simples
+  
     try{
     for (int i = 0; i < Game.quanti.get(0); i++) {
       imagens.add(new Imagem(Broken_tree_shadow2_3, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
@@ -713,7 +713,7 @@ public class decoracao {
     }
   } catch (IndexOutOfBoundsException e) {
   }
-    /// -Complexas
+ 
     for (int i = 0; i < Game.quantiComplexo.size(); i++) {
       if (Game.quantiComplexo.get(i) > 0) {
         switch (i) {
@@ -931,10 +931,10 @@ public class decoracao {
               ImagemArvore1 = buffer.createGraphics();
               AffineTransform at1 = new AffineTransform();
               at1.scale((double) (66 + 2) / sw1, (double) (65 + 2) / sh1);
-              // Create an AffineTransformOp object with the AffineTransform
+             
               AffineTransformOp op1 = new AffineTransformOp(at1,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+           
               BufferedImage scaledImage1 = op1.filter(arvore1.getSubimage(sx1, sy1, sw1,
                   sh1),
                   null);
@@ -962,10 +962,10 @@ public class decoracao {
               ImagemArvore2 = buffer.createGraphics();
               AffineTransform at1 = new AffineTransform();
               at1.scale((double) (80 + 2) / sw1, (double) (96 + 2) / sh1);
-              // Create an AffineTransformOp object with the AffineTransform
+             
               AffineTransformOp op1 = new AffineTransformOp(at1,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+             
               BufferedImage scaledImage1 = op1.filter(arvore1.getSubimage(sx1, sy1, sw1,
                   sh1),
                   null);
@@ -994,10 +994,10 @@ public class decoracao {
               ImagemArvore3 = buffer.createGraphics();
               AffineTransform at1 = new AffineTransform();
               at1.scale((double) (92 + 2) / sw1, (double) (128 + 2) / sh1);
-              // Create an AffineTransformOp object with the AffineTransform
+            
               AffineTransformOp op1 = new AffineTransformOp(at1,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+            
               BufferedImage scaledImage1 = op1.filter(arvore2.getSubimage(sx1, sy1, sw1,
                   sh1),
                   null);
@@ -1035,10 +1035,10 @@ public class decoracao {
               ImagemCris = buffer.createGraphics();
               AffineTransform atc = new AffineTransform();
               atc.scale((double) (128 + 2) / swc, (double) (128 + 2) / shc);
-              // Create an AffineTransformOp object with the AffineTransform
+            
               AffineTransformOp opc = new AffineTransformOp(atc,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+             
               BufferedImage scaledImagecris = opc.filter(homemcristal.getSubimage(sxc, syc, swc,
                   shc),
                   null);
@@ -1079,7 +1079,7 @@ public class decoracao {
     imagens.clear();
 
     int index = 0;
-    /// -Simples
+
     try {
       for (int i = 0; i < Game.quanti.get(0); i++) {
         imagens.add(new Imagem(Black_crystal1, Game.DecoracaoX[index], Game.DecoracaoY[index], 32, 32));
@@ -1148,10 +1148,10 @@ public class decoracao {
         fireFogo = buffer.createGraphics();
         AffineTransform at1 = new AffineTransform();
         at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
-        // Create an AffineTransformOp object with the AffineTransform
+       
         AffineTransformOp op1 = new AffineTransformOp(at1,
             AffineTransformOp.TYPE_BILINEAR);
-        // Apply the transform to the image
+      
         BufferedImage scaledImage1 = op1.filter(fire.getSubimage(sx1, sy1, sw1,
             sh1),
             null);
@@ -1185,10 +1185,10 @@ public class decoracao {
         vulcanfire = buffer.createGraphics();
         AffineTransform at1 = new AffineTransform();
         at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
-        // Create an AffineTransformOp object with the AffineTransform
+       
         AffineTransformOp op1 = new AffineTransformOp(at1,
             AffineTransformOp.TYPE_BILINEAR);
-        // Apply the transform to the image
+       
         BufferedImage scaledImage1 = op1.filter(vulcan.getSubimage(sx1, sy1, sw1,
             sh1),
             null);
@@ -1216,10 +1216,10 @@ public class decoracao {
         fireFogo2 = buffer.createGraphics();
         AffineTransform at1 = new AffineTransform();
         at1.scale((double) (35 + 2) / sw1, (double) (35 + 2) / sh1);
-        // Create an AffineTransformOp object with the AffineTransform
+
         AffineTransformOp op1 = new AffineTransformOp(at1,
             AffineTransformOp.TYPE_BILINEAR);
-        // Apply the transform to the image
+       
         BufferedImage scaledImage1 = op1.filter(fire.getSubimage(sx1, sy1, sw1,
             sh1),
             null);
@@ -1346,10 +1346,10 @@ public class decoracao {
               temple1 = buffer.createGraphics();
               AffineTransform at1 = new AffineTransform();
               at1.scale((double) (60 + 2) / sw1, (double) (100 + 2) / sh1);
-              // Create an AffineTransformOp object with the AffineTransform
+            
               AffineTransformOp op1 = new AffineTransformOp(at1,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+           
               BufferedImage scaledImage1 = op1.filter(skullTemple1.getSubimage(sx1, sy1,
                   sw1,
                   sh1),
@@ -1381,10 +1381,10 @@ public class decoracao {
               temple2 = buffer.createGraphics();
               AffineTransform at1 = new AffineTransform();
               at1.scale((double) (70 + 2) / sw1, (double) (100 + 2) / sh1);
-              // Create an AffineTransformOp object with the AffineTransform
+             
               AffineTransformOp op1 = new AffineTransformOp(at1,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+             
               BufferedImage scaledImage1 = op1.filter(skullTemple2.getSubimage(sx1, sy1,
                   sw1,
                   sh1),
@@ -1415,10 +1415,10 @@ public class decoracao {
               temple3 = buffer.createGraphics();
               AffineTransform at1 = new AffineTransform();
               at1.scale((double) (70 + 2) / sw1, (double) (100 + 2) / sh1);
-              // Create an AffineTransformOp object with the AffineTransform
+            
               AffineTransformOp op1 = new AffineTransformOp(at1,
                   AffineTransformOp.TYPE_BILINEAR);
-              // Apply the transform to the image
+            
               BufferedImage scaledImage1 = op1.filter(skullTemple3.getSubimage(sx1, sy1,
                   sw1,
                   sh1),

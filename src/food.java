@@ -18,12 +18,12 @@ public class food {
     g.drawImage(buffer, 0, 0, null);
   }
 
-  public static int numFramesX1 = 13; // Ajuste conforme necessário
-  public static int numFramesY1 = 1; // Supondo que todas as animações estão na mesma linha
-  public static int frameWidth1 = 500; // Largura do frame redimensionado
-  public static int frameHeight1 = 500; // Altura do frame redimensionado
+  public static int numFramesX1 = 13;
+  public static int numFramesY1 = 1; 
+  public static int frameWidth1 = 500; 
+  public static int frameHeight1 = 500; 
   public static int totalFrames1 = numFramesX1 * numFramesY1;
-  public static int frameInterval1 = 250; // Intervalo entre quadros em milissegundos
+  public static int frameInterval1 = 250; 
   public static long currentTime1 = System.currentTimeMillis();
   public static Graphics2D food1;
   public static AffineTransform transform1 = new AffineTransform();
@@ -45,7 +45,7 @@ public class food {
     AffineTransformOp op = new AffineTransformOp(atPoison, AffineTransformOp.TYPE_BILINEAR);
     BufferedImage scaledImage = op.filter(EnergyAnimationFoodPoison.getSubimage(sx, sy, sw, sh), null);
     food1.drawImage(scaledImage, macaPOX, macaPOY, null);
-    // Atualize o quadro que foi renderizado
+   
     if (Game.ManterAnimation) {
       Game.currentFrame6 = (Game.currentFrame6 + 1) % totalFrames1;
       totalFrames1 = numFramesX1 * numFramesY1;
@@ -56,10 +56,10 @@ public class food {
     }
   }
 
-  public static int numFramesX = 6; // Ajuste conforme necessário
-  public static int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-  public static int frameWidth = 500; // Largura do frame redimensionado
-  public static int frameHeight = 500; // Altura do frame redimensionado
+  public static int numFramesX = 6;
+  public static int numFramesY = 1; 
+  public static int frameWidth = 500; 
+  public static int frameHeight = 500; 
   private static final int frameInterval = 120;
   public static int totalFrames = numFramesX * numFramesY;
   public static long currentTime = System.currentTimeMillis();
@@ -75,18 +75,18 @@ public class food {
     int sw = EnergyAnimationFoodEnergy.getWidth() / numFramesX;
     int sh = EnergyAnimationFoodEnergy.getHeight() / numFramesY;
     food = buffer.createGraphics();
-    // Create an AffineTransform to scale the image
+   
     AffineTransform at = new AffineTransform();
     if (Game.RemoverAnimation) {
       width = 40;
       height = 40;
     }
     at.scale((double) (width + 2) / sw, (double) (height + 2) / sh);
-    // Create an AffineTransformOp object with the AffineTransform
+   
     AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-    // Apply the transform to the image
+  
     BufferedImage scaledImage = op.filter(EnergyAnimationFoodEnergy.getSubimage(sx, sy, sw, sh), null);
-    // Draw the scaled image
+
     food.drawImage(scaledImage, macaX, macaY, null);
     if (Game.ManterAnimation) {
       Game.currentFrame5 = (Game.currentFrame5 + 1) % totalFrames;

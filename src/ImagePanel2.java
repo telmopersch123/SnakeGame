@@ -22,7 +22,7 @@ class ImagePanel2 extends JPanel {
     this.totalFrames = (spriteSheet.getWidth() / frameWidth) * (spriteSheet.getHeight() / frameHeight);
     this.currentFrame = 0;
 
-    // Ajusta o tamanho do painel de acordo com o tamanho dos frames
+   
     this.setPreferredSize(new Dimension(frameWidth + 210, frameHeight + 190));
     this.setOpaque(false);
 
@@ -31,7 +31,7 @@ class ImagePanel2 extends JPanel {
       public void actionPerformed(ActionEvent e) {
         currentFrame+=2;
         if (currentFrame >= totalFrames) {
-        timer.stop(); // Para o timer quando a animação terminar
+        timer.stop(); 
         }
         repaint();
       }
@@ -47,7 +47,7 @@ class ImagePanel2 extends JPanel {
     int x = (currentFrame % cols) * frameWidth;
     int y = (currentFrame / cols) * frameHeight ;
 
-    // Desenha o frame aumentado em 500 pixels em ambas as dimensões
+   
     g.drawImage(spriteSheet, 0, 0, frameWidth + 200, frameHeight + 200, x, y, x + frameWidth, y + frameHeight, this);
   }
 }

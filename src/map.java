@@ -21,7 +21,7 @@ public class map {
       backgroundImageHeight = bufferedImage.getHeight();
       scaledBackgroundImageWidth = (int) (backgroundImageWidth * scale);
       scaledBackgroundImageHeight = (int) (backgroundImageHeight * scale);
-      // Desenha as imagens de fundo
+   
       for (int y = 0; y < ALL_DOTS_Height; y += scaledBackgroundImageHeight) {
         for (int x = 0; x < ALL_DOTS_Width; x += scaledBackgroundImageWidth) {
           g2d.drawImage(gramSprit, x, y, scaledBackgroundImageWidth, scaledBackgroundImageHeight, null);

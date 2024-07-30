@@ -64,24 +64,23 @@ public class MenuPanel extends JPanel {
     GridBagConstraints Menu = new GridBagConstraints();
 
     try {
-      // ========LOADING-----------
+     
       painelLoading();
-      // ==========================
-      // Carregue a imagem dos botoes
+    
       Font Fonts = loadFont.loadFont("resources/fontes/fontGeral.ttf", 20);
       ImageIcon buttonReturn = new StretchIcon("resources/Menu/return.png");
       ImageIcon buttonImage = new StretchIcon("resources/Menu/buttonRock.png");
       ImageIcon configImage = new StretchIcon("resources/Menu/configuracoesbutton.png");
 
-      // Carregue a imagem do fundo
+    
       Image backgroundImage = ImageIO.read(new File("resources/Menu/thumbMenu.png"));
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
       backgroundImage = backgroundImage.getScaledInstance((int) screenSize.getWidth(), (int) screenSize.getHeight(),
-          Image.SCALE_SMOOTH); // Redimensionar a imagem
+          Image.SCALE_SMOOTH); 
       backgroundLabel = new JLabel(new ImageIcon(backgroundImage));
       backgroundLabel.setLayout(new GridBagLayout());
 
-      // Adicione o JLabel com a imagem ao fundo
+    
       GridBagConstraints bgConstraints = new GridBagConstraints();
       bgConstraints.gridx = 0;
       bgConstraints.gridy = 0;
@@ -103,23 +102,23 @@ public class MenuPanel extends JPanel {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g.create();
             if (!NotificationDesblocked.SumirFundo) {
-              g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // Transparência de 50%
+              g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); 
             } else {
-              g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f)); // Transparência de 0%
+              g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f)); 
             }
-            g2d.setColor(Color.BLACK); // Cor do fundo
+            g2d.setColor(Color.BLACK); 
             g2d.fillRect(0, 0, getWidth(), getHeight());
             g2d.dispose();
           }
         };
-        overlayPanel.setOpaque(false); // Deixe o overlayPanel transparente
+        overlayPanel.setOpaque(false); 
         add(overlayPanel, bgConstraints);
       }
-      ////////////////////////////////////////////////
+    
       add(backgroundLabel, bgConstraints);
-      ////////////////////////////////////////////////
+    
       add(loadingPanel, bgConstraints);
-      ////////////////////////////////////////////////
+  
       backgroundClosedUNHover = new StretchIcon("resources/Notification/removerNotiunHover.png");
       backgroundClosedHover = new StretchIcon("resources/Notification/removerNotiHover.png");
       BotaoExit = new JButton("", backgroundClosedUNHover);
@@ -130,11 +129,11 @@ public class MenuPanel extends JPanel {
       NotificationDesblocked.hoverbuttonExit(BotaoExit, backgroundClosedUNHover, backgroundClosedHover);
       Menu.gridx = 0;
       Menu.gridy = 0;
-      Menu.anchor = GridBagConstraints.NORTHWEST; // Ancora no lado esquerdo
-      Menu.weightx = 1.0; // Adiciona peso para expandir horizontalmente
+      Menu.anchor = GridBagConstraints.NORTHWEST;
+      Menu.weightx = 1.0; 
       Menu.insets = new Insets(-390, 10, 0, 0);
       backgroundLabel.add(BotaoExit, Menu);
-      ////////////////////////////////////////////////
+    
       startButton = new JButton("Iniciar Jogo", buttonImage);
       addShadow(startButton, "Iniciar Jogo", Fonts, 150, 50, false);
       startButton.addActionListener(new ActionListener() {
@@ -238,7 +237,7 @@ public class MenuPanel extends JPanel {
       addShadow(OutfitButton, "Skin", Fonts, 150, 50, false);
       Menu.gridy = 3;
       backgroundLabel.add(OutfitButton, Menu);
-      ///
+   
       comoButton = new JButton("Como Jogar!", buttonImage);
       comoButton.addActionListener(new ActionListener() {
 
@@ -259,7 +258,7 @@ public class MenuPanel extends JPanel {
       addShadow(comoButton, "Como Jogar!", Fonts, 150, 50, false);
       Menu.gridy = 4;
       backgroundLabel.add(comoButton, Menu);
-      //////////////////////////////
+     
       settingsButton = new JButton("", configImage);
       settingsButton.addActionListener(new ActionListener() {
         @Override
@@ -279,7 +278,7 @@ public class MenuPanel extends JPanel {
       addShadow(settingsButton, "", Fonts, 70, 70, false);
       Menu.gridy = 5;
       Menu.insets = new Insets(0, 15, -390, 0);
-      Menu.anchor = GridBagConstraints.SOUTHWEST; // Ancora no lado esquerdo
+      Menu.anchor = GridBagConstraints.SOUTHWEST; 
       backgroundLabel.add(settingsButton, Menu);
       if (Game.NotificationGameDesblocked) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -294,10 +293,10 @@ public class MenuPanel extends JPanel {
       BufferedImage snakeBackground = ImageIO.read(new File("resources/Menu/snakeMenu.png"));
       int numY = 6;
       int numX = 8;
-      int frameWidth = snakeBackground.getWidth() / numX; // Largura de cada frame
-      int frameHeight = snakeBackground.getHeight() / numY; // Altura de cada frame
-      int newFrameWidth = frameWidth + 50; // Nova largura com 100 pixels a mais
-      int newFrameHeight = frameHeight + 50; // Nova altura com 100 pixels a mais
+      int frameWidth = snakeBackground.getWidth() / numX; 
+      int frameHeight = snakeBackground.getHeight() / numY; 
+      int newFrameWidth = frameWidth + 50; 
+      int newFrameHeight = frameHeight + 50; 
       BufferedImage[] frames = new BufferedImage[numY * numX];
       int index = 0;
 
@@ -339,18 +338,18 @@ public class MenuPanel extends JPanel {
   }
 
   public static void addShadow(JButton button, String text, Font font, int width, int height, boolean Apos) {
-    // Adicione os botões sobre a imagem de fundo
+  
     button.setForeground(new Color(0, 0, 0));
-    Font originalFont = font; // Armazena a fonte original do botão
+    Font originalFont = font; 
     button.setFont(originalFont);
-    // DESENHAR BOTAO
+   
     button.setPreferredSize(new Dimension(width, height));
     button.setBorder(BorderFactory.createEmptyBorder());
-    // Configuração do botão para ser transparente
+   
     button.setOpaque(false);
     button.setContentAreaFilled(false);
     button.setBorderPainted(false);
-    // Configuração da SOMBRA SIMPLES
+  
     JPanel textPanel = new JPanel();
     textPanel.setOpaque(false);
     JLabel textLabel = new JLabel(text);
@@ -364,9 +363,9 @@ public class MenuPanel extends JPanel {
     }
     textLabel.setFont(font);
     textPanel.add(textLabel);
-    Border border = BorderFactory.createEmptyBorder(6, 11, 5, 10); // Ajuste conforme necessário
+    Border border = BorderFactory.createEmptyBorder(6, 11, 5, 10);
     textPanel.setBorder(border);
-    // Configuração do hover;
+   
     button.setLayout(new BorderLayout());
     button.add(textPanel, BorderLayout.CENTER);
     button.setFocusPainted(false);

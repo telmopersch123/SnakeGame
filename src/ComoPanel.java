@@ -68,14 +68,14 @@ public class ComoPanel extends JPanel {
       public void actionPerformed(ActionEvent e) {
         MusicPlayer.AudioClick();
         JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(ComoPanel.this);
-        MenuPanel menuPanel = new MenuPanel(); // Crie uma nova instância de MenuPanel
+        MenuPanel menuPanel = new MenuPanel();
         topFrame.getContentPane().removeAll();
         topFrame.getContentPane().add(menuPanel);
         topFrame.revalidate();
         topFrame.repaint();
       }
     });
-    ReturnButton.setBounds(10, 10, 100, 80); // Posição do botão no canto superior esquerdo
+    ReturnButton.setBounds(10, 10, 100, 80);
     MapPanel.ReturnButtonImage(ReturnButton, 100, 80, Fonts);
     layeredPane.add(ReturnButton, JLayeredPane.PALETTE_LAYER);
 
@@ -96,10 +96,10 @@ public class ComoPanel extends JPanel {
     textJoga.setFont(FontsTitulo);
     textJoga.setForeground(Color.WHITE);
     backgroundLabel.add(textJoga, gbc);
-    ////
+
     int width = 120;
     int height = 90;
-    gbc.insets = new Insets(10, 10, 10, 10); // Ajuste os Insets conforme necessário
+    gbc.insets = new Insets(10, 10, 10, 10);
     botafundobotao1 = new ImageIcon("resources/Menu/foto1.png");
     Image image = botafundobotao1.getImage();
     Image newImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -109,10 +109,10 @@ public class ComoPanel extends JPanel {
 
     gbc.gridx = 0;
     gbc.gridy = 1;
-    gbc.insets = new Insets(100, 0, 0, 0); // Ajuste os Insets conforme necessário
-    gbc.anchor = GridBagConstraints.CENTER; // Certifique-se de que a imagem está centralizada
+    gbc.insets = new Insets(100, 0, 0, 0);
+    gbc.anchor = GridBagConstraints.CENTER;
     backgroundLabel.add(fotoPrimaria, gbc);
-    ///
+
     gbc.gridy = 2;
     gbc.insets = new Insets(0, 0, 0, 0);
     textRemocao = new JLabel(
@@ -121,7 +121,7 @@ public class ComoPanel extends JPanel {
     textRemocao.setPreferredSize(new Dimension(260, 100));
     textRemocao.setForeground(Color.WHITE);
     backgroundLabel.add(textRemocao, gbc);
-    //////////////////////////
+
     botafundobotao1 = new ImageIcon("resources/Menu/foto2.png");
     Image image2 = botafundobotao1.getImage();
     Image newImage2 = image2.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -131,8 +131,8 @@ public class ComoPanel extends JPanel {
 
     gbc.gridx = 0;
     gbc.gridy = 3;
-    gbc.insets = new Insets(50, 0, 0, 0); // Ajuste os Insets conforme necessário
-    gbc.anchor = GridBagConstraints.CENTER; // Certifique-se de que a imagem está centralizada
+    gbc.insets = new Insets(50, 0, 0, 0);
+    gbc.anchor = GridBagConstraints.CENTER;
     backgroundLabel.add(fotoSegundaria, gbc);
 
     gbc.gridy = 4;
@@ -140,10 +140,10 @@ public class ComoPanel extends JPanel {
     textRemocao1 = new JLabel(
         "<html><div style='width:250px; text-align: center;'> Para vencer (ZERAR) cada mapa do jogo, é necessário alcançar 2500 pontos, precisando comer 250 frutas, tanto no modo Normal, Fácil ou Difícil. Isso pode ser feito ao comer as frutas corretas.</div></html>");
     textRemocao1.setFont(Fonts);
-    textRemocao1.setPreferredSize(new Dimension(300, 130));
+    textRemocao1.setPreferredSize(new Dimension(320, 130));
     textRemocao1.setForeground(Color.WHITE);
     backgroundLabel.add(textRemocao1, gbc);
-    /////////////////////
+
     botafundobotao3 = new ImageIcon("resources/Menu/foto3.png");
     Image image3 = botafundobotao3.getImage();
     Image newImage3 = image3.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -153,14 +153,14 @@ public class ComoPanel extends JPanel {
 
     gbc.gridx = 0;
     gbc.gridy = 5;
-    gbc.insets = new Insets(50, 0, 0, 0); // Ajuste os Insets conforme necessário
-    gbc.anchor = GridBagConstraints.CENTER; // Certifique-se de que a imagem está centralizada
+    gbc.insets = new Insets(50, 0, 0, 0);
+    gbc.anchor = GridBagConstraints.CENTER;
     backgroundLabel.add(fotoTerciaria, gbc);
     //
     gbc.gridy = 6;
     gbc.insets = new Insets(5, 0, 0, 0);
     textRemocao1 = new JLabel(
-        "<html><div style='width:260px; text-align: center;'>As frutas no jogo têm diferentes efeitos e valores de pontos. A fruta comum ajuda a acumular pontos de maneira constante. A de Energia concede um aumento temporário na velocidade <strong style='color: blue;''>a depender da velocidade da cobra</strong>, a um período curto. e a de Veneno Reduz a pontuação do jogador pela metade.</div></html>");
+        "<html><div style='width:260px; text-align: center;'>As frutas no jogo têm diferentes efeitos e valores de pontos. A fruta comum ajuda a acumular pontos de maneira constante. A de Energia concede um aumento temporário na velocidade <strong style='color: blue;''>a depender da velocidade da cobra</strong>, a um período curto. E a de Veneno Reduz a pontuação do jogador pela metade.</div></html>");
     textRemocao1.setFont(Fonts);
     textRemocao1.setPreferredSize(new Dimension(350, 200));
     textRemocao1.setForeground(Color.WHITE);

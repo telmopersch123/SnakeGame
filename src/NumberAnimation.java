@@ -90,7 +90,6 @@ public class NumberAnimation {
     }, 0, NumberInterval);
   }
 
-  /////////
 
   public static void NumberAnimationDeath(BufferedImage buffer, Image DeathIcon, int posicaoX,
       int posicaoY, int widhtDeathW, int widhtDeathH, float TransparentDeath) {
@@ -165,7 +164,7 @@ public class NumberAnimation {
     }, 0, DeathInterval);
   }
 
-  /////////
+
   public static void NumberAnimationEnergy(BufferedImage buffer, Image DeathIcon, int posicaoX,
       int posicaoY, int widhtDeathW, int widhtDeathH, float TransparentDeath) {
     Graphics2D NumberMais = buffer.createGraphics();
@@ -239,7 +238,7 @@ public class NumberAnimation {
     }, 0, EnergyInterval);
   }
 
-  /////////
+
   public static void NumberAnimationVelocity(BufferedImage buffer, Image VelocityIcon, int posicaoX,
       int posicaoY, int widhtVelocityW, int widhtVelocityH, float TransparentVelocity) {
     Graphics2D VelocityMais = buffer.createGraphics();

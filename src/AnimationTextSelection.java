@@ -49,7 +49,7 @@ public class AnimationTextSelection {
             MapPanel.backgroundLabel.add(MapPanel.FieldButton, MapPanel.gbc);
             MapPanel.gbc.gridy = 2;
             MapPanel.backgroundLabel.add(MapPanel.backgroundLabel2, MapPanel.gbc);
-            // ---------------------------------------------------
+         
             MapPanel.backgroundLabel.revalidate();
             MapPanel.backgroundLabel.repaint();
           } else {
@@ -92,7 +92,7 @@ public class AnimationTextSelection {
             MapPanel.Position -= 2;
             SkinPanel.TextSelection.setBorder(BorderFactory.createEmptyBorder(150, 0,
                 MapPanel.Position, 0));
-                // ---------------------------------------------------
+              
             SkinPanel.gbc.gridy = 1;
             SkinPanel.backgroundLabel.add(SkinPanel.TextSelection, SkinPanel.gbc);
             SkinPanel.gbc.gridy = 1;
@@ -103,7 +103,7 @@ public class AnimationTextSelection {
             SkinPanel.backgroundLabel.add(SkinPanel.FireSkinButton, SkinPanel.gbc);
             SkinPanel.gbc.gridy = 2;
             SkinPanel.backgroundLabel.add(MapPanel.backgroundLabel2, SkinPanel.gbc);
-            // ---------------------------------------------------
+          
             SkinPanel.backgroundLabel.revalidate();
             SkinPanel.backgroundLabel.repaint();
           } else {

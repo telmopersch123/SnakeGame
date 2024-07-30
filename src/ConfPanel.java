@@ -130,41 +130,41 @@ public class ConfPanel extends JPanel {
       public void actionPerformed(ActionEvent e) {
         MusicPlayer.AudioClick();
         JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(ConfPanel.this);
-        MenuPanel menuPanel = new MenuPanel(); // Crie uma nova instância de MenuPanel
+        MenuPanel menuPanel = new MenuPanel();
         topFrame.getContentPane().removeAll();
         topFrame.getContentPane().add(menuPanel);
         topFrame.revalidate();
         topFrame.repaint();
       }
     });
-    ReturnButton.setBounds(10, 10, 100, 80); // Posição do botão no canto superior esquerdo
+    ReturnButton.setBounds(10, 10, 100, 80); 
     MapPanel.ReturnButtonImage(ReturnButton, 100, 80, Fonts);
     layeredPane.add(ReturnButton, JLayeredPane.PALETTE_LAYER);
-    // ================
+   
     JLabel mapLabel = new JLabel("Configurações");
     mapLabel.setFont(FontsTitulo);
     mapLabel.setForeground(Color.WHITE);
     gbc.gridx = 0;
     gbc.gridy = 1;
     backgroundLabel.add(mapLabel, gbc);
-    // ================
+  
     ComponetsVerticais(Fonts);
     gbc.gridy = GridBagConstraints.RELATIVE;
     gbc.anchor = GridBagConstraints.NORTH;
     gbc.gridy = 2;
-    gbc.insets = new Insets(50, 0, 0, 0); // Add top padding to move the panel
-    // down
+    gbc.insets = new Insets(50, 0, 0, 0); 
+ 
     backgroundLabel.add(verticalPanel, gbc);
-    // ================
+ 
     FerramentasdeConfig(Fonts);
     gbc.gridy = 2;
     gbc.anchor = GridBagConstraints.CENTER;
     backgroundLabel.add(ferramentasConfiguracoes, gbc);
-    // ================
+   
     ImagemFundo();
     gbc.gridy = 2;
     backgroundLabel.add(backgroundLabel2, gbc);
-    // ================
+    
     add(layeredPane);
     setPreferredSize(screenSize);
     setBounds(0, 0, screenSize.width, screenSize.height);
@@ -188,7 +188,7 @@ public class ConfPanel extends JPanel {
     gbc.gridy = 0;
     ferramentasConfiguracoes.add(texto, gbc);
     configLabels.add(texto);
-    /// ====================================
+   
     botaosuperior = new StretchIcon("resources/Menu/up.png");
     Botaosuperior = new JButton(KeyEvent.getKeyText(Game.keyPressedSuperior), botaosuperior);
 
@@ -201,7 +201,7 @@ public class ConfPanel extends JPanel {
           public void keyPressed(KeyEvent event) {
             Game.keyPressedSuperior = event.getKeyCode();
 
-            // Remove the KeyListener after the first key press
+          
             ConfPanel.this.removeKeyListener(this);
             Botaosuperior.setText(KeyEvent.getKeyText(Game.keyPressedSuperior));
             Botaosuperior.setForeground(Color.WHITE);
@@ -218,7 +218,7 @@ public class ConfPanel extends JPanel {
     gbc.insets = new Insets(50, 0, 0, 0);
     ferramentasConfiguracoes.add(Botaosuperior, gbc);
     configLabels.add(Botaosuperior);
-    /// -----
+    
     botaoesquerdo = new StretchIcon("resources/Menu/left.png");
     Botaoesquerdo = new JButton(KeyEvent.getKeyText(Game.keyPressedEsquerda), botaoesquerdo);
 
@@ -230,7 +230,7 @@ public class ConfPanel extends JPanel {
           @Override
           public void keyPressed(KeyEvent event) {
             Game.keyPressedEsquerda = event.getKeyCode();
-            // Remove the KeyListener after the first key press
+         
             ConfPanel.this.removeKeyListener(this);
             Botaoesquerdo.setText(KeyEvent.getKeyText(Game.keyPressedEsquerda));
             Botaoesquerdo.setForeground(Color.WHITE);
@@ -247,7 +247,7 @@ public class ConfPanel extends JPanel {
     gbc.insets = new Insets(20, 0, 0, 0);
     ferramentasConfiguracoes.add(Botaoesquerdo, gbc);
     configLabels.add(Botaoesquerdo);
-    /// -----
+   
     botaoedireito = new StretchIcon("resources/Menu/right.png");
     Botaodireito = new JButton(KeyEvent.getKeyText(Game.keyPressedDireita), botaoedireito);
 
@@ -259,7 +259,7 @@ public class ConfPanel extends JPanel {
           @Override
           public void keyPressed(KeyEvent event) {
             Game.keyPressedDireita = event.getKeyCode();
-            // Remove the KeyListener after the first key press
+          
             ConfPanel.this.removeKeyListener(this);
             Botaodireito.setText(KeyEvent.getKeyText(Game.keyPressedDireita));
             Botaodireito.setForeground(Color.WHITE);
@@ -276,7 +276,7 @@ public class ConfPanel extends JPanel {
     gbc.insets = new Insets(20, 0, 0, 0);
     ferramentasConfiguracoes.add(Botaodireito, gbc);
     configLabels.add(Botaodireito);
-    /// -----
+ 
     botaoeinferior = new StretchIcon("resources/Menu/down.png");
     Botaoinferior = new JButton(KeyEvent.getKeyText(Game.keyPressedInferior), botaoeinferior);
     Botaoinferior.addActionListener(new ActionListener() {
@@ -287,7 +287,7 @@ public class ConfPanel extends JPanel {
           @Override
           public void keyPressed(KeyEvent event) {
             Game.keyPressedInferior = event.getKeyCode();
-            // Remove the KeyListener after the first key press
+          
             ConfPanel.this.removeKeyListener(this);
             Botaoinferior.setText(KeyEvent.getKeyText(Game.keyPressedInferior));
             Botaoinferior.setForeground(Color.WHITE);
@@ -304,13 +304,8 @@ public class ConfPanel extends JPanel {
     gbc.insets = new Insets(20, 0, 0, 0);
     ferramentasConfiguracoes.add(Botaoinferior, gbc);
     configLabels.add(Botaoinferior);
-    /// -----
-    /// ====================================
-    /// ====================================
-    /// ====================================
-    /// ====================================
-    /// ====================================
-    /// ====================================
+
+ 
     botaorock00 = new StretchIcon("resources/Menu/buttonRock00.png");
     ButtonRemoverAnimacao = new JButton("Remover Animação", botaorock00);
     ButtonRemoverAnimacao.addActionListener(new ActionListener() {
@@ -347,7 +342,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(textRemocao, gbc);
     textRemocao.setVisible(false);
     configLabels.add(textRemocao);
-    //// ----------
+  
     int width = 380;
     int height = 250;
     gbc.insets = new Insets(0, 0, 0, 0);
@@ -356,7 +351,7 @@ public class ConfPanel extends JPanel {
     Image newImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
     botafundobotao1 = new ImageIcon(newImage);
     FundoBotaoRemover = new JLabel(botafundobotao1);
-    FundoBotaoRemover.setPreferredSize(new Dimension(width, height)); // Defina o tamanho preferido
+    FundoBotaoRemover.setPreferredSize(new Dimension(width, height)); 
     FundoBotaoRemover.setSize(new Dimension(width, height));
     gbc.gridx = 0;
     gbc.gridy = 0;
@@ -364,8 +359,6 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(FundoBotaoRemover, gbc);
     FundoBotaoRemover.setVisible(false);
     configLabels.add(FundoBotaoRemover);
-    /// ====================================
-    /// ====================================
     ButtonManter = new JButton("Manter Animação", botaorock00);
     ButtonManter.addActionListener(new ActionListener() {
       @Override
@@ -390,7 +383,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(ButtonManter, gbc);
     ButtonManter.setVisible(false);
     configLabels.add(ButtonManter);
-    //// ----------
+
     gbc.gridx = 0;
     gbc.gridy = 3;
     gbc.insets = new Insets(-150, 0, 0, 0);
@@ -402,9 +395,9 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(textManter, gbc);
     textManter.setVisible(false);
     configLabels.add(textManter);
-    //// ----------
+  
     FundoBotaoManter = new JLabel(botafundobotao1);
-    FundoBotaoManter.setPreferredSize(new Dimension(width, height)); // Defina o tamanho preferido
+    FundoBotaoManter.setPreferredSize(new Dimension(width, height)); 
     FundoBotaoManter.setSize(new Dimension(width, height));
     gbc.gridx = 0;
     gbc.gridy = 2;
@@ -412,12 +405,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(FundoBotaoManter, gbc);
     FundoBotaoManter.setVisible(false);
     configLabels.add(FundoBotaoManter);
-    /// ====================================
-    /// ====================================
-    /// ====================================
-    /// ====================================
-    /// ====================================
-    /// ====================================
+  
     Preferences prefs = Preferences.userNodeForPackage(CustomSlider.class);
 
     texto2 = new JLabel("Musicas");
@@ -429,7 +417,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(texto2, gbc);
     texto2.setVisible(false);
     configLabels.add(texto2);
-    /// ====================================
+    
     Image thumbImage = new ImageIcon("resources/Menu/buttonArrastar.png").getImage().getScaledInstance(20, 20,
         Image.SCALE_SMOOTH);
     Image backgroundImage = new ImageIcon("resources/Menu/barraVolume.png").getImage();
@@ -472,7 +460,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(sliderPanel, gbc);
     sliderPanel.setVisible(false);
     configLabels.add(sliderPanel);
-    /// ====================================
+   
     ImageIcon remoting = new ImageIcon("resources/Menu/blockedSons.png");
     Image image4 = remoting.getImage();
     Image resizedImage4 = image4.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -487,7 +475,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(RemoteSom, gbc);
     RemoteSom.setVisible(false);
     configLabels.add(RemoteSom);
-    /// ====================================
+   
     fundoButtonSom = new ImageIcon("resources/Menu/SomButton.png");
     Image image2 = fundoButtonSom.getImage();
     Image resizedImage2 = image2.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -514,7 +502,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(buttonSom, gbc);
     buttonSom.setVisible(false);
     configLabels.add(buttonSom);
-    // -------
+
 
     slider.addChangeListener(new ChangeListener() {
       @Override
@@ -549,16 +537,16 @@ public class ConfPanel extends JPanel {
     OuvirSomJLabel = new JLabel(" " + value + "%");
     OuvirSomJLabel.setFont(Fonts);
     OuvirSomJLabel.setForeground(Color.WHITE);
-    OuvirSomJLabel.setPreferredSize(new Dimension(70, 20)); // Tamanho fixo
-    OuvirSomJLabel.setMinimumSize(new Dimension(70, 20)); // Tamanho fixo
-    OuvirSomJLabel.setMaximumSize(new Dimension(70, 20)); // Tamanho fixo
+    OuvirSomJLabel.setPreferredSize(new Dimension(70, 20)); 
+    OuvirSomJLabel.setMinimumSize(new Dimension(70, 20)); 
+    OuvirSomJLabel.setMaximumSize(new Dimension(70, 20)); 
     gbc.gridx = 2;
     gbc.gridy = 1;
     ferramentasConfiguracoes.add(OuvirSomJLabel, gbc);
     OuvirSomJLabel.setVisible(false);
     configLabels.add(OuvirSomJLabel);
-    /// ====================================
-    /// ====================================
+  
+
     textoEfeitos = new JLabel("Efeitos");
     textoEfeitos.setFont(Fonts);
     textoEfeitos.setForeground(Color.WHITE);
@@ -568,7 +556,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(textoEfeitos, gbc);
     textoEfeitos.setVisible(false);
     configLabels.add(textoEfeitos);
-    /// ====================================
+    
     Image thumbImage1 = new ImageIcon("resources/Menu/buttonArrastar.png").getImage().getScaledInstance(20,
         20,
         Image.SCALE_SMOOTH);
@@ -613,7 +601,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(sliderPanelEfeito, gbc);
     sliderPanelEfeito.setVisible(false);
     configLabels.add(sliderPanelEfeito);
-    /// =====================================
+   
     ImageIcon remoting1 = new ImageIcon("resources/Menu/blockedSons.png");
     Image image5 = remoting1.getImage();
     Image resizedImage5 = image5.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -628,7 +616,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(RemoteEfeito, gbc);
     RemoteEfeito.setVisible(false);
     configLabels.add(RemoteEfeito);
-    /// ====================================
+   
     fundoButtonSom = new ImageIcon("resources/Menu/EfeitosButton.png");
     Image image3 = fundoButtonSom.getImage();
     Image resizedImage3 = image3.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -655,7 +643,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(buttonEfeito, gbc);
     buttonEfeito.setVisible(false);
     configLabels.add(buttonEfeito);
-    // ----
+    
     sliderEfeito.addChangeListener(new ChangeListener() {
 
       @Override
@@ -698,12 +686,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(OuvirEfeitoJLabel, gbc);
     OuvirEfeitoJLabel.setVisible(false);
     configLabels.add(OuvirEfeitoJLabel);
-    /// ====================================
-    /// ====================================
-    /// ====================================
-    /// ====================================
-    /// ====================================
-    /// ====================================
+    
     texto3 = new JLabel("<html><div style='width: 200px; text-align: center;'>Dificuldade de jogo</div></html>");
     texto3.setFont(Fonts);
     texto3.setForeground(Color.WHITE);
@@ -712,7 +695,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(texto3, gbc);
     texto3.setVisible(false);
     configLabels.add(texto3);
-    // -----
+   
     FBDificults = Fonts.deriveFont((float) 20);
     fundoButtonsDificults = new StretchIcon("resources/Menu/buttonDificults.png");
     ButtonDificiult = new JButton("Difícil", fundoButtonsDificults);
@@ -751,7 +734,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(ButtonDificiult, gbc);
     ButtonDificiult.setVisible(false);
     configLabels.add(ButtonDificiult);
-    // ----
+   
     textDificuldade = new JLabel(
         "<html><div style='width: 200px; text-align: center;'>Irá conter mais obstáculos do que o normal, e a cobra terá vida útil.</div></html>");
     textDificuldade.setFont(Fonts);
@@ -763,8 +746,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(textDificuldade, gbc);
     textDificuldade.setVisible(false);
     configLabels.add(textDificuldade);
-    /// ===================
-    /// =====================
+ 
     ButtonDificiultNormal = new JButton("Normal", fundoButtonsDificults);
 
     ConfigButton(ButtonDificiultNormal, FBDificults, 150, 60, " ");
@@ -801,7 +783,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(ButtonDificiultNormal, gbc);
     ButtonDificiultNormal.setVisible(false);
     configLabels.add(ButtonDificiultNormal);
-    // ----
+ 
     textNormal = new JLabel(
         "<html><div style='width: 200px; text-align: center;'>Irá conter mais obstáculos  do que o fácil e tera colisões com as extremidades.</div></html>");
     textNormal.setFont(Fonts);
@@ -813,8 +795,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(textNormal, gbc);
     textNormal.setVisible(false);
     configLabels.add(textNormal);
-    /// ====================
-    /// =====================
+   
     ButtonDificiultFacil = new JButton("Fácil", fundoButtonsDificults);
     ConfigButton(ButtonDificiultFacil, FBDificults, 150, 60, "");
 
@@ -850,7 +831,7 @@ public class ConfPanel extends JPanel {
     ferramentasConfiguracoes.add(ButtonDificiultFacil, gbc);
     ButtonDificiultFacil.setVisible(false);
     configLabels.add(ButtonDificiultFacil);
-    // ----
+  
     textFacil = new JLabel(
         "<html><div style='width: 200px; text-align: center;'>Menos obstáculos e poucas colisões, e sem extremidades.</div></html>");
     textFacil.setFont(Fonts);
@@ -1040,7 +1021,7 @@ public class ConfPanel extends JPanel {
     gbc.gridx = 2;
     gbc.gridy = 0;
     verticalPanel.add(áudio, gbc);
-    //////
+  
     JButton Dificuldade = new JButton("Dificuldade", fundoBotaoConfig);
     Dificuldade.addActionListener(new ActionListener() {
       @Override
@@ -1085,8 +1066,8 @@ public class ConfPanel extends JPanel {
     button.setForeground(Color.WHITE);
     button.setFont(font);
     button.setPreferredSize(new Dimension(width, height));
-    button.setMinimumSize(new Dimension(width, height)); // Adiciona o tamanho mínimo
-    button.setMaximumSize(new Dimension(width, height)); // Adiciona o tamanho máximo
+    button.setMinimumSize(new Dimension(width, height)); 
+    button.setMaximumSize(new Dimension(width, height)); 
     button.setBorder(BorderFactory.createEmptyBorder());
     button.setOpaque(false);
     button.setContentAreaFilled(false);
@@ -1098,7 +1079,7 @@ public class ConfPanel extends JPanel {
     textLabel.setFont(font);
     textLabel.setForeground(Color.DARK_GRAY);
     textPanel.add(textLabel);
-    Border border = BorderFactory.createEmptyBorder(6, 15, 5, 10); // Ajuste conforme necessário
+    Border border = BorderFactory.createEmptyBorder(6, 15, 5, 10);
     textPanel.setBorder(border);
     button.setLayout(new BorderLayout());
     button.add(textPanel, BorderLayout.CENTER);

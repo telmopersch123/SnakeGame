@@ -224,17 +224,17 @@ public class AnimationEnergyControl {
 
   private static long lastFrameTimees = System.currentTimeMillis();
   private static int frameIntervales = 100;
-  static int numFramesXes = 8; // Ajuste conforme necessário
-  static int numFramesYes = 1; // Supondo que todas as animações estão na mesma linha
+  static int numFramesXes = 8; 
+  static int numFramesYes = 1; 
   static int totalFrameses = numFramesXes * numFramesYes;
 
   public static void animationDeathExplosion(BufferedImage buffer, Image explosionDeath) {
     BufferedImage EnergyAnimationColision = (BufferedImage) explosionDeath;
     Graphics2D Explosao = buffer.createGraphics();
-    int numFramesX = 8; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 500; // Largura do frame redimensionado
-    int frameHeight = 500; // Altura do frame redimensionado
+    int numFramesX = 8; 
+    int numFramesY = 1; 
+    int frameWidth = 500; 
+    int frameHeight = 500; 
     int totalFrameses = numFramesX * numFramesY;
     long currentTimees = System.currentTimeMillis();
 

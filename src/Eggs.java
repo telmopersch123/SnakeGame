@@ -14,10 +14,10 @@ public class Eggs {
     BufferedImage eggAnimation = (BufferedImage) EggAnimation;
     egg = buffer.createGraphics();
 
-    int numFramesX = 8; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 500; // Largura do frame redimensionado
-    int frameHeight = 500; // Altura do frame redimensionado
+    int numFramesX = 8; 
+    int numFramesY = 1; 
+    int frameWidth = 500; 
+    int frameHeight = 500; 
     int totalFramesegg = numFramesX * numFramesY;
     int sx = (Game.currentFrame29 % numFramesX) * (eggAnimation.getWidth() / numFramesX);
     int sy = (Game.currentFrame29 / numFramesX) * (eggAnimation.getWidth() / numFramesX);
@@ -40,10 +40,10 @@ public class Eggs {
     BufferedImage eggAnimation = (BufferedImage) EggAnimationBreak;
     eggBreak = buffer.createGraphics();
 
-    int numFramesX = 10; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 500; // Largura do frame redimensionado
-    int frameHeight = 500; // Altura do frame redimensionado
+    int numFramesX = 10;
+    int numFramesY = 1; 
+    int frameWidth = 500; 
+    int frameHeight = 500; 
     int totalFrameseggB = numFramesX * numFramesY;
     int sx = (Game.currentFrame30 % numFramesX) * (eggAnimation.getWidth() / numFramesX);
     int sy = (Game.currentFrame30 / numFramesX) * (eggAnimation.getWidth() / numFramesX);
@@ -55,8 +55,8 @@ public class Eggs {
     eggBreak.drawImage(resizedImageColision, PosicaoX - 32, PosicaoY - 25, 70, 60, null);
     long currentTimeeggB = System.currentTimeMillis();
     if (Game.ManterAnimation) {
-      if (Game.currentFrame30 == 0) { // Verificação do primeiro índice da spritesheet
-        MusicPlayer.ovoBreak(); // Chamar o método para tocar o som
+      if (Game.currentFrame30 == 0) { 
+        MusicPlayer.ovoBreak();
       }
       if (currentTimeeggB - lastFrameTimeeggB > frameIntervaleggB) {
         Game.currentFrame30 = (Game.currentFrame30 + 1) % totalFrameseggB;

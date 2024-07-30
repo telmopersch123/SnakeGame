@@ -256,14 +256,14 @@ public class MusicPlayer {
         RaioCaindoClip = AudioSystem.getClip();
         RaioCaindoClip.open(audioInputStream);
 
-        // Adiciona um LineListener para verificar quando o som termina
+       
         RaioCaindoClip.addLineListener(new LineListener() {
           @Override
           public void update(LineEvent event) {
             if (event.getType() == LineEvent.Type.STOP) {
               RaioCaindoClip.stop();
               RaioCaindoClip.setFramePosition(0);
-              AnimationEnergyControl.CaiuRaio = false; // Define a variável como false
+              AnimationEnergyControl.CaiuRaio = false; 
               isEnergyPlayingRaioCaindo = false;
             }
           }
@@ -313,7 +313,7 @@ public class MusicPlayer {
     }
   }
 
-  //////////////
+  
 
   public static void MusicasFields() {
     if (Game.MapField) {
@@ -399,7 +399,7 @@ public class MusicPlayer {
       clipMusicMenu = AudioSystem.getClip();
       clipMusicMenu.open(audioInputStream);
 
-      // Adiciona um listener para reiniciar a música após 5 segundos
+      
       clipMusicMenu.addLineListener(new LineListener() {
         @Override
         public void update(LineEvent event) {

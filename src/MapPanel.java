@@ -96,14 +96,14 @@ public class MapPanel extends JPanel {
       gbc.gridx = 0;
       gbc.gridy = 0;
       gbc.anchor = GridBagConstraints.CENTER;
-      // ------------------------
+   
       mapLabel = new JLabel("Cenários de Fuga");
       mapLabel.setFont(FontsTitulo);
       mapLabel.setForeground(Color.WHITE);
       mapLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 150, 0));
       backgroundLabel.add(mapLabel, gbc);
       add(layeredPane, BorderLayout.CENTER);
-      // ------------------------
+    
       if (Game.DesblockedPontuation <= 1) {
         if (Game.MapDungeon) {
           DungeonButton = new JButton("Masmorra", buttonDungeonBack);
@@ -236,7 +236,7 @@ public class MapPanel extends JPanel {
       gbc.gridy = 2;
       ImagemFundo();
       backgroundLabel.add(backgroundLabel2, gbc);
-      // ===============
+    
       TextSelection = new JLabel("");
       gbc.gridy = 1;
       backgroundLabel.add(TextSelection, gbc);

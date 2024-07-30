@@ -36,10 +36,10 @@ public class LifesTimers {
     GraficosLifeSnake = buffer.createGraphics();
     AffineTransform at1 = new AffineTransform();
     at1.scale((double) (80) / sw1, (double) (20) / sh1);
-    // Create an AffineTransformOp object with the AffineTransform
+ 
     AffineTransformOp op1 = new AffineTransformOp(at1,
         AffineTransformOp.TYPE_BILINEAR);
-    // Apply the transform to the image
+   
     BufferedImage scaledImage1 = op1.filter(lifesnake.getSubimage(sx1, sy1, sw1,
         sh1),
         null);

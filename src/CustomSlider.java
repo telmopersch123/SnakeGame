@@ -69,14 +69,14 @@ public class CustomSlider extends JSlider {
     }
 
     private void resetPreferences() {
-        // Limpa a preferência específica para o slider quando o jogo inicia
+       
         prefs.remove(sliderPositionKey);
     }
 
     public void updateImages(Image background, Image thumb) {
         this.backgroundImage = background;
         this.thumbImage = thumb;
-        repaint(); // Repaint para aplicar as mudanças
+        repaint(); 
     }
 
     @Override

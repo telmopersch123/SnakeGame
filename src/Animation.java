@@ -8,9 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Animation {
-  private static int poisonFruitAnimationInterval = 20; // Intervalo de tempo para atualizar a animação (em
-                                                        // milissegundos)
-                                                        // Timer para controlar a animação da fruta envenenada
+  private static int poisonFruitAnimationInterval = 20; 
 
   private static boolean increaseSizeCla = true;
   private static long lastFrameTime = System.currentTimeMillis();
@@ -77,39 +75,39 @@ public class Animation {
       boolean animationFinished, int x, int y, MyKeyBoardListener keyListener) {
     Graphics2D g2d = buffer.createGraphics();
 
-    // Converte a imagem da folha de sprite para BufferedImage
+   
     if (Game.snakePoison) {
       bufferedSpriteSheet = (BufferedImage) spriteSheet2;
     } else {
       bufferedSpriteSheet = (BufferedImage) spriteSheet;
     }
 
-    // Variáveis para manipulação de ângulo e deslocamento da imagem
+  
     int angle = 0;
     int valueX = 0;
     int valueY = 0;
 
-    // Número de frames na horizontal e vertical na folha de sprite
-    int numFramesX = 10; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
+    
+    int numFramesX = 10; 
+    int numFramesY = 1; 
 
-    // Dimensões do frame redimensionado
+   
     int frameWidth = 20;
     int frameHeight = 50;
 
-    // Total de frames na folha de sprite
+    
     int totalFrames = numFramesX * numFramesY;
 
-    // Calcula o recorte do frame atual na folha de sprite
+   
     int sx = (Game.currentFrame1 % numFramesX) * (bufferedSpriteSheet.getWidth() / numFramesX);
     int sy = (Game.currentFrame1 / numFramesX) * (bufferedSpriteSheet.getHeight() / numFramesY);
     int sw = bufferedSpriteSheet.getWidth() / numFramesX;
     int sh = bufferedSpriteSheet.getHeight() / numFramesY;
 
-    // Redimensiona a imagem para as dimensões desejadas
+   
     BufferedImage resizedImage = resizeImage(bufferedSpriteSheet.getSubimage(sx, sy, sw, sh), frameWidth, frameHeight);
 
-    // Desenha o frame atual na tela
+  
     if (keyListener.getDirection() == KeyEvent.VK_LEFT) {
       angle = -90;
       valueX = 18;
@@ -128,15 +126,15 @@ public class Animation {
       valueX = 20;
     }
 
-    // Rotaciona a imagem de acordo com o ângulo e desenha na tela
+   
     g2d.rotate(Math.toRadians(angle), x, y);
     g2d.drawImage(resizedImage, x - valueX, y - valueY, null);
 
-    // Contador de tempo para controlar a troca de frames
+    
     long currentTime = System.currentTimeMillis();
-    if (currentTime - lastFrameTime > frameInterval) { // Verifica se passou o intervalo de tempo
-      Game.currentFrame1 = (Game.currentFrame1 + 1) % totalFrames; // Avança para o próximo frame
-      lastFrameTime = currentTime; // Atualiza o tempo do último frame
+    if (currentTime - lastFrameTime > frameInterval) { 
+      Game.currentFrame1 = (Game.currentFrame1 + 1) % totalFrames; 
+      lastFrameTime = currentTime; 
 
       if (Game.currentFrame1 == totalFrames - 1) {
         animationFinished = true;
@@ -157,22 +155,21 @@ public class Animation {
       int y, double rotationAngle) {
 
     g2d = buffer.createGraphics();
-    // Define a rotação
-    imageCenterX = x; // Calcula o centro da imagem no eixo X
-    imageCenterY = y; // Calcula o centro da imagem no eixo Y
+   
+    imageCenterX = x; 
+    imageCenterY = y; 
     if (Game.ManterAnimation) {
-      g2d.rotate(Math.toRadians(rotationAngle), imageCenterX, imageCenterY); // Define o ponto de rotação como o centro
-                                                                             // da imagem
+      g2d.rotate(Math.toRadians(rotationAngle), imageCenterX, imageCenterY); 
     }
     
-      drawX = x - BeatEffect.getWidth(null) / 50; // Centraliza a imagem horizontalmente
-      drawY = y - BeatEffect.getHeight(null) / 50; // Centraliza a imagem verticalmente
+      drawX = x - BeatEffect.getWidth(null) / 50; 
+      drawY = y - BeatEffect.getHeight(null) / 50; 
     
     g2d.drawImage(BeatEffect, drawX, drawY, 30, 30, null);
-    // Reinicia a transformação para evitar acumulação de transformações
+  
     
     if (Game.ManterAnimation) {
-      g2d.rotate(-Math.toRadians(rotationAngle), imageCenterX, imageCenterY); // Reverte a rotação
+      g2d.rotate(-Math.toRadians(rotationAngle), imageCenterX, imageCenterY);
     }
     g2d.dispose();
   }
@@ -183,27 +180,27 @@ public class Animation {
 
     BufferedImage bufferedSpriteSheetHead = (BufferedImage) EnergyAnimationBody;
     BufferedImage bufferedSpriteSheetTail = (BufferedImage) EnergyAnimationTail;
-    int numFramesX = 16; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 40; // Largura do frame redimensionado
-    int frameHeight = 100; // Altura do frame redimensionado
+    int numFramesX = 16; 
+    int numFramesY = 1;
+    int frameWidth = 40; 
+    int frameHeight = 100;
     int totalFrames = numFramesX * numFramesY;
 
-    // Calcula o recorte do frame atual na folha de sprite do corpo
+    
     int sxB = (Game.currentFrame2 % numFramesX) * (bufferedSpriteSheetHead.getWidth() / numFramesX);
     int syB = (Game.currentFrame2 / numFramesX) * (bufferedSpriteSheetHead.getHeight() / numFramesX);
     int swB = bufferedSpriteSheetHead.getWidth() / numFramesX;
     int shB = bufferedSpriteSheetHead.getHeight() / numFramesY;
     BufferedImage resizedImageBody = resizeImage(bufferedSpriteSheetHead.getSubimage(sxB, syB, swB, shB), frameWidth,
         frameHeight);
-    // Calcula o recorte do frame atual na folha de sprite da calda
+   
     int sxT = (Game.currentFrame2 % numFramesX) * (bufferedSpriteSheetTail.getWidth() / numFramesX);
     int syT = (Game.currentFrame2 / numFramesX) * (bufferedSpriteSheetTail.getHeight() / numFramesX);
     int swT = bufferedSpriteSheetTail.getWidth() / numFramesX;
     int shT = bufferedSpriteSheetTail.getHeight() / numFramesY;
     BufferedImage resizedImageTail = resizeImage(bufferedSpriteSheetTail.getSubimage(sxT, syT, swT, shT), frameWidth,
         frameHeight);
-    // Desenha o frame atual na tela
+   
 
     for (int i = 1; i < nodeSnake.length; i += 19) {
       int xPos = nodeSnake[i].x;
@@ -216,22 +213,22 @@ public class Animation {
       boolean isHorizontal = currY == prevY;
       if (isHorizontal) {
         Graphics2D g2d = buffer.createGraphics();
-        AffineTransform oldTransform = g2d.getTransform(); // Salva a transformação atual
+        AffineTransform oldTransform = g2d.getTransform(); 
         g2d.rotate(Math.toRadians(90), xPos, yPos);
 
         g2d.drawImage(resizedImageBody, xPos - 9, yPos - 22, 30, 30, null);
-        g2d.setTransform(oldTransform); // Restaura a transformação
+        g2d.setTransform(oldTransform); 
         g2d.dispose();
       } else {
         Graphics2D g2d = buffer.createGraphics();
-        AffineTransform oldTransform = g2d.getTransform(); // Salva a transformação atual
+        AffineTransform oldTransform = g2d.getTransform();
         g2d.rotate(Math.toRadians(0), xPos, yPos);
 
         g2d.drawImage(resizedImageBody, xPos - 9, yPos - 10, 30, 30, null);
-        g2d.setTransform(oldTransform); // Restaura a transformação
+        g2d.setTransform(oldTransform); 
         g2d.dispose();
       }
-      // Rotaciona a imagem de acordo com o ângulo e desenha na tela
+      
     }
     for (int i = 1; i < nodeSnake.length; i++) {
       int xPos = nodeSnake[i].x;
@@ -246,19 +243,19 @@ public class Animation {
         if (isHorizontal) {
 
           Graphics2D g2d = buffer.createGraphics();
-          AffineTransform oldTransform = g2d.getTransform(); // Salva a transformação atual
+          AffineTransform oldTransform = g2d.getTransform(); 
           g2d.rotate(Math.toRadians(90), xPos, yPos);
 
           g2d.drawImage(resizedImageTail, xPos - 9, yPos - 22, 30, 30, null);
-          g2d.setTransform(oldTransform); // Restaura a transformação
+          g2d.setTransform(oldTransform); 
           g2d.dispose();
         } else {
           Graphics2D g2d = buffer.createGraphics();
-          AffineTransform oldTransform = g2d.getTransform(); // Salva a transformação atual
+          AffineTransform oldTransform = g2d.getTransform(); 
           g2d.rotate(Math.toRadians(0), xPos, yPos - valueY);
 
           g2d.drawImage(resizedImageTail, xPos - 8, yPos - 7, 30, 30, null);
-          g2d.setTransform(oldTransform); // Restaura a transformação
+          g2d.setTransform(oldTransform); 
           g2d.dispose();
         }
       }
@@ -273,13 +270,13 @@ public class Animation {
   public static void AnimationEnergyTemporaryFinal(BufferedImage buffer, Image EnergyAnimationFinale,
       Node[] nodeSnake) {
     BufferedImage EnergyAnimationFinal = (BufferedImage) EnergyAnimationFinale;
-    int numFramesX = 11; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 40; // Largura do frame redimensionado
-    int frameHeight = 100; // Altura do frame redimensionado
+    int numFramesX = 11;
+    int numFramesY = 1; 
+    int frameWidth = 40; 
+    int frameHeight = 100; 
     int totalFrames = numFramesX * numFramesY;
 
-    // Calcula o recorte do frame atual na folha de sprite do corpo
+    
     int sx = (Game.currentFrame4 % numFramesX) * (EnergyAnimationFinal.getWidth() / numFramesX);
     int sy = (Game.currentFrame4 / numFramesX) * (EnergyAnimationFinal.getHeight() / numFramesX);
     int sw = EnergyAnimationFinal.getWidth() / numFramesX;
@@ -296,19 +293,19 @@ public class Animation {
       boolean isHorizontal = currY == prevY;
       if (isHorizontal) {
         Graphics2D g2d = buffer.createGraphics();
-        AffineTransform oldTransform = g2d.getTransform(); // Salva a transformação atual
+        AffineTransform oldTransform = g2d.getTransform(); 
         g2d.rotate(Math.toRadians(90), xPos, yPos);
 
         g2d.drawImage(resizedImageFinal, xPos - 9, yPos - 22, 30, 30, null);
-        g2d.setTransform(oldTransform); // Restaura a transformação
+        g2d.setTransform(oldTransform); 
         g2d.dispose();
       } else {
         Graphics2D g2d = buffer.createGraphics();
-        AffineTransform oldTransform = g2d.getTransform(); // Salva a transformação atual
+        AffineTransform oldTransform = g2d.getTransform(); 
         g2d.rotate(Math.toRadians(0), xPos, yPos);
 
         g2d.drawImage(resizedImageFinal, xPos - 9, yPos - 10, 30, 30, null);
-        g2d.setTransform(oldTransform); // Restaura a transformação
+        g2d.setTransform(oldTransform); 
         g2d.dispose();
       }
     }
@@ -324,19 +321,19 @@ public class Animation {
         if (isHorizontal) {
 
           Graphics2D g2d = buffer.createGraphics();
-          AffineTransform oldTransform = g2d.getTransform(); // Salva a transformação atual
+          AffineTransform oldTransform = g2d.getTransform(); 
           g2d.rotate(Math.toRadians(90), xPos, yPos);
 
           g2d.drawImage(resizedImageFinal, xPos - 9, yPos - 25, 30, 30, null);
-          g2d.setTransform(oldTransform); // Restaura a transformação
+          g2d.setTransform(oldTransform); 
           g2d.dispose();
         } else {
           Graphics2D g2d = buffer.createGraphics();
-          AffineTransform oldTransform = g2d.getTransform(); // Salva a transformação atual
+          AffineTransform oldTransform = g2d.getTransform(); 
           g2d.rotate(Math.toRadians(0), xPos, yPos - valueY);
 
           g2d.drawImage(resizedImageFinal, xPos - 8, yPos - 13, 30, 30, null);
-          g2d.setTransform(oldTransform); // Restaura a transformação
+          g2d.setTransform(oldTransform); 
           g2d.dispose();
         }
       }
@@ -357,10 +354,10 @@ public class Animation {
       int x, int y) {
     BufferedImage EnergyAnimationColisionInitial = (BufferedImage) EnergyAnimationInitial;
     Graphics2D g2d = buffer.createGraphics();
-    int numFramesX = 23; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 500; // Largura do frame redimensionado
-    int frameHeight = 500; // Altura do frame redimensionado
+    int numFramesX = 23; 
+    int numFramesY = 1; 
+    int frameWidth = 500; 
+    int frameHeight = 500; 
     int totalFrames = numFramesX * numFramesY;
 
     long currentTime = System.currentTimeMillis();
@@ -395,10 +392,10 @@ public class Animation {
       int x, int y) {
     BufferedImage EnergyAnimationColision = (BufferedImage) ColidianEnergyFood;
     Graphics2D g2d = buffer.createGraphics();
-    int numFramesX = 8; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 500; // Largura do frame redimensionado
-    int frameHeight = 500; // Altura do frame redimensionado
+    int numFramesX = 8; 
+    int numFramesY = 1; 
+    int frameWidth = 500; 
+    int frameHeight = 500; 
     int totalFrames = numFramesX * numFramesY;
     long currentTime = System.currentTimeMillis();
 
@@ -428,10 +425,10 @@ public class Animation {
       int x, int y) {
     BufferedImage PoisonAnimationColision = (BufferedImage) ColidianPoisonFood;
     Graphics2D g2d = buffer.createGraphics();
-    int numFramesX1 = 7; // Ajuste conforme necessário
-    int numFramesY1 = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth1 = 200; // Largura do frame redimensionado
-    int frameHeight1 = 200; // Altura do frame redimensionado
+    int numFramesX1 = 7; 
+    int numFramesY1 = 1; 
+    int frameWidth1 = 200; 
+    int frameHeight1 = 200; 
     int totalFrames1 = numFramesX1 * numFramesY1;
 
     int sx1 = (Game.currentFrame8 % numFramesX1) * (PoisonAnimationColision.getWidth() / numFramesX1);
@@ -461,10 +458,10 @@ public class Animation {
       int x, int y) {
     BufferedImage ClassicAnimationColision = (BufferedImage) ColidianClassicFood;
     Graphics2D g2d = buffer.createGraphics();
-    int numFramesX = 7; // Ajuste conforme necessário
-    int numFramesY = 1; // Supondo que todas as animações estão na mesma linha
-    int frameWidth = 500; // Largura do frame redimensionado
-    int frameHeight = 500; // Altura do frame redimensionado
+    int numFramesX = 7;
+    int numFramesY = 1; 
+    int frameWidth = 500; 
+    int frameHeight = 500;
     int totalFrames = numFramesX * numFramesY;
     long currentTime = System.currentTimeMillis();
 

@@ -2,11 +2,11 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
 public class AbaixarOuAumentarMusica {
-  private static float MIN_VOLUME = -20.0f; // Volume mínimo em dB
-  private static float MAX_VOLUME = 6.0f; // Volume máximo em dB
+  private static float MIN_VOLUME = -20.0f; 
+  private static float MAX_VOLUME = 6.0f; 
 
   public static void setVolumeForAllClips(int volumePercentage) {
-    // Garantir que volumePercentage esteja entre 0 e 100
+   
     if (volumePercentage < 0) {
       volumePercentage = 0;
     }

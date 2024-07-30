@@ -14,7 +14,7 @@ public class loadFont {
       ge.registerFont(font);
     } catch (IOException | FontFormatException e) {
       e.printStackTrace();
-      // Tratar erro ao carregar fonte, por exemplo, usar uma fonte padrão
+    
       font = new Font("Arial", Font.PLAIN, (int) size);
     }
     return font;
