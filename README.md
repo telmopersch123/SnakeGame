@@ -22,7 +22,7 @@ Se fosse necessário destacar todas as funcionalidades, seria preciso criar uma 
 
 Caso queria testar e conhecer o jogo `SnakeGame`. ele esta dísponivel para dwonload nesse link [here](https://www.mediafire.com/file/snuh2i73mvzbr9a/installadorGameSnake.exe/file).
 
-<span style="color: green;">O Windows pode reconhecer executáveis de pessoas físicas como ameaças devido à falta de certificação digital e baixa reputação. Isso ocorre porque o sistema SmartScreen e as ferramentas antivírus são mais rigorosos com arquivos que não têm uma assinatura confiável ou que são distribuídos fora de plataformas conhecidas. Mas não se preocupe, o arquivo contém apenas o jogo, e o código do jogo está logo acima! PARA BAIXAR, CLIQUE EM (EXECUTAR ASSIM MESMO!)</span>
+<p style="color:blue;">O Windows pode reconhecer executáveis de pessoas físicas como ameaças devido à falta de certificação digital e baixa reputação. Isso ocorre porque o sistema SmartScreen e as ferramentas antivírus são mais rigorosos com arquivos que não têm uma assinatura confiável ou que são distribuídos fora de plataformas conhecidas. Mas não se preocupe, o arquivo contém apenas o jogo, e o código do jogo está logo acima! PARA BAIXAR, CLIQUE EM (EXECUTAR ASSIM MESMO!)</p>
 
 Todos os direitos das imagens e músicas são reservados aos sites listados abaixo:
 
