@@ -20,7 +20,7 @@ Se fosse necessário destacar todas as funcionalidades, seria preciso criar uma 
 
 ## DESEJA JOGAR O JOGO?
 
-Caso queria testar e conhecer o jogo `SnakeGame`. ele esta dísponivel para dwonload nesse link [here](https://www.mediafire.com/file/snuh2i73mvzbr9a/installadorGameSnake.exe/file).
+Caso queria testar e conhecer o jogo `SnakeGame`. ele esta dísponivel para dwonload nesse link [AQUI!](https://www.mediafire.com/file/snuh2i73mvzbr9a/installadorGameSnake.exe/file).
 
 > ⚠️ **O Windows pode reconhecer executáveis de pessoas físicas como ameaças devido à falta de certificação digital e baixa reputação. Isso ocorre porque o sistema SmartScreen e as ferramentas antivírus são mais rigorosos com arquivos que não têm uma assinatura confiável ou que são distribuídos fora de plataformas conhecidas. Mas não se preocupe, o arquivo contém apenas o jogo, e o código do jogo está logo acima! PARA BAIXAR, CLIQUE EM (EXECUTAR ASSIM MESMO!)**
 
